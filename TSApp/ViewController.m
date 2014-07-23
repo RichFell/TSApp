@@ -14,6 +14,7 @@
 @property CLLocationManager *locationmanager;
 @property GMSMapView *mapView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureRecognizer;
 
 @end
 
@@ -22,6 +23,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnMap:)];
 
     self.locationmanager = [[CLLocationManager alloc] init];
     self.locationmanager.delegate = self;
@@ -43,12 +46,12 @@
 
 -(void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position
 {
-    NSLog(@"Changing camera position");
+    //continuously gets called as the camera is moving
 }
 
 -(void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture
 {
-    NSLog(@"willMove is being called");
+    //only gets called once when camera begins moving
 }
 
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position
@@ -79,13 +82,14 @@
             [self.mapView animateToLocation:location.coordinate];
         }
     }
-    NSLog(@"happened in CLLocationManagerDelegate method");
 }
 
 #pragma mark - UITextFieldDelegate Methods
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [self geoCodeLocation:textField.text];
+    [self.textField resignFirstResponder];
     return true;
 }
 
@@ -107,4 +111,28 @@
     self.mapView.myLocationEnabled = 0;
 }
 
+#pragma mark - CLGeoCoder
+
+-(void)geoCodeLocation: (NSString *) address
+{
+    CLGeocoder *geoCoder = [[CLGeocoder alloc]init];
+    [geoCoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks.count > 0)
+        {
+            CLPlacemark *placemark = (CLPlacemark *)[placemarks objectAtIndex:0];
+
+            [self.mapView animateToLocation:placemark.location.coordinate];
+        }
+    }];
+}
+
+#pragma mark - Using TapGestureRecognizer to add markers where tapped
+
+-(void) tappedOnMap: (UITapGestureRecognizer *)tapGestureRecognizer
+{
+    GMSMarker *marker = [[GMSMarker alloc]init];
+    CGPoint point = [tapGestureRecognizer locationInView:self.view];
+    CLLocationCoordinate2D location = [self.mapView.projection coordinateForPoint:point];
+    marker.position = location;
+}
 @end
