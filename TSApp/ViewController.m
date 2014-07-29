@@ -14,7 +14,6 @@
 @property CLLocationManager *locationmanager;
 @property GMSMapView *mapView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *gestureRecognizer;
 
 @end
 
@@ -23,8 +22,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnMap:)];
 
     self.locationmanager = [[CLLocationManager alloc] init];
     self.locationmanager.delegate = self;
@@ -68,6 +65,15 @@
     }];
 }
 
+-(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    marker.position = coordinate;
+    marker.map = self.mapView;
+
+    [self reverseGeocode:coordinate];
+}
+
 # pragma mark - CLLocationManagerDelegate Methods
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -100,8 +106,6 @@
 
     GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude zoom:6];
 
-//    self.mapView = [GMSMapView mapWithFrame:CGRectZero camera:cameraPosition];
-
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = cameraPosition.target;
     marker.snippet = @"Snippet?..Really?";
@@ -126,13 +130,20 @@
     }];
 }
 
-#pragma mark - Using TapGestureRecognizer to add markers where tapped
+#pragma mark - GMSGeocoder for reverse Geocode
 
--(void) tappedOnMap: (UITapGestureRecognizer *)tapGestureRecognizer
+-(void)reverseGeocode:(CLLocationCoordinate2D )location
 {
-    GMSMarker *marker = [[GMSMarker alloc]init];
-    CGPoint point = [tapGestureRecognizer locationInView:self.view];
-    CLLocationCoordinate2D location = [self.mapView.projection coordinateForPoint:point];
-    marker.position = location;
+    [[GMSGeocoder geocoder]reverseGeocodeCoordinate:location completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
+        if (error)
+        {
+            NSLog(@"Reverse Geocoder Error: %@", error);
+        }
+        else
+        {
+            NSLog(@"ReverseGeocodeResponse %@", response);
+        }
+    }];
+
 }
 @end

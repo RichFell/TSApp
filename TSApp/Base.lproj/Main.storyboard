@@ -25,22 +25,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="l1R-Y3-In7" appends="YES" id="pP5-sw-KoS"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="jJW-n1-Ke5"/>
                     <connections>
-                        <outlet property="gestureRecognizer" destination="l1R-Y3-In7" id="4BD-tY-LYq"/>
                         <outlet property="textField" destination="ACk-bv-GN9" id="1eZ-I5-bF8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="l1R-Y3-In7">
-                    <connections>
-                        <action selector="tappedOnMap:" destination="vXZ-lx-hvc" id="KAY-jE-dzq"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="734" y="8"/>
         </scene>

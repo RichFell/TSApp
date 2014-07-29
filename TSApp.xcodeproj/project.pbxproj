@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */; };
 		9BB0B875197AF79500D545C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0B874197AF79500D545C1 /* Foundation.framework */; };
 		9BB0B877197AF79500D545C1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0B876197AF79500D545C1 /* CoreGraphics.framework */; };
 		9BB0B879197AF79500D545C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0B878197AF79500D545C1 /* UIKit.framework */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9BB0B871197AF79500D545C1 /* TSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BB0B874197AF79500D545C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9BB0B876197AF79500D545C1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -88,6 +90,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BB0B877197AF79500D545C1 /* CoreGraphics.framework in Frameworks */,
+				9BB0B8B2197B178E00D545C1 /* CoreData.framework in Frameworks */,
 				9BB0B8C4197B17F600D545C1 /* SystemConfiguration.framework in Frameworks */,
 				9BB0B8C2197B17E900D545C1 /* QuartzCore.framework in Frameworks */,
 				9BB0B8C0197B17DF00D545C1 /* OpenGLES.framework in Frameworks */,
@@ -97,10 +101,8 @@
 				9BB0B8B8197B17AD00D545C1 /* ImageIO.framework in Frameworks */,
 				9BB0B8B6197B17A400D545C1 /* GLKit.framework in Frameworks */,
 				9BB0B8B4197B179A00D545C1 /* CoreText.framework in Frameworks */,
-				9BB0B8B2197B178E00D545C1 /* CoreData.framework in Frameworks */,
 				9BB0B8B0197B178400D545C1 /* CoreLocation.framework in Frameworks */,
 				9BB0B8AE197B175E00D545C1 /* AVFoundation.framework in Frameworks */,
-				9BB0B877197AF79500D545C1 /* CoreGraphics.framework in Frameworks */,
 				9BB0B879197AF79500D545C1 /* UIKit.framework in Frameworks */,
 				9BB0B8AA197AF7F100D545C1 /* GoogleMaps.framework in Frameworks */,
 				9BB0B875197AF79500D545C1 /* Foundation.framework in Frameworks */,
@@ -172,6 +174,7 @@
 				9BB0B886197AF79500D545C1 /* Main.storyboard */,
 				9BB0B889197AF79500D545C1 /* ViewController.h */,
 				9BB0B88A197AF79500D545C1 /* ViewController.m */,
+				9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */,
 				9BB0B88C197AF79500D545C1 /* Images.xcassets */,
 				9BB0B87B197AF79500D545C1 /* Supporting Files */,
 			);
@@ -308,6 +311,7 @@
 				9BB0B88B197AF79500D545C1 /* ViewController.m in Sources */,
 				9BB0B885197AF79500D545C1 /* AppDelegate.m in Sources */,
 				9BB0B881197AF79500D545C1 /* main.m in Sources */,
+				9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +526,7 @@
 				9BB0B8A5197AF79500D545C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BB0B8A6197AF79500D545C1 /* Build configuration list for PBXNativeTarget "TSAppTests" */ = {
 			isa = XCConfigurationList;
@@ -530,8 +535,23 @@
 				9BB0B8A8197AF79500D545C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */,
+			);
+			currentVersion = 9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = ../Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9BB0B869197AF79500D545C1 /* Project object */;
 }
