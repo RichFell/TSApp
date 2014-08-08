@@ -22,11 +22,27 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAc-3X-ndl">
+                                <rect key="frame" x="266" y="103" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="active.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onButtonPressedPlaceMarker:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7UL-ED-XX8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
-                    <navigationItem key="navigationItem" id="jJW-n1-Ke5"/>
+                    <navigationItem key="navigationItem" id="jJW-n1-Ke5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="PYi-A5-hky">
+                            <connections>
+                                <action selector="onButtonPressedCreateRegion:" destination="vXZ-lx-hvc" id="dkK-JC-LEG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="textField" destination="ACk-bv-GN9" id="1eZ-I5-bF8"/>
                     </connections>
@@ -53,7 +69,28 @@
             </objects>
             <point key="canvasLocation" x="281" y="13"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="ufG-7c-NXR">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="hhB-pk-SNi" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tvI-xQ-R7B"/>
+                        <viewControllerLayoutGuide type="bottom" id="9iJ-70-JJc"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="G4c-mf-BNS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bjC-Eb-oFm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
+    <resources>
+        <image name="active.png" width="64" height="64"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

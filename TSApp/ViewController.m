@@ -8,11 +8,17 @@
 
 #import "ViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import <Parse/Parse.h>
+#import "ParseModel.h"
+#import "MapModel.h"
 
-@interface ViewController ()<GMSMapViewDelegate, CLLocationManagerDelegate, UITextFieldDelegate>
-@property CLLocation *currentLocation;
-@property CLLocationManager *locationmanager;
+
+@interface ViewController ()<GMSMapViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MapModelDelegate>
 @property GMSMapView *mapView;
+@property UITextField *alertTextField;
+@property ParseModel *parseModel;
+@property MapModel *mapModel;
+
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
 @end
@@ -23,12 +29,13 @@
 {
     [super viewDidLoad];
 
-    self.locationmanager = [[CLLocationManager alloc] init];
-    self.locationmanager.delegate = self;
-    [self.locationmanager startUpdatingLocation];
+    self.mapModel = [[MapModel alloc] init];
+    [self.mapModel setupLocationManager];
+    self.mapModel.delegate = self;
 
     self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
     self.mapView.delegate = self;
+
     [self.mapView animateToZoom:10.0];
     [self.view addSubview: self.mapView];
 
@@ -37,64 +44,47 @@
 
     self.textField.delegate = self;
 
+    self.parseModel = [[ParseModel alloc] init];
+
 }
 
 #pragma mark -GMSMapViewDelegate methods
 
--(void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position
-{
-    //continuously gets called as the camera is moving
-}
-
--(void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture
-{
-    //only gets called once when camera begins moving
-}
-
--(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position
-{
-    [[GMSGeocoder geocoder]reverseGeocodeCoordinate:CLLocationCoordinate2DMake(position.target.latitude, position.target.longitude) completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
-        if (error)
-        {
-            NSLog(@"Reverse Geocoder Error: %@", error);
-        }
-        else
-        {
-            //Do stuff with the reverse geoCode
-        }
-    }];
-}
-
 -(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = coordinate;
-    marker.map = self.mapView;
-
-    [self reverseGeocode:coordinate];
+    [self.mapModel reverseGeocode:coordinate];
 }
 
-# pragma mark - CLLocationManagerDelegate Methods
+-(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
+{
+    NSLog(@"marker: %@", marker);
+}
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+# pragma mark - MapModelDelegate Methods
+
+
+-(void)didFindNewLocation:(CLLocation *)location
+{
+    [self.mapView animateToLocation:location.coordinate];
+}
+
+-(void)didGeocodeString:(CLLocationCoordinate2D)coordinate
+{
+    [self.mapView animateToLocation:coordinate];
+}
+
+-(void)didReverseGeocode:(GMSReverseGeocodeResponse *)reverseGeocode
 {
 
-    for (CLLocation *location in locations)
-    {
-        if (location.verticalAccuracy < 1000 && location.horizontalAccuracy < 1000)
-        {
-            self.currentLocation = location;
-            [self.locationmanager stopUpdatingLocation];
-            [self.mapView animateToLocation:location.coordinate];
-        }
-    }
+    [self placeMarker:reverseGeocode.firstResult.coordinate string:reverseGeocode.firstResult.description];
+
 }
 
 #pragma mark - UITextFieldDelegate Methods
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self geoCodeLocation:textField.text];
+    [self.mapModel geocodeString:textField.text];
     [self.textField resignFirstResponder];
     return true;
 }
@@ -112,38 +102,46 @@
     self.mapView.mapType = kGMSTypeNormal;
     marker.map = self.mapView;
     self.mapView.delegate = self;
-    self.mapView.myLocationEnabled = 0;
+    self.mapView.myLocationEnabled = YES;
 }
 
-#pragma mark - CLGeoCoder
+#pragma mark - Bar Button action and AlertView delegate method
 
--(void)geoCodeLocation: (NSString *) address
+- (IBAction)onButtonPressedCreateRegion:(UIBarButtonItem *)sender
 {
-    CLGeocoder *geoCoder = [[CLGeocoder alloc]init];
-    [geoCoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (placemarks.count > 0)
-        {
-            CLPlacemark *placemark = (CLPlacemark *)[placemarks objectAtIndex:0];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Name this region" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alertView textFieldAtIndex:0].keyboardType = UIKeyboardAppearanceDefault;
+    self.alertTextField = [alertView textFieldAtIndex:0];
 
-            [self.mapView animateToLocation:placemark.location.coordinate];
-        }
-    }];
+    [alertView show];
 }
 
-#pragma mark - GMSGeocoder for reverse Geocode
-
--(void)reverseGeocode:(CLLocationCoordinate2D )location
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [[GMSGeocoder geocoder]reverseGeocodeCoordinate:location completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
-        if (error)
-        {
-            NSLog(@"Reverse Geocoder Error: %@", error);
-        }
-        else
-        {
-            NSLog(@"ReverseGeocodeResponse %@", response);
-        }
-    }];
-
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        [self.parseModel createRegion:self.alertTextField.text];
+    }
 }
+
+#pragma mark - Button Action
+- (IBAction)onButtonPressedPlaceMarker:(UIButton *)sender
+{
+    CLPlacemark *placemark = [self.mapModel returnSearchedPlacemark];
+    [self placeMarker:placemark.location.coordinate string:placemark.description];
+}
+
+#pragma mark - Helper Method for placing Markers
+
+-(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string
+{
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    marker.position = coordinate;
+    marker.map = self.mapView;
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    marker.tappable = YES;
+    marker.snippet = string;
+}
+
 @end
