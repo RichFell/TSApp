@@ -16,27 +16,91 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter City or Region Here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ACk-bv-GN9">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter City or Region Here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ACk-bv-GN9">
                                 <rect key="frame" x="20" y="65" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="3X1-fh-DpG"/>
+                                    <constraint firstAttribute="width" constant="280" id="RYn-A1-TuN"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAc-3X-ndl">
-                                <rect key="frame" x="266" y="103" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAc-3X-ndl">
+                                <rect key="frame" x="270" y="103" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="active.png">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="cN8-Yz-HGW"/>
+                                    <constraint firstAttribute="height" constant="30" id="gUR-Pa-8hg"/>
+                                </constraints>
+                                <state key="normal" image="placemarker_image">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="onButtonPressedPlaceMarker:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7UL-ED-XX8"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0rd-jH-bpf">
+                                <rect key="frame" x="20" y="103" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="2kq-Ge-g7d"/>
+                                    <constraint firstAttribute="width" constant="30" id="njL-R9-DGs"/>
+                                </constraints>
+                                <state key="normal" image="addLocation_image">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addSelectedLocationOnPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="pjH-eb-VvI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTY-ld-gN8">
+                                <rect key="frame" x="262" y="509" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="UserLocation_Image">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedGoToUserLocation:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="rst-wR-Ili"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jnr-tz-8y7">
+                                <rect key="frame" x="0.0" y="65" width="217" height="503"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellID" id="i78-f0-Clu">
+                                        <rect key="frame" x="0.0" y="22" width="217" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i78-f0-Clu" id="Mpn-H3-2Dz">
+                                            <rect key="frame" x="0.0" y="0.0" width="217" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="Myr-gc-NMb"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="DnL-lf-sDw"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="0rd-jH-bpf" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="103" id="3V4-M0-p85"/>
+                            <constraint firstAttribute="trailing" secondItem="dAc-3X-ndl" secondAttribute="trailing" constant="20" id="AtM-Xu-BzN"/>
+                            <constraint firstAttribute="centerX" secondItem="ACk-bv-GN9" secondAttribute="centerX" id="VyD-nf-iSK"/>
+                            <constraint firstItem="ACk-bv-GN9" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="65" id="f5Y-dh-S4C"/>
+                            <constraint firstItem="dAc-3X-ndl" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="103" id="ouP-lZ-2yj"/>
+                            <constraint firstItem="0rd-jH-bpf" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="was-5h-91I"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jJW-n1-Ke5">
+                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="kdu-lk-jCU">
+                            <connections>
+                                <action selector="onPressedShowTableView:" destination="vXZ-lx-hvc" id="nPl-A6-0f3"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="PYi-A5-hky">
                             <connections>
                                 <action selector="onButtonPressedCreateRegion:" destination="vXZ-lx-hvc" id="dkK-JC-LEG"/>
@@ -44,12 +108,16 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="markerButton" destination="dAc-3X-ndl" id="f4h-Ba-Vlt"/>
+                        <outlet property="tableView" destination="jnr-tz-8y7" id="cSQ-JO-vzQ"/>
+                        <outlet property="tableViewControllerButton" destination="kdu-lk-jCU" id="yYZ-Gt-Yw0"/>
                         <outlet property="textField" destination="ACk-bv-GN9" id="1eZ-I5-bF8"/>
+                        <outlet property="userLocationButton" destination="PTY-ld-gN8" id="AN3-7B-1bI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="734" y="8"/>
+            <point key="canvasLocation" x="732" y="6"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ycj-7O-VQO">
@@ -69,27 +137,11 @@
             </objects>
             <point key="canvasLocation" x="281" y="13"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="ufG-7c-NXR">
-            <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="hhB-pk-SNi" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="tvI-xQ-R7B"/>
-                        <viewControllerLayoutGuide type="bottom" id="9iJ-70-JJc"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="G4c-mf-BNS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bjC-Eb-oFm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
     </scenes>
     <resources>
-        <image name="active.png" width="64" height="64"/>
+        <image name="UserLocation_Image" width="30" height="30"/>
+        <image name="addLocation_image" width="30" height="30"/>
+        <image name="placemarker_image" width="40" height="40"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

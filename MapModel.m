@@ -58,6 +58,16 @@
     return self.searchedPlacemark;
 }
 
+-(void)setLocation:(CLLocationCoordinate2D)location
+{
+    self.selectedLocation = location;
+}
+
+-(CLLocationCoordinate2D)requestSelectedLocation
+{
+    return self.selectedLocation;
+}
+
 #pragma mark - CLLocationManagerDelegate Method
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {

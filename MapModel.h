@@ -23,9 +23,13 @@
 @property id<MapModelDelegate> delegate;
 @property CLLocationManager *locationManager;
 @property CLPlacemark *searchedPlacemark;
+@property CLLocationCoordinate2D selectedLocation;
 
 -(void)setupLocationManager;
 -(void)geocodeString: (NSString *)address;
 -(void)reverseGeocode: (CLLocationCoordinate2D) location;
 -(CLPlacemark *)returnSearchedPlacemark;
+-(void)setLocation: (CLLocationCoordinate2D) location;
+-(CLLocationCoordinate2D)requestSelectedLocation;
+
 @end
