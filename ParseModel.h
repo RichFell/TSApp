@@ -8,32 +8,45 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "Location.h"
+#import "Region.h"
+#import "User.h"
 
 @protocol ParseModelDataSource <NSObject>
 
+@optional-(void)didCreateRegion: (Region *)region;
 @optional-(void)didFinishRegionsQuery: (NSArray *)regions;
+@optional-(void)didCreateLocation: (Location *)location;
 @optional-(void)didQueryLocations: (NSArray *)locations;
+@optional-(void)reorderedLocations;
+@optional-(void)didMoveLocationsIndex;
+@optional-(void)didSignUp;
+@optional-(void)didLogin;
 
 @end
 
 @interface ParseModel : NSObject
 
-
--(void)createRegion:(NSString *) name;
--(void )createLocation: (CLLocationCoordinate2D) coordinate;
+-(void)userSignUp: (NSString *)username andPassword: (NSString *)password andEmail: (NSString *)email;
+-(void)userLogin: (NSString *)username withPassword: (NSString *)password;
+-(void)createRegion:(NSString *) regionName;
+-(void )createLocation: (CLLocationCoordinate2D) coordinate array: (NSMutableArray *)array currentRegion: (Region *)region;
 -(void)queryForRegions;
--(void)queryForLocations: (NSString *)regionNameString;
+-(void)queryForLocations: (Region *)region;
+-(void)removeLocation:(Location *)location;
+-(void)reorderLocationsArray:(NSIndexPath *)startingIndexPath endIndex: (NSIndexPath *) edingIndexPath array: (NSArray *)array;
+-(void)moveObject: (PFObject *)object toIndexPath: (NSIndexPath *)destingationIndexPath;
+-(void)changeVisitedStatusOfLocation:(Location *)location;
 
-#define rwfLongitude @"longitude"
-#define rwfLatitude @"latitude"
-#define rwfLocations @"locations"
-#define rwfLocationString @"Current Location"
-#define rwfLocationParseClass @"Location"
-#define rwfCellIdentifier @"CellID"
-#define rwfRegionString @"Region"
-#define rwfRegionNameString @"name"
-#define rwfLocationToRegion @"region"
 @property id<ParseModelDataSource> delegate;
-@property PFObject *currentRegion;
+
+
+#define rwfLocationString @"Current Location"
+#define rwfCellIdentifier @"CellID"
+#define rwfLocationTableViewCellID @"Cell"
+#define rwfLocationToRegion @"region"
+#define rwfLocationIndex @"index"
+#define rwfRegionToUser @"user"
+
 
 @end

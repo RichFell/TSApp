@@ -58,10 +58,11 @@
     return self.searchedPlacemark;
 }
 
--(void)setLocation:(CLLocationCoordinate2D)location
-{
-    self.selectedLocation = location;
-}
+//-(void)selectLocation:(CLLocationCoordinate2D)location
+//{
+//    self.selectedLocation = location;
+//  
+//}
 
 -(CLLocationCoordinate2D)requestSelectedLocation
 {
@@ -79,6 +80,39 @@
             [self.locationManager stopUpdatingLocation];
         }
     }
+}
+
+-(void)getDirections:(CLLocationCoordinate2D)startingPosition endingPosition:(CLLocationCoordinate2D)endPosition
+{
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=%f,%f&destination=%f,%f&key=AIzaSyCLR3ztaPMZugnESkzeeAWWTkxbHTpgCPA", startingPosition.latitude, startingPosition.longitude, endPosition.latitude, endPosition.longitude];
+    NSURL *url = [NSURL URLWithString:urlString];
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError)
+        {
+            NSLog(@"%@", connectionError);
+        }
+        else
+        {
+            NSError *jsonError = nil;
+
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+
+//            NSArray *directionsArray = dictionary[@"routes"];
+            self.directions = [NSArray arrayWithArray:dictionary[@"routes"]];
+
+            NSLog(@"%@", self.directions);
+
+            [self.delegate didGetDirections:self.directions];
+        }
+    }];
+}
+
+-(NSArray *)returnDirections
+{
+    return self.directions;
 }
 
 @end

@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <Parse/Parse.h>
+#import "User.h"
+#import "Region.h"
+#import "Location.h"
 
 
 @implementation AppDelegate
@@ -17,8 +20,11 @@
 {
     [GMSServices provideAPIKey:@"AIzaSyCLR3ztaPMZugnESkzeeAWWTkxbHTpgCPA"];
 
+    [User registerSubclass];
     [Parse setApplicationId:@"tODHHsxlD4kr43TJG7T0TB74doArNn9w370bG4s9"
                   clientKey:@"RWXNAF7TiGqnVaQJERLfLivu4LgRD6RJTJfzCvt1"];
+    [Region registerSubclass];
+    [Location registerSubclass];
     return YES;
 }
 							

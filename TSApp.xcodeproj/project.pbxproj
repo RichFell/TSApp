@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B15128F19B406CC00F6F505 /* DirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B15128E19B406CC00F6F505 /* DirectionsViewController.m */; };
+		9B1C6E4319A6E82C00D8B804 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4219A6E82C00D8B804 /* User.m */; };
+		9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4519A6F26100D8B804 /* InitialViewController.m */; };
+		9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */; };
 		9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */; };
 		9BAA8D701988912E000BC9A9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D6F1988912E000BC9A9 /* Parse.framework */; };
 		9BAA8D711988912E000BC9A9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D6F1988912E000BC9A9 /* Parse.framework */; };
@@ -46,6 +50,12 @@
 		9BB0B8C0197B17DF00D545C1 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0B8BF197B17DF00D545C1 /* OpenGLES.framework */; };
 		9BB0B8C2197B17E900D545C1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0B8C1197B17E900D545C1 /* QuartzCore.framework */; };
 		9BB0B8C4197B17F600D545C1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0B8C3197B17F600D545C1 /* SystemConfiguration.framework */; };
+		9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB0F941997F21300C5321D /* LocationsListViewController.m */; };
+		9BBB1123199AC72300C5321D /* LocationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB1122199AC72300C5321D /* LocationTableViewCell.m */; };
+		9BBB1128199AEA2800C5321D /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB1127199AEA2800C5321D /* Location.m */; };
+		9BBB112B199AEA3400C5321D /* Region.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB112A199AEA3400C5321D /* Region.m */; };
+		9BC6CC8319B4D6900020C14D /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8219B4D6900020C14D /* Direction.m */; };
+		9BC6CC8619B4FA780020C14D /* NSString+StringCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */; };
 		9BF7254F199447FE00BFCA34 /* ParseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF7254E199447FE00BFCA34 /* ParseModel.m */; };
 		9BF7255719944E9100BFCA34 /* MapModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF7255619944E9100BFCA34 /* MapModel.m */; };
 /* End PBXBuildFile section */
@@ -61,6 +71,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B15128D19B406CC00F6F505 /* DirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsViewController.h; sourceTree = "<group>"; };
+		9B15128E19B406CC00F6F505 /* DirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsViewController.m; sourceTree = "<group>"; };
+		9B1C6E4119A6E82C00D8B804 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		9B1C6E4219A6E82C00D8B804 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		9B1C6E4419A6F26100D8B804 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
+		9B1C6E4519A6F26100D8B804 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
+		9B1C6E4719A6F29E00D8B804 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9BAA8D6F1988912E000BC9A9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -103,6 +121,18 @@
 		9BB0B8BF197B17DF00D545C1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		9BB0B8C1197B17E900D545C1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9BB0B8C3197B17F600D545C1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9BBB0F931997F21300C5321D /* LocationsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationsListViewController.h; path = ../LocationsListViewController.h; sourceTree = "<group>"; };
+		9BBB0F941997F21300C5321D /* LocationsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationsListViewController.m; path = ../LocationsListViewController.m; sourceTree = "<group>"; };
+		9BBB1121199AC72300C5321D /* LocationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationTableViewCell.h; path = ../LocationTableViewCell.h; sourceTree = "<group>"; };
+		9BBB1122199AC72300C5321D /* LocationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationTableViewCell.m; path = ../LocationTableViewCell.m; sourceTree = "<group>"; };
+		9BBB1126199AEA2800C5321D /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		9BBB1127199AEA2800C5321D /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		9BBB1129199AEA3400C5321D /* Region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Region.h; sourceTree = "<group>"; };
+		9BBB112A199AEA3400C5321D /* Region.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Region.m; sourceTree = "<group>"; };
+		9BC6CC8119B4D68F0020C14D /* Direction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Direction.h; sourceTree = "<group>"; };
+		9BC6CC8219B4D6900020C14D /* Direction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Direction.m; sourceTree = "<group>"; };
+		9BC6CC8419B4FA780020C14D /* NSString+StringCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringCategory.h"; sourceTree = "<group>"; };
+		9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringCategory.m"; sourceTree = "<group>"; };
 		9BF7254D199447FE00BFCA34 /* ParseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParseModel.h; path = ../ParseModel.h; sourceTree = "<group>"; };
 		9BF7254E199447FE00BFCA34 /* ParseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParseModel.m; path = ../ParseModel.m; sourceTree = "<group>"; };
 		9BF7255519944E9100BFCA34 /* MapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapModel.h; path = ../MapModel.h; sourceTree = "<group>"; };
@@ -252,9 +282,36 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9BBB1124199AC9F400C5321D /* CustomObjects */ = {
+			isa = PBXGroup;
+			children = (
+				9BC6CC8119B4D68F0020C14D /* Direction.h */,
+				9BC6CC8219B4D6900020C14D /* Direction.m */,
+				9BBB1121199AC72300C5321D /* LocationTableViewCell.h */,
+				9BBB1122199AC72300C5321D /* LocationTableViewCell.m */,
+				9BC6CC8419B4FA780020C14D /* NSString+StringCategory.h */,
+				9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */,
+			);
+			name = CustomObjects;
+			sourceTree = "<group>";
+		};
+		9BBB1125199AEA0300C5321D /* CustomObjects */ = {
+			isa = PBXGroup;
+			children = (
+				9BBB1126199AEA2800C5321D /* Location.h */,
+				9BBB1127199AEA2800C5321D /* Location.m */,
+				9BBB1129199AEA3400C5321D /* Region.h */,
+				9BBB112A199AEA3400C5321D /* Region.m */,
+				9B1C6E4119A6E82C00D8B804 /* User.h */,
+				9B1C6E4219A6E82C00D8B804 /* User.m */,
+			);
+			name = CustomObjects;
+			sourceTree = "<group>";
+		};
 		9BF72550199448A200BFCA34 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9BBB1125199AEA0300C5321D /* CustomObjects */,
 				9BF7254D199447FE00BFCA34 /* ParseModel.h */,
 				9BF7254E199447FE00BFCA34 /* ParseModel.m */,
 				9BF7255519944E9100BFCA34 /* MapModel.h */,
@@ -266,8 +323,17 @@
 		9BF72551199448AF00BFCA34 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9BBB1124199AC9F400C5321D /* CustomObjects */,
 				9BB0B889197AF79500D545C1 /* ViewController.h */,
 				9BB0B88A197AF79500D545C1 /* ViewController.m */,
+				9BBB0F931997F21300C5321D /* LocationsListViewController.h */,
+				9BBB0F941997F21300C5321D /* LocationsListViewController.m */,
+				9B1C6E4419A6F26100D8B804 /* InitialViewController.h */,
+				9B1C6E4519A6F26100D8B804 /* InitialViewController.m */,
+				9B1C6E4719A6F29E00D8B804 /* LoginViewController.h */,
+				9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */,
+				9B15128D19B406CC00F6F505 /* DirectionsViewController.h */,
+				9B15128E19B406CC00F6F505 /* DirectionsViewController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -372,9 +438,19 @@
 			files = (
 				9BF7255719944E9100BFCA34 /* MapModel.m in Sources */,
 				9BF7254F199447FE00BFCA34 /* ParseModel.m in Sources */,
+				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
+				9BC6CC8319B4D6900020C14D /* Direction.m in Sources */,
 				9BB0B88B197AF79500D545C1 /* ViewController.m in Sources */,
+				9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */,
 				9BB0B885197AF79500D545C1 /* AppDelegate.m in Sources */,
+				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
+				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
+				9B15128F19B406CC00F6F505 /* DirectionsViewController.m in Sources */,
 				9BB0B881197AF79500D545C1 /* main.m in Sources */,
+				9BBB112B199AEA3400C5321D /* Region.m in Sources */,
+				9BC6CC8619B4FA780020C14D /* NSString+StringCategory.m in Sources */,
+				9B1C6E4319A6E82C00D8B804 /* User.m in Sources */,
+				9BBB1123199AC72300C5321D /* LocationTableViewCell.m in Sources */,
 				9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,6 +11,9 @@
 #import <Parse/Parse.h>
 #import "ParseModel.h"
 #import "MapModel.h"
+#import "LocationsListViewController.h"
+#import "DirectionsViewController.h"
+#import "Direction.h"
 
 
 @interface ViewController ()<GMSMapViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MapModelDelegate, UITableViewDataSource, UITableViewDelegate, ParseModelDataSource>
@@ -19,13 +22,19 @@
 @property UITextField *alertTextField;
 @property ParseModel *parseModel;
 @property MapModel *mapModel;
-@property NSArray *regionArray;
+@property NSMutableArray *regionArray;
+@property NSMutableArray *locationsArray;
+@property Region *currentRegion;
+@property CLLocationCoordinate2D selectedLocation;
+@property NSMutableArray *markers;
+@property NSMutableArray *directions;
 
 @property (weak, nonatomic) IBOutlet UIButton *markerButton;
 @property (weak, nonatomic) IBOutlet UIButton *userLocationButton;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *tableViewControllerButton;
+@property (weak, nonatomic) IBOutlet UIButton *locationsButton;
 
 @end
 
@@ -37,10 +46,13 @@
 {
     [super viewDidLoad];
 
+    self.locationsArray = [NSMutableArray array];
+    self.regionArray = [NSMutableArray array];
+    self.directions = [NSMutableArray array];
+
     self.mapModel = [[MapModel alloc] init];
     self.mapModel.delegate = self;
     self.mapView.myLocationEnabled = YES;
-//    self.mapView.settings.myLocationButton = YES;
 
     self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
     self.mapView.delegate = self;
@@ -52,6 +64,7 @@
     [self.view bringSubviewToFront:self.markerButton];
     [self.view bringSubviewToFront:self.userLocationButton];
     [self.view sendSubviewToBack:self.mapView];
+    [self.view bringSubviewToFront:self.locationsButton];
 
     self.textField.delegate = self;
 
@@ -61,6 +74,8 @@
     self.tableViewControllerButton.tag = 0;
 
     self.tableView.hidden = YES;
+
+    self.markers = [NSMutableArray array];
 
 }
 
@@ -73,14 +88,14 @@
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
-    [self.mapModel setLocation:marker.position];
+    [self.mapView setSelectedMarker:marker];
 
     return true;
 }
 
 -(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
 {
-    NSLog(@"marker: %@", marker);
+    self.selectedLocation = marker.position;
 }
 
 # pragma mark - MapModelDelegate Methods
@@ -99,25 +114,47 @@
 
 -(void)didReverseGeocode:(GMSReverseGeocodeResponse *)reverseGeocode
 {
-
     [self placeMarker:reverseGeocode.firstResult.coordinate string:reverseGeocode.firstResult.description];
-
 }
+
+
 
 #pragma mark - ParseModelDataSource Delegate Methods
 
--(void)didFinishRegionsQuery:(NSArray *)regions
+-(void)didCreateRegion:(Region *)region
 {
-    self.regionArray = [NSArray arrayWithArray:regions];
+    [self.regionArray addObject:region];
+    [self.tableView reloadData];
+}
+
+-(void)didFinishRegionsQuery:(NSMutableArray *)regions
+{
+    self.regionArray = [regions mutableCopy];
     [self.tableView reloadData];
 }
 
 -(void)didQueryLocations:(NSArray *)locations
 {
-    for (PFObject *location in locations)
+
+    [self.locationsArray removeAllObjects];
+    GMSMutablePath *path = [GMSMutablePath path];
+
+    for (Location *location in locations)
     {
-//        [self placeMarker:location  string:<#(NSString *)#>];
+        double latitude = location.latitude.doubleValue;
+        double longitude = location.longitude.doubleValue;
+        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+        NSString *markerSnippet = location.name;
+        [self placeMarker:coordinate string:markerSnippet];
+
+        [path addCoordinate:coordinate];
     }
+    self.locationsArray = [locations mutableCopy];
+    GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithPath:path];
+    GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:bounds withPadding:20.0];
+
+    [self.mapView moveCamera:update];
+
 }
 
 #pragma mark - UITextFieldDelegate Methods
@@ -134,9 +171,9 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:rwfCellIdentifier];
-    PFObject *region = [self.regionArray objectAtIndex:indexPath.row];
+    Region *region = [self.regionArray objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = [region objectForKey: rwfRegionNameString];
+    cell.textLabel.text = region.name;
 
     return cell;
 }
@@ -149,6 +186,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.tableView.hidden = true;
+    [self.mapView clear];
+
+    self.currentRegion = [self.regionArray objectAtIndex:indexPath.row];
+    [self.parseModel queryForLocations:self.currentRegion];
 }
 
 #pragma mark - Helper method to setup GMSMapView and the CameraPosition
@@ -156,7 +197,7 @@
 -(void)setupMapAndCamera:(CLLocation *)location
 {
 
-    GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude zoom:6];
+//    GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude zoom:6];
 
     self.mapView.mapType = kGMSTypeNormal;
     self.mapView.delegate = self;
@@ -180,6 +221,7 @@
     if (buttonIndex != alertView.cancelButtonIndex)
     {
         [self.parseModel createRegion:self.alertTextField.text];
+//        [self.parseModel queryForRegions];
     }
 }
 
@@ -192,8 +234,7 @@
 
 - (IBAction)addSelectedLocationOnPressed:(UIButton *)sender
 {
-    CLLocationCoordinate2D location = [self.mapModel requestSelectedLocation];
-    [self.parseModel createLocation:location];
+    [self.parseModel createLocation:self.selectedLocation array:self.locationsArray currentRegion:self.currentRegion];
 }
 
 - (IBAction)onPressedGoToUserLocation:(UIButton *)sender
@@ -237,4 +278,37 @@
     [self.mapView setSelectedMarker:marker];
 }
 
+#pragma mark - place PolyLine method
+
+-(void)placePolyLine: (NSArray *)array
+{
+    GMSMutablePath *path = [GMSMutablePath path];
+
+    for (Direction *direction in self.directions)
+    {
+        [path addLatitude:direction.startingLatitude longitude:direction.startingLongitude];
+        [path addLatitude:direction.endingLatitude longitude:direction.endingLongitude];
+    }
+
+    GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];
+    polyLine.strokeWidth = 5.0;
+    polyLine.map = self.mapView;
+}
+
+#pragma mark - PrepareForSegue
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    LocationsListViewController *nextVC = segue.destinationViewController;
+
+    nextVC.locations = self.locationsArray;
+    nextVC.region = self.currentRegion;
+}
+
+-(IBAction)unwindSegue:(UIStoryboardSegue *)segue
+{
+    DirectionsViewController *directionVC = segue.sourceViewController;
+    self.directions = directionVC.listOfDirections;
+    [self placePolyLine:self.directions];
+}
 @end

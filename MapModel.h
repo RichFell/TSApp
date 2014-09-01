@@ -15,6 +15,7 @@
 @optional -(void)didFindNewLocation: (CLLocation *)location;
 @optional -(void)didGeocodeString: (CLLocationCoordinate2D )coordinate;
 @optional -(void)didReverseGeocode: (GMSReverseGeocodeResponse *)reverseGeocode;
+@optional -(void)didGetDirections: (NSArray *)directionArray;
 
 @end
 
@@ -24,12 +25,14 @@
 @property CLLocationManager *locationManager;
 @property CLPlacemark *searchedPlacemark;
 @property CLLocationCoordinate2D selectedLocation;
+@property NSArray *directions;
 
 -(void)setupLocationManager;
 -(void)geocodeString: (NSString *)address;
 -(void)reverseGeocode: (CLLocationCoordinate2D) location;
 -(CLPlacemark *)returnSearchedPlacemark;
--(void)setLocation: (CLLocationCoordinate2D) location;
 -(CLLocationCoordinate2D)requestSelectedLocation;
+-(void)getDirections: (CLLocationCoordinate2D)startingPosition endingPosition: (CLLocationCoordinate2D)endPosition;
+-(NSArray *)returnDirections;
 
 @end
