@@ -10,4 +10,6 @@
 
 @interface RegionTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIButton *completedButton;
+
 @end

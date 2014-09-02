@@ -18,6 +18,7 @@
 
 @dynamic name;
 @dynamic user;
+@dynamic completed;
 //@dynamic nearLeftLat;
 //@dynamic nearLeftLong;
 //@dynamic nearRightLat;

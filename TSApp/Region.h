@@ -15,6 +15,7 @@
 
 @property NSString *name;
 @property PFUser *user;
+@property BOOL completed;
 //@property NSNumber *nearLeftLong;
 //@property NSNumber *nearLeftLat;
 //@property NSNumber *nearRightLong;

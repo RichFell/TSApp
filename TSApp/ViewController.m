@@ -14,6 +14,7 @@
 #import "LocationsListViewController.h"
 #import "DirectionsViewController.h"
 #import "Direction.h"
+#import "RegionTableViewCell.h"
 
 
 @interface ViewController ()<GMSMapViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MapModelDelegate, UITableViewDataSource, UITableViewDelegate, ParseModelDataSource>
@@ -36,12 +37,16 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *tableViewControllerButton;
 @property (weak, nonatomic) IBOutlet UIButton *locationsButton;
 
+#define tsNotVisitedImage @"PlaceHolderImage"
+#define tsHasVisitedImage @"CheckMarkImage"
+
 @end
 
 @implementation ViewController
 
 
-
+//TODO: Need to figure out how want to setup saving locations to itenarary
+//TODO: Figure out full look and feel. Getting to a point where it will save time in the long run to now get the UI laid out
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -88,8 +93,8 @@
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
-    [self.mapView setSelectedMarker:marker];
 
+    //TODO: Make it so that when tap on the marker then window displays
     return true;
 }
 
@@ -141,6 +146,7 @@
 
     for (Location *location in locations)
     {
+        //TODO: make a custom window to add in a button to tap onto the location for info, or if that will be the way to save
         double latitude = location.latitude.doubleValue;
         double longitude = location.longitude.doubleValue;
         CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
@@ -151,7 +157,7 @@
     }
     self.locationsArray = [locations mutableCopy];
     GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithPath:path];
-    GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:bounds withPadding:20.0];
+    GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:bounds withPadding:40.0];
 
     [self.mapView moveCamera:update];
 
@@ -170,9 +176,21 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:rwfCellIdentifier];
+    RegionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:rwfCellIdentifier];
     Region *region = [self.regionArray objectAtIndex:indexPath.row];
 
+    if (region.completed == true)
+    {
+        cell.completedButton.tag = 1;
+        [cell.completedButton setBackgroundImage:[UIImage imageNamed:tsHasVisitedImage] forState:UIControlStateNormal];
+    }
+    else
+    {
+        cell.completedButton.tag = 0;
+        [cell.completedButton setBackgroundImage:[UIImage imageNamed:tsNotVisitedImage] forState:UIControlStateNormal];
+    }
+
+    NSLog(@"Cell Button Tag: %li", (long)cell.completedButton.tag);
     cell.textLabel.text = region.name;
 
     return cell;
@@ -190,6 +208,15 @@
 
     self.currentRegion = [self.regionArray objectAtIndex:indexPath.row];
     [self.parseModel queryForLocations:self.currentRegion];
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [self.parseModel deleteRegion:[self.regionArray objectAtIndex:indexPath.row]];
+        [self.regionArray removeObjectAtIndex:indexPath.row];
+    }
 }
 
 #pragma mark - Helper method to setup GMSMapView and the CameraPosition
@@ -291,7 +318,7 @@
     }
 
     GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];
-    polyLine.strokeWidth = 5.0;
+    polyLine.strokeWidth = 8.0;
     polyLine.map = self.mapView;
 }
 
@@ -311,4 +338,36 @@
     self.directions = directionVC.listOfDirections;
     [self placePolyLine:self.directions];
 }
+
+- (IBAction)onTappedSetCompletedForRegion:(UIButton *)sender
+{
+
+    RegionTableViewCell *cell = (RegionTableViewCell *)[[[sender superview]superview]superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Region *selectedRegion = [self.regionArray objectAtIndex:indexPath.row];
+
+    if (sender.tag == 0)
+    {
+        [sender setBackgroundImage:[UIImage imageNamed:tsHasVisitedImage] forState:UIControlStateNormal];
+        [self.parseModel editRegion:selectedRegion completedType:true];
+        sender.tag = 1;
+    }
+    else
+    {
+        [sender setBackgroundImage:[UIImage imageNamed:tsNotVisitedImage] forState:UIControlStateNormal];
+        [self.parseModel editRegion:selectedRegion completedType:false];
+        sender.tag = 0;
+    }
+}
+
 @end
+
+
+
+
+
+
+
+
+
+
