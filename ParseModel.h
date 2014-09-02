@@ -30,6 +30,8 @@
 -(void)userSignUp: (NSString *)username andPassword: (NSString *)password andEmail: (NSString *)email;
 -(void)userLogin: (NSString *)username withPassword: (NSString *)password;
 -(void)createRegion:(NSString *) regionName;
+-(void)editRegion:(Region *)region completedType: (BOOL)completed;
+-(void)deleteRegion:(Region *)region;
 -(void )createLocation: (CLLocationCoordinate2D) coordinate array: (NSMutableArray *)array currentRegion: (Region *)region;
 -(void)queryForRegions;
 -(void)queryForLocations: (Region *)region;

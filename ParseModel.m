@@ -59,6 +59,7 @@
     Region *region = [Region object];
     region.name = regionName;
     region.user = [User currentUser];
+    region.completed = NO;
     [region saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error)
         {
@@ -67,6 +68,33 @@
         else
         {
             [self.delegate didCreateRegion:region];
+        }
+    }];
+}
+
+-(void)editRegion:(Region *)region completedType:(BOOL)completed
+{
+    region.completed = completed;
+
+    [region saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+
+        if (error)
+        {
+            NSLog(@"%@", error);
+        }
+        else
+        {
+            NSLog(@"It saved in the background and such");
+        }
+    }];
+}
+
+-(void)deleteRegion:(Region *)region
+{
+    [region deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error)
+        {
+            NSLog(@"%@", error);
         }
     }];
 }
