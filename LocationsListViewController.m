@@ -21,6 +21,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *setDestinationsButton;
 @property (weak, nonatomic) IBOutlet UIButton *callDirectionsButton;
 
+@property UIView *locationsView;
+@property UITextField *locationOneTextField;
+@property UITextField *locationTwoTextField;
+@property UIButton *produceDirectionsButton;
+
 @property ParseModel *aParseModel;
 @property MapModel *mapModel;
 @property int destinationSelector;
@@ -100,19 +105,25 @@
     [self.locations insertObject:location atIndex:destinationIndexPath.row];
 }
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+
     if (self.setDestinationsButton.tag == 1)
     {
         if (self.destinationSelector == 0)
         {
             self.destinationSelector = 1;
             self.startingLocation = [self.locations objectAtIndex:indexPath.row];
+
+            cell.backgroundColor = [UIColor blueColor];
         }
         else
         {
             self.destinationSelector = 0;
             self.endingLocation = [self.locations objectAtIndex:indexPath.row];
+
+            cell.backgroundColor = [UIColor greenColor];
 
             self.callDirectionsButton.enabled = true;
         }
@@ -182,10 +193,13 @@
     if (sender.tag == 0)
     {
         sender.tag = 1;
+        [sender setBackgroundColor:[UIColor orangeColor]];
+        [self presentNewLocationsView];
     }
     else
     {
         sender.tag = 0;
+        [sender setBackgroundColor:[UIColor clearColor]];
     }
 }
 
@@ -198,6 +212,26 @@
 
         [self.mapModel getDirections: startingCoordinate endingPosition:endingCoordinate];
     }
+}
+
+-(void)presentNewLocationsView
+{
+
+    self.locationsView = [[UIView alloc]initWithFrame:CGRectMake(10.0, 50.0, 300.0, 80.0)];
+    self.locationsView.backgroundColor = [UIColor grayColor];
+    [self.view addSubview:self.locationsView];
+
+    self.tableView.frame = CGRectMake(0.0, 230.0, 320.0, 400.0);
+
+//    [self.view addSubview:self.tableView];
+
+    self.locationOneTextField = [[UITextField alloc]initWithFrame:CGRectMake(5.0, 10.0, 70.0, 30.0)];
+    [self.locationsView addSubview:self.locationOneTextField];
+    [self.locationsView bringSubviewToFront:self.locationOneTextField];
+
+    self.locationTwoTextField = [[UITextField alloc]initWithFrame:CGRectMake(40.0, 10.0, 70.0, 30.0)];
+    [self.locationsView addSubview:self.locationTwoTextField];
+    [self.locationsView bringSubviewToFront:self.locationTwoTextField];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
