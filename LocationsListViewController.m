@@ -221,6 +221,7 @@
     self.locationsView.backgroundColor = [UIColor grayColor];
     [self.view addSubview:self.locationsView];
 
+    //TODO: Need to make it so that when the View is presented, the TableView moves down, and when dismissed, the tableView moves back. For some reason changing the frame is not having the desired effect. Need to get this worked out.
     self.tableView.frame = CGRectMake(0.0, 230.0, 320.0, 400.0);
 
 //    [self.view addSubview:self.tableView];
