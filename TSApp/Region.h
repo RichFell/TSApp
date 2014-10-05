@@ -7,11 +7,12 @@
 //
 
 #import <Parse/Parse.h>
-#import "Location.h"
 
 @interface Region : PFObject <PFSubclassing>
 
 +(NSString *) parseClassName;
++(void)queryForRegionsWithBlock: (void(^)(NSArray *regions, NSError *error))completionHandler;
++(void)createRegion:(NSString *) regionName compeletion: (void(^)(Region *newRegion, NSError *error))completionHandler;
 
 @property NSString *name;
 @property PFUser *user;

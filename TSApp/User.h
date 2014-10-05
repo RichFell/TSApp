@@ -12,6 +12,6 @@
 @interface User : PFUser<PFSubclassing>
 
 +(void)load;
-+(User*)currentUser;
++(User *)currentUser;
 
 @end

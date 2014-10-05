@@ -16,6 +16,22 @@
     return @"Region";
 }
 
++(void)queryForRegionsWithBlock:(void (^)(NSArray *regions, NSError *error))completionHandler
+{
+    PFQuery *query = [Region query];
+    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        completionHandler(objects, error);
+    }];
+}
+
++(void)createRegion:(NSString *)regionName compeletion:(void (^)(Region *, NSError *))completionHandler
+{
+    Region *theRegion = [[Region alloc]init];
+    theRegion.name = regionName;
+    theRegion.user = [PFUser currentUser];
+}
+
 @dynamic name;
 @dynamic user;
 @dynamic completed;

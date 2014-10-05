@@ -10,29 +10,29 @@
 	<string>TSApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>267C20FE-327E-4EFE-8956-2875EC59E0EC</key>
+		<key>0A34B389300827D37343DB43F6E468D8878E9A13</key>
 		<string>https://github.com/RichFell/TSApp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>TSApp.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>267C20FE-327E-4EFE-8956-2875EC59E0EC</key>
+		<key>0A34B389300827D37343DB43F6E468D8878E9A13</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/RichFell/TSApp.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>267C20FE-327E-4EFE-8956-2875EC59E0EC</string>
+	<string>0A34B389300827D37343DB43F6E468D8878E9A13</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>267C20FE-327E-4EFE-8956-2875EC59E0EC</string>
+			<string>0A34B389300827D37343DB43F6E468D8878E9A13</string>
 			<key>IDESourceControlWCCName</key>
 			<string>TSApp</string>
 		</dict>
