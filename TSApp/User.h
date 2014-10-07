@@ -13,5 +13,5 @@
 
 +(void)load;
 +(User *)currentUser;
-
++(void)signUpNewUserWithUsername: (NSString *)username withPassword: (NSString *)password withEmail: (NSString *)email andCompletion: (void (^)(PFUser *user, NSError *error))completionHandler;
 @end

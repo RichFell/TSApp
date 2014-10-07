@@ -40,10 +40,29 @@
     }];
 }
 
--(void)deleteLocationWithBlock:(void (^)(BOOL, NSError *))completionHandler
++(void)queryForLocations:(Region *)region completed:(void (^)(NSArray *, NSError *))completionHandler
+{
+    PFQuery *query = [Location query];
+    [query whereKey:@"region" equalTo:region];
+
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        completionHandler(objects, error);
+    }];
+}
+
+-(void)deleteLocationWithBlock:(NSArray *)locations completed:(void (^)(BOOL, NSError *))completionHandler
 {
     [self deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        completionHandler(succeeded, error);
+        if (succeeded == true)
+        {
+            [self changeIndexOfLocations:locations completion:^(BOOL result, NSError *error) {
+                completionHandler(result, error);
+            }];
+        }
+        else
+        {
+            completionHandler(succeeded, error);
+        }
     }];
 }
 
@@ -62,7 +81,18 @@
 
         completionHandler(succeeded, error);
     }];
+}
 
+-(void)changeIndexOfLocations:(NSArray *)locations completion:(void (^)(BOOL, NSError *))completionHandler
+{
+    for (Location *aLocation in locations)
+    {
+        NSUInteger index = [locations indexOfObject:aLocation] + 1;
+        aLocation.index = [NSNumber numberWithUnsignedInteger:index];
+        [aLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            completionHandler(succeeded, error);
+        }];
+    }
 }
 
 

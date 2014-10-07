@@ -24,8 +24,10 @@
 
 +(void )createLocation: (CLLocationCoordinate2D) coordinate array: (NSMutableArray *)array currentRegion: (Region *)region completion: (void (^)(Location *theLocation, NSError *error))completionHandler;
 
--(void)deleteLocationWithBlock: (void(^)(BOOL result, NSError *error))completionHandler;
--(void)changeVisitedStatusWithBlock: (void(^)(BOOL result, NSError *error))completionHandler;
++(void)queryForLocations:(Region *) region completed: (void(^)(NSArray * locations, NSError *error))completionHandler;
 
+-(void)deleteLocationWithBlock: (NSArray *)locations completed:(void(^)(BOOL result, NSError *error))completionHandler;
+-(void)changeVisitedStatusWithBlock: (void(^)(BOOL result, NSError *error))completionHandler;
+-(void)changeIndexOfLocations: (NSArray *)locations completion: (void(^)(BOOL result, NSError *error))completionHandler;
 @end
 

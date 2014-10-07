@@ -11,6 +11,7 @@
 #import "ParseModel.h"
 #import "MapModel.h"
 #import "DirectionsViewController.h"
+#import "NetworkErrorAlert.h"
 
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, ParseModelDataSource, MapModelDelegate>
@@ -84,10 +85,21 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [self.aParseModel removeLocation:[self.locations objectAtIndex:indexPath.row]];
-        [self.locations removeObjectAtIndex:indexPath.row];
+        Location *location = [self.locations objectAtIndex:indexPath.row];
+        [location deleteLocationWithBlock:self.locations completed:^(BOOL result, NSError *error) {
 
-        [self.tableView reloadData];
+            if (error == nil)
+            {
+                [self.locations removeObject:location];
+                [self.tableView reloadData];
+            }
+            else
+            {
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+        }];
+
+
     }
 }
 
@@ -177,13 +189,23 @@
     if (button.tag == 0)
     {
         [button setImage: [UIImage imageNamed:@"placemarker_Image"] forState:UIControlStateNormal];
-        [self.aParseModel changeVisitedStatusOfLocation:selectedLocation];
+        [selectedLocation changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
+            if (error != nil)
+            {
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+        }];
         button.tag = 1;
     }
     else
     {
         [button setImage:[UIImage imageNamed:@"UserLocation_Image"] forState:UIControlStateNormal];
-        [self.aParseModel changeVisitedStatusOfLocation:selectedLocation];
+        [selectedLocation changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
+            if (error != nil)
+            {
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+        }];
         button.tag = 0;
     }
 }

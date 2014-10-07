@@ -8,6 +8,7 @@
 
 #import "Region.h"
 #import <Parse/PFObject+Subclass.h>
+#import "Location.h"
 
 @implementation Region
 
@@ -15,6 +16,18 @@
 {
     return @"Region";
 }
+
+@dynamic name;
+@dynamic user;
+@dynamic completed;
+//@dynamic nearLeftLat;
+//@dynamic nearLeftLong;
+//@dynamic nearRightLat;
+//@dynamic nearRightLong;
+//@dynamic farLeftLat;
+//@dynamic farLeftLong;
+//@dynamic farRightLat;
+//@dynamic farRightLong;
 
 +(void)queryForRegionsWithBlock:(void (^)(NSArray *regions, NSError *error))completionHandler
 {
@@ -32,16 +45,43 @@
     theRegion.user = [PFUser currentUser];
 }
 
-@dynamic name;
-@dynamic user;
-@dynamic completed;
-//@dynamic nearLeftLat;
-//@dynamic nearLeftLong;
-//@dynamic nearRightLat;
-//@dynamic nearRightLong;
-//@dynamic farLeftLat;
-//@dynamic farLeftLong;
-//@dynamic farRightLat;
-//@dynamic farRightLong;
+-(void)deleteRegionWithBlock:(void (^)(BOOL, NSError *))completionHandler
+{
+    [Location queryForLocations:self completed:^(NSArray *locations, NSError *error) {
+        if (error == nil)
+        {
+            for (Location *location in locations)
+            {
+                [location deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                }];
+            }
+        }
+        completionHandler(true, error);
+    }];
+}
+
+-(void)switchRegionCompletedStatusWithBlock:(void (^)(BOOL, NSError *))completionHandler
+{
+    if (self.completed == false)
+    {
+        self.completed = true;
+    }
+    else
+    {
+        self.completed = false;
+    }
+
+    [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        completionHandler(succeeded, error);
+    }];
+}
 
 @end
+
+
+
+
+
+
+
+

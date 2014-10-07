@@ -12,15 +12,13 @@
 #import <FacebookSDK/FacebookSDK.h>
 
 
-@interface LoginViewController ()<ParseModelDataSource, UITextFieldDelegate, FBLoginViewDelegate>
+@interface LoginViewController ()<UITextFieldDelegate, FBLoginViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 @property (weak, nonatomic) IBOutlet FBLoginView *fbLoginView;
-
-@property ParseModel *parseModel;
 
 @end
 
@@ -30,15 +28,45 @@
 {
     [super viewDidLoad];
 
-    self.parseModel = [[ParseModel alloc] init];
-    self.parseModel.delegate = self;
     self.signUpButton.tag = 0;
     self.emailTextField.hidden = YES;
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardDidChangeFrameNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+
+        NSDictionary *info = [note userInfo];
+        CGPoint from = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].origin;
+        CGPoint to = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].origin;
+        CGFloat height;
+        double duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey]doubleValue];
+        CGRect rect = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
+        {
+            height = to.x - from.x;
+        }
+        else
+        {
+            height = to.y - from.y;
+        }
+
+        [UIView animateWithDuration:duration animations:^{
+            self.view.frame = CGRectMake(0, rect.origin.y - self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+    }];
 }
 
 - (IBAction)onPressedLogin:(UIButton *)sender
 {
-    [self.parseModel userLogin:self.usernameTextField.text withPassword:self.passwordTextField.text];
+    [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
+        if (error == nil)
+        {
+            [self didLogin];
+        }
+        else
+        {
+            [self errorMessage:@"Sorry either the username or password entered were incorrect, please try again" andMessage:@"If you forgot your username or password, you can use the forgot password button to receive a change of password email"];
+        }
+    }];
 }
 
 - (IBAction)onPressedSignUp:(UIButton *)sender
@@ -51,7 +79,17 @@
     else
     {
         self.emailTextField.hidden = YES;
-        [self.parseModel userSignUp:self.usernameTextField.text andPassword:self.passwordTextField.text andEmail:self.emailTextField.text];
+        [User signUpNewUserWithUsername:self.usernameTextField.text withPassword:self.passwordTextField.text withEmail:self.emailTextField.text andCompletion:^(PFUser *user, NSError *error) {
+            if (error == nil)
+            {
+                [self didSignUp];
+            }
+            else
+            {
+                [self errorMessage:@"There was an issue submitting for your new account" andMessage:@"This might be a network error, make sure you have either a connection to the internet via your cellular provider, or are connected to wifi"];
+            }
+        }];
+       
     }
 }
 
@@ -76,6 +114,17 @@
 -(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user
 {
 //    [self.parseModel userSignUp:user.name andPassword:user.password andEmail:user.email];
+}
+
+-(void)errorMessage: (NSString *)title andMessage: (NSString *)message
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message: message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alertView show];
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:true];
 }
 
 @end

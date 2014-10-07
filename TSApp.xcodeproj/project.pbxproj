@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */; };
+		9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF319E37A89001ADB3E /* RegionListViewController.m */; };
+		9B14DAF719E37D04001ADB3E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF619E37D04001ADB3E /* MapViewController.m */; };
 		9B15128F19B406CC00F6F505 /* DirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B15128E19B406CC00F6F505 /* DirectionsViewController.m */; };
 		9B1C6E4319A6E82C00D8B804 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4219A6E82C00D8B804 /* User.m */; };
 		9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4519A6F26100D8B804 /* InitialViewController.m */; };
@@ -72,6 +75,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B14DAEF19E2D257001ADB3E /* NetworkErrorAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkErrorAlert.h; sourceTree = "<group>"; };
+		9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkErrorAlert.m; sourceTree = "<group>"; };
+		9B14DAF219E37A89001ADB3E /* RegionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionListViewController.h; sourceTree = "<group>"; };
+		9B14DAF319E37A89001ADB3E /* RegionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionListViewController.m; sourceTree = "<group>"; };
+		9B14DAF519E37D04001ADB3E /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		9B14DAF619E37D04001ADB3E /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		9B15128D19B406CC00F6F505 /* DirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsViewController.h; sourceTree = "<group>"; };
 		9B15128E19B406CC00F6F505 /* DirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsViewController.m; sourceTree = "<group>"; };
 		9B1C6E4119A6E82C00D8B804 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -321,6 +330,8 @@
 				9BF7254E199447FE00BFCA34 /* ParseModel.m */,
 				9BF7255519944E9100BFCA34 /* MapModel.h */,
 				9BF7255619944E9100BFCA34 /* MapModel.m */,
+				9B14DAEF19E2D257001ADB3E /* NetworkErrorAlert.h */,
+				9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -339,6 +350,10 @@
 				9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */,
 				9B15128D19B406CC00F6F505 /* DirectionsViewController.h */,
 				9B15128E19B406CC00F6F505 /* DirectionsViewController.m */,
+				9B14DAF219E37A89001ADB3E /* RegionListViewController.h */,
+				9B14DAF319E37A89001ADB3E /* RegionListViewController.m */,
+				9B14DAF519E37D04001ADB3E /* MapViewController.h */,
+				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -443,12 +458,15 @@
 			files = (
 				9BF7255719944E9100BFCA34 /* MapModel.m in Sources */,
 				9BF7254F199447FE00BFCA34 /* ParseModel.m in Sources */,
+				9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */,
 				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
 				9BC6CC8319B4D6900020C14D /* Direction.m in Sources */,
 				9BB0B88B197AF79500D545C1 /* ViewController.m in Sources */,
 				9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */,
+				9B14DAF719E37D04001ADB3E /* MapViewController.m in Sources */,
 				9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */,
 				9BB0B885197AF79500D545C1 /* AppDelegate.m in Sources */,
+				9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */,
 				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
 				9B15128F19B406CC00F6F505 /* DirectionsViewController.m in Sources */,

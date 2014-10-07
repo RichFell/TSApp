@@ -15,6 +15,7 @@
 #import "DirectionsViewController.h"
 #import "Direction.h"
 #import "RegionTableViewCell.h"
+#import "NetworkErrorAlert.h"
 
 
 @interface ViewController ()<GMSMapViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MapModelDelegate, UITableViewDataSource, UITableViewDelegate, ParseModelDataSource>
@@ -207,15 +208,34 @@
     [self.mapView clear];
 
     self.currentRegion = [self.regionArray objectAtIndex:indexPath.row];
-    [self.parseModel queryForLocations:self.currentRegion];
+    [Location queryForLocations:self.currentRegion completed:^(NSArray *locations, NSError *error) {
+        if (error == nil)
+        {
+            //TODO: something with the array of Locations given back
+        }
+        else
+        {
+            //TODO: show the Network error alert
+        }
+    }];
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [self.parseModel deleteRegion:[self.regionArray objectAtIndex:indexPath.row]];
-        [self.regionArray removeObjectAtIndex:indexPath.row];
+//        [self.parseModel deleteRegion:[self.regionArray objectAtIndex:indexPath.row]];
+        Region *regionToDelete = [self.regionArray objectAtIndex:indexPath.row];
+        [regionToDelete deleteRegionWithBlock:^(BOOL result, NSError *error) {
+            if (error == nil)
+            {
+                [self.regionArray removeObject:regionToDelete];
+            }
+            else
+            {
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+        }];
     }
 }
 
@@ -247,8 +267,12 @@
 {
     if (buttonIndex != alertView.cancelButtonIndex)
     {
-        [self.parseModel createRegion:self.alertTextField.text];
-//        [self.parseModel queryForRegions];
+        [Region createRegion:self.alertTextField.text compeletion:^(Region *newRegion, NSError *error) {
+            if (error != nil)
+            {
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+        }];
     }
 }
 
@@ -261,7 +285,12 @@
 
 - (IBAction)addSelectedLocationOnPressed:(UIButton *)sender
 {
-    [self.parseModel createLocation:self.selectedLocation array:self.locationsArray currentRegion:self.currentRegion];
+    [Location createLocation:self.selectedLocation array:self.locationsArray currentRegion:self.currentRegion completion:^(Location *theLocation, NSError *error) {
+        if (error != nil)
+        {
+            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+        }
+    }];
 }
 
 - (IBAction)onPressedGoToUserLocation:(UIButton *)sender
@@ -275,7 +304,12 @@
     {
         self.tableView.hidden = NO;
         [self.view bringSubviewToFront:self.tableView];
-        [self.parseModel queryForRegions];
+        [Region queryForRegionsWithBlock:^(NSArray *regions, NSError *error) {
+            if (error != nil)
+            {
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+        }];
         self.tableViewControllerButton.tag = 1;
     }
     else if (self.tableViewControllerButton.tag == 1)
@@ -349,13 +383,24 @@
     if (sender.tag == 0)
     {
         [sender setBackgroundImage:[UIImage imageNamed:tsHasVisitedImage] forState:UIControlStateNormal];
-        [self.parseModel editRegion:selectedRegion completedType:true];
+        [selectedRegion switchRegionCompletedStatusWithBlock:^(BOOL result, NSError *error) {
+            if (error != nil)
+            {
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+        }];
         sender.tag = 1;
     }
     else
     {
         [sender setBackgroundImage:[UIImage imageNamed:tsNotVisitedImage] forState:UIControlStateNormal];
-        [self.parseModel editRegion:selectedRegion completedType:false];
+
+        [selectedRegion switchRegionCompletedStatusWithBlock:^(BOOL result, NSError *error) {
+            if (error != nil)
+            {
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+        }];
         sender.tag = 0;
     }
 }

@@ -11,8 +11,6 @@
 @interface Region : PFObject <PFSubclassing>
 
 +(NSString *) parseClassName;
-+(void)queryForRegionsWithBlock: (void(^)(NSArray *regions, NSError *error))completionHandler;
-+(void)createRegion:(NSString *) regionName compeletion: (void(^)(Region *newRegion, NSError *error))completionHandler;
 
 @property NSString *name;
 @property PFUser *user;
@@ -26,4 +24,16 @@
 //@property NSNumber *farRightLong;
 //@property NSNumber *farRightLat;
 
++(void)queryForRegionsWithBlock: (void(^)(NSArray *regions, NSError *error))completionHandler;
++(void)createRegion:(NSString *) regionName compeletion: (void(^)(Region *newRegion, NSError *error))completionHandler;
+
+-(void)deleteRegionWithBlock: (void(^)(BOOL result, NSError *error))completionHandler;
+-(void)switchRegionCompletedStatusWithBlock: (void(^)(BOOL result, NSError *error))completionHandler;
+
 @end
+
+
+
+
+
+

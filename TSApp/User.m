@@ -19,5 +19,16 @@
 {
     return (User *)[PFUser currentUser];
 }
++(void)signUpNewUserWithUsername:(NSString *)username withPassword:(NSString *)password withEmail:(NSString *)email andCompletion:(void (^)(PFUser *, NSError *))completionHandler
+{
+    PFUser *user = [PFUser object];
+    user.username = username;
+    user.password = password;
+    user.email = email;
+
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        completionHandler(user, error);
+    }];
+}
 
 @end
