@@ -17,10 +17,9 @@
 @property NSString *name;
 @property NSNumber *index;
 @property NSString *objectID;
-@property NSNumber *latitude;
-@property NSNumber *longitude;
 @property NSNumber *hasVisited;
 @property PFObject *region;
+@property PFGeoPoint *coordinate;
 
 +(void )createLocation: (CLLocationCoordinate2D) coordinate array: (NSMutableArray *)array currentRegion: (Region *)region completion: (void (^)(Location *theLocation, NSError *error))completionHandler;
 

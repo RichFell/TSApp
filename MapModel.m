@@ -45,8 +45,6 @@
         }
         else
         {
-            NSLog(@"%@", response.firstResult);
-
             [self.delegate didReverseGeocode:response];
         }
     }];

@@ -7,16 +7,68 @@
 //
 
 #import "RegionListViewController.h"
+#import "NetworkErrorAlert.h"
 
-@interface RegionListViewController ()
+@interface RegionListViewController ()<UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
 @implementation RegionListViewController
 
++(RegionListViewController *)newStoryboardInstance
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    return [storyboard instantiateViewControllerWithIdentifier:@"RegionListViewController"];
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setup];
+}
+
+#pragma mark - Helper methods
+
+-(void)setup
+{
+    self.regionsArray = [NSMutableArray array];
+    [Region queryForRegionsWithBlock:^(NSArray *regions, NSError *error) {
+        if (error == nil)
+        {
+            self.regionsArray = [regions mutableCopy];
+            [self.tableView reloadData];
+        }
+        else
+        {
+            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+        }
+    }];
+}
+
+#pragma mark - TableView Delegate methods
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+    Region *region = [self.regionsArray objectAtIndex:indexPath.row];
+
+    cell.textLabel.text = region.name;
+    return cell;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.regionsArray.count;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+    Region *region = [self.regionsArray objectAtIndex:indexPath.row];
+    [self.delegate didSelectRegion:region];
 }
 
 

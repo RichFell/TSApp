@@ -52,76 +52,76 @@
 {
     [super viewDidLoad];
 
-    self.locationsArray = [NSMutableArray array];
-    self.regionArray = [NSMutableArray array];
-    self.directions = [NSMutableArray array];
+//    self.locationsArray = [NSMutableArray array];
+//    self.regionArray = [NSMutableArray array];
+//    self.directions = [NSMutableArray array];
+//
+//    self.mapModel = [[MapModel alloc] init];
+//    self.mapModel.delegate = self;
+//    self.mapView.myLocationEnabled = YES;
+//
+//    self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
+//    self.mapView.delegate = self;
+//
+//    [self.mapView animateToZoom:10.0];
+//    [self.view addSubview: self.mapView];
 
-    self.mapModel = [[MapModel alloc] init];
-    self.mapModel.delegate = self;
-    self.mapView.myLocationEnabled = YES;
+//    [self.view bringSubviewToFront:self.textField];
+//    [self.view bringSubviewToFront:self.markerButton];
+//    [self.view bringSubviewToFront:self.userLocationButton];
+//    [self.view sendSubviewToBack:self.mapView];
+//    [self.view bringSubviewToFront:self.locationsButton];
 
-    self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
-    self.mapView.delegate = self;
+//    self.textField.delegate = self;
 
-    [self.mapView animateToZoom:10.0];
-    [self.view addSubview: self.mapView];
-
-    [self.view bringSubviewToFront:self.textField];
-    [self.view bringSubviewToFront:self.markerButton];
-    [self.view bringSubviewToFront:self.userLocationButton];
-    [self.view sendSubviewToBack:self.mapView];
-    [self.view bringSubviewToFront:self.locationsButton];
-
-    self.textField.delegate = self;
-
-    self.parseModel = [[ParseModel alloc] init];
-    self.parseModel.delegate = self;
+//    self.parseModel = [[ParseModel alloc] init];
+//    self.parseModel.delegate = self;
 
     self.tableViewControllerButton.tag = 0;
 
-    self.tableView.hidden = YES;
+//    self.tableView.hidden = YES;
 
-    self.markers = [NSMutableArray array];
+//    self.markers = [NSMutableArray array];
 
 }
 
 #pragma mark -GMSMapViewDelegate methods
+//
+//-(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
+//{
+//    [self.mapModel reverseGeocode:coordinate];
+//}
+//
+//-(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
+//{
+//
+//    //TODO: Make it so that when tap on the marker then window displays
+//    return true;
+//}
 
--(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
-{
-    [self.mapModel reverseGeocode:coordinate];
-}
-
--(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
-{
-
-    //TODO: Make it so that when tap on the marker then window displays
-    return true;
-}
-
--(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
-{
-    self.selectedLocation = marker.position;
-}
+//-(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
+//{
+//    self.selectedLocation = marker.position;
+//}
 
 # pragma mark - MapModelDelegate Methods
 
 
--(void)didFindNewLocation:(CLLocation *)location
-{
-    [self.mapView animateToLocation:location.coordinate];
-    [self placeMarker:location.coordinate string:rwfLocationString];
-}
-
--(void)didGeocodeString:(CLLocationCoordinate2D)coordinate
-{
-    [self.mapView animateToLocation:coordinate];
-}
-
--(void)didReverseGeocode:(GMSReverseGeocodeResponse *)reverseGeocode
-{
-    [self placeMarker:reverseGeocode.firstResult.coordinate string:reverseGeocode.firstResult.description];
-}
+//-(void)didFindNewLocation:(CLLocation *)location
+//{
+//    [self.mapView animateToLocation:location.coordinate];
+//    [self placeMarker:location.coordinate string:rwfLocationString];
+//}
+//
+//-(void)didGeocodeString:(CLLocationCoordinate2D)coordinate
+//{
+//    [self.mapView animateToLocation:coordinate];
+//}
+//
+//-(void)didReverseGeocode:(GMSReverseGeocodeResponse *)reverseGeocode
+//{
+//    [self placeMarker:reverseGeocode.firstResult.coordinate string:reverseGeocode.firstResult.description];
+//}
 
 
 

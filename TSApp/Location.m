@@ -18,8 +18,7 @@
 
 @dynamic name;
 @dynamic index;
-@dynamic latitude;
-@dynamic longitude;
+@dynamic coordinate;
 @dynamic hasVisited;
 @dynamic objectID;
 @dynamic region;
@@ -27,8 +26,9 @@
 +(void )createLocation: (CLLocationCoordinate2D) coordinate array: (NSMutableArray *)array currentRegion: (Region *)region completion: (void (^)(Location *theLocation, NSError *error))completionHandler;
 {
     Location *newLocation = [[Location alloc]init];
-    newLocation.longitude = [NSNumber numberWithDouble:coordinate.longitude];
-    newLocation.latitude = [NSNumber numberWithDouble:coordinate.latitude];
+//    newLocation.longitude = [NSNumber numberWithDouble:coordinate.longitude];
+//    newLocation.latitude = [NSNumber numberWithDouble:coordinate.latitude];
+    newLocation.coordinate = [PFGeoPoint geo];
     newLocation.name = @"";
     NSUInteger index = array.count + 1;
     newLocation.index = [NSNumber numberWithUnsignedInteger:index];
