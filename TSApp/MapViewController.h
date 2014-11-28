@@ -8,14 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MapViewControllerDelegate <NSObject>
 
--(void)openList;
--(void)closeList;
 
-@end
+
 
 @interface MapViewController : UIViewController
 
-@property id<MapViewControllerDelegate> delegate;
 @end

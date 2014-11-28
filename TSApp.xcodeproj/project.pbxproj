@@ -14,6 +14,7 @@
 		9B1C6E4319A6E82C00D8B804 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4219A6E82C00D8B804 /* User.m */; };
 		9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4519A6F26100D8B804 /* InitialViewController.m */; };
 		9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */; };
+		9B36F2DE1A28EFAD0061DB17 /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36F2DD1A28EFAD0061DB17 /* UserDefaults.m */; };
 		9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */; };
 		9BAA8D701988912E000BC9A9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D6F1988912E000BC9A9 /* Parse.framework */; };
 		9BAA8D711988912E000BC9A9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D6F1988912E000BC9A9 /* Parse.framework */; };
@@ -89,6 +90,8 @@
 		9B1C6E4519A6F26100D8B804 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		9B1C6E4719A6F29E00D8B804 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		9B36F2DC1A28EFAD0061DB17 /* UserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDefaults.h; path = ../UserDefaults.h; sourceTree = "<group>"; };
+		9B36F2DD1A28EFAD0061DB17 /* UserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDefaults.m; path = ../UserDefaults.m; sourceTree = "<group>"; };
 		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9BAA8D6F1988912E000BC9A9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -312,6 +315,8 @@
 		9BBB1125199AEA0300C5321D /* CustomObjects */ = {
 			isa = PBXGroup;
 			children = (
+				9B36F2DC1A28EFAD0061DB17 /* UserDefaults.h */,
+				9B36F2DD1A28EFAD0061DB17 /* UserDefaults.m */,
 				9BBB1126199AEA2800C5321D /* Location.h */,
 				9BBB1127199AEA2800C5321D /* Location.m */,
 				9BBB1129199AEA3400C5321D /* Region.h */,
@@ -469,6 +474,7 @@
 				9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */,
 				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
+				9B36F2DE1A28EFAD0061DB17 /* UserDefaults.m in Sources */,
 				9B15128F19B406CC00F6F505 /* DirectionsViewController.m in Sources */,
 				9BB0B881197AF79500D545C1 /* main.m in Sources */,
 				9BBB112B199AEA3400C5321D /* Region.m in Sources */,

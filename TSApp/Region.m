@@ -45,6 +45,14 @@
     theRegion.user = [PFUser currentUser];
 }
 
++(void)queryForRegionWithObjectId:(NSString *)objectId completion:(void (^)(Region *, NSError *))completionHandler
+{
+    PFQuery *query = [Region query];
+    [query whereKey:@"objectId" equalTo:objectId];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        completionHandler((Region *)object, error);
+    }];
+}
 -(void)deleteRegionWithBlock:(void (^)(BOOL, NSError *))completionHandler
 {
     [Location queryForLocations:self completed:^(NSArray *locations, NSError *error) {

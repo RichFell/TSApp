@@ -98,8 +98,6 @@
                 [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
             }
         }];
-
-
     }
 }
 
@@ -180,34 +178,34 @@
 }
 - (IBAction)onPressedChangeVisitedImage:(UIButton *)sender
 {
-    UIButton *button = (UIButton *)sender;
-
-    LocationTableViewCell *cell = (LocationTableViewCell *)[[sender superview]superview];
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    Location *selectedLocation = [self.locations objectAtIndex:indexPath.row];
-
-    if (button.tag == 0)
-    {
-        [button setImage: [UIImage imageNamed:@"placemarker_Image"] forState:UIControlStateNormal];
-        [selectedLocation changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
-            if (error != nil)
-            {
-                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-            }
-        }];
-        button.tag = 1;
-    }
-    else
-    {
-        [button setImage:[UIImage imageNamed:@"UserLocation_Image"] forState:UIControlStateNormal];
-        [selectedLocation changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
-            if (error != nil)
-            {
-                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-            }
-        }];
-        button.tag = 0;
-    }
+//    UIButton *button = (UIButton *)sender;
+//
+//    LocationTableViewCell *cell = (LocationTableViewCell *)[[sender superview]superview];
+//    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+//    Location *selectedLocation = [self.locations objectAtIndex:indexPath.row];
+//
+//    if (button.tag == 0)
+//    {
+//        [button setImage: [UIImage imageNamed:@"placemarker_Image"] forState:UIControlStateNormal];
+//        [selectedLocation changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
+//            if (error != nil)
+//            {
+//                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+//            }
+//        }];
+//        button.tag = 1;
+//    }
+//    else
+//    {
+//        [button setImage:[UIImage imageNamed:@"UserLocation_Image"] forState:UIControlStateNormal];
+//        [selectedLocation changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
+//            if (error != nil)
+//            {
+//                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+//            }
+//        }];
+//        button.tag = 0;
+//    }
 }
 
 - (IBAction)onPressedSetDestinations:(UIButton *)sender

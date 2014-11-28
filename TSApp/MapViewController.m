@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 TravelSages. All rights reserved.
 //
 
+//TODO: Go through all error message handling
+
 #import "MapViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <Parse/Parse.h> 
@@ -15,6 +17,7 @@
 #import "Location.h"
 #import "Region.h"
 #import "NetworkErrorAlert.h"
+#import "UserDefaults.h"
 
 @interface MapViewController ()<GMSMapViewDelegate, MapModelDelegate, RegionListVCDelegate>
 
@@ -65,9 +68,6 @@
     [self.mapView animateToZoom:10.0];
     [self.view addSubview:self.mapView];
     [self.view sendSubviewToBack:self.mapView];
-
-    self.regionListVC = [RegionListViewController newStoryboardInstance];
-    self.regionListVC.delegate = self;
     self.leftBarButtonItem.tag = 0;
 
     self.title = self.currentRegion.name;
@@ -90,6 +90,32 @@
     [self.mapView setSelectedMarker:marker];
 }
 
+-(void)queryForLocationsAndPlaceMarkers
+{
+    [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
+        if (error == nil && region != nil)
+        {
+            [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
+                if (error == nil)
+                {
+                    self.locationsArray = [locations mutableCopy];
+                    for (Location *location in locations)
+                    {
+                        [self placeMarker:location.coordinate string:location.name];
+                    }
+                }
+                else
+                {
+                    [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+                }
+            }];
+        }
+        else
+        {
+            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+        }
+    }];
+}
 #pragma mark - GMSMapViewDelegate Methods
 
 -(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
@@ -151,7 +177,6 @@
         }
     }];
     self.currentRegion = selectedRegion;
-    [self.delegate closeList];
 }
 - (IBAction)slideOpenLocationListOnTapped:(UIBarButtonItem *)sender
 {
@@ -171,6 +196,7 @@
     }
 }
 
+#pragma mark - IBAction and methods to control the sliding of the container view
 - (IBAction)didStartSlidingUpContainer:(UIPanGestureRecognizer *)sender
 {
     CGPoint currentPosition;

@@ -8,6 +8,8 @@
 
 #import "RegionListViewController.h"
 #import "NetworkErrorAlert.h"
+#import "MapViewController.h"
+#import "UserDefaults.h"
 
 @interface RegionListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -68,8 +70,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:true];
     Region *region = [self.regionsArray objectAtIndex:indexPath.row];
-    [self.delegate didSelectRegion:region];
+    [UserDefaults setDefaultRegion:region];
 }
-
 
 @end
