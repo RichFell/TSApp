@@ -19,7 +19,7 @@
 #import "NetworkErrorAlert.h"
 #import "UserDefaults.h"
 
-@interface MapViewController ()<GMSMapViewDelegate, MapModelDelegate, RegionListVCDelegate>
+@interface MapViewController ()<GMSMapViewDelegate, MapModelDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftBarButtonItem;
 @property GMSMapView *mapView;
@@ -70,12 +70,11 @@
     [self.view sendSubviewToBack:self.mapView];
     self.leftBarButtonItem.tag = 0;
 
-    self.title = self.currentRegion.name;
-
     self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
     self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
     self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
+    [self queryForLocationsAndPlaceMarkers];
 }
 
 -(void)placeMarker:(PFGeoPoint *)geoPoint string: (NSString *)string
@@ -95,6 +94,7 @@
     [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
         if (error == nil && region != nil)
         {
+            self.title = region.name;
             [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
                 if (error == nil)
                 {
@@ -157,45 +157,6 @@
     [self placeMarker:geoPoint string:rwfLocationString];
 }
 
-#pragma mark - RegionListVCDelegate Method
-
--(void)didSelectRegion:(Region *)selectedRegion
-{
-    [Location queryForLocations:selectedRegion completed:^(NSArray *locations, NSError *error) {
-        if (error == nil)
-        {
-            self.locationsArray = [locations mutableCopy];
-
-            for (Location *location in self.locationsArray)
-            {
-                [self placeMarker:location.coordinate string:location.name];
-            }
-        }
-        else
-        {
-            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-        }
-    }];
-    self.currentRegion = selectedRegion;
-}
-- (IBAction)slideOpenLocationListOnTapped:(UIBarButtonItem *)sender
-{
-    if (sender.tag == 0)
-    {
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.view layoutIfNeeded];
-        }];
-        sender.tag = 1;
-    }
-    else
-    {
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.view layoutIfNeeded];
-        }];
-        sender.tag = 0;
-    }
-}
-
 #pragma mark - IBAction and methods to control the sliding of the container view
 - (IBAction)didStartSlidingUpContainer:(UIPanGestureRecognizer *)sender
 {
@@ -237,7 +198,6 @@
         self.containerBottomeConstraint.constant = 0;
         self.imageViewTopConstraint.constant = 60;
         [self.view layoutIfNeeded];
-
     }];
 }
 
