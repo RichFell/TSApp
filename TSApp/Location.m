@@ -28,7 +28,10 @@
     Location *newLocation = [[Location alloc]init];
 //    newLocation.longitude = [NSNumber numberWithDouble:coordinate.longitude];
 //    newLocation.latitude = [NSNumber numberWithDouble:coordinate.latitude];
-    newLocation.coordinate = [PFGeoPoint geo];
+    PFGeoPoint *geoPoint = [[PFGeoPoint alloc]init];
+    geoPoint.latitude = coordinate.latitude;
+    geoPoint.longitude = coordinate.longitude;
+    newLocation.coordinate = geoPoint;
     newLocation.name = @"";
     NSUInteger index = array.count + 1;
     newLocation.index = [NSNumber numberWithUnsignedInteger:index];

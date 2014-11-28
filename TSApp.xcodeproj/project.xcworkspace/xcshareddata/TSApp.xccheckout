@@ -14,7 +14,7 @@
 		<string>https://github.com/RichFell/TSApp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TSApp.xcodeproj/project.xcworkspace</string>
+	<string>TSApp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0A34B389300827D37343DB43F6E468D8878E9A13</key>

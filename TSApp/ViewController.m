@@ -148,8 +148,8 @@
     for (Location *location in locations)
     {
         //TODO: make a custom window to add in a button to tap onto the location for info, or if that will be the way to save
-        double latitude = location.latitude.doubleValue;
-        double longitude = location.longitude.doubleValue;
+        double latitude = location.coordinate.latitude;
+        double longitude = location.coordinate.longitude;
         CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
         NSString *markerSnippet = location.name;
         [self placeMarker:coordinate string:markerSnippet];
@@ -360,10 +360,10 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    LocationsListViewController *nextVC = segue.destinationViewController;
-
-    nextVC.locations = self.locationsArray;
-    nextVC.region = self.currentRegion;
+//    LocationsListViewController *nextVC = segue.destinationViewController;
+//
+//    nextVC.locations = self.locationsArray;
+//    nextVC.region = self.currentRegion;
 }
 
 -(IBAction)unwindSegue:(UIStoryboardSegue *)segue

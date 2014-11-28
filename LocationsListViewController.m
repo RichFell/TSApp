@@ -67,7 +67,7 @@
 
     Location *location = [self.locations objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", location.latitude];
+    cell.textLabel.text = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
     cell.button.tag = 0;
 
     
@@ -229,8 +229,8 @@
 {
     if (self.startingLocation != nil && self.endingLocation != nil)
     {
-        CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.latitude.doubleValue, self.startingLocation.longitude.doubleValue);
-        CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.latitude.doubleValue, self.endingLocation.longitude.doubleValue);
+        CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
+        CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
 
         [self.mapModel getDirections: startingCoordinate endingPosition:endingCoordinate];
     }

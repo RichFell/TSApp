@@ -18,6 +18,7 @@
 
 @interface MapViewController ()<GMSMapViewDelegate, MapModelDelegate, RegionListVCDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftBarButtonItem;
 @property GMSMapView *mapView;
 @property MapModel *mapModel;
 @property NSMutableArray *locationsArray;
@@ -26,6 +27,12 @@
 @property NSMutableArray *directions;
 @property RegionListViewController *regionListVC;
 @property Region *currentRegion;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerBottomeConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
+@property CGFloat startingImageViewConstant;
+@property CGFloat startingContainerBottomConstant;
+@property CGPoint panStartPoint;
+
 
 #define kNotVisitedImage @"PlacHolderImage"
 #define kHasVisitedImage @"CheckMarkImage"
@@ -61,12 +68,20 @@
 
     self.regionListVC = [RegionListViewController newStoryboardInstance];
     self.regionListVC.delegate = self;
+    self.leftBarButtonItem.tag = 0;
+
+    self.title = self.currentRegion.name;
+
+    self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
+    self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
+    self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
+    self.startingImageViewConstant = self.imageViewTopConstraint.constant;
 }
 
--(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string
+-(void)placeMarker:(PFGeoPoint *)geoPoint string: (NSString *)string
 {
     GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = coordinate;
+    marker.position = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
     marker.map = self.mapView;
     marker.appearAnimation = kGMSMarkerAnimationPop;
     marker.tappable = YES;
@@ -99,8 +114,8 @@
 -(void)didFindNewLocation:(CLLocation *)location
 {
     [self.mapView animateToLocation:location.coordinate];
-//    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:location];
-//    [self placeMarker:geoPoint string:rwfLocationString];
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:location];
+    [self placeMarker:geoPoint string:rwfLocationString];
 }
 
 -(void)didGeocodeString:(CLLocationCoordinate2D)coordinate
@@ -110,7 +125,10 @@
 
 -(void)didReverseGeocode:(GMSReverseGeocodeResponse *)reverseGeocode
 {
-//    [self placeMarker:reverseGeocode.firstResult.coordinate string:rwfLocationString];
+    PFGeoPoint *geoPoint = [[PFGeoPoint alloc]init];
+    geoPoint.latitude = reverseGeocode.firstResult.coordinate.latitude;
+    geoPoint.longitude = reverseGeocode.firstResult.coordinate.longitude;
+    [self placeMarker:geoPoint string:rwfLocationString];
 }
 
 #pragma mark - RegionListVCDelegate Method
@@ -124,7 +142,7 @@
 
             for (Location *location in self.locationsArray)
             {
-//                [self placeMarker:location.coordinate string:location.name];
+                [self placeMarker:location.coordinate string:location.name];
             }
         }
         else
@@ -133,7 +151,79 @@
         }
     }];
     self.currentRegion = selectedRegion;
+    [self.delegate closeList];
 }
+- (IBAction)slideOpenLocationListOnTapped:(UIBarButtonItem *)sender
+{
+    if (sender.tag == 0)
+    {
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+        sender.tag = 1;
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+        sender.tag = 0;
+    }
+}
+
+- (IBAction)didStartSlidingUpContainer:(UIPanGestureRecognizer *)sender
+{
+    CGPoint currentPosition;
+    switch (sender.state)
+    {
+        case UIGestureRecognizerStateBegan:
+            self.panStartPoint = [sender locationInView:self.view];
+            break;
+
+        case UIGestureRecognizerStateChanged:
+            currentPosition = [sender translationInView:self.view];
+            CGFloat deltaY = self.panStartPoint.y + currentPosition.y;
+            self.imageViewTopConstraint.constant = deltaY;
+            self.containerBottomeConstraint.constant = -deltaY;
+            break;
+
+        case UIGestureRecognizerStateEnded:
+            if (self.imageViewTopConstraint.constant < self.view.frame.size.height/2)
+            {
+                [self animateContainerUp];
+            }
+            else
+            {
+                [self animateContainerDown];
+            }
+            break;
+        case UIGestureRecognizerStateCancelled:
+            break;
+
+        default:
+            break;
+    }
+}
+
+-(void)animateContainerUp
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        self.containerBottomeConstraint.constant = 0;
+        self.imageViewTopConstraint.constant = 60;
+        [self.view layoutIfNeeded];
+
+    }];
+}
+
+-(void)animateContainerDown
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
+        self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
+        [self.view layoutIfNeeded];
+    }];
+}
+
 
 
 @end
