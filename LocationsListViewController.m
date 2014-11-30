@@ -57,6 +57,8 @@
 
     self.callDirectionsButton.enabled = false;
 
+    self.view.backgroundColor = [UIColor customTableViewBackgroundOrange];
+    self.tableView.backgroundColor = [UIColor clearColor];
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods
