@@ -21,7 +21,7 @@
 
 @interface MapViewController ()<GMSMapViewDelegate, MapModelDelegate>
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
 @property GMSMapView *mapView;
 @property MapModel *mapModel;
 @property NSMutableArray *locationsArray;
@@ -70,7 +70,7 @@ static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
     [self.mapView animateToZoom:10.0];
     [self.view addSubview:self.mapView];
     [self.view sendSubviewToBack:self.mapView];
-    self.leftBarButtonItem.tag = 0;
+    self.regionBarButtonItem.tag = 0;
 
     self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
     self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
@@ -197,14 +197,9 @@ static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 
 -(void)animateContainerUp
 {
-//    [UIView animateWithDuration:0.5 animations:^{
-//        self.containerBottomeConstraint.constant = 0;
-//        self.imageViewTopConstraint.constant = 60;
-//        [self.view layoutIfNeeded];
-//    }];
     [UIView animateWithDuration:0.5 animations:^{
         self.containerBottomeConstraint.constant = 0;
-        self.imageViewTopConstraint.constant = 60;
+        self.imageViewTopConstraint.constant = 70;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kDownArrowImage];
@@ -213,12 +208,6 @@ static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 
 -(void)animateContainerDown
 {
-//    [UIView animateWithDuration:0.5 animations:^{
-//        self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
-//        self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
-//        [self.view layoutIfNeeded];
-//    }];
-
     [UIView animateWithDuration:0.5 animations:^{
         self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
         self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
