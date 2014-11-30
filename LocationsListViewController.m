@@ -8,13 +8,12 @@
 
 #import "LocationsListViewController.h"
 #import "LocationTableViewCell.h"
-#import "ParseModel.h"
 #import "MapModel.h"
 #import "DirectionsViewController.h"
 #import "NetworkErrorAlert.h"
 
 
-@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, ParseModelDataSource, MapModelDelegate>
+@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate,MapModelDelegate>
 
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -27,7 +26,6 @@
 @property UITextField *locationTwoTextField;
 @property UIButton *produceDirectionsButton;
 
-@property ParseModel *aParseModel;
 @property MapModel *mapModel;
 @property int destinationSelector;
 @property Location *startingLocation;
@@ -38,16 +36,12 @@
 
 @implementation LocationsListViewController
 
+static NSString *const kDirectionsSegue = @"DirectionsSegue";
+static NSString *const kLocationCellId = @"LocationTableViewCell";
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.aParseModel = [[ParseModel alloc]init];
-    self.aParseModel.delegate = self;
-
-    self.navigationItem.title = self.region.name;
-    UINavigationItem *item = self.navBar.items[0];
-    item.title = self.region.name;
 
     self.setDestinationsButton.tag = 0;
     self.destinationSelector = 0;
@@ -57,7 +51,7 @@
 
     self.callDirectionsButton.enabled = false;
 
-    self.view.backgroundColor = [UIColor customTableViewBackgroundOrange];
+    self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.setDestinationsButton.backgroundColor = [UIColor customOrange];
     self.callDirectionsButton.backgroundColor = [UIColor customOrange];
@@ -67,7 +61,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:rwfLocationTableViewCellID];
+    LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
 
     Location *location = [self.locations objectAtIndex:indexPath.row];
 
@@ -112,7 +106,6 @@
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-    [self.aParseModel reorderLocationsArray:sourceIndexPath endIndex:destinationIndexPath array:self.locations];
 
     Location *location = [self.locations objectAtIndex:sourceIndexPath.row];
     [self.locations removeObject: location];
@@ -157,7 +150,7 @@
 {
     self.directionsArray = [NSArray arrayWithArray:directionArray];
 
-    [self performSegueWithIdentifier:@"DirectionsSegue" sender:self];
+    [self performSegueWithIdentifier:kDirectionsSegue sender:self];
 }
 
 #pragma mark - IBActions
@@ -182,6 +175,8 @@
 }
 - (IBAction)onPressedChangeVisitedImage:(UIButton *)sender
 {
+
+    //TODO: This should be handled by the cell using a protocol. This way is very hackish, and should be avoided at any time
 //    UIButton *button = (UIButton *)sender;
 //
 //    LocationTableViewCell *cell = (LocationTableViewCell *)[[sender superview]superview];
@@ -218,7 +213,6 @@
     {
         sender.tag = 1;
         [sender setBackgroundColor:[UIColor orangeColor]];
-        [self presentNewLocationsView];
     }
     else
     {
@@ -236,27 +230,6 @@
 
         [self.mapModel getDirections: startingCoordinate endingPosition:endingCoordinate];
     }
-}
-
--(void)presentNewLocationsView
-{
-
-    self.locationsView = [[UIView alloc]initWithFrame:CGRectMake(10.0, 50.0, 300.0, 80.0)];
-    self.locationsView.backgroundColor = [UIColor grayColor];
-    [self.view addSubview:self.locationsView];
-
-    //TODO: Need to make it so that when the View is presented, the TableView moves down, and when dismissed, the tableView moves back. For some reason changing the frame is not having the desired effect. Need to get this worked out.
-    self.tableView.frame = CGRectMake(0.0, 230.0, 320.0, 400.0);
-
-//    [self.view addSubview:self.tableView];
-
-    self.locationOneTextField = [[UITextField alloc]initWithFrame:CGRectMake(5.0, 10.0, 70.0, 30.0)];
-    [self.locationsView addSubview:self.locationOneTextField];
-    [self.locationsView bringSubviewToFront:self.locationOneTextField];
-
-    self.locationTwoTextField = [[UITextField alloc]initWithFrame:CGRectMake(40.0, 10.0, 70.0, 30.0)];
-    [self.locationsView addSubview:self.locationTwoTextField];
-    [self.locationsView bringSubviewToFront:self.locationTwoTextField];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

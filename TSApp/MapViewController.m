@@ -35,6 +35,7 @@
 @property CGFloat startingImageViewConstant;
 @property CGFloat startingContainerBottomConstant;
 @property CGPoint panStartPoint;
+@property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
 
 @end
 
@@ -43,6 +44,8 @@
 static NSString *const kNotVisitedImage = @"PlacHolderImage";
 static NSString *const kHasVisitedImage = @"CheckMarkImage";
 static NSString *const rwfLocationString = @"Current Location";
+static NSString *const kUpArrowImage = @"TSOrangeUpArrow";
+static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 
 - (void)viewDidLoad
 {
@@ -73,6 +76,7 @@ static NSString *const rwfLocationString = @"Current Location";
     self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
     self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
+    self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
     [self queryForLocationsAndPlaceMarkers];
 }
 
@@ -193,19 +197,34 @@ static NSString *const rwfLocationString = @"Current Location";
 
 -(void)animateContainerUp
 {
+//    [UIView animateWithDuration:0.5 animations:^{
+//        self.containerBottomeConstraint.constant = 0;
+//        self.imageViewTopConstraint.constant = 60;
+//        [self.view layoutIfNeeded];
+//    }];
     [UIView animateWithDuration:0.5 animations:^{
         self.containerBottomeConstraint.constant = 0;
         self.imageViewTopConstraint.constant = 60;
         [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.slidingImageView.image = [UIImage imageNamed:kDownArrowImage];
     }];
 }
 
 -(void)animateContainerDown
 {
+//    [UIView animateWithDuration:0.5 animations:^{
+//        self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
+//        self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
+//        [self.view layoutIfNeeded];
+//    }];
+
     [UIView animateWithDuration:0.5 animations:^{
         self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
         self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
         [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
     }];
 }
 

@@ -7,9 +7,9 @@
 //
 
 #import "LoginViewController.h"
-#import "ParseModel.h"
 #import <Parse/Parse.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "User.h"
 
 
 @interface LoginViewController ()<UITextFieldDelegate, FBLoginViewDelegate>

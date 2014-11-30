@@ -62,7 +62,6 @@
 		9BC6CC8319B4D6900020C14D /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8219B4D6900020C14D /* Direction.m */; };
 		9BC6CC8619B4FA780020C14D /* NSString+StringCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */; };
 		9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8819B5318C0020C14D /* RegionTableViewCell.m */; };
-		9BF7254F199447FE00BFCA34 /* ParseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF7254E199447FE00BFCA34 /* ParseModel.m */; };
 		9BF7255719944E9100BFCA34 /* MapModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF7255619944E9100BFCA34 /* MapModel.m */; };
 /* End PBXBuildFile section */
 
@@ -151,8 +150,6 @@
 		9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringCategory.m"; sourceTree = "<group>"; };
 		9BC6CC8719B5318C0020C14D /* RegionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionTableViewCell.h; sourceTree = "<group>"; };
 		9BC6CC8819B5318C0020C14D /* RegionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionTableViewCell.m; sourceTree = "<group>"; };
-		9BF7254D199447FE00BFCA34 /* ParseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParseModel.h; path = ../ParseModel.h; sourceTree = "<group>"; };
-		9BF7254E199447FE00BFCA34 /* ParseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParseModel.m; path = ../ParseModel.m; sourceTree = "<group>"; };
 		9BF7255519944E9100BFCA34 /* MapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapModel.h; path = ../MapModel.h; sourceTree = "<group>"; };
 		9BF7255619944E9100BFCA34 /* MapModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapModel.m; path = ../MapModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -272,7 +269,7 @@
 			children = (
 				9BBB1124199AC9F400C5321D /* Custom Cells */,
 				9B36F2E61A2B83320061DB17 /* Utilities */,
-				9BF72551199448AF00BFCA34 /* View Controller */,
+				9BF72551199448AF00BFCA34 /* View Controllers */,
 				9BF72550199448A200BFCA34 /* Model */,
 				9BB0B883197AF79500D545C1 /* AppDelegate.h */,
 				9BB0B884197AF79500D545C1 /* AppDelegate.m */,
@@ -345,8 +342,6 @@
 			isa = PBXGroup;
 			children = (
 				9BBB1125199AEA0300C5321D /* CustomObjects */,
-				9BF7254D199447FE00BFCA34 /* ParseModel.h */,
-				9BF7254E199447FE00BFCA34 /* ParseModel.m */,
 				9BF7255519944E9100BFCA34 /* MapModel.h */,
 				9BF7255619944E9100BFCA34 /* MapModel.m */,
 				9B14DAEF19E2D257001ADB3E /* NetworkErrorAlert.h */,
@@ -355,7 +350,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		9BF72551199448AF00BFCA34 /* View Controller */ = {
+		9BF72551199448AF00BFCA34 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				9BB0B889197AF79500D545C1 /* ViewController.h */,
@@ -373,7 +368,7 @@
 				9B14DAF519E37D04001ADB3E /* MapViewController.h */,
 				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
 			);
-			name = "View Controller";
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -475,7 +470,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BF7255719944E9100BFCA34 /* MapModel.m in Sources */,
-				9BF7254F199447FE00BFCA34 /* ParseModel.m in Sources */,
 				9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */,
 				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
 				9BC6CC8319B4D6900020C14D /* Direction.m in Sources */,

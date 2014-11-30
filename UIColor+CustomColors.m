@@ -34,4 +34,9 @@
 {
     return [UIColor colorWithRed:240.0/255.0 green:89.0/255.0 blue:43.0/255.0 alpha:1.0];
 }
+
++(UIColor *)customTableViewBackgroundGrey
+{
+    return [UIColor colorWithRed:194.0/255.0 green:190.0/255.0 blue:189.0/255.0 alpha:0.8];
+}
 @end

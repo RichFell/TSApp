@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <Parse/Parse.h>
-#import "ParseModel.h"
 #import "MapModel.h"
 #import "LocationsListViewController.h"
 #import "DirectionsViewController.h"
@@ -18,11 +17,10 @@
 #import "NetworkErrorAlert.h"
 
 
-@interface ViewController ()<GMSMapViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MapModelDelegate, UITableViewDataSource, UITableViewDelegate, ParseModelDataSource>
+@interface ViewController ()<GMSMapViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MapModelDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property GMSMapView *mapView;
 @property UITextField *alertTextField;
-@property ParseModel *parseModel;
 @property MapModel *mapModel;
 @property NSMutableArray *regionArray;
 @property NSMutableArray *locationsArray;

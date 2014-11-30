@@ -447,6 +447,7 @@
                         <outlet property="containerBottomeConstraint" destination="gSM-Zh-V18" id="OjB-RC-YlJ"/>
                         <outlet property="imageViewTopConstraint" destination="eIg-3Q-6k4" id="NY3-LP-RoA"/>
                         <outlet property="leftBarButtonItem" destination="Hgk-eN-g6L" id="0rF-nm-Fpd"/>
+                        <outlet property="slidingImageView" destination="Cob-EZ-P03" id="j9U-dv-6SA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BeX-6l-gCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
