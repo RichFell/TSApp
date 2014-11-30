@@ -36,14 +36,13 @@
 @property CGFloat startingContainerBottomConstant;
 @property CGPoint panStartPoint;
 
-
-#define kNotVisitedImage @"PlacHolderImage"
-#define kHasVisitedImage @"CheckMarkImage"
-#define rwfLocationString @"Current Location"
-
 @end
 
 @implementation MapViewController
+
+static NSString *const kNotVisitedImage = @"PlacHolderImage";
+static NSString *const kHasVisitedImage = @"CheckMarkImage";
+static NSString *const rwfLocationString = @"Current Location";
 
 - (void)viewDidLoad
 {

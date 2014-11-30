@@ -38,13 +38,14 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *tableViewControllerButton;
 @property (weak, nonatomic) IBOutlet UIButton *locationsButton;
 
-#define tsNotVisitedImage @"PlaceHolderImage"
-#define tsHasVisitedImage @"CheckMarkImage"
 
 @end
 
 @implementation ViewController
 
+static NSString *const kCellIdentifier = @"CellID";
+static NSString *const tsNotVisitedImage = @"PlaceHolderImage";
+static NSString *const tsHasVisitiedImage = @"CheckMarkImage";
 
 //TODO: Need to figure out how want to setup saving locations to itenarary
 //TODO: Figure out full look and feel. Getting to a point where it will save time in the long run to now get the UI laid out
@@ -177,13 +178,13 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RegionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:rwfCellIdentifier];
+    RegionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
     Region *region = [self.regionArray objectAtIndex:indexPath.row];
 
     if (region.completed == true)
     {
         cell.completedButton.tag = 1;
-        [cell.completedButton setBackgroundImage:[UIImage imageNamed:tsHasVisitedImage] forState:UIControlStateNormal];
+        [cell.completedButton setBackgroundImage:[UIImage imageNamed:tsHasVisitiedImage] forState:UIControlStateNormal];
     }
     else
     {
@@ -360,10 +361,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//    LocationsListViewController *nextVC = segue.destinationViewController;
-//
-//    nextVC.locations = self.locationsArray;
-//    nextVC.region = self.currentRegion;
+
 }
 
 -(IBAction)unwindSegue:(UIStoryboardSegue *)segue
@@ -382,7 +380,7 @@
 
     if (sender.tag == 0)
     {
-        [sender setBackgroundImage:[UIImage imageNamed:tsHasVisitedImage] forState:UIControlStateNormal];
+        [sender setBackgroundImage:[UIImage imageNamed:tsHasVisitiedImage] forState:UIControlStateNormal];
         [selectedRegion switchRegionCompletedStatusWithBlock:^(BOOL result, NSError *error) {
             if (error != nil)
             {
