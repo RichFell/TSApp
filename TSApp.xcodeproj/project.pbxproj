@@ -93,8 +93,8 @@
 		9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		9B36F2DC1A28EFAD0061DB17 /* UserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDefaults.h; path = ../UserDefaults.h; sourceTree = "<group>"; };
 		9B36F2DD1A28EFAD0061DB17 /* UserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDefaults.m; path = ../UserDefaults.m; sourceTree = "<group>"; };
-		9B36F2E31A2B7F500061DB17 /* UIColor+CustomColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CustomColors.h"; sourceTree = "<group>"; };
-		9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CustomColors.m"; sourceTree = "<group>"; };
+		9B36F2E31A2B7F500061DB17 /* UIColor+CustomColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+CustomColors.h"; path = "../UIColor+CustomColors.h"; sourceTree = "<group>"; };
+		9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+CustomColors.m"; path = "../UIColor+CustomColors.m"; sourceTree = "<group>"; };
 		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9BAA8D6F1988912E000BC9A9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -204,11 +204,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B36F2E61A2B83320061DB17 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9BC6CC8419B4FA780020C14D /* NSString+StringCategory.h */,
+				9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */,
+				9B36F2E31A2B7F500061DB17 /* UIColor+CustomColors.h */,
+				9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		9BB0B868197AF79500D545C1 = {
 			isa = PBXGroup;
 			children = (
-				9B36F2E31A2B7F500061DB17 /* UIColor+CustomColors.h */,
-				9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */,
 				9BB0B87A197AF79500D545C1 /* TSApp */,
 				9BB0B899197AF79500D545C1 /* TSAppTests */,
 				9BB0B873197AF79500D545C1 /* Frameworks */,
@@ -261,6 +270,8 @@
 		9BB0B87A197AF79500D545C1 /* TSApp */ = {
 			isa = PBXGroup;
 			children = (
+				9BBB1124199AC9F400C5321D /* Custom Cells */,
+				9B36F2E61A2B83320061DB17 /* Utilities */,
 				9BF72551199448AF00BFCA34 /* View Controller */,
 				9BF72550199448A200BFCA34 /* Model */,
 				9BB0B883197AF79500D545C1 /* AppDelegate.h */,
@@ -302,19 +313,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9BBB1124199AC9F400C5321D /* CustomObjects */ = {
+		9BBB1124199AC9F400C5321D /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
 				9BC6CC8119B4D68F0020C14D /* Direction.h */,
 				9BC6CC8219B4D6900020C14D /* Direction.m */,
 				9BBB1121199AC72300C5321D /* LocationTableViewCell.h */,
 				9BBB1122199AC72300C5321D /* LocationTableViewCell.m */,
-				9BC6CC8419B4FA780020C14D /* NSString+StringCategory.h */,
-				9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */,
 				9BC6CC8719B5318C0020C14D /* RegionTableViewCell.h */,
 				9BC6CC8819B5318C0020C14D /* RegionTableViewCell.m */,
 			);
-			name = CustomObjects;
+			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		9BBB1125199AEA0300C5321D /* CustomObjects */ = {
@@ -349,7 +358,6 @@
 		9BF72551199448AF00BFCA34 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9BBB1124199AC9F400C5321D /* CustomObjects */,
 				9BB0B889197AF79500D545C1 /* ViewController.h */,
 				9BB0B88A197AF79500D545C1 /* ViewController.m */,
 				9BBB0F931997F21300C5321D /* LocationsListViewController.h */,

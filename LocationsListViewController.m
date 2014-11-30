@@ -59,6 +59,8 @@
 
     self.view.backgroundColor = [UIColor customTableViewBackgroundOrange];
     self.tableView.backgroundColor = [UIColor clearColor];
+    self.setDestinationsButton.backgroundColor = [UIColor customOrange];
+    self.callDirectionsButton.backgroundColor = [UIColor customOrange];
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods
