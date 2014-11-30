@@ -18,6 +18,8 @@
 
 @implementation DirectionsViewController
 
+static NSString *const kCellID = @"CellID";
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -30,28 +32,19 @@
     for (NSDictionary *dictionsary in self.directions)
     {
         someDirections = [NSArray arrayWithArray:dictionsary[@"legs"]];
-//        [someDirections arrayByAddingObjectsFromArray:dictionsary[@"legs"]];
+
     }
 
     NSLog(@"SOMEDIRECTIONS: %@", someDirections);
 
     for (NSDictionary *anotherDictionary in someDirections)
     {
-//        [self.listOfDirections arrayByAddingObjectsFromArray:anotherDictionary[@"steps"]];
         anotherArray = [NSArray arrayWithArray:anotherDictionary[@"steps"]];
     }
 
     for (NSDictionary *thisDictionary in anotherArray)
     {
-        Direction *direction = [[Direction alloc] init];
-
-        NSString *directionString = [thisDictionary[@"html_instructions"] stringByStrippingHtml];
-        direction.direction = directionString;
-        direction.startingLatitude = [thisDictionary[@"start_location"][@"lat"] floatValue];
-        direction.startingLongitude = [thisDictionary[@"start_location"][@"lng"]floatValue];
-        direction.endingLatitude = [thisDictionary[@"end_location"][@"lat"]floatValue];
-        direction.endingLongitude = [thisDictionary[@"end_location"][@"lng"]floatValue];
-        direction.distance = thisDictionary[@"distance"][@"text"];
+        Direction *direction = [Direction initWithDictionary:thisDictionary];
 
         [self.listOfDirections addObject:direction];
     }
@@ -64,7 +57,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
 
     Direction *direction = [self.listOfDirections objectAtIndex:indexPath.row];
 

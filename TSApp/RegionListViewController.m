@@ -19,10 +19,14 @@
 
 @implementation RegionListViewController
 
+static NSString *const kMainStoryboard = @"Main";
+static NSString *const kRegionListVC = @"RegionListViewController";
+static NSString *const kCellID = @"CellID";
+
 +(RegionListViewController *)newStoryboardInstance
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    return [storyboard instantiateViewControllerWithIdentifier:@"RegionListViewController"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kMainStoryboard bundle:nil];
+    return [storyboard instantiateViewControllerWithIdentifier:kRegionListVC];
 
 }
 
@@ -54,7 +58,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
     Region *region = [self.regionsArray objectAtIndex:indexPath.row];
 
     cell.textLabel.text = region.name;
@@ -71,6 +75,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:true];
     Region *region = [self.regionsArray objectAtIndex:indexPath.row];
     [UserDefaults setDefaultRegion:region];
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 @end

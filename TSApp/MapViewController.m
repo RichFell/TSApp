@@ -46,12 +46,21 @@ static NSString *const kHasVisitedImage = @"CheckMarkImage";
 static NSString *const rwfLocationString = @"Current Location";
 static NSString *const kUpArrowImage = @"TSOrangeUpArrow";
 static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
+static CGFloat const kConstraintConstantBuffer = 40.0;
+static CGFloat const kImageViewConstraintConstantOpen = 70.0;
+static CGFloat const kMapZoom = 10.0;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     [self setup];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:true];
+    [self queryForLocationsAndPlaceMarkers];
 }
 
 #pragma mark - Helper Methods
@@ -67,17 +76,16 @@ static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 
     self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
     self.mapView.delegate = self;
-    [self.mapView animateToZoom:10.0];
+    [self.mapView animateToZoom:kMapZoom];
     [self.view addSubview:self.mapView];
     [self.view sendSubviewToBack:self.mapView];
     self.regionBarButtonItem.tag = 0;
 
-    self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
-    self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
+    self.imageViewTopConstraint.constant = self.view.frame.size.height - kConstraintConstantBuffer;
+    self.containerBottomeConstraint.constant = -self.view.frame.size.height + kConstraintConstantBuffer;
     self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
-    [self queryForLocationsAndPlaceMarkers];
 }
 
 -(void)placeMarker:(PFGeoPoint *)geoPoint string: (NSString *)string
@@ -119,6 +127,7 @@ static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
         }
     }];
 }
+
 #pragma mark - GMSMapViewDelegate Methods
 
 -(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
@@ -199,7 +208,7 @@ static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 {
     [UIView animateWithDuration:0.5 animations:^{
         self.containerBottomeConstraint.constant = 0;
-        self.imageViewTopConstraint.constant = 70;
+        self.imageViewTopConstraint.constant = kImageViewConstraintConstantOpen;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kDownArrowImage];
@@ -209,8 +218,8 @@ static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 -(void)animateContainerDown
 {
     [UIView animateWithDuration:0.5 animations:^{
-        self.containerBottomeConstraint.constant = -self.view.frame.size.height + 40;
-        self.imageViewTopConstraint.constant = self.view.frame.size.height - 40;
+        self.containerBottomeConstraint.constant = -self.view.frame.size.height + kConstraintConstantBuffer;
+        self.imageViewTopConstraint.constant = self.view.frame.size.height - kConstraintConstantBuffer;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];

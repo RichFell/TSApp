@@ -17,4 +17,6 @@
 @property float endingLatitude;
 @property float endingLongitude;
 
++(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 @end

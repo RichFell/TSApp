@@ -24,6 +24,8 @@
 
 @implementation LoginViewController
 
+static NSString *const kMoveForwardSegue = @"moveForward";
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -95,12 +97,12 @@
 
 -(void)didLogin
 {
-    [self performSegueWithIdentifier:@"moveForward" sender:self];
+    [self performSegueWithIdentifier:kMoveForwardSegue sender:self];
 }
 
 -(void)didSignUp
 {
-    [self performSegueWithIdentifier:@"moveForward" sender:self];
+    [self performSegueWithIdentifier:kMoveForwardSegue sender:self];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField

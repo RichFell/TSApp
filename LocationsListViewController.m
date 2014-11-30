@@ -155,10 +155,6 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
 
 #pragma mark - IBActions
 
-- (IBAction)onPressedDismissViewController:(UIBarButtonItem *)sender
-{
-    [self dismissViewControllerAnimated:true completion:nil];
-}
 
 - (IBAction)onPressedEnterEditingMode:(UIBarButtonItem *)sender
 {
@@ -177,6 +173,8 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
 {
 
     //TODO: This should be handled by the cell using a protocol. This way is very hackish, and should be avoided at any time
+
+    
 //    UIButton *button = (UIButton *)sender;
 //
 //    LocationTableViewCell *cell = (LocationTableViewCell *)[[sender superview]superview];

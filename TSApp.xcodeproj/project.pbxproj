@@ -204,6 +204,8 @@
 		9B36F2E61A2B83320061DB17 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9B14DAEF19E2D257001ADB3E /* NetworkErrorAlert.h */,
+				9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */,
 				9BC6CC8419B4FA780020C14D /* NSString+StringCategory.h */,
 				9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */,
 				9B36F2E31A2B7F500061DB17 /* UIColor+CustomColors.h */,
@@ -270,7 +272,7 @@
 				9BBB1124199AC9F400C5321D /* Custom Cells */,
 				9B36F2E61A2B83320061DB17 /* Utilities */,
 				9BF72551199448AF00BFCA34 /* View Controllers */,
-				9BF72550199448A200BFCA34 /* Model */,
+				9BF72550199448A200BFCA34 /* Model Objects */,
 				9BB0B883197AF79500D545C1 /* AppDelegate.h */,
 				9BB0B884197AF79500D545C1 /* AppDelegate.m */,
 				9BB0B886197AF79500D545C1 /* Main.storyboard */,
@@ -313,8 +315,6 @@
 		9BBB1124199AC9F400C5321D /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
-				9BC6CC8119B4D68F0020C14D /* Direction.h */,
-				9BC6CC8219B4D6900020C14D /* Direction.m */,
 				9BBB1121199AC72300C5321D /* LocationTableViewCell.h */,
 				9BBB1122199AC72300C5321D /* LocationTableViewCell.m */,
 				9BC6CC8719B5318C0020C14D /* RegionTableViewCell.h */,
@@ -323,9 +323,11 @@
 			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
-		9BBB1125199AEA0300C5321D /* CustomObjects */ = {
+		9BF72550199448A200BFCA34 /* Model Objects */ = {
 			isa = PBXGroup;
 			children = (
+				9BC6CC8119B4D68F0020C14D /* Direction.h */,
+				9BC6CC8219B4D6900020C14D /* Direction.m */,
 				9B36F2DC1A28EFAD0061DB17 /* UserDefaults.h */,
 				9B36F2DD1A28EFAD0061DB17 /* UserDefaults.m */,
 				9BBB1126199AEA2800C5321D /* Location.h */,
@@ -334,20 +336,10 @@
 				9BBB112A199AEA3400C5321D /* Region.m */,
 				9B1C6E4119A6E82C00D8B804 /* User.h */,
 				9B1C6E4219A6E82C00D8B804 /* User.m */,
-			);
-			name = CustomObjects;
-			sourceTree = "<group>";
-		};
-		9BF72550199448A200BFCA34 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				9BBB1125199AEA0300C5321D /* CustomObjects */,
 				9BF7255519944E9100BFCA34 /* MapModel.h */,
 				9BF7255619944E9100BFCA34 /* MapModel.m */,
-				9B14DAEF19E2D257001ADB3E /* NetworkErrorAlert.h */,
-				9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */,
 			);
-			name = Model;
+			name = "Model Objects";
 			sourceTree = "<group>";
 		};
 		9BF72551199448AF00BFCA34 /* View Controllers */ = {
