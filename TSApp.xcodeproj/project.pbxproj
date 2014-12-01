@@ -16,6 +16,7 @@
 		9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */; };
 		9B36F2DE1A28EFAD0061DB17 /* UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36F2DD1A28EFAD0061DB17 /* UserDefaults.m */; };
 		9B36F2E51A2B7F500061DB17 /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */; };
+		9B36F2E91A2C17AC0061DB17 /* CreateTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */; };
 		9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */; };
 		9BAA8D701988912E000BC9A9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D6F1988912E000BC9A9 /* Parse.framework */; };
 		9BAA8D711988912E000BC9A9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D6F1988912E000BC9A9 /* Parse.framework */; };
@@ -94,6 +95,8 @@
 		9B36F2DD1A28EFAD0061DB17 /* UserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDefaults.m; path = ../UserDefaults.m; sourceTree = "<group>"; };
 		9B36F2E31A2B7F500061DB17 /* UIColor+CustomColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+CustomColors.h"; path = "../UIColor+CustomColors.h"; sourceTree = "<group>"; };
 		9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+CustomColors.m"; path = "../UIColor+CustomColors.m"; sourceTree = "<group>"; };
+		9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateTripViewController.h; sourceTree = "<group>"; };
+		9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateTripViewController.m; sourceTree = "<group>"; };
 		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9BAA8D6F1988912E000BC9A9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -359,6 +362,8 @@
 				9B14DAF319E37A89001ADB3E /* RegionListViewController.m */,
 				9B14DAF519E37D04001ADB3E /* MapViewController.h */,
 				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
+				9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */,
+				9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -462,6 +467,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BF7255719944E9100BFCA34 /* MapModel.m in Sources */,
+				9B36F2E91A2C17AC0061DB17 /* CreateTripViewController.m in Sources */,
 				9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */,
 				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
 				9BC6CC8319B4D6900020C14D /* Direction.m in Sources */,

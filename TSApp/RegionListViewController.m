@@ -11,6 +11,7 @@
 #import "NetworkErrorAlert.h"
 #import "MapViewController.h"
 #import "UserDefaults.h"
+#import "RegionTableViewCell.h"
 
 @interface RegionListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -59,10 +60,11 @@ static NSString *const kCellID = @"CellID";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
+    RegionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
     Region *region = [self.regionsArray objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = region.name;
+    cell.infoLabel.text = region.name;
+    cell.numberLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)indexPath.row];
     return cell;
 }
 

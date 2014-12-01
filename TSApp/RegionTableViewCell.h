@@ -10,6 +10,8 @@
 
 @interface RegionTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UIButton *completedButton;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
 @end
