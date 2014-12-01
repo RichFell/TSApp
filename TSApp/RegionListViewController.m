@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 TravelSages. All rights reserved.
 //
 
+//TODO: There needs to be a new file that will work to help control the constraints used depending on the device sizes. Hopefully can avoid needing too much adjustment if possible.
 #import "RegionListViewController.h"
 #import "NetworkErrorAlert.h"
 #import "MapViewController.h"
