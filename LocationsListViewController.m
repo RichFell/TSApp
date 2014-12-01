@@ -93,6 +93,7 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
             }
             else
             {
+                //TODO: Here is an error presentation for us to evaluate
                 [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
             }
         }];

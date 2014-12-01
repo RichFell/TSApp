@@ -27,7 +27,6 @@ static NSString *const kCellID = @"CellID";
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kMainStoryboard bundle:nil];
     return [storyboard instantiateViewControllerWithIdentifier:kRegionListVC];
-
 }
 
 - (void)viewDidLoad
@@ -49,6 +48,7 @@ static NSString *const kCellID = @"CellID";
         }
         else
         {
+            //TODO: Here is an error message for us to evaluate
             [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
         }
     }];

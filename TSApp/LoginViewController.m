@@ -66,6 +66,7 @@ static NSString *const kMoveForwardSegue = @"moveForward";
         }
         else
         {
+            //TODO: Here is an error message for us to evaluate
             [self errorMessage:@"Sorry either the username or password entered were incorrect, please try again" andMessage:@"If you forgot your username or password, you can use the forgot password button to receive a change of password email"];
         }
     }];
@@ -88,6 +89,7 @@ static NSString *const kMoveForwardSegue = @"moveForward";
             }
             else
             {
+                //TODO: Here is an error message for us to evaluate
                 [self errorMessage:@"There was an issue submitting for your new account" andMessage:@"This might be a network error, make sure you have either a connection to the internet via your cellular provider, or are connected to wifi"];
             }
         }];

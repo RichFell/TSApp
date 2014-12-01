@@ -9,15 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Region.h"
 
-@protocol RegionListVCDelegate <NSObject>
-
--(void)didSelectRegion: (Region *)selectedRegion;
-
-@end
 
 @interface RegionListViewController : UIViewController
 
-@property id<RegionListVCDelegate> delegate;
 @property NSMutableArray *regionsArray;
 +(RegionListViewController *)newStoryboardInstance;
 

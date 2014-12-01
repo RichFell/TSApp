@@ -117,12 +117,14 @@ static CGFloat const kMapZoom = 10.0;
                 }
                 else
                 {
+                    //TODO: Here is an error message for us to evaluate
                     [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
                 }
             }];
         }
         else
         {
+            //TODO: Here is an error message for us to evaluate
             [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
         }
     }];
