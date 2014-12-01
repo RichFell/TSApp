@@ -467,28 +467,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="v5a-Rt-M6e" kind="relationship" relationship="rootViewController" id="KeI-iS-im9"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uTg-I4-A2E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="789" y="-24"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="QBo-l7-q0e">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cOg-Fx-ZCf" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="esj-bE-J6J">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="v5a-Rt-M6e" kind="relationship" relationship="rootViewController" id="Qzv-pN-8Sh"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="D06-pp-MZx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="918" y="-752"/>
         </scene>
     </scenes>
     <resources>

@@ -55,6 +55,7 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
     self.tableView.backgroundColor = [UIColor clearColor];
     self.setDestinationsButton.backgroundColor = [UIColor customOrange];
     self.callDirectionsButton.backgroundColor = [UIColor customOrange];
+    [self.setDestinationsButton setTintColor:[UIColor darkGrayColor]];
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods
