@@ -25,6 +25,7 @@
                   clientKey:@"RWXNAF7TiGqnVaQJERLfLivu4LgRD6RJTJfzCvt1"];
     [Region registerSubclass];
     [Location registerSubclass];
+    self.window.tintColor = [UIColor customOrange];
     return YES;
 }
 							
