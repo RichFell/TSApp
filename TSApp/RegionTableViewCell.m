@@ -21,7 +21,7 @@
 - (void)awakeFromNib
 {
     self.numberLabel.backgroundColor = [UIColor customOrange];
-    self.numberLabel.layer.cornerRadius = 15.0;
+    self.numberLabel.layer.cornerRadius = 20.0;
     self.numberLabel.clipsToBounds = true;
 }
 

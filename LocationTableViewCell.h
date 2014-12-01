@@ -10,6 +10,7 @@
 
 @interface LocationTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton *button;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
 @end

@@ -66,11 +66,10 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
 
     Location *location = [self.locations objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-    cell.button.tag = 0;
+    cell.infoLabel.text = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
 
-    
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", location.index];
+    int position = (int)indexPath.row;
+    cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
 
     return cell;
 }
