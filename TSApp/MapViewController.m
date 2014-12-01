@@ -49,6 +49,7 @@ static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 static CGFloat const kConstraintConstantBuffer = 40.0;
 static CGFloat const kImageViewConstraintConstantOpen = 70.0;
 static CGFloat const kMapZoom = 10.0;
+static CGFloat const kAnimationDuration = 0.5;
 
 - (void)viewDidLoad
 {
@@ -208,7 +209,7 @@ static CGFloat const kMapZoom = 10.0;
 
 -(void)animateContainerUp
 {
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:kAnimationDuration animations:^{
         self.containerBottomeConstraint.constant = 0;
         self.imageViewTopConstraint.constant = kImageViewConstraintConstantOpen;
         [self.view layoutIfNeeded];
@@ -219,7 +220,7 @@ static CGFloat const kMapZoom = 10.0;
 
 -(void)animateContainerDown
 {
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:kAnimationDuration animations:^{
         self.containerBottomeConstraint.constant = -self.view.frame.size.height + kConstraintConstantBuffer;
         self.imageViewTopConstraint.constant = self.view.frame.size.height - kConstraintConstantBuffer;
         [self.view layoutIfNeeded];

@@ -20,11 +20,13 @@
 {
     [GMSServices provideAPIKey:@"AIzaSyCLR3ztaPMZugnESkzeeAWWTkxbHTpgCPA"];
 
-    [User registerSubclass];
     [Parse setApplicationId:@"tODHHsxlD4kr43TJG7T0TB74doArNn9w370bG4s9"
                   clientKey:@"RWXNAF7TiGqnVaQJERLfLivu4LgRD6RJTJfzCvt1"];
+    
     [Region registerSubclass];
     [Location registerSubclass];
+    [User registerSubclass];
+
     self.window.tintColor = [UIColor customOrange];
     return YES;
 }
