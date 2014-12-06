@@ -18,9 +18,9 @@
     [viewController presentViewController:alertController animated:true completion:nil];
 }
 
-+(void)showErrorWithTitle:(NSString *)theTitle withMessage:(NSString *)theMessage forViewController:(UIViewController *)vc
++(void)showAlertForViewController:(UIViewController *)vc
 {
-    UIAlertController *alertController =[UIAlertController alertControllerWithTitle:theTitle message:theMessage preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController =[UIAlertController alertControllerWithTitle:@"Failed to load" message:@"Network can't be reached" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:okAction];
     [vc presentViewController:alertController animated:true completion:nil];

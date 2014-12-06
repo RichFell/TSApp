@@ -11,5 +11,5 @@
 @interface NetworkErrorAlert : NSObject
 
 +(void)showNetworkAlertWithError: (NSError *)error withViewController: (UIViewController *)viewController;
-+(void)showErrorWithTitle:(NSString *)theTitle withMessage:(NSString *)theMessage forViewController:(UIViewController *)vc;
++(void)showAlertForViewController: (UIViewController *)vc;
 @end

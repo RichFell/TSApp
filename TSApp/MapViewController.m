@@ -36,6 +36,7 @@
 @property CGFloat startingContainerBottomConstant;
 @property CGPoint panStartPoint;
 @property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
+@property CLLocationManager *locationManager;
 
 @end
 
@@ -68,15 +69,19 @@ static CGFloat const kAnimationDuration = 0.5;
 
 -(void)setup
 {
+    self.locationManager = [[CLLocationManager alloc]init];
+    [self.locationManager requestAlwaysAuthorization];
     self.locationsArray = [NSMutableArray array];
     self.directions = [NSMutableArray array];
     self.mapModel = [[MapModel alloc] init];
     self.mapModel.delegate = self;
-    self.mapView.myLocationEnabled = true;
-    self.markers = [NSMutableArray array];
-
     self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
     self.mapView.delegate = self;
+    self.mapView.myLocationEnabled = YES;
+    NSLog(@"myLocation: %@", self.mapView.myLocation);
+    self.mapView.settings.myLocationButton = YES;
+    self.markers = [NSMutableArray array];
+
     [self.mapView animateToZoom:kMapZoom];
     [self.view addSubview:self.mapView];
     [self.view sendSubviewToBack:self.mapView];
@@ -118,15 +123,14 @@ static CGFloat const kAnimationDuration = 0.5;
                 }
                 else
                 {
-                    //TODO: Here is an error message for us to evaluate
-                    [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+                    //TODO: Here is where two alerts are being shown if there is a network error
+                    [NetworkErrorAlert showAlertForViewController:self];
                 }
             }];
         }
         else
         {
-            //TODO: Here is an error message for us to evaluate
-            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            [NetworkErrorAlert showAlertForViewController:self];
         }
     }];
 }
