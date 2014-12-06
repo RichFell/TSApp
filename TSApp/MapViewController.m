@@ -112,6 +112,7 @@ static CGFloat const kAnimationDuration = 0.5;
             [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
                 if (error == nil)
                 {
+                    NSLog(@"%@", locations);
                     self.locationsArray = [locations mutableCopy];
                     for (Location *location in locations)
                     {

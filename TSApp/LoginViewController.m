@@ -11,7 +11,6 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "User.h"
 
-
 @interface LoginViewController ()<UITextFieldDelegate, FBLoginViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
