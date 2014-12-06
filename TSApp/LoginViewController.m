@@ -15,44 +15,40 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
-@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
-@property (weak, nonatomic) IBOutlet FBLoginView *fbLoginView;
 
 @end
 
 @implementation LoginViewController
 
-static NSString *const kMoveForwardSegue = @"moveForward";
+static NSString *const kMoveForwardSegue = @"LoginSegue";
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    self.signUpButton.tag = 0;
-    self.emailTextField.hidden = YES;
+
 
     [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardDidChangeFrameNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
 
-        NSDictionary *info = [note userInfo];
-        CGPoint from = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].origin;
-        CGPoint to = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].origin;
-        CGFloat height;
-        double duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey]doubleValue];
-        CGRect rect = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-
-        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
-        {
-            height = to.x - from.x;
-        }
-        else
-        {
-            height = to.y - from.y;
-        }
-
-        [UIView animateWithDuration:duration animations:^{
-            self.view.frame = CGRectMake(0, rect.origin.y - self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
-        }];
+//        NSDictionary *info = [note userInfo];
+//        CGPoint from = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].origin;
+//        CGPoint to = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].origin;
+//        CGFloat height;
+//        double duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey]doubleValue];
+//        CGRect rect = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//
+//        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
+//        {
+//            height = to.x - from.x;
+//        }
+//        else
+//        {
+//            height = to.y - from.y;
+//        }
+//
+//        [UIView animateWithDuration:duration animations:^{
+//            self.view.frame = CGRectMake(0, rect.origin.y - self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+//        }];
     }];
 }
 
@@ -71,30 +67,7 @@ static NSString *const kMoveForwardSegue = @"moveForward";
     }];
 }
 
-- (IBAction)onPressedSignUp:(UIButton *)sender
-{
-    if (self.signUpButton.tag == 0)
-    {
-        self.emailTextField.hidden = NO;
-        self.signUpButton.tag = 1;
-    }
-    else
-    {
-        self.emailTextField.hidden = YES;
-        [User signUpNewUserWithUsername:self.usernameTextField.text withPassword:self.passwordTextField.text withEmail:self.emailTextField.text andCompletion:^(PFUser *user, NSError *error) {
-            if (error == nil)
-            {
-                [self didSignUp];
-            }
-            else
-            {
-                //TODO: Here is an error message for us to evaluate
-                [self errorMessage:@"There was an issue submitting for your new account" andMessage:@"This might be a network error, make sure you have either a connection to the internet via your cellular provider, or are connected to wifi"];
-            }
-        }];
-       
-    }
-}
+
 
 -(void)didLogin
 {
@@ -110,7 +83,6 @@ static NSString *const kMoveForwardSegue = @"moveForward";
 {
     [self.usernameTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
-    [self.emailTextField resignFirstResponder];
     return YES;
 }
 

@@ -164,17 +164,6 @@ static CGFloat const kAnimationDuration = 0.5;
     self.selectedLocation = marker.position;
 }
 
-#pragma mark - MapModelDelegate methods
-
-//-(void)didFindNewLocation:(CLLocation *)location
-//{
-//    [self.mapView animateToLocation:location.coordinate];
-//    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:location];
-//    [self placeMarker:geoPoint string:rwfLocationString];
-//}
-
-
-
 #pragma mark - IBAction and methods to control the sliding of the container view
 - (IBAction)didStartSlidingUpContainer:(UIPanGestureRecognizer *)sender
 {

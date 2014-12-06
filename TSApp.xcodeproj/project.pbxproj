@@ -22,6 +22,8 @@
 		9B8681DA1A32BF16009F9AD0 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8681D61A32BF16009F9AD0 /* ParseUI.framework */; };
 		9B8681DE1A32C3CB009F9AD0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8681DC1A32C3CB009F9AD0 /* FacebookSDK.framework */; };
 		9B8681DF1A32C3CB009F9AD0 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8681DD1A32C3CB009F9AD0 /* FBAudienceNetwork.framework */; };
+		9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681E11A32CB81009F9AD0 /* EntryViewController.m */; };
+		9B8681E51A32D1E5009F9AD0 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */; };
 		9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */; };
 		9BAA8D7319889193000BC9A9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */; };
 		9BAA8D77198891C1000BC9A9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D76198891C1000BC9A9 /* MobileCoreServices.framework */; };
@@ -103,6 +105,10 @@
 		9B8681D61A32BF16009F9AD0 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = "../../../../Desktop/parse-library-1/ParseUI.framework"; sourceTree = "<group>"; };
 		9B8681DC1A32C3CB009F9AD0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		9B8681DD1A32C3CB009F9AD0 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		9B8681E01A32CB81009F9AD0 /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
+		9B8681E11A32CB81009F9AD0 /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
+		9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
+		9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9BAA8D74198891AE000BC9A9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -372,6 +378,10 @@
 				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
 				9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */,
 				9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */,
+				9B8681E01A32CB81009F9AD0 /* EntryViewController.h */,
+				9B8681E11A32CB81009F9AD0 /* EntryViewController.m */,
+				9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */,
+				9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -475,6 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BF7255719944E9100BFCA34 /* MapModel.m in Sources */,
+				9B8681E51A32D1E5009F9AD0 /* RegistrationViewController.m in Sources */,
 				9B36F2E91A2C17AC0061DB17 /* CreateTripViewController.m in Sources */,
 				9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */,
 				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
@@ -486,6 +497,7 @@
 				9BB0B885197AF79500D545C1 /* AppDelegate.m in Sources */,
 				9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */,
 				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
+				9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */,
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
 				9B36F2DE1A28EFAD0061DB17 /* UserDefaults.m in Sources */,
 				9B15128F19B406CC00F6F505 /* DirectionsViewController.m in Sources */,
