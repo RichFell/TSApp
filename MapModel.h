@@ -10,29 +10,17 @@
 #import <CoreLocation/CoreLocation.h>
 #import <GoogleMaps/GoogleMaps.h>
 
-@protocol MapModelDelegate <NSObject>
 
-@optional -(void)didFindNewLocation: (CLLocation *)location;
-@optional -(void)didGeocodeString: (CLLocationCoordinate2D )coordinate;
-@optional -(void)didReverseGeocode: (GMSReverseGeocodeResponse *)reverseGeocode;
-@optional -(void)didGetDirections: (NSArray *)directionArray;
+@interface MapModel : NSObject
 
-@end
-
-@interface MapModel : NSObject<CLLocationManagerDelegate>
-
-@property id<MapModelDelegate> delegate;
-@property CLLocationManager *locationManager;
-@property CLPlacemark *searchedPlacemark;
-@property CLLocationCoordinate2D selectedLocation;
-@property NSArray *directions;
-
--(void)setupLocationManager;
--(void)geocodeString: (NSString *)address;
--(void)reverseGeocode: (CLLocationCoordinate2D) location;
--(CLPlacemark *)returnSearchedPlacemark;
--(CLLocationCoordinate2D)requestSelectedLocation;
--(void)getDirections: (CLLocationCoordinate2D)startingPosition endingPosition: (CLLocationCoordinate2D)endPosition;
--(NSArray *)returnDirections;
+//@property CLPlacemark *searchedPlacemark;
+//@property CLLocationCoordinate2D selectedLocation;
+//@property NSArray *directions;
+//
+//-(CLLocationCoordinate2D)requestSelectedLocation;
+//-(NSArray *)returnDirections;
++(void)geocodeString:(NSString *)theString withBlock: (void (^)(CLLocationCoordinate2D coordinate, NSError *error))completionHandler;
++(void)reverseGeoCode: (CLLocationCoordinate2D) location withBlock: (void(^)(GMSReverseGeocodeResponse *response, NSError *error))completionHandler;
++(void)getDirectionsWithCoordinate: (CLLocationCoordinate2D)startingPosition andEndingPosition: (CLLocationCoordinate2D)endPosition andBlock:(void(^)(NSArray *directionArray, NSError *error))completionHandler;
 
 @end

@@ -13,7 +13,7 @@
 #import "NetworkErrorAlert.h"
 
 
-@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate,MapModelDelegate>
+@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,7 +26,6 @@
 @property UITextField *locationTwoTextField;
 @property UIButton *produceDirectionsButton;
 
-@property MapModel *mapModel;
 @property int destinationSelector;
 @property Location *startingLocation;
 @property Location *endingLocation;
@@ -45,10 +44,6 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
 
     self.setDestinationsButton.tag = 0;
     self.destinationSelector = 0;
-
-    self.mapModel = [[MapModel alloc]init];
-    self.mapModel.delegate = self;
-
     self.callDirectionsButton.enabled = false;
 
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
@@ -170,41 +165,6 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
         sender.tag = 0;
     }
 }
-- (IBAction)onPressedChangeVisitedImage:(UIButton *)sender
-{
-
-    //TODO: This should be handled by the cell using a protocol. This way is very hackish, and should be avoided at any time
-
-    
-//    UIButton *button = (UIButton *)sender;
-//
-//    LocationTableViewCell *cell = (LocationTableViewCell *)[[sender superview]superview];
-//    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-//    Location *selectedLocation = [self.locations objectAtIndex:indexPath.row];
-//
-//    if (button.tag == 0)
-//    {
-//        [button setImage: [UIImage imageNamed:@"placemarker_Image"] forState:UIControlStateNormal];
-//        [selectedLocation changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
-//            if (error != nil)
-//            {
-//                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-//            }
-//        }];
-//        button.tag = 1;
-//    }
-//    else
-//    {
-//        [button setImage:[UIImage imageNamed:@"UserLocation_Image"] forState:UIControlStateNormal];
-//        [selectedLocation changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
-//            if (error != nil)
-//            {
-//                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-//            }
-//        }];
-//        button.tag = 0;
-//    }
-}
 
 - (IBAction)onPressedSetDestinations:(UIButton *)sender
 {
@@ -227,7 +187,17 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
         CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
         CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
 
-        [self.mapModel getDirections: startingCoordinate endingPosition:endingCoordinate];
+//        [self.mapModel getDirections: startingCoordinate endingPosition:endingCoordinate];
+        [MapModel getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate andBlock:^(NSArray *directionArray, NSError *error) {
+            if (error)
+            {
+                [NetworkErrorAlert showAlertForViewController:self];
+            }
+            else
+            {
+
+            }
+        }];
     }
 }
 

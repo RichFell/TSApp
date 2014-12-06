@@ -11,76 +11,24 @@
 
 @implementation MapModel
 
-
--(void)setupLocationManager
++(void)geocodeString:(NSString *)theString withBlock:(void (^)(CLLocationCoordinate2D, NSError *))completionHandler
 {
-
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-    [self.locationManager startUpdatingLocation];
-}
-
--(void)geocodeString: (NSString *)address
-{
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (error != nil)
-        {
-            NSLog(@"error");
-        }
-        else
-        {
-            self.searchedPlacemark = (CLPlacemark *)placemarks[0];
-            [self.delegate didGeocodeString:self.searchedPlacemark.location.coordinate];
-        }
+    CLGeocoder *geoCoder = [[CLGeocoder alloc]init];
+    [geoCoder geocodeAddressString:theString completionHandler:^(NSArray *placemarks, NSError *error) {
+        CLPlacemark *placemark = placemarks[0];
+        completionHandler(placemark.location.coordinate, error);
     }];
 }
 
--(void)reverseGeocode:(CLLocationCoordinate2D)location
++(void)reverseGeoCode:(CLLocationCoordinate2D)location withBlock:(void (^)(GMSReverseGeocodeResponse *, NSError *))completionHandler
 {
     [[GMSGeocoder geocoder]reverseGeocodeCoordinate:location completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
-        if (error != nil)
-        {
-            NSLog(@"Reverse Geocoder Error: %@", error);
-        }
-        else
-        {
-            [self.delegate didReverseGeocode:response];
-        }
+        completionHandler(response, error);
     }];
 
 }
 
--(CLPlacemark *)returnSearchedPlacemark
-{
-    return self.searchedPlacemark;
-}
-
-//-(void)selectLocation:(CLLocationCoordinate2D)location
-//{
-//    self.selectedLocation = location;
-//  
-//}
-
--(CLLocationCoordinate2D)requestSelectedLocation
-{
-    return self.selectedLocation;
-}
-
-#pragma mark - CLLocationManagerDelegate Method
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    for (CLLocation  *location in locations)
-    {
-        if (location.verticalAccuracy < 100 && location.horizontalAccuracy < 100)
-        {
-            [self.delegate didFindNewLocation:location];
-            [self.locationManager stopUpdatingLocation];
-        }
-    }
-}
-
--(void)getDirections:(CLLocationCoordinate2D)startingPosition endingPosition:(CLLocationCoordinate2D)endPosition
++(void)getDirectionsWithCoordinate:(CLLocationCoordinate2D)startingPosition andEndingPosition:(CLLocationCoordinate2D)endPosition andBlock:(void (^)(NSArray *, NSError *))completionHandler
 {
     NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=%f,%f&destination=%f,%f&key=AIzaSyCLR3ztaPMZugnESkzeeAWWTkxbHTpgCPA", startingPosition.latitude, startingPosition.longitude, endPosition.latitude, endPosition.longitude];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -88,29 +36,14 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError)
-        {
-            NSLog(@"%@", connectionError);
-        }
-        else
-        {
             NSError *jsonError = nil;
 
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
 
-//            NSArray *directionsArray = dictionary[@"routes"];
-            self.directions = [NSArray arrayWithArray:dictionary[@"routes"]];
+            NSArray *theDirections = [NSArray arrayWithArray:dictionary[@"routes"]];
 
-            NSLog(@"%@", self.directions);
-
-            [self.delegate didGetDirections:self.directions];
-        }
+            completionHandler(theDirections, connectionError);
     }];
-}
-
--(NSArray *)returnDirections
-{
-    return self.directions;
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "Region.h"
 #import "UserDefaults.h"
 #import "NetworkErrorAlert.h"
+#import "MapModel.h"
 
 @interface CreateTripViewController ()
 
@@ -30,10 +31,25 @@
 
 - (IBAction)saveNewRegionOnTap:(UIButton *)sender
 {
-    [Region createRegion:self.tripNameTextField.text compeletion:^(Region *newRegion, NSError *error) {
+    [MapModel geocodeString:self.destinationTextField.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
         if (error)
         {
-            //TODO: Another error to look at
+            [NetworkErrorAlert showAlertForViewController:self];
+        }
+        else
+        {
+            PFGeoPoint *gPoint = [PFGeoPoint geoPointWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+            [self saveRegionWithGeoPoint:gPoint];
+        }
+    }];
+}
+
+-(void)saveRegionWithGeoPoint: (PFGeoPoint *)geoPoint
+{
+
+    [Region createRegion:self.tripNameTextField.text withGeoPoint:geoPoint compeletion:^(Region *newRegion, NSError *error) {
+        if (error != nil)
+        {
             [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
         }
         else

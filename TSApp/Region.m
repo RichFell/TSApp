@@ -20,14 +20,8 @@
 @dynamic name;
 @dynamic user;
 @dynamic completed;
-//@dynamic nearLeftLat;
-//@dynamic nearLeftLong;
-//@dynamic nearRightLat;
-//@dynamic nearRightLong;
-//@dynamic farLeftLat;
-//@dynamic farLeftLong;
-//@dynamic farRightLat;
-//@dynamic farRightLong;
+@dynamic destinationPoint;
+
 
 +(void)queryForRegionsWithBlock:(void (^)(NSArray *regions, NSError *error))completionHandler
 {
@@ -38,11 +32,14 @@
     }];
 }
 
-+(void)createRegion:(NSString *)regionName compeletion:(void (^)(Region *, NSError *))completionHandler
++(void)createRegion:(NSString *)regionName withGeoPoint:(PFGeoPoint *)geoPoint compeletion:(void (^)(Region *, NSError *))completionHandler
 {
     Region *theRegion = [[Region alloc]init];
     theRegion.name = regionName;
     theRegion.user = [PFUser currentUser];
+    [theRegion saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        completionHandler(theRegion, error);
+    }];
 }
 
 +(void)queryForRegionWithObjectId:(NSString *)objectId completion:(void (^)(Region *, NSError *))completionHandler

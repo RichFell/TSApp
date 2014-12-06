@@ -17,11 +17,10 @@
 #import "NetworkErrorAlert.h"
 
 
-@interface ViewController ()<GMSMapViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, MapModelDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ViewController ()<GMSMapViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property GMSMapView *mapView;
 @property UITextField *alertTextField;
-@property MapModel *mapModel;
 @property NSMutableArray *regionArray;
 @property NSMutableArray *locationsArray;
 @property Region *currentRegion;
@@ -51,78 +50,9 @@ static NSString *const tsHasVisitiedImage = @"CheckMarkImage";
 {
     [super viewDidLoad];
 
-//    self.locationsArray = [NSMutableArray array];
-//    self.regionArray = [NSMutableArray array];
-//    self.directions = [NSMutableArray array];
-//
-//    self.mapModel = [[MapModel alloc] init];
-//    self.mapModel.delegate = self;
-//    self.mapView.myLocationEnabled = YES;
-//
-//    self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
-//    self.mapView.delegate = self;
-//
-//    [self.mapView animateToZoom:10.0];
-//    [self.view addSubview: self.mapView];
-
-//    [self.view bringSubviewToFront:self.textField];
-//    [self.view bringSubviewToFront:self.markerButton];
-//    [self.view bringSubviewToFront:self.userLocationButton];
-//    [self.view sendSubviewToBack:self.mapView];
-//    [self.view bringSubviewToFront:self.locationsButton];
-
-//    self.textField.delegate = self;
-
-//    self.parseModel = [[ParseModel alloc] init];
-//    self.parseModel.delegate = self;
 
     self.tableViewControllerButton.tag = 0;
-
-//    self.tableView.hidden = YES;
-
-//    self.markers = [NSMutableArray array];
-
 }
-
-#pragma mark -GMSMapViewDelegate methods
-//
-//-(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
-//{
-//    [self.mapModel reverseGeocode:coordinate];
-//}
-//
-//-(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
-//{
-//
-//    //TODO: Make it so that when tap on the marker then window displays
-//    return true;
-//}
-
-//-(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
-//{
-//    self.selectedLocation = marker.position;
-//}
-
-# pragma mark - MapModelDelegate Methods
-
-
-//-(void)didFindNewLocation:(CLLocation *)location
-//{
-//    [self.mapView animateToLocation:location.coordinate];
-//    [self placeMarker:location.coordinate string:rwfLocationString];
-//}
-//
-//-(void)didGeocodeString:(CLLocationCoordinate2D)coordinate
-//{
-//    [self.mapView animateToLocation:coordinate];
-//}
-//
-//-(void)didReverseGeocode:(GMSReverseGeocodeResponse *)reverseGeocode
-//{
-//    [self placeMarker:reverseGeocode.firstResult.coordinate string:reverseGeocode.firstResult.description];
-//}
-
-
 
 #pragma mark - ParseModelDataSource Delegate Methods
 
@@ -146,7 +76,6 @@ static NSString *const tsHasVisitiedImage = @"CheckMarkImage";
 
     for (Location *location in locations)
     {
-        //TODO: make a custom window to add in a button to tap onto the location for info, or if that will be the way to save
         double latitude = location.coordinate.latitude;
         double longitude = location.coordinate.longitude;
         CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
@@ -167,7 +96,17 @@ static NSString *const tsHasVisitiedImage = @"CheckMarkImage";
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.mapModel geocodeString:textField.text];
+//    [self.mapModel geocodeString:textField.text];
+    [MapModel geocodeString:textField.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
+        if (error)
+        {
+            [NetworkErrorAlert showAlertForViewController:self];
+        }
+        else
+        {
+
+        }
+    }];
     [self.textField resignFirstResponder];
     return true;
 }
@@ -266,10 +205,15 @@ static NSString *const tsHasVisitiedImage = @"CheckMarkImage";
 {
     if (buttonIndex != alertView.cancelButtonIndex)
     {
-        [Region createRegion:self.alertTextField.text compeletion:^(Region *newRegion, NSError *error) {
-            if (error != nil)
+        [Region createRegion:self.alertTextField.text withGeoPoint:nil compeletion:^(Region *newRegion, NSError *error) {
+
+            if (error)
             {
                 [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+            else
+            {
+                
             }
         }];
     }
@@ -278,8 +222,9 @@ static NSString *const tsHasVisitiedImage = @"CheckMarkImage";
 #pragma mark - Button Action
 - (IBAction)onButtonPressedPlaceMarker:(UIButton *)sender
 {
-    CLPlacemark *placemark = [self.mapModel returnSearchedPlacemark];
-    [self placeMarker:placemark.location.coordinate string:placemark.description];
+    //TODO: Need to store the SearchePlacemark elseWhere
+//    CLPlacemark *placemark = [self.mapModel returnSearchedPlacemark];
+//    [self placeMarker:placemark.location.coordinate string:placemark.description];
 }
 
 - (IBAction)addSelectedLocationOnPressed:(UIButton *)sender
@@ -294,7 +239,6 @@ static NSString *const tsHasVisitiedImage = @"CheckMarkImage";
 
 - (IBAction)onPressedGoToUserLocation:(UIButton *)sender
 {
-    [self.mapModel setupLocationManager];
 }
 
 - (IBAction)onPressedShowTableView:(UIBarButtonItem *)sender

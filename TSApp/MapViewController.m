@@ -19,11 +19,10 @@
 #import "NetworkErrorAlert.h"
 #import "UserDefaults.h"
 
-@interface MapViewController ()<GMSMapViewDelegate, MapModelDelegate>
+@interface MapViewController ()<GMSMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
 @property GMSMapView *mapView;
-@property MapModel *mapModel;
 @property NSMutableArray *locationsArray;
 @property CLLocationCoordinate2D selectedLocation;
 @property NSMutableArray *markers;
@@ -73,8 +72,6 @@ static CGFloat const kAnimationDuration = 0.5;
     [self.locationManager requestAlwaysAuthorization];
     self.locationsArray = [NSMutableArray array];
     self.directions = [NSMutableArray array];
-    self.mapModel = [[MapModel alloc] init];
-    self.mapModel.delegate = self;
     self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = YES;
@@ -139,7 +136,19 @@ static CGFloat const kAnimationDuration = 0.5;
 
 -(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    [self.mapModel reverseGeocode:coordinate];
+    [MapModel reverseGeoCode:coordinate withBlock:^(GMSReverseGeocodeResponse *response, NSError *error) {
+        if (error)
+        {
+            [NetworkErrorAlert showAlertForViewController:self];
+        }
+        else
+        {
+            PFGeoPoint *geoPoint = [[PFGeoPoint alloc]init];
+            geoPoint.latitude = response.firstResult.coordinate.latitude;
+            geoPoint.longitude = response.firstResult.coordinate.longitude;
+            [self placeMarker:geoPoint string:rwfLocationString];
+        }
+    }];
 }
 
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
@@ -156,25 +165,14 @@ static CGFloat const kAnimationDuration = 0.5;
 
 #pragma mark - MapModelDelegate methods
 
--(void)didFindNewLocation:(CLLocation *)location
-{
-    [self.mapView animateToLocation:location.coordinate];
-    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:location];
-    [self placeMarker:geoPoint string:rwfLocationString];
-}
+//-(void)didFindNewLocation:(CLLocation *)location
+//{
+//    [self.mapView animateToLocation:location.coordinate];
+//    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:location];
+//    [self placeMarker:geoPoint string:rwfLocationString];
+//}
 
--(void)didGeocodeString:(CLLocationCoordinate2D)coordinate
-{
-    [self.mapView animateToLocation:coordinate];
-}
 
--(void)didReverseGeocode:(GMSReverseGeocodeResponse *)reverseGeocode
-{
-    PFGeoPoint *geoPoint = [[PFGeoPoint alloc]init];
-    geoPoint.latitude = reverseGeocode.firstResult.coordinate.latitude;
-    geoPoint.longitude = reverseGeocode.firstResult.coordinate.longitude;
-    [self placeMarker:geoPoint string:rwfLocationString];
-}
 
 #pragma mark - IBAction and methods to control the sliding of the container view
 - (IBAction)didStartSlidingUpContainer:(UIPanGestureRecognizer *)sender

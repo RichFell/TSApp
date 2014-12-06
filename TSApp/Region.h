@@ -15,18 +15,11 @@
 @property NSString *name;
 @property PFUser *user;
 @property BOOL completed;
-//@property NSNumber *nearLeftLong;
-//@property NSNumber *nearLeftLat;
-//@property NSNumber *nearRightLong;
-//@property NSNumber *nearRightLat;
-//@property NSNumber *farLeftLong;
-//@property NSNumber *farLeftLat;
-//@property NSNumber *farRightLong;
-//@property NSNumber *farRightLat;
+@property PFGeoPoint *destinationPoint;
 
 +(void)queryForRegionsWithBlock: (void(^)(NSArray *regions, NSError *error))completionHandler;
 +(void)queryForRegionWithObjectId: (NSString *)objectId completion: (void(^)(Region *defaultRegion, NSError *error))completionHandler;
-+(void)createRegion:(NSString *) regionName compeletion: (void(^)(Region *newRegion, NSError *error))completionHandler;
++(void)createRegion:(NSString *) regionName withGeoPoint:(PFGeoPoint *)geoPoint compeletion: (void(^)(Region *newRegion, NSError *error))completionHandler;
 
 -(void)deleteRegionWithBlock: (void(^)(BOOL result, NSError *error))completionHandler;
 -(void)switchRegionCompletedStatusWithBlock: (void(^)(BOOL result, NSError *error))completionHandler;
