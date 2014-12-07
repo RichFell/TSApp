@@ -12,4 +12,5 @@
 
 +(void)showNetworkAlertWithError: (NSError *)error withViewController: (UIViewController *)viewController;
 +(void)showAlertForViewController: (UIViewController *)vc;
+
 @end

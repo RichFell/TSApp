@@ -12,6 +12,8 @@
 
 @interface EntryViewController ()
 
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *buttonsCollection;
+
 @end
 
 @implementation EntryViewController
@@ -19,6 +21,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setupButtonBackground];
+}
+
+-(void)setupButtonBackground
+{
+    for (UIButton *button in self.buttonsCollection)
+    {
+        button.backgroundColor = [UIColor customOrange];
+    }
 }
 
 +(EntryViewController *)newStoryboardInstance

@@ -368,8 +368,12 @@
 				9BBB0F941997F21300C5321D /* LocationsListViewController.m */,
 				9B1C6E4419A6F26100D8B804 /* InitialViewController.h */,
 				9B1C6E4519A6F26100D8B804 /* InitialViewController.m */,
+				9B8681E01A32CB81009F9AD0 /* EntryViewController.h */,
+				9B8681E11A32CB81009F9AD0 /* EntryViewController.m */,
 				9B1C6E4719A6F29E00D8B804 /* LoginViewController.h */,
 				9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */,
+				9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */,
+				9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */,
 				9B15128D19B406CC00F6F505 /* DirectionsViewController.h */,
 				9B15128E19B406CC00F6F505 /* DirectionsViewController.m */,
 				9B14DAF219E37A89001ADB3E /* RegionListViewController.h */,
@@ -378,10 +382,6 @@
 				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
 				9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */,
 				9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */,
-				9B8681E01A32CB81009F9AD0 /* EntryViewController.h */,
-				9B8681E11A32CB81009F9AD0 /* EntryViewController.m */,
-				9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */,
-				9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";

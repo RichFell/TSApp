@@ -14,6 +14,7 @@
 @interface LoginViewController ()<UITextFieldDelegate, FBLoginViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @end
@@ -21,35 +22,13 @@
 @implementation LoginViewController
 
 static NSString *const kMoveForwardSegue = @"LoginSegue";
+static CGFloat const kYForKeyboardAnimation = -200.0;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-
-
-    [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardDidChangeFrameNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
-
-//        NSDictionary *info = [note userInfo];
-//        CGPoint from = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].origin;
-//        CGPoint to = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].origin;
-//        CGFloat height;
-//        double duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey]doubleValue];
-//        CGRect rect = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//
-//        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
-//        {
-//            height = to.x - from.x;
-//        }
-//        else
-//        {
-//            height = to.y - from.y;
-//        }
-//
-//        [UIView animateWithDuration:duration animations:^{
-//            self.view.frame = CGRectMake(0, rect.origin.y - self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
-//        }];
-    }];
+    [self setupElements];
 }
 
 - (IBAction)onPressedLogin:(UIButton *)sender
@@ -67,6 +46,12 @@ static NSString *const kMoveForwardSegue = @"LoginSegue";
     }];
 }
 
+-(void)setupElements
+{
+    self.usernameTextField.backgroundColor = [UIColor customLightGrey];
+    self.passwordTextField.backgroundColor = [UIColor customLightGrey];
+    self.loginButton.backgroundColor = [UIColor customOrange];
+}
 
 
 -(void)didLogin
@@ -74,16 +59,26 @@ static NSString *const kMoveForwardSegue = @"LoginSegue";
     [self performSegueWithIdentifier:kMoveForwardSegue sender:self];
 }
 
--(void)didSignUp
-{
-    [self performSegueWithIdentifier:kMoveForwardSegue sender:self];
-}
-
+#pragma mark - TextField Delegate Methods
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.usernameTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
     return YES;
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    }];
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.view.frame = CGRectMake(0, kYForKeyboardAnimation, self.view.frame.size.width, self.view.frame.size.height);
+    }];
 }
 
 -(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user
