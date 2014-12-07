@@ -21,7 +21,7 @@
 
 @implementation LoginViewController
 
-static NSString *const kMoveForwardSegue = @"LoginSegue";
+static NSString *const kMoveForwardSegue = @"moveForward";
 static CGFloat const kYForKeyboardAnimation = -200.0;
 
 - (void)viewDidLoad
@@ -33,15 +33,17 @@ static CGFloat const kYForKeyboardAnimation = -200.0;
 
 - (IBAction)onPressedLogin:(UIButton *)sender
 {
+    [self.view endEditing:true];
     [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
-        if (error == nil)
-        {
-            [self didLogin];
-        }
-        else
+        if (error)
         {
             //TODO: Here is an error message for us to evaluate
             [self errorMessage:@"Sorry either the username or password entered were incorrect, please try again" andMessage:@"If you forgot your username or password, you can use the forgot password button to receive a change of password email"];
+            NSLog(@"%@", error);
+        }
+        else
+        {
+            [self performSegueWithIdentifier:kMoveForwardSegue sender:self];
         }
     }];
 }
@@ -51,12 +53,6 @@ static CGFloat const kYForKeyboardAnimation = -200.0;
     self.usernameTextField.backgroundColor = [UIColor customLightGrey];
     self.passwordTextField.backgroundColor = [UIColor customLightGrey];
     self.loginButton.backgroundColor = [UIColor customOrange];
-}
-
-
--(void)didLogin
-{
-    [self performSegueWithIdentifier:kMoveForwardSegue sender:self];
 }
 
 #pragma mark - TextField Delegate Methods
@@ -81,10 +77,10 @@ static CGFloat const kYForKeyboardAnimation = -200.0;
     }];
 }
 
--(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user
-{
-//    [self.parseModel userSignUp:user.name andPassword:user.password andEmail:user.email];
-}
+//-(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user
+//{
+////    [self.parseModel userSignUp:user.name andPassword:user.password andEmail:user.email];
+//}
 
 -(void)errorMessage: (NSString *)title andMessage: (NSString *)message
 {

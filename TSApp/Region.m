@@ -9,6 +9,7 @@
 #import "Region.h"
 #import <Parse/PFObject+Subclass.h>
 #import "Location.h"
+#import "MapModel.h"
 
 @implementation Region
 
@@ -36,6 +37,7 @@
 {
     Region *theRegion = [[Region alloc]init];
     theRegion.name = regionName;
+    theRegion.destinationPoint = geoPoint;
     theRegion.user = [PFUser currentUser];
     [theRegion saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         completionHandler(theRegion, error);

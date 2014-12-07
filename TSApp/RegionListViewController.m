@@ -12,6 +12,7 @@
 #import "MapViewController.h"
 #import "UserDefaults.h"
 #import "RegionTableViewCell.h"
+#import "CreateTripViewController.h"
 
 @interface RegionListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -34,12 +35,17 @@ static NSString *const kCellID = @"CellID";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setup];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:true];
+    [self queryForTrips];
 }
 
 #pragma mark - Helper methods
 
--(void)setup
+-(void)queryForTrips
 {
     self.regionsArray = [NSMutableArray array];
     [Region queryForRegionsWithBlock:^(NSArray *regions, NSError *error) {

@@ -320,7 +320,6 @@
                                 </state>
                                 <connections>
                                     <action selector="onPressedLogin:" destination="kco-ij-gBt" eventType="touchUpInside" id="3ft-8W-C5J"/>
-                                    <segue destination="KYq-iv-Dee" kind="modal" identifier="LoginSegue" id="D2x-Wh-KBm"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -340,6 +339,7 @@
                         <outlet property="loginButton" destination="kZ2-wS-sTX" id="UJt-0M-Qj3"/>
                         <outlet property="passwordTextField" destination="brl-vf-96H" id="E8k-og-44t"/>
                         <outlet property="usernameTextField" destination="pYh-AJ-zbs" id="klZ-8b-NJd"/>
+                        <segue destination="KYq-iv-Dee" kind="modal" identifier="moveForward" id="bOa-fM-29M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dYl-md-NxI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -577,6 +577,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="tiX-dX-keP" id="cH5-5G-1hy"/>
+                        <segue destination="Keu-kB-DQd" kind="custom" identifier="unwind" id="G2b-Jr-RGE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n5d-Iz-SZm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -613,6 +614,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Keu-kB-DQd" id="1q9-wi-bbm"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Destination" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pZj-hN-cKZ">
                                 <rect key="frame" x="54" y="285" width="213" height="30"/>
@@ -622,6 +626,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Keu-kB-DQd" id="hB2-3G-nC6"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_________________________" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ee-kU-Ft2">
                                 <rect key="frame" x="54" y="210" width="226" height="21"/>
@@ -821,6 +828,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Oiy-u0-nea"/>
+        <segue reference="bOa-fM-29M"/>
+        <segue reference="G2b-Jr-RGE"/>
     </inferredMetricsTieBreakers>
 </document>

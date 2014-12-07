@@ -25,10 +25,8 @@
 
 +(void )createLocation: (CLLocationCoordinate2D) coordinate array: (NSMutableArray *)array currentRegion: (Region *)region completion: (void (^)(Location *theLocation, NSError *error))completionHandler;
 {
-    Location *newLocation = [[Location alloc]init];
-//    newLocation.longitude = [NSNumber numberWithDouble:coordinate.longitude];
-//    newLocation.latitude = [NSNumber numberWithDouble:coordinate.latitude];
-    PFGeoPoint *geoPoint = [[PFGeoPoint alloc]init];
+    Location *newLocation = [Location new];
+    PFGeoPoint *geoPoint = [PFGeoPoint new];
     geoPoint.latitude = coordinate.latitude;
     geoPoint.longitude = coordinate.longitude;
     newLocation.coordinate = geoPoint;

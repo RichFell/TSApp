@@ -61,7 +61,7 @@ static CGFloat const kAnimationDuration = 0.5;
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:true];
-    [self queryForLocationsAndPlaceMarkers];
+    [self queryForTrip];
 }
 
 #pragma mark - Helper Methods
@@ -98,36 +98,49 @@ static CGFloat const kAnimationDuration = 0.5;
     marker.map = self.mapView;
     marker.appearAnimation = kGMSMarkerAnimationPop;
     marker.tappable = YES;
-    marker.snippet = string;
+    marker.title = string;
 
     [self.mapView setSelectedMarker:marker];
 }
 
--(void)queryForLocationsAndPlaceMarkers
+-(void)queryForTrip
 {
     [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
         if (error == nil && region != nil)
         {
             self.title = region.name;
-            [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
-                if (error == nil)
-                {
-                    NSLog(@"%@", locations);
-                    self.locationsArray = [locations mutableCopy];
-                    for (Location *location in locations)
-                    {
-                        [self placeMarker:location.coordinate string:location.name];
-                    }
-                }
-                else
-                {
-                    //TODO: Here is where two alerts are being shown if there is a network error
-                    [NetworkErrorAlert showAlertForViewController:self];
-                }
-            }];
+            CLLocationCoordinate2D destinationCoordinate = CLLocationCoordinate2DMake(region.destinationPoint.latitude, region.destinationPoint.longitude);
+            [self.mapView animateToLocation:destinationCoordinate];
+            [self performQueryForLocationsWithRegion:region];
+
         }
         else
         {
+            [NetworkErrorAlert showAlertForViewController:self];
+        }
+    }];
+}
+
+-(void)spanToTheTripDestination
+{
+    
+}
+
+-(void)performQueryForLocationsWithRegion: (Region *)theRegion
+{
+
+    [Location queryForLocations:theRegion completed:^(NSArray *locations, NSError *error) {
+        if (error == nil)
+        {
+            self.locationsArray = [locations mutableCopy];
+            for (Location *location in locations)
+            {
+                [self placeMarker:location.coordinate string:location.name];
+            }
+        }
+        else
+        {
+            //TODO: Here is where two alerts are being shown if there is a network error
             [NetworkErrorAlert showAlertForViewController:self];
         }
     }];
@@ -156,6 +169,9 @@ static CGFloat const kAnimationDuration = 0.5;
 {
 
     //TODO: Make it so that when tap on the marker then window displays
+    marker.snippet = @"snippet";
+    marker.tappable = true;
+    NSLog(@"Tapped on marker");
     return true;
 }
 
