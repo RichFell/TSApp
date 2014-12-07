@@ -24,7 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
 @property GMSMapView *mapView;
 @property NSMutableArray *locationsArray;
-@property CLLocationCoordinate2D selectedLocation;
 @property NSMutableArray *markers;
 @property NSMutableArray *directions;
 @property RegionListViewController *regionListVC;
@@ -109,6 +108,7 @@ static CGFloat const kAnimationDuration = 0.5;
         if (error == nil && region != nil)
         {
             self.title = region.name;
+            self.currentRegion = region;
             CLLocationCoordinate2D destinationCoordinate = CLLocationCoordinate2DMake(region.destinationPoint.latitude, region.destinationPoint.longitude);
             [self.mapView animateToLocation:destinationCoordinate];
             [self performQueryForLocationsWithRegion:region];
@@ -119,11 +119,6 @@ static CGFloat const kAnimationDuration = 0.5;
             [NetworkErrorAlert showAlertForViewController:self];
         }
     }];
-}
-
--(void)spanToTheTripDestination
-{
-    
 }
 
 -(void)performQueryForLocationsWithRegion: (Region *)theRegion
@@ -177,7 +172,29 @@ static CGFloat const kAnimationDuration = 0.5;
 
 -(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
 {
-    self.selectedLocation = marker.position;
+    [self createNewLocation:marker.position];
+}
+
+-(void)createNewLocation: (CLLocationCoordinate2D) coordinate
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to save this location?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *yesAction =[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        [Location createLocation: coordinate array:self.locationsArray currentRegion:self.currentRegion completion:^(Location *theLocation, NSError *error) {
+            if (error)
+            {
+                [NetworkErrorAlert showAlertForViewController:self];
+            }
+            else
+            {
+                [self.locationsArray addObject:theLocation];
+            }
+        }];
+    }];
+    [alert addAction:yesAction];
+    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:noAction];
+    [self presentViewController:alert animated:true completion:nil];
 }
 
 #pragma mark - IBAction and methods to control the sliding of the container view
