@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *tripNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *destinationTextField;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @end
 
@@ -29,6 +30,7 @@ static CGFloat const kYKeyboardClosed = 0.0;
     [super viewDidLoad];
 
     self.saveButton.backgroundColor = [UIColor customOrange];
+    self.cancelButton.backgroundColor = [UIColor customOrange];
 }
 
 
@@ -45,6 +47,10 @@ static CGFloat const kYKeyboardClosed = 0.0;
             [self saveRegionWithGeoPoint:gPoint];
         }
     }];
+}
+- (IBAction)dismissViewOnTapped:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 ///Sages a new region to Parse

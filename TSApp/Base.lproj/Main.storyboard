@@ -675,6 +675,22 @@
                                 <color key="textColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bC6-XU-yvP">
+                                <rect key="frame" x="54" y="493" width="213" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="213" id="HiG-yJ-tZs"/>
+                                    <constraint firstAttribute="height" constant="30" id="ZFB-Hs-MrY"/>
+                                </constraints>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissViewOnTapped:" destination="Keu-kB-DQd" eventType="touchUpInside" id="yni-aH-eYn"/>
+                                    <action selector="saveNewRegionOnTap:" destination="Keu-kB-DQd" eventType="touchUpInside" id="RSK-0j-qtW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -683,9 +699,11 @@
                             <constraint firstAttribute="centerX" secondItem="pZj-hN-cKZ" secondAttribute="centerX" id="8gX-ea-Cxv"/>
                             <constraint firstItem="7Dc-b5-9we" firstAttribute="top" secondItem="UbE-1j-q2M" secondAttribute="bottom" constant="31" id="9Q3-yj-385"/>
                             <constraint firstAttribute="centerX" secondItem="4ee-kU-Ft2" secondAttribute="centerX" constant="-7" id="GMy-Fl-NxR"/>
+                            <constraint firstAttribute="centerX" secondItem="bC6-XU-yvP" secondAttribute="centerX" id="Pis-t7-OZS"/>
                             <constraint firstAttribute="centerX" secondItem="UbE-1j-q2M" secondAttribute="centerX" constant="-7" id="Rox-Dh-SFT"/>
                             <constraint firstItem="4ee-kU-Ft2" firstAttribute="top" secondItem="e18-70-ZmE" secondAttribute="bottom" constant="84" id="Tca-Lb-ryP"/>
                             <constraint firstItem="CDR-Tr-nr7" firstAttribute="top" secondItem="e18-70-ZmE" secondAttribute="bottom" constant="67" id="Tuq-fX-lnB"/>
+                            <constraint firstItem="bC6-XU-yvP" firstAttribute="top" secondItem="WqE-zZ-PQB" secondAttribute="bottom" constant="21" id="Wda-rk-2V1"/>
                             <constraint firstAttribute="centerX" secondItem="e18-70-ZmE" secondAttribute="centerX" id="iSn-Yq-G2N"/>
                             <constraint firstItem="pZj-hN-cKZ" firstAttribute="top" secondItem="4ee-kU-Ft2" secondAttribute="bottom" constant="54" id="jfa-0I-Ybv"/>
                             <constraint firstAttribute="centerX" secondItem="CDR-Tr-nr7" secondAttribute="centerX" id="nKF-on-vvd"/>
@@ -695,6 +713,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="bC6-XU-yvP" id="EPp-I1-6RN"/>
                         <outlet property="destinationTextField" destination="pZj-hN-cKZ" id="Q87-D6-3SC"/>
                         <outlet property="saveButton" destination="WqE-zZ-PQB" id="ZVv-ke-kCh"/>
                         <outlet property="tripNameTextField" destination="CDR-Tr-nr7" id="HXV-W3-42M"/>
