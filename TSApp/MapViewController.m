@@ -18,6 +18,7 @@
 #import "Region.h"
 #import "NetworkErrorAlert.h"
 #import "UserDefaults.h"
+#import "UniversalRegion.h"
 
 @interface MapViewController ()<GMSMapViewDelegate>
 
@@ -109,6 +110,9 @@ static CGFloat const kAnimationDuration = 0.5;
         {
             self.title = region.name;
             self.currentRegion = region;
+
+            UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+            sharedRegion.region = region;
             CLLocationCoordinate2D destinationCoordinate = CLLocationCoordinate2DMake(region.destinationPoint.latitude, region.destinationPoint.longitude);
             [self.mapView animateToLocation:destinationCoordinate];
             [self performQueryForLocationsWithRegion:region];
@@ -128,6 +132,8 @@ static CGFloat const kAnimationDuration = 0.5;
         if (error == nil)
         {
             self.locationsArray = [locations mutableCopy];
+            UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+            sharedRegion.locations = locations;
             for (Location *location in locations)
             {
                 [self placeMarker:location.coordinate string:location.name];

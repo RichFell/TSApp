@@ -25,6 +25,7 @@
 		9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681E11A32CB81009F9AD0 /* EntryViewController.m */; };
 		9B8681E51A32D1E5009F9AD0 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */; };
 		9B8681E71A3513C5009F9AD0 /* CustomInfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8681E61A3513C5009F9AD0 /* CustomInfoWindow.xib */; };
+		9B8681EA1A3520A3009F9AD0 /* UniversalRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681E91A3520A3009F9AD0 /* UniversalRegion.m */; };
 		9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */; };
 		9BAA8D7319889193000BC9A9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */; };
 		9BAA8D77198891C1000BC9A9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D76198891C1000BC9A9 /* MobileCoreServices.framework */; };
@@ -111,6 +112,8 @@
 		9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
 		9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		9B8681E61A3513C5009F9AD0 /* CustomInfoWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomInfoWindow.xib; sourceTree = "<group>"; };
+		9B8681E81A3520A3009F9AD0 /* UniversalRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalRegion.h; sourceTree = "<group>"; };
+		9B8681E91A3520A3009F9AD0 /* UniversalRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniversalRegion.m; sourceTree = "<group>"; };
 		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9BAA8D74198891AE000BC9A9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -226,6 +229,8 @@
 				9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */,
 				9B36F2E31A2B7F500061DB17 /* UIColor+CustomColors.h */,
 				9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */,
+				9B8681E81A3520A3009F9AD0 /* UniversalRegion.h */,
+				9B8681E91A3520A3009F9AD0 /* UniversalRegion.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -491,6 +496,7 @@
 				9BF7255719944E9100BFCA34 /* MapModel.m in Sources */,
 				9B8681E51A32D1E5009F9AD0 /* RegistrationViewController.m in Sources */,
 				9B36F2E91A2C17AC0061DB17 /* CreateTripViewController.m in Sources */,
+				9B8681EA1A3520A3009F9AD0 /* UniversalRegion.m in Sources */,
 				9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */,
 				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
 				9BC6CC8319B4D6900020C14D /* Direction.m in Sources */,

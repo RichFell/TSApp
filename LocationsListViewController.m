@@ -11,6 +11,7 @@
 #import "MapModel.h"
 #import "DirectionsViewController.h"
 #import "NetworkErrorAlert.h"
+#import "UserDefaults.h"
 
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -30,6 +31,8 @@
 @property Location *startingLocation;
 @property Location *endingLocation;
 @property NSArray *directionsArray;
+@property NSMutableArray *locations;
+@property Region *region;
 
 @end
 
@@ -51,6 +54,29 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
     self.setDestinationsButton.backgroundColor = [UIColor customOrange];
     self.callDirectionsButton.backgroundColor = [UIColor customOrange];
     [self.setDestinationsButton setTintColor:[UIColor darkGrayColor]];
+    [self queryForLocations];
+}
+
+-(void)queryForLocations
+{
+    [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
+        [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
+            if (error)
+            {
+                [NetworkErrorAlert showAlertForViewController:self];
+            }
+            else
+            {
+                self.locations = [locations mutableCopy];
+                [self.tableView reloadData];
+            }
+        }];
+
+    }];
+//    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+//    self.locations = [sharedRegion.locations mutableCopy];
+//    [self.tableView reloadData];
+
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods

@@ -13,7 +13,6 @@
 
 @interface LocationsListViewController : UIViewController
 
-@property NSMutableArray *locations;
-@property Region *region;
+
 
 @end
