@@ -44,6 +44,8 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
 static NSString *const kNeedToVisitString = @"Need To Visit";
 static NSString *const kVisitedString = @"Visited";
 static NSString *const kHeaderCellID = @"headerCell";
+static NSString *const kDefaultRegion = @"defaultRegion";
+
 
 - (void)viewDidLoad
 {
@@ -84,19 +86,23 @@ static NSString *const kHeaderCellID = @"headerCell";
 
 -(void)queryForLocations
 {
-    [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
-        [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
-            if (error)
-            {
-                [NetworkErrorAlert showAlertForViewController:self];
-            }
-            else
-            {
-                [self sortLocations:locations];
-            }
+    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion])
+    {
+        [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
+            [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
+                if (error)
+                {
+                    [NetworkErrorAlert showAlertForViewController:self];
+                }
+                else
+                {
+                    [self sortLocations:locations];
+                }
+            }];
+            
         }];
+    }
 
-    }];
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods

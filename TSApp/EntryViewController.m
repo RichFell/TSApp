@@ -9,6 +9,7 @@
 #import "EntryViewController.h"
 #import <FacebookSDK/FaceBookSDK.h> 
 #import <Parse/Parse.h>
+#import "NetworkErrorAlert.h"
 
 @interface EntryViewController ()
 
@@ -41,7 +42,7 @@
 
 - (IBAction)connectWithFacebookOnTapped:(UIButton *)sender
 {
-
+    [NetworkErrorAlert showAlertForViewController:self];
 }
 
 @end

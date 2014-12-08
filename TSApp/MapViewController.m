@@ -37,6 +37,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
 @property CLLocationManager *locationManager;
 
+
+
 @end
 
 @implementation MapViewController
@@ -50,6 +52,8 @@ static CGFloat const kConstraintConstantBuffer = 40.0;
 static CGFloat const kImageViewConstraintConstantOpen = 70.0;
 static CGFloat const kMapZoom = 10.0;
 static CGFloat const kAnimationDuration = 0.5;
+static NSString *const kDefaultRegion = @"defaultRegion";
+
 
 - (void)viewDidLoad
 {
@@ -105,24 +109,33 @@ static CGFloat const kAnimationDuration = 0.5;
 
 -(void)queryForTrip
 {
-    [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
-        if (error == nil && region != nil)
-        {
-            self.title = region.name;
-            self.currentRegion = region;
+    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion] != nil)
+    {
+        [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
+            if (error == nil && region != nil)
+            {
+                self.title = region.name;
+                self.currentRegion = region;
 
-            UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-            sharedRegion.region = region;
-            CLLocationCoordinate2D destinationCoordinate = CLLocationCoordinate2DMake(region.destinationPoint.latitude, region.destinationPoint.longitude);
-            [self.mapView animateToLocation:destinationCoordinate];
-            [self performQueryForLocationsWithRegion:region];
+                UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+                sharedRegion.region = region;
+                CLLocationCoordinate2D destinationCoordinate = CLLocationCoordinate2DMake(region.destinationPoint.latitude, region.destinationPoint.longitude);
+                [self.mapView animateToLocation:destinationCoordinate];
+                [self performQueryForLocationsWithRegion:region];
 
-        }
-        else
-        {
-            [NetworkErrorAlert showAlertForViewController:self];
-        }
-    }];
+            }
+            else
+            {
+                [NetworkErrorAlert showAlertForViewController:self];
+            }
+        }];
+
+    }
+    else
+    {
+        [self.mapView animateToLocation:self.mapView.myLocation.coordinate];
+    }
+
 }
 
 -(void)performQueryForLocationsWithRegion: (Region *)theRegion
