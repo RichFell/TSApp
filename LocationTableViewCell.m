@@ -33,4 +33,13 @@
 
 }
 
+-(void)prepareForReuse
+{
+    self.indexPath = nil;
+}
+- (IBAction)changeVisitedStatusOnTapped:(UIButton *)sender
+{
+    [self.delegate didTapVisitedButtonAtIndexPath:self.indexPath];
+}
+
 @end

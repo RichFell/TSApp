@@ -8,9 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LocationTableViewCell : UITableViewCell
+@protocol LocationTVCellDelegate <NSObject>
 
+@required
+-(void)didTapVisitedButtonAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+@interface LocationTableViewCell : UITableViewCell
+@property id<LocationTVCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property NSIndexPath *indexPath;
 
 @end

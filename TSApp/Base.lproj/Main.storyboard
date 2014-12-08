@@ -22,6 +22,32 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="441"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="headerCell" rowHeight="40" id="wfy-zM-lHJ" customClass="HeaderTableViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wfy-zM-lHJ" id="Psc-3z-ds6">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visited" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q1D-XD-m9O">
+                                                    <rect key="frame" x="8" y="13" width="304" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Dic-3s-eWD"/>
+                                                        <constraint firstAttribute="width" constant="304" id="osu-iR-54I"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Q1D-XD-m9O" firstAttribute="leading" secondItem="Psc-3z-ds6" secondAttribute="leadingMargin" id="Bj2-Uw-B4o"/>
+                                                <constraint firstItem="Q1D-XD-m9O" firstAttribute="top" secondItem="Psc-3z-ds6" secondAttribute="topMargin" constant="5" id="HAL-HS-6w8"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="headerTitleLabel" destination="Q1D-XD-m9O" id="eEs-FK-poL"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LocationTableViewCell" rowHeight="68" id="h3t-gx-M7k" customClass="LocationTableViewCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -29,8 +55,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNt-M2-5Jc">
-                                                    <rect key="frame" x="8" y="11" width="42" height="45"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNt-M2-5Jc">
+                                                    <rect key="frame" x="8" y="12" width="42" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="Ske-S3-1mE"/>
                                                         <constraint firstAttribute="width" constant="42" id="scY-Lx-Olf"/>
@@ -49,6 +75,15 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ry0-jE-hkl">
+                                                    <rect key="frame" x="282" y="19" width="30" height="30"/>
+                                                    <state key="normal" image="CheckMarkImage">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="changeVisitedStatusOnTapped:" destination="h3t-gx-M7k" eventType="touchUpInside" id="uu8-ti-50B"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="OIv-V5-s1t" firstAttribute="leading" secondItem="zNt-M2-5Jc" secondAttribute="trailing" constant="8" id="6XF-si-R8u"/>
@@ -110,7 +145,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HxQ-Bv-nqk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1294" y="-85"/>
+            <point key="canvasLocation" x="1294" y="-89"/>
         </scene>
         <!--Directions View Controller-->
         <scene sceneID="K94-Bu-y9T">
@@ -838,6 +873,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="CheckMarkImage" width="30" height="30"/>
         <image name="TSOrangeUpArrow" width="40" height="30"/>
         <image name="TravelSagesInitialImage" width="150" height="150"/>
     </resources>
@@ -847,7 +883,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="bOa-fM-29M"/>
+        <segue reference="rcw-hg-mPT"/>
         <segue reference="G2b-Jr-RGE"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -12,9 +12,10 @@
 #import "DirectionsViewController.h"
 #import "NetworkErrorAlert.h"
 #import "UserDefaults.h"
+#import "HeaderTableViewCell.h"
 
 
-@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -31,15 +32,18 @@
 @property Location *startingLocation;
 @property Location *endingLocation;
 @property NSArray *directionsArray;
-@property NSMutableArray *locations;
 @property Region *region;
-
+@property NSDictionary *dictionary;
+@property NSMutableArray *allLocations;
 @end
 
 @implementation LocationsListViewController
 
 static NSString *const kDirectionsSegue = @"DirectionsSegue";
 static NSString *const kLocationCellId = @"LocationTableViewCell";
+static NSString *const kNeedToVisitString = @"Need To Visit";
+static NSString *const kVisitedString = @"Visited";
+static NSString *const kHeaderCellID = @"headerCell";
 
 - (void)viewDidLoad
 {
@@ -48,6 +52,7 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
     self.setDestinationsButton.tag = 0;
     self.destinationSelector = 0;
     self.callDirectionsButton.enabled = false;
+    self.allLocations = [NSMutableArray new];
 
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -55,6 +60,26 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
     self.callDirectionsButton.backgroundColor = [UIColor customOrange];
     [self.setDestinationsButton setTintColor:[UIColor darkGrayColor]];
     [self queryForLocations];
+}
+
+-(void)sortLocations:(NSArray *)theLocations
+{
+    NSMutableArray *visitedArray = [NSMutableArray new];
+    NSMutableArray *notVisitedArray = [NSMutableArray new];
+
+    for (Location *location in theLocations)
+    {
+        if ([location.hasVisited isEqual: @0])
+        {
+            [notVisitedArray addObject:location];
+        }
+        else
+        {
+            [visitedArray addObject:location];
+        }
+    }
+
+    self.dictionary = @{kNeedToVisitString: notVisitedArray, kVisitedString: visitedArray};
 }
 
 -(void)queryForLocations
@@ -67,16 +92,11 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
             }
             else
             {
-                self.locations = [locations mutableCopy];
-                [self.tableView reloadData];
+                [self sortLocations:locations];
             }
         }];
 
     }];
-//    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-//    self.locations = [sharedRegion.locations mutableCopy];
-//    [self.tableView reloadData];
-
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods
@@ -84,10 +104,13 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
+    NSArray *locations = [self returnCorrectArrayForSection:indexPath.section];
 
-    Location *location = [self.locations objectAtIndex:indexPath.row];
+    Location *location = [locations objectAtIndex:indexPath.row];
 
     cell.infoLabel.text = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+    cell.indexPath = indexPath;
+    cell.delegate = self;
 
     int position = (int)indexPath.row;
     cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
@@ -95,21 +118,43 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
     return cell;
 }
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    HeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kHeaderCellID];
+    NSArray *keyArray = [self.dictionary allKeys];
+    NSString *key = keyArray[section];
+    cell.headerTitleLabel.text = key;
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40.0;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    NSArray *keyArray = [self.dictionary allKeys];
+    return keyArray.count;
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.locations.count;
+    NSArray *arrayToCount = [self returnCorrectArrayForSection:section];
+    return arrayToCount.count;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //TODO: Need to update to delete from Arrays within the dictionary
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        Location *location = [self.locations objectAtIndex:indexPath.row];
-        [location deleteLocationWithBlock:self.locations completed:^(BOOL result, NSError *error) {
+        NSArray *locations = [self returnCorrectArrayForSection:indexPath.section];
+        Location *location = [locations objectAtIndex:indexPath.row];
+        [location deleteLocationWithBlock:locations completed:^(BOOL result, NSError *error) {
 
             if (error == nil)
             {
-                [self.locations removeObject:location];
+//                [locations removeObject:location];
                 [self.tableView reloadData];
             }
             else
@@ -128,10 +173,10 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-
-    Location *location = [self.locations objectAtIndex:sourceIndexPath.row];
-    [self.locations removeObject: location];
-    [self.locations insertObject:location atIndex:destinationIndexPath.row];
+//
+//    Location *location = [self.locations objectAtIndex:sourceIndexPath.row];
+//    [self.locations removeObject: location];
+//    [self.locations insertObject:location atIndex:destinationIndexPath.row];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -143,14 +188,14 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
         if (self.destinationSelector == 0)
         {
             self.destinationSelector = 1;
-            self.startingLocation = [self.locations objectAtIndex:indexPath.row];
+//            self.startingLocation = [self.locations objectAtIndex:indexPath.row];
 
             cell.backgroundColor = [UIColor blueColor];
         }
         else
         {
             self.destinationSelector = 0;
-            self.endingLocation = [self.locations objectAtIndex:indexPath.row];
+//            self.endingLocation = [self.locations objectAtIndex:indexPath.row];
 
             cell.backgroundColor = [UIColor greenColor];
 
@@ -159,6 +204,26 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
     }
 }
 
+#pragma mark - LocationTableViewCellDelegate method
+-(void)didTapVisitedButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    //TODO: update for the dictionary
+    NSMutableArray *locations = [[self returnCorrectArrayForSection:indexPath.section]mutableCopy];
+    Location *location = locations[indexPath.row];
+    [location changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
+        if (error)
+        {
+            [NetworkErrorAlert showAlertForViewController:self];
+        }
+        else
+        {
+            [locations removeObject:location];
+
+            [self.tableView reloadData];
+        }
+    }];
+
+}
 #pragma mark - ParseModelDataSource methods
 
 -(void)didMoveLocationsIndex
@@ -233,5 +298,16 @@ static NSString *const kLocationCellId = @"LocationTableViewCell";
     directionVC.directions = [NSArray arrayWithArray:self.directionsArray];
 }
 
+-(NSArray *)returnCorrectArrayForSection:(NSInteger)section
+{
+    if (section == 0)
+    {
+        return self.dictionary[kNeedToVisitString];
+    }
+    else
+    {
+        return self.dictionary[kVisitedString];
+    }
+}
 
 @end
