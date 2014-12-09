@@ -95,6 +95,7 @@
                                         <connections>
                                             <outlet property="countLabel" destination="zNt-M2-5Jc" id="aeM-zC-wHj"/>
                                             <outlet property="infoLabel" destination="OIv-V5-s1t" id="iSS-OR-ShH"/>
+                                            <outlet property="visitedButton" destination="Ry0-jE-hkl" id="EDC-tD-p6F"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

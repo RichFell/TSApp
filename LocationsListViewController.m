@@ -46,6 +46,8 @@ static NSString *const kVisitedString = @"Visited";
 static NSString *const kHeaderCellID = @"headerCell";
 static NSString *const kDefaultRegion = @"defaultRegion";
 static NSString *const kNewLocationNotification = @"NewLocationNotification";
+static NSString *const kPlaceHolderImageName = @"PlaceHolderImage";
+static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 
 - (void)viewDidLoad
 {
@@ -121,6 +123,7 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
     cell.infoLabel.text = location.name;
     cell.indexPath = indexPath;
     cell.delegate = self;
+    cell.visitedButton.imageView.image =  [location.hasVisited  isEqual: @1] ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
 
     int position = (int)indexPath.row;
     cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
@@ -237,10 +240,7 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
         }
         else
         {
-            [locations removeObject:location];
-//            self.dictionary[k]
-
-            [self.tableView reloadData];
+            [self moveLocation:location FromSection:indexPath.section];
         }
     }];
 
@@ -332,6 +332,17 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
 -(NSArray *)arrayForSection:(NSInteger)section
 {
     return section == 0 ? self.dictionary[kNeedToVisitString] : self.dictionary[kVisitedString];
+}
+
+-(void)moveLocation:(Location *)location FromSection:(NSInteger)section
+{
+    NSMutableArray *forSection = section == 1 ? [self.dictionary[kVisitedString] mutableCopy] : [self.dictionary[kNeedToVisitString] mutableCopy];
+    [forSection removeObject:location];
+    NSMutableArray *toSection = section == 1 ? [self.dictionary[kNeedToVisitString]mutableCopy] : [self.dictionary[kVisitedString]mutableCopy];
+    [toSection addObject:location];
+    [self.dictionary[[self keyForSection:section]] removeObject:location];
+    [self.dictionary[[self keyForOppositeSection:section]] addObject:location];
+    [self.tableView reloadData];
 }
 
 @end
