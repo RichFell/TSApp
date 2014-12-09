@@ -789,17 +789,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHH-1c-tPc">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-wk-K9m">
-                                        <rect key="frame" x="24" y="13" width="261" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-EZ-P03">
                                 <rect key="frame" x="140" y="64" width="30" height="30"/>
                                 <gestureRecognizers/>
@@ -817,15 +806,35 @@
                                     <segue destination="y2z-dT-rya" kind="embed" id="FRt-5i-W3C"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHH-1c-tPc">
+                                <rect key="frame" x="0.0" y="64" width="320" height="56"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-wk-K9m">
+                                        <rect key="frame" x="24" y="13" width="261" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="v5a-Rt-M6e" id="DpO-5u-woM"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="JcX-n9-8R1"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="8LK-Dz-1RL" secondAttribute="trailing" constant="-16" id="Akl-ph-F1w"/>
+                            <constraint firstItem="aHH-1c-tPc" firstAttribute="leading" secondItem="Je2-LR-36N" secondAttribute="leadingMargin" constant="-16" id="QUK-cW-sCE"/>
                             <constraint firstAttribute="centerX" secondItem="Cob-EZ-P03" secondAttribute="centerX" constant="5" id="Tjh-cf-ITX"/>
                             <constraint firstItem="Cob-EZ-P03" firstAttribute="top" secondItem="Je2-LR-36N" secondAttribute="topMargin" constant="64" id="eIg-3Q-6k4"/>
                             <constraint firstItem="8LK-Dz-1RL" firstAttribute="top" secondItem="Cob-EZ-P03" secondAttribute="bottom" constant="1" id="gIX-eT-lHz"/>
                             <constraint firstAttribute="bottomMargin" secondItem="8LK-Dz-1RL" secondAttribute="bottom" constant="-31" id="gSM-Zh-V18"/>
                             <constraint firstItem="8LK-Dz-1RL" firstAttribute="leading" secondItem="Je2-LR-36N" secondAttribute="leadingMargin" constant="-16" id="sWS-x6-1jq"/>
+                            <constraint firstItem="aHH-1c-tPc" firstAttribute="top" secondItem="hRA-gQ-fwK" secondAttribute="bottom" id="uge-kL-5xK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aHH-1c-tPc" secondAttribute="trailing" constant="-16" id="vCd-bm-24w"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -840,6 +849,7 @@
                         <outlet property="containerBottomeConstraint" destination="gSM-Zh-V18" id="OjB-RC-YlJ"/>
                         <outlet property="imageViewTopConstraint" destination="eIg-3Q-6k4" id="NY3-LP-RoA"/>
                         <outlet property="regionBarButtonItem" destination="Hgk-eN-g6L" id="Zne-ik-MFN"/>
+                        <outlet property="searchTextField" destination="lJg-wk-K9m" id="mmU-G5-eNV"/>
                         <outlet property="slidingImageView" destination="Cob-EZ-P03" id="j9U-dv-6SA"/>
                     </connections>
                 </viewController>

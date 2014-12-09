@@ -20,7 +20,7 @@
 #import "UserDefaults.h"
 #import "UniversalRegion.h"
 
-@interface MapViewController ()<GMSMapViewDelegate>
+@interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
 @property GMSMapView *mapView;
@@ -36,8 +36,7 @@
 @property CGPoint panStartPoint;
 @property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
 @property CLLocationManager *locationManager;
-
-
+@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 
 @end
 
@@ -54,6 +53,7 @@ static CGFloat const kMapZoom = 10.0;
 static CGFloat const kAnimationDuration = 0.5;
 static NSString *const kDefaultRegion = @"defaultRegion";
 static NSString *const kNewLocationNotification = @"NewLocationNotification";
+static float const kMapLocationZoom = 20.0;
 
 
 
@@ -136,7 +136,7 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
     }
     else
     {
-        [self.mapView animateToLocation:CLLocationCoordinate2DMake(41.8369, -87.6847)];
+        [self.mapView animateToLocation:self.mapView.myLocation.coordinate];
     }
 
 }
@@ -224,6 +224,24 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
     [alert addAction:noAction];
 
     [self presentViewController:alert animated:true completion:nil];
+}
+
+#pragma mark - TextFieldDelegate methods
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [MapModel geocodeString:textField.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
+        if (error) {
+            [NetworkErrorAlert showAlertForViewController:self];
+        }
+        else
+        {
+            [self.mapView animateToLocation:coordinate];
+            [self.mapView animateToZoom:kMapLocationZoom];
+            [self placeMarker:[PFGeoPoint geoPointWithLatitude:coordinate.latitude longitude:coordinate.longitude] string:@"Tap to save destination"];
+        }
+    }];
+    [textField resignFirstResponder];
+    return true;
 }
 
 #pragma mark - IBAction and methods to control the sliding of the container view
