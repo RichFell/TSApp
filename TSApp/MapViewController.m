@@ -53,6 +53,8 @@ static CGFloat const kImageViewConstraintConstantOpen = 70.0;
 static CGFloat const kMapZoom = 10.0;
 static CGFloat const kAnimationDuration = 0.5;
 static NSString *const kDefaultRegion = @"defaultRegion";
+static NSString *const kNewLocationNotification = @"NewLocationNotification";
+
 
 
 - (void)viewDidLoad
@@ -206,6 +208,7 @@ static NSString *const kDefaultRegion = @"defaultRegion";
             else
             {
                 [self.locationsArray addObject:theLocation];
+                [[NSNotificationCenter defaultCenter]postNotificationName:kNewLocationNotification object:nil];
             }
         }];
     }];

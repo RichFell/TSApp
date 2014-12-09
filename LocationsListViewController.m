@@ -45,7 +45,7 @@ static NSString *const kNeedToVisitString = @"Need To Visit";
 static NSString *const kVisitedString = @"Visited";
 static NSString *const kHeaderCellID = @"headerCell";
 static NSString *const kDefaultRegion = @"defaultRegion";
-
+static NSString *const kNewLocationNotification = @"NewLocationNotification";
 
 - (void)viewDidLoad
 {
@@ -61,6 +61,9 @@ static NSString *const kDefaultRegion = @"defaultRegion";
     self.setDestinationsButton.backgroundColor = [UIColor customOrange];
     self.callDirectionsButton.backgroundColor = [UIColor customOrange];
     [self.setDestinationsButton setTintColor:[UIColor darkGrayColor]];
+    [[NSNotificationCenter defaultCenter]addObserverForName:kNewLocationNotification object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
+        [self queryForLocations];
+    }];
     [self queryForLocations];
 }
 
@@ -82,6 +85,7 @@ static NSString *const kDefaultRegion = @"defaultRegion";
     }
 
     self.dictionary = @{kNeedToVisitString: notVisitedArray, kVisitedString: visitedArray};
+    [self.tableView reloadData];
 }
 
 -(void)queryForLocations
