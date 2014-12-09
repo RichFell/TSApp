@@ -98,12 +98,14 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
 
 -(void)placeMarker:(PFGeoPoint *)geoPoint string: (NSString *)string
 {
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+    Location *location = [self locationForCoordinate:coordinate];
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
     marker.map = self.mapView;
     marker.appearAnimation = kGMSMarkerAnimationPop;
     marker.tappable = YES;
-    marker.title = string;
+    marker.title = location ? location.name : @"Tap to create new destination" ;
 
     [self.mapView setSelectedMarker:marker];
 }
@@ -183,10 +185,10 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
 
-    //TODO: Make it so that when tap on the marker then window displays
-    marker.snippet = @"snippet";
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(marker.position.latitude, marker.position.longitude);
+    Location *location = [self locationForCoordinate:coordinate];
+    marker.snippet = location.name;
     marker.tappable = true;
-    NSLog(@"Tapped on marker");
     return false;
 }
 
@@ -281,6 +283,18 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
     }];
 }
 
+-(Location *)locationForCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    for (Location *location in self.locationsArray)
+    {
+        CLLocationCoordinate2D locationsCoordinate = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);
+        if (locationsCoordinate.latitude ==  coordinate.latitude && locationsCoordinate.longitude == coordinate.longitude)
+        {
+             return location;
+        }
+    }
+    return nil;
+}
 
 
 @end
