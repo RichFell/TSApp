@@ -229,12 +229,7 @@ static NSString *const tsHasVisitiedImage = @"CheckMarkImage";
 
 - (IBAction)addSelectedLocationOnPressed:(UIButton *)sender
 {
-    [Location createLocation:self.selectedLocation array:self.locationsArray currentRegion:self.currentRegion completion:^(Location *theLocation, NSError *error) {
-        if (error != nil)
-        {
-            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-        }
-    }];
+
 }
 
 - (IBAction)onPressedGoToUserLocation:(UIButton *)sender

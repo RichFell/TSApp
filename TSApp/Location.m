@@ -23,14 +23,14 @@
 @dynamic objectID;
 @dynamic region;
 
-+(void )createLocation: (CLLocationCoordinate2D) coordinate array: (NSMutableArray *)array currentRegion: (Region *)region completion: (void (^)(Location *theLocation, NSError *error))completionHandler;
++(void )createLocation: (CLLocationCoordinate2D) coordinate andName:(NSString *)name array:(NSMutableArray *)array currentRegion:(Region *)region completion:(void (^)(Location *, NSError *))completionHandler
 {
     Location *newLocation = [Location new];
     PFGeoPoint *geoPoint = [PFGeoPoint new];
     geoPoint.latitude = coordinate.latitude;
     geoPoint.longitude = coordinate.longitude;
     newLocation.coordinate = geoPoint;
-    newLocation.name = @"";
+    newLocation.name = name;
     NSUInteger index = array.count + 1;
     newLocation.index = [NSNumber numberWithUnsignedInteger:index];
     newLocation.hasVisited = @0;

@@ -118,7 +118,7 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
 
     Location *location = [locations objectAtIndex:indexPath.row];
 
-    cell.infoLabel.text = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+    cell.infoLabel.text = location.name;
     cell.indexPath = indexPath;
     cell.delegate = self;
 

@@ -45,7 +45,7 @@
 
 static NSString *const kNotVisitedImage = @"PlacHolderImage";
 static NSString *const kHasVisitedImage = @"CheckMarkImage";
-static NSString *const rwfLocationString = @"Current Location";
+static NSString *const rwfLocationString = @"Tap to save destination";
 static NSString *const kUpArrowImage = @"TSOrangeUpArrow";
 static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 static CGFloat const kConstraintConstantBuffer = 40.0;
@@ -187,7 +187,7 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
     marker.snippet = @"snippet";
     marker.tappable = true;
     NSLog(@"Tapped on marker");
-    return true;
+    return false;
 }
 
 -(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
@@ -198,9 +198,13 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
 -(void)createNewLocation: (CLLocationCoordinate2D) coordinate
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to save this location?" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *yesAction =[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"New Destination's name";
+    }];
+    UIAlertAction *saveAction =[UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
-        [Location createLocation: coordinate array:self.locationsArray currentRegion:self.currentRegion completion:^(Location *theLocation, NSError *error) {
+        UITextField *nameTextfield = [alert.textFields firstObject];
+        [Location createLocation:coordinate andName:nameTextfield.text array:self.locationsArray currentRegion:self.currentRegion completion:^(Location *theLocation, NSError *error) {
             if (error)
             {
                 [NetworkErrorAlert showAlertForViewController:self];
@@ -212,9 +216,11 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
             }
         }];
     }];
-    [alert addAction:yesAction];
+    [alert addAction:saveAction];
+
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:noAction];
+
     [self presentViewController:alert animated:true completion:nil];
 }
 
