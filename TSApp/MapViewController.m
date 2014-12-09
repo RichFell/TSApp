@@ -120,6 +120,7 @@ static float const kMapLocationZoom = 20.0;
     marker.appearAnimation = kGMSMarkerAnimationPop;
     marker.tappable = YES;
     marker.title = location ? location.name : @"Tap to create new destination" ;
+    marker.icon = [location.hasVisited isEqualToNumber:@0] ? [GMSMarker markerImageWithColor:[UIColor blueColor]] : [GMSMarker markerImageWithColor:[UIColor redColor]];
 
     [self.mapView setSelectedMarker:marker];
 }

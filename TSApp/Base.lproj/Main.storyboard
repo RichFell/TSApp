@@ -117,30 +117,18 @@
                                     <action selector="receiveDirections:" destination="y2z-dT-rya" eventType="touchUpInside" id="cJv-0E-tVo"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amZ-cc-RqO">
-                                <rect key="frame" x="42" y="454" width="113" height="30"/>
-                                <state key="normal" title="Set Destinations">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onPressedSetDestinations:" destination="y2z-dT-rya" eventType="touchUpInside" id="0Wg-rU-nzX"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="awO-Tp-G2c" firstAttribute="top" secondItem="amZ-cc-RqO" secondAttribute="bottom" constant="20" id="4Nv-DK-MZ4"/>
+                            <constraint firstItem="awO-Tp-G2c" firstAttribute="top" secondItem="l6T-ZB-ebo" secondAttribute="bottom" constant="63" id="CXo-0j-Wer"/>
                             <constraint firstAttribute="trailingMargin" secondItem="l6T-ZB-ebo" secondAttribute="trailing" constant="-16" id="Eg1-Ba-Ubm"/>
                             <constraint firstItem="l6T-ZB-ebo" firstAttribute="top" secondItem="LxL-c1-3wy" secondAttribute="bottom" id="FDG-PL-nwI"/>
                             <constraint firstItem="l6T-ZB-ebo" firstAttribute="leading" secondItem="v5h-52-mYc" secondAttribute="leadingMargin" constant="-16" id="Kfc-Nt-Tum"/>
-                            <constraint firstItem="amZ-cc-RqO" firstAttribute="leading" secondItem="v5h-52-mYc" secondAttribute="leadingMargin" constant="26" id="d4L-BV-2Ki"/>
-                            <constraint firstItem="amZ-cc-RqO" firstAttribute="top" secondItem="l6T-ZB-ebo" secondAttribute="bottom" constant="13" id="laB-WM-Ep0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YGa-IL-Cft"/>
                     <connections>
                         <outlet property="callDirectionsButton" destination="DD9-Q6-XXF" id="xWp-CV-9q1"/>
-                        <outlet property="setDestinationsButton" destination="amZ-cc-RqO" id="2fA-j3-LXw"/>
                         <outlet property="tableView" destination="l6T-ZB-ebo" id="Vco-zO-WoK"/>
                     </connections>
                 </viewController>
