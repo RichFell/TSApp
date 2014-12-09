@@ -114,7 +114,7 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
-    NSArray *locations = [self returnCorrectArrayForSection:indexPath.section];
+    NSArray *locations = [self arrayForSection:indexPath.section];
 
     Location *location = [locations objectAtIndex:indexPath.row];
 
@@ -149,7 +149,7 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *arrayToCount = [self returnCorrectArrayForSection:section];
+    NSArray *arrayToCount = [self arrayForSection:section];
     return arrayToCount.count;
 }
 
@@ -158,19 +158,20 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
     //TODO: Need to update to delete from Arrays within the dictionary
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        NSArray *locations = [self returnCorrectArrayForSection:indexPath.section];
+        NSArray *locations = [self arrayForSection:indexPath.section];
         Location *location = [locations objectAtIndex:indexPath.row];
         [location deleteLocationWithBlock:locations completed:^(BOOL result, NSError *error) {
 
-            if (error == nil)
+            if (error)
             {
-//                [locations removeObject:location];
-                [self.tableView reloadData];
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
             }
             else
             {
                 //TODO: Here is an error presentation for us to evaluate
-                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+                [self.dictionary[[self keyForSection:indexPath.section]] removeObject:location];
+                [self.tableView reloadData];
+
             }
         }];
     }
@@ -218,7 +219,7 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
 -(void)didTapVisitedButtonAtIndexPath:(NSIndexPath *)indexPath
 {
     //TODO: update for the dictionary
-    NSMutableArray *locations = [[self returnCorrectArrayForSection:indexPath.section]mutableCopy];
+    NSMutableArray *locations = [[self arrayForSection:indexPath.section]mutableCopy];
     Location *location = locations[indexPath.row];
     [location changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
         if (error)
@@ -228,6 +229,7 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
         else
         {
             [locations removeObject:location];
+//            self.dictionary[k]
 
             [self.tableView reloadData];
         }
@@ -308,16 +310,19 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
     directionVC.directions = [NSArray arrayWithArray:self.directionsArray];
 }
 
--(NSArray *)returnCorrectArrayForSection:(NSInteger)section
+-(NSString *)keyForSection:(NSInteger)section
 {
-    if (section == 0)
-    {
-        return self.dictionary[kNeedToVisitString];
-    }
-    else
-    {
-        return self.dictionary[kVisitedString];
-    }
+    return section == 0 ? kNeedToVisitString : kVisitedString;
+}
+
+-(NSString *)keyForOppositeSection:(NSInteger)section
+{
+    return section == 0 ? kVisitedString : kNeedToVisitString;
+}
+
+-(NSArray *)arrayForSection:(NSInteger)section
+{
+    return section == 0 ? self.dictionary[kNeedToVisitString] : self.dictionary[kVisitedString];
 }
 
 @end

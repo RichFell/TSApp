@@ -807,7 +807,7 @@
                                 </constraints>
                             </view>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-EZ-P03">
-                                <rect key="frame" x="140" y="64" width="30" height="30"/>
+                                <rect key="frame" x="145" y="64" width="30" height="30"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="cNF-Ht-adn"/>
@@ -826,9 +826,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Cob-EZ-P03" secondAttribute="centerX" id="5Fc-et-vE7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8LK-Dz-1RL" secondAttribute="trailing" constant="-16" id="Akl-ph-F1w"/>
                             <constraint firstItem="aHH-1c-tPc" firstAttribute="leading" secondItem="Je2-LR-36N" secondAttribute="leadingMargin" constant="-16" id="QUK-cW-sCE"/>
-                            <constraint firstAttribute="centerX" secondItem="Cob-EZ-P03" secondAttribute="centerX" constant="5" id="Tjh-cf-ITX"/>
                             <constraint firstItem="Cob-EZ-P03" firstAttribute="top" secondItem="Je2-LR-36N" secondAttribute="topMargin" constant="64" id="eIg-3Q-6k4"/>
                             <constraint firstItem="8LK-Dz-1RL" firstAttribute="top" secondItem="Cob-EZ-P03" secondAttribute="bottom" constant="1" id="gIX-eT-lHz"/>
                             <constraint firstAttribute="bottomMargin" secondItem="8LK-Dz-1RL" secondAttribute="bottom" constant="-31" id="gSM-Zh-V18"/>

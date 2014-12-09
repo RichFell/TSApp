@@ -54,16 +54,7 @@
 -(void)deleteLocationWithBlock:(NSArray *)locations completed:(void (^)(BOOL, NSError *))completionHandler
 {
     [self deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded == true)
-        {
-            [self changeIndexOfLocations:locations completion:^(BOOL result, NSError *error) {
-                completionHandler(result, error);
-            }];
-        }
-        else
-        {
-            completionHandler(succeeded, error);
-        }
+        completionHandler(succeeded, error);
     }];
 }
 
