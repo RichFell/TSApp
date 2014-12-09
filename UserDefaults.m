@@ -25,8 +25,12 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 {
     if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion] != nil)
     {
+
         NSString *defaultId = [NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion];
         [Region queryForRegionWithObjectId:defaultId completion:^(Region *defaultRegion, NSError *error) {
+
+            UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+            sharedRegion.region = defaultRegion;
             completionHandler(defaultRegion, error);
         }];
     }

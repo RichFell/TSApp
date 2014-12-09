@@ -862,10 +862,10 @@
             </objects>
             <point key="canvasLocation" x="1294" y="-752"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Map Navigation View Controller-->
         <scene sceneID="J6W-YG-xCL">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KYq-iv-Dee" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MapNavigationViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KYq-iv-Dee" customClass="MapNavigationViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="9xK-ub-rT7"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QGc-8t-eTk">

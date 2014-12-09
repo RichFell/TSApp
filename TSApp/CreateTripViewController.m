@@ -10,6 +10,7 @@
 #import "UserDefaults.h"
 #import "NetworkErrorAlert.h"
 #import "MapModel.h"
+#import "MapNavigationViewController.h"
 
 @interface CreateTripViewController () <UITextFieldDelegate>
 
@@ -65,7 +66,10 @@ static CGFloat const kYKeyboardClosed = 0.0;
         else
         {
             [UserDefaults setDefaultRegion:newRegion];
-            [self dismissViewControllerAnimated:true completion:nil];
+//            [self dismissViewControllerAnimated:true completion:nil];
+            MapNavigationViewController *mapVC = [MapNavigationViewController storyboardInstanceOfMapNavVC];
+            [self presentViewController:mapVC animated:true completion:nil];
+
         }
     }];
 }

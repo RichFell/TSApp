@@ -14,4 +14,6 @@
 
 @interface MapViewController : UIViewController
 
++(MapViewController *)storyboardInstanceOfMapVC;
+
 @end

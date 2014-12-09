@@ -20,6 +20,8 @@
 #import "UserDefaults.h"
 #import "UniversalRegion.h"
 
+static NSString *const kStoryboardID = @"Main";
+
 @interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
@@ -55,7 +57,12 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 static NSString *const kNewLocationNotification = @"NewLocationNotification";
 static float const kMapLocationZoom = 20.0;
 
-
++(MapViewController *)storyboardInstanceOfMapVC
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardID bundle:nil];
+    MapViewController *mapVC = [storyboard instantiateViewControllerWithIdentifier:@"MapViewController"];
+    return mapVC;
+}
 
 - (void)viewDidLoad
 {

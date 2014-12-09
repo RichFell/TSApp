@@ -15,7 +15,7 @@
 
 +(id)sharedRegion
 {
-    static Region *sharedMyRegion = nil;
+    static UniversalRegion *sharedMyRegion = nil;
     @synchronized(self)
     {
         if (sharedMyRegion == nil)
