@@ -79,7 +79,6 @@ static NSString *const kDefaultRegion = @"defaultRegion";
     self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = YES;
-    NSLog(@"myLocation: %@", self.mapView.myLocation);
     self.mapView.settings.myLocationButton = YES;
     self.markers = [NSMutableArray array];
 
@@ -133,7 +132,7 @@ static NSString *const kDefaultRegion = @"defaultRegion";
     }
     else
     {
-        [self.mapView animateToLocation:self.mapView.myLocation.coordinate];
+        [self.mapView animateToLocation:CLLocationCoordinate2DMake(41.8369, -87.6847)];
     }
 
 }
