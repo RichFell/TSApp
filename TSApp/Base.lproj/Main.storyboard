@@ -789,23 +789,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-EZ-P03">
-                                <rect key="frame" x="140" y="64" width="30" height="30"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="cNF-Ht-adn"/>
-                                    <constraint firstAttribute="height" constant="30" id="pJj-ef-QL1"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="7uq-eC-fAx" appends="YES" id="fAY-20-2QG"/>
-                                </connections>
-                            </imageView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8LK-Dz-1RL">
-                                <rect key="frame" x="0.0" y="95" width="320" height="504"/>
-                                <connections>
-                                    <segue destination="y2z-dT-rya" kind="embed" id="FRt-5i-W3C"/>
-                                </connections>
-                            </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHH-1c-tPc">
                                 <rect key="frame" x="0.0" y="64" width="320" height="56"/>
                                 <subviews>
@@ -823,6 +806,23 @@
                                     <constraint firstAttribute="height" constant="56" id="JcX-n9-8R1"/>
                                 </constraints>
                             </view>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-EZ-P03">
+                                <rect key="frame" x="140" y="64" width="30" height="30"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="cNF-Ht-adn"/>
+                                    <constraint firstAttribute="height" constant="30" id="pJj-ef-QL1"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="7uq-eC-fAx" appends="YES" id="fAY-20-2QG"/>
+                                </connections>
+                            </imageView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8LK-Dz-1RL">
+                                <rect key="frame" x="0.0" y="95" width="320" height="504"/>
+                                <connections>
+                                    <segue destination="y2z-dT-rya" kind="embed" id="FRt-5i-W3C"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -839,7 +839,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="bIj-YA-rKy">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="Hgk-eN-g6L">
+                        <barButtonItem key="rightBarButtonItem" title="Trips" id="Hgk-eN-g6L">
                             <connections>
                                 <segue destination="gqU-SK-xg8" kind="push" id="VkJ-70-wET"/>
                             </connections>
