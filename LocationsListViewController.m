@@ -168,13 +168,22 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
             }
             else
             {
-                //TODO: Here is an error presentation for us to evaluate
-                [self.dictionary[[self keyForSection:indexPath.section]] removeObject:location];
-                [self.tableView reloadData];
-
+                [self onSuccessfulDeleteAtIndexPath:indexPath ofLocation:location];
             }
         }];
     }
+}
+
+-(void)onSuccessfulDeleteAtIndexPath:(NSIndexPath *)indexPath ofLocation:(Location *)location
+{
+    [self.dictionary[[self keyForSection:indexPath.section]] removeObject:location];
+    NSMutableArray *firstArray = [self.dictionary[kNeedToVisitString] mutableCopy];
+    [firstArray addObjectsFromArray:self.dictionary[kVisitedString]];
+    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+    sharedRegion.locations = firstArray;
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"DeleteLocationNotification" object:nil];
+    [self.tableView reloadData];
+
 }
 
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath

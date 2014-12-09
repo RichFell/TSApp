@@ -101,6 +101,13 @@ static float const kMapLocationZoom = 20.0;
     self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
+    [[NSNotificationCenter defaultCenter]addObserverForName:@"DeleteLocationNotification" object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
+        [self.mapView clear];
+        UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+        for (Location *location in sharedRegion.locations) {
+            [self placeMarker:location.coordinate string:location.name];
+        }
+    }];
 }
 
 -(void)placeMarker:(PFGeoPoint *)geoPoint string: (NSString *)string
