@@ -20,8 +20,9 @@
 @property NSNumber *hasVisited;
 @property PFObject *region;
 @property PFGeoPoint *coordinate;
+@property NSString *address;
 
-+(void )createLocation: (CLLocationCoordinate2D) coordinate andName:(NSString *)name array: (NSMutableArray *)array currentRegion: (Region *)region completion: (void (^)(Location *theLocation, NSError *error))completionHandler;
++(void )createLocation: (CLLocationCoordinate2D) coordinate andName:(NSString *)name array: (NSMutableArray *)array currentRegion: (Region *)region andAddress:(NSString *)theAddress completion: (void (^)(Location *theLocation, NSError *error))completionHandler;
 
 +(void)queryForLocations:(Region *) region completed: (void(^)(NSArray * locations, NSError *error))completionHandler;
 
