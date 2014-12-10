@@ -184,7 +184,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     [firstArray addObjectsFromArray:self.dictionary[kVisitedString]];
     UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
     sharedRegion.locations = firstArray;
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"DeleteLocationNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"ChangeLocationNotification" object:nil];
     [self.tableView reloadData];
 
 }
@@ -240,6 +240,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
         }
         else
         {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeLocationNotification" object:nil];
             [self moveLocation:location FromSection:indexPath.section];
         }
     }];

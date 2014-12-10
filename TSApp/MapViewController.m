@@ -101,7 +101,7 @@ static float const kMapLocationZoom = 20.0;
     self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
-    [[NSNotificationCenter defaultCenter]addObserverForName:@"DeleteLocationNotification" object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
+    [[NSNotificationCenter defaultCenter]addObserverForName:@"ChangeLocationNotification" object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
         [self.mapView clear];
         UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
         for (Location *location in sharedRegion.locations) {
