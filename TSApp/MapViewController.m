@@ -198,6 +198,7 @@ static float const kMapLocationZoom = 20.0;
             geoPoint.latitude = response.firstResult.coordinate.latitude;
             geoPoint.longitude = response.firstResult.coordinate.longitude;
 
+            [self refreshMarkers];
             [self placeMarker:geoPoint string:response.firstResult.thoroughfare];
         }
     }];
@@ -355,6 +356,15 @@ static float const kMapLocationZoom = 20.0;
         }
     }
     return nil;
+}
+
+-(void)refreshMarkers
+{
+    [self.mapView clear];
+    for (Location *location in self.locationsArray)
+    {
+        [self placeMarker:location.coordinate string:location.address];
+    }
 }
 
 
