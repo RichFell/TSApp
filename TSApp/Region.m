@@ -55,16 +55,8 @@
 }
 -(void)deleteRegionWithBlock:(void (^)(BOOL, NSError *))completionHandler
 {
-    [Location queryForLocations:self completed:^(NSArray *locations, NSError *error) {
-        if (error == nil)
-        {
-            for (Location *location in locations)
-            {
-                [location deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                }];
-            }
-        }
-        completionHandler(true, error);
+    [self deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        completionHandler(succeeded, error);
     }];
 }
 
