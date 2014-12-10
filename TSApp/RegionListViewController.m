@@ -126,9 +126,33 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:true];
-    Region *region = [self.regionsArray objectAtIndex:indexPath.row];
+    Region *region = self.regionDictionary[[self keyForSection:indexPath.section]][indexPath.row];
     [UserDefaults setDefaultRegion:region];
     [self dismissViewControllerAnimated:true completion:nil];
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        Region *region = [self correctArrayForSection:indexPath.section][indexPath.row];
+        [region deleteRegionWithBlock:^(BOOL result, NSError *error) {
+            if (error)
+            {
+                [NetworkErrorAlert showAlertForViewController:self];
+            }
+            else
+            {
+                [self removeRegionAfterDeleteAtIndexPath:indexPath];
+            }
+        }];
+    }
+}
+
+-(void)removeRegionAfterDeleteAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.regionDictionary[[self keyForSection:indexPath.section]] removeObjectAtIndex:indexPath.row];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Dictionary Helper Methods
@@ -136,6 +160,11 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 -(NSArray *)correctArrayForSection:(NSInteger)section
 {
     return section == 0 ? self.regionDictionary[kNeedToVisitKey] : self.regionDictionary[kVisitedKey];
+}
+
+-(NSString *)keyForSection:(NSInteger)section
+{
+    return section == 0 ? kNeedToVisitKey : kVisitedKey;
 }
 
 @end

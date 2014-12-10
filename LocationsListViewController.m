@@ -163,7 +163,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         NSArray *locations = [self arrayForSection:indexPath.section];
-        Location *location = [locations objectAtIndex:indexPath.row];
+        Location *location = locations[indexPath.row];
         [location deleteLocationWithBlock:locations completed:^(BOOL result, NSError *error) {
 
             if (error)
