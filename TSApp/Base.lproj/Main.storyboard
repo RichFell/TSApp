@@ -539,6 +539,32 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="40" id="lzV-X6-4Qh" customClass="HeaderTableViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lzV-X6-4Qh" id="zsR-wl-oRS">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Need To Visit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSh-EV-1e7">
+                                                    <rect key="frame" x="15" y="11" width="291" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="BSX-KC-JVa"/>
+                                                        <constraint firstAttribute="width" constant="291" id="kF1-PY-tG7"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerX" secondItem="kSh-EV-1e7" secondAttribute="centerX" id="qzk-ly-ndZ"/>
+                                                <constraint firstAttribute="centerY" secondItem="kSh-EV-1e7" secondAttribute="centerY" constant="-1.5" id="zO8-6U-5oE"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="headerTitleLabel" destination="kSh-EV-1e7" id="tU2-9h-Cp4"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellID" rowHeight="84" id="Y65-6U-7w6" customClass="RegionTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y65-6U-7w6" id="pmE-fi-vKG">
@@ -585,6 +611,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="destinationLabel" destination="No9-Ol-LQN" id="WGV-BQ-JlD"/>
                                             <outlet property="infoLabel" destination="aCp-Ek-qOQ" id="ugt-Dt-ej6"/>
                                             <outlet property="numberLabel" destination="RP0-Sa-N3o" id="ZRS-sB-tyH"/>
                                         </connections>
@@ -619,7 +646,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n5d-Iz-SZm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1670" y="-756"/>
+            <point key="canvasLocation" x="1670" y="-758"/>
         </scene>
         <!--Create Trip View Controller-->
         <scene sceneID="cQX-VV-T6H">

@@ -39,6 +39,7 @@
     theRegion.name = regionName;
     theRegion.destinationPoint = geoPoint;
     theRegion.user = [PFUser currentUser];
+    theRegion.completed = false;
     [theRegion saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         completionHandler(theRegion, error);
     }];
@@ -69,14 +70,7 @@
 
 -(void)switchRegionCompletedStatusWithBlock:(void (^)(BOOL, NSError *))completionHandler
 {
-    if (self.completed == false)
-    {
-        self.completed = true;
-    }
-    else
-    {
-        self.completed = false;
-    }
+    self.completed = false ? false : true;
 
     [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         completionHandler(succeeded, error);

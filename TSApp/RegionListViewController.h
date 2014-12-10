@@ -12,7 +12,7 @@
 
 @interface RegionListViewController : UIViewController
 
-@property NSMutableArray *regionsArray;
+
 +(RegionListViewController *)newStoryboardInstance;
 
 @end
