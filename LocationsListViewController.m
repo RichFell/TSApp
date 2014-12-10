@@ -59,7 +59,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     self.allLocations = [NSMutableArray new];
 
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
-    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     self.setDestinationsButton.backgroundColor = [UIColor customOrange];
     self.callDirectionsButton.backgroundColor = [UIColor customOrange];
     [self.setDestinationsButton setTintColor:[UIColor darkGrayColor]];
@@ -123,6 +123,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     cell.infoLabel.text = location.name;
     cell.indexPath = indexPath;
     cell.delegate = self;
+    cell.addressLabel.text = location.address ? location.address : @"No Address";
     cell.visitedButton.imageView.image =  [location.hasVisited  isEqual: @1] ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
 
     int position = (int)indexPath.row;

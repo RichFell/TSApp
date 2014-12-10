@@ -20,5 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 @property NSIndexPath *indexPath;
 @property (weak, nonatomic) IBOutlet UIButton *visitedButton;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
 @end
