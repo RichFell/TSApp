@@ -153,7 +153,7 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 {
     [self.regionDictionary[[self keyForSection:indexPath.section]] removeObjectAtIndex:indexPath.row];
     UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-    sharedRegion.region = self.regionDictionary[kNeedToVisitKey][0];
+    sharedRegion.region = self.regionDictionary[kNeedToVisitKey][0] ? self.regionDictionary[kNeedToVisitKey][0] : [Region new];
     [self.tableView reloadData];
 }
 

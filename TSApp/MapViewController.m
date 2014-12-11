@@ -125,7 +125,7 @@ static float const kMapLocationZoom = 20.0;
     }
     marker.title = location ? location.name : @"Tap to create new destination" ;
     marker.snippet = location ? location.address : string;
-    marker.icon = [location.hasVisited isEqualToNumber:@0] ? [GMSMarker markerImageWithColor:[UIColor blueColor]] : [GMSMarker markerImageWithColor:[UIColor redColor]];
+    marker.icon = [location.hasVisited isEqualToNumber:@0] ? [GMSMarker markerImageWithColor:[UIColor redColor]] : [GMSMarker markerImageWithColor:[UIColor blueColor]];
 
     [self.mapView setSelectedMarker:marker];
 }
@@ -264,6 +264,7 @@ static float const kMapLocationZoom = 20.0;
         else
         {
             [self.locationsArray addObject:theLocation];
+            [self refreshMarkers];
             [[NSNotificationCenter defaultCenter]postNotificationName:kNewLocationNotification object:nil];
         }
     }];
