@@ -22,6 +22,11 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *setDestinationsButton;
 @property (weak, nonatomic) IBOutlet UIButton *callDirectionsButton;
+@property (weak, nonatomic) IBOutlet UILabel *locationTwoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *locationOneLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *goButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *directionsButton;
 
 @property UIView *locationsView;
 @property UITextField *locationOneTextField;
@@ -35,6 +40,7 @@
 @property Region *region;
 @property NSDictionary *dictionary;
 @property NSMutableArray *allLocations;
+
 @end
 
 @implementation LocationsListViewController
@@ -63,6 +69,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     self.setDestinationsButton.backgroundColor = [UIColor customOrange];
     self.callDirectionsButton.backgroundColor = [UIColor customOrange];
     [self.setDestinationsButton setTintColor:[UIColor darkGrayColor]];
+    [self reduceDirectionsViewInViewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserverForName:kNewLocationNotification object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
         [self queryForLocations];
     }];
@@ -314,6 +321,28 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
         }];
     }
 }
+- (IBAction)getDirectionsOnTapped:(UIButton *)sender
+{
+
+}
+- (IBAction)didTapOnLocationOneLabel:(UITapGestureRecognizer *)sender
+{
+
+    
+}
+
+- (IBAction)didTapOnLocationTwoLabel:(UITapGestureRecognizer *)sender
+{
+
+}
+
+-(void)reduceDirectionsViewInViewDidLoad
+{
+    self.goButtonWidthConstraint.constant = 0.0;
+    self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + 20;
+    self.locationTwoLabel.hidden = true;
+}
+
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
