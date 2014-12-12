@@ -79,12 +79,8 @@ FBSDK_EXTERN NSString *kThirdTestUserTag;
 @property (readonly, copy) NSString *testAppID;
 /// The App Secret of the test app as configured in the plist.
 @property (readonly, copy) NSString *testAppSecret;
-/*!
- @abstract Flag to disable reuathorize calls.
- @discussion
- Defaults to NO. If set to YES, reauthorize calls will fail with a nil token
- as if the user had cancelled it reauthorize.
-*/
+// Defaults to NO. If set to YES, reauthorize calls will fail with a nil token
+// as if the user had cancelled it reauthorize.
 @property (assign) BOOL disableReauthorize;
 
 /*!

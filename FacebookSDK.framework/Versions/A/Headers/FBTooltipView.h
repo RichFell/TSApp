@@ -56,7 +56,6 @@ typedef NS_ENUM(NSUInteger, FBTooltipColorStyle) {
 
 /*!
  @abstract Gets or sets the amount of time in seconds the tooltip should be displayed.
-
  @discussion Set this to zero to make the display permanent until explicitly dismissed.
  Defaults to six seconds.
 */
@@ -64,7 +63,6 @@ typedef NS_ENUM(NSUInteger, FBTooltipColorStyle) {
 
 /*!
  @abstract Gets or sets the color style after initialization.
-
  @discussion Defaults to value passed to -initWithTagline:message:colorStyle:.
  */
 @property (nonatomic, assign) FBTooltipColorStyle colorStyle;

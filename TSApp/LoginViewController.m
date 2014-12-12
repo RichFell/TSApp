@@ -8,10 +8,9 @@
 
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
-#import <FacebookSDK/FacebookSDK.h>
 #import "User.h"
 
-@interface LoginViewController ()<UITextFieldDelegate, FBLoginViewDelegate>
+@interface LoginViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;

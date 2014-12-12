@@ -97,6 +97,9 @@ typedef NS_ENUM(NSInteger, FBErrorCode) {
     /*! An error occurred related to an iOS API call */
     FBErrorSystemAPI,
 
+    /*! An error occurred while trying to fetch publish install response data */
+    FBErrorPublishInstallResponse,
+
     /*!
      The application had its applicationDidBecomeActive: method called while waiting
      on a response from the native Facebook app for a pending FBAppCall.
@@ -122,7 +125,7 @@ typedef NS_ENUM(NSInteger, FBErrorCode) {
     /*!
      Reserved for future use.
     */
-    FBErrorOperationDisallowedForRestrictedTreatment,
+    FBErrorOperationDisallowedForRestrictedTreament,
 };
 
 /*!
@@ -163,7 +166,7 @@ typedef NS_ENUM(NSUInteger, FBNativeApplicationErrorCode) {
 
  @abstract Indicates the Facebook SDK classification for the error
 
- @discussion See `[FBErrorUtility errorCategoryForError:]`.
+ @discussion
  */
 typedef NS_ENUM(NSInteger, FBErrorCategory) {
     /*! Indicates that the error category is invalid and likely represents an error that
@@ -189,6 +192,12 @@ typedef NS_ENUM(NSInteger, FBErrorCategory) {
     /*! Indicates that the error is an application error resulting in a bad or malformed request to the server. */
     FBErrorCategoryBadRequest                   = -2,
 };
+
+/*!
+ The key in the userInfo NSDictionary of NSError where you can find
+ the inner NSError (if any).
+ */
+FBSDK_EXTERN NSString *const FBErrorInnerErrorKey;
 
 /*!
  The key in the userInfo NSDictionary of NSError where you can find

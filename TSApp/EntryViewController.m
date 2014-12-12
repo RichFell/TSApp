@@ -7,7 +7,6 @@
 //
 
 #import "EntryViewController.h"
-#import <FacebookSDK/FaceBookSDK.h> 
 #import <Parse/Parse.h>
 #import "NetworkErrorAlert.h"
 
