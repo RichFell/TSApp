@@ -327,8 +327,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 }
 - (IBAction)didTapOnLocationOneLabel:(UITapGestureRecognizer *)sender
 {
-
-    
+    [self expandDirectionsView];
 }
 
 - (IBAction)didTapOnLocationTwoLabel:(UITapGestureRecognizer *)sender
@@ -343,6 +342,22 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     self.locationTwoLabel.hidden = true;
 }
 
+-(void)expandDirectionsView
+{
+
+    self.locationTwoLabel.hidden = false;
+
+    [UIView animateWithDuration:0.5 animations:^{
+
+    }];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.goButtonWidthConstraint.constant = 40.0;
+        self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + self.locationTwoLabel.frame.size.height + 40;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.locationTwoLabel.hidden = false;
+    }];
+}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
