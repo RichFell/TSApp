@@ -13,9 +13,10 @@
 #import "UserDefaults.h"
 #import "HeaderTableViewCell.h"
 #import "Direction.h"
+#import <CoreLocation/CoreLocation.h>
 
 
-@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate>
+@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *callDirectionsButton;
@@ -24,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *goButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *directionsButton;
+@property CLLocationManager *locationManager;
+@property CLLocation *currentLocation;
 
 @property UIView *locationsView;
 @property UITextField *locationOneTextField;
@@ -60,6 +63,9 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 
     self.endingDestination = false;
     self.destinationSelector = 0;
+    self.locationManager = [CLLocationManager new];
+    self.locationManager.delegate = self;
+    [self.locationManager startUpdatingLocation];
     self.callDirectionsButton.enabled = false;
     self.allLocations = [NSMutableArray new];
     self.wantDirections = false;
@@ -266,6 +272,18 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     [self performSegueWithIdentifier:kDirectionsSegue sender:self];
 }
 
+#pragma mark - LocationManagerDelegate methods
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    for (CLLocation *location in locations) {
+        if (location.verticalAccuracy < 1000 && location.horizontalAccuracy < 1000) {
+            self.currentLocation = location;
+            [self.locationManager stopUpdatingLocation];
+        }
+    }
+}
+
 #pragma mark - IBActions
 
 
@@ -326,10 +344,8 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     }
 
     if (self.startingLocation == nil) {
-        UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-        Location *currentLocation = [Location new];
-        currentLocation.coordinate = [PFGeoPoint geoPointWithLatitude:sharedRegion.currentLocation.latitude longitude:sharedRegion.currentLocation.longitude];
-        self.locationOneLabel.text = @"Current Location";
+        self.startingLocation = [Location new];
+        self.startingLocation.coordinate = [PFGeoPoint geoPointWithLocation: self.currentLocation];
     }
 }
 

@@ -96,9 +96,6 @@ static float const kMapLocationZoom = 20.0;
     [self.view sendSubviewToBack:self.mapView];
     self.regionBarButtonItem.tag = 0;
 
-    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-    sharedRegion.currentLocation = self.mapView.myLocation.coordinate;
-
     self.imageViewTopConstraint.constant = self.view.frame.size.height - kConstraintConstantBuffer;
     self.containerBottomeConstraint.constant = -self.view.frame.size.height + kConstraintConstantBuffer;
     self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
@@ -241,7 +238,6 @@ static float const kMapLocationZoom = 20.0;
 
     [self presentViewController:alert animated:true completion:nil];
 }
-
 -(void)reverseGeocodeCoordinate:(CLLocationCoordinate2D)coordinate andName:(NSString *)theName
 {
     [MapModel reverseGeoCode:coordinate withBlock:^(GMSReverseGeocodeResponse *response, NSError *error) {
