@@ -8,19 +8,16 @@
 
 #import "LocationsListViewController.h"
 #import "LocationTableViewCell.h"
-#import "MapModel.h"
 #import "DirectionsViewController.h"
 #import "NetworkErrorAlert.h"
 #import "UserDefaults.h"
 #import "HeaderTableViewCell.h"
+#import "Direction.h"
 
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate>
 
-@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
-@property (weak, nonatomic) IBOutlet UIButton *setDestinationsButton;
 @property (weak, nonatomic) IBOutlet UIButton *callDirectionsButton;
 @property (weak, nonatomic) IBOutlet UILabel *locationTwoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationOneLabel;
@@ -40,6 +37,8 @@
 @property Region *region;
 @property NSDictionary *dictionary;
 @property NSMutableArray *allLocations;
+@property BOOL wantDirections;
+@property BOOL endingDestination;
 
 @end
 
@@ -59,16 +58,14 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 {
     [super viewDidLoad];
 
-    self.setDestinationsButton.tag = 0;
+    self.endingDestination = false;
     self.destinationSelector = 0;
     self.callDirectionsButton.enabled = false;
     self.allLocations = [NSMutableArray new];
-
+    self.wantDirections = false;
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
-    self.setDestinationsButton.backgroundColor = [UIColor customOrange];
     self.callDirectionsButton.backgroundColor = [UIColor customOrange];
-    [self.setDestinationsButton setTintColor:[UIColor darkGrayColor]];
     [self reduceDirectionsViewInViewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserverForName:kNewLocationNotification object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
         [self queryForLocations];
@@ -214,20 +211,19 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 
-    if (self.setDestinationsButton.tag == 1)
+    if (self.wantDirections == true)
     {
         if (self.destinationSelector == 0)
         {
-            self.destinationSelector = 1;
-//            self.startingLocation = [self.locations objectAtIndex:indexPath.row];
-
+            self.endingLocation = self.dictionary[[self keyForSection:indexPath.section]][indexPath.row];
+            self.locationTwoLabel.text = self.endingLocation.address;
             cell.backgroundColor = [UIColor blueColor];
+            self.directionsButton.enabled = true;
         }
         else
         {
-            self.destinationSelector = 0;
-//            self.endingLocation = [self.locations objectAtIndex:indexPath.row];
-
+            self.startingLocation = self.dictionary[[self keyForSection:indexPath.section]][indexPath.row];
+            self.locationOneLabel.text = self.startingLocation.address;
             cell.backgroundColor = [UIColor greenColor];
 
             self.callDirectionsButton.enabled = true;
@@ -301,38 +297,46 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     }
 }
 
-- (IBAction)receiveDirections:(UIButton *)sender
-{
-    if (self.startingLocation != nil && self.endingLocation != nil)
-    {
-        CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
-        CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
-
-//        [self.mapModel getDirections: startingCoordinate endingPosition:endingCoordinate];
-        [MapModel getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate andBlock:^(NSArray *directionArray, NSError *error) {
-            if (error)
-            {
-                [NetworkErrorAlert showAlertForViewController:self];
-            }
-            else
-            {
-
-            }
-        }];
-    }
-}
 - (IBAction)getDirectionsOnTapped:(UIButton *)sender
 {
+    CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
+    CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
+
+    NSLog(@"starting: %@  ending: %@", self.startingLocation, self.endingLocation);
+
+    [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate andBlock:^(NSArray *directionArray, NSError *error) {
+        if (error)
+        {
+            [NetworkErrorAlert showAlertForViewController:self];
+        }
+        else
+        {
+            NSLog(@"Directions: %@", directionArray);
+        }
+    }];
 
 }
 - (IBAction)didTapOnLocationOneLabel:(UITapGestureRecognizer *)sender
 {
     [self expandDirectionsView];
+    if (self.endingDestination) {
+        self.endingDestination = false;
+        self.locationOneLabel.backgroundColor = [UIColor lightGrayColor];
+        self.locationTwoLabel.backgroundColor = [UIColor whiteColor];
+    }
+
+    if (self.startingLocation == nil) {
+        UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+        Location *currentLocation = [Location new];
+        currentLocation.coordinate = [PFGeoPoint geoPointWithLatitude:sharedRegion.currentLocation.latitude longitude:sharedRegion.currentLocation.longitude];
+        self.locationOneLabel.text = @"Current Location";
+    }
 }
 
 - (IBAction)didTapOnLocationTwoLabel:(UITapGestureRecognizer *)sender
 {
-
+    self.endingDestination = true;
+    self.locationTwoLabel.backgroundColor = [UIColor lightGrayColor];
 }
 
 -(void)reduceDirectionsViewInViewDidLoad
@@ -345,24 +349,23 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 -(void)expandDirectionsView
 {
 
-    self.locationTwoLabel.hidden = false;
-
-    [UIView animateWithDuration:0.5 animations:^{
-
-    }];
-    [UIView animateWithDuration:0.3 animations:^{
-        self.goButtonWidthConstraint.constant = 40.0;
-        self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + self.locationTwoLabel.frame.size.height + 40;
-        [self.view layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        self.locationTwoLabel.hidden = false;
-    }];
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    DirectionsViewController *directionVC = segue.destinationViewController;
-    directionVC.directions = [NSArray arrayWithArray:self.directionsArray];
+    if (self.wantDirections == false) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.goButtonWidthConstraint.constant = 40.0;
+            self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + self.locationTwoLabel.frame.size.height + 40;
+            [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            self.locationTwoLabel.hidden = false;
+        }];
+        self.wantDirections = true;
+    }
+    else {
+        self.wantDirections = false;
+        [UIView animateWithDuration:0.3 animations:^{
+            [self reduceDirectionsViewInViewDidLoad];
+            [self.view layoutIfNeeded];
+        }];
+    }
 }
 
 -(NSString *)keyForSection:(NSInteger)section

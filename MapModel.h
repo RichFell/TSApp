@@ -15,6 +15,5 @@
 
 +(void)geocodeString:(NSString *)theString withBlock: (void (^)(CLLocationCoordinate2D coordinate, NSError *error))completionHandler;
 +(void)reverseGeoCode: (CLLocationCoordinate2D) location withBlock: (void(^)(GMSReverseGeocodeResponse *response, NSError *error))completionHandler;
-+(void)getDirectionsWithCoordinate: (CLLocationCoordinate2D)startingPosition andEndingPosition: (CLLocationCoordinate2D)endPosition andBlock:(void(^)(NSArray *directionArray, NSError *error))completionHandler;
 
 @end
