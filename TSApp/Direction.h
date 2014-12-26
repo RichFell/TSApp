@@ -10,7 +10,7 @@
 
 @interface Direction : NSObject
 
-@property NSString *direction;
+@property NSString *step;
 @property NSString *distance;
 @property float startingLatitude;
 @property float startingLongitude;

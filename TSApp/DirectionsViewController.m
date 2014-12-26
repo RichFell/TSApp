@@ -61,7 +61,7 @@ static NSString *const kCellID = @"CellID";
 
     Direction *direction = [self.listOfDirections objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = direction.direction;
+    cell.textLabel.text = direction.step;
 
     return cell;
 }

@@ -14,6 +14,7 @@
 #import "HeaderTableViewCell.h"
 #import "Direction.h"
 #import <CoreLocation/CoreLocation.h>
+#import "DirectionTableViewCell.h"
 
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate>
@@ -42,6 +43,7 @@
 @property NSMutableArray *allLocations;
 @property BOOL wantDirections;
 @property BOOL endingDestination;
+@property BOOL displayDirections;
 
 @end
 
@@ -56,12 +58,14 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 static NSString *const kNewLocationNotification = @"NewLocationNotification";
 static NSString *const kPlaceHolderImageName = @"PlaceHolderImage";
 static NSString *const kCheckMarkImageName = @"CheckMarkImage";
+static NSString *const kDirectionsCellID = @"DirectionCell";
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     self.endingDestination = false;
+    self.displayDirections = false;
     self.destinationSelector = 0;
     self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
@@ -79,6 +83,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     [self queryForLocations];
 }
 
+#pragma mark - helper methods
 -(void)sortLocations:(NSArray *)theLocations
 {
     NSMutableArray *visitedArray = [NSMutableArray new];
@@ -118,26 +123,54 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
             
         }];
     }
+}
 
+///Removes the deleted destination(Location) from the correct array after a successful delete
+-(void)onSuccessfulDeleteAtIndexPath:(NSIndexPath *)indexPath ofLocation:(Location *)location
+{
+    [self.dictionary[[self keyForSection:indexPath.section]] removeObject:location];
+    NSMutableArray *firstArray = [self.dictionary[kNeedToVisitString] mutableCopy];
+    [firstArray addObjectsFromArray:self.dictionary[kVisitedString]];
+    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+    sharedRegion.locations = firstArray;
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"ChangeLocationNotification" object:nil];
+    [self.tableView reloadData];
+}
+
+///Returns the correct cell we want to display whether we want to show directions, or to show the destinations
+-(UITableViewCell *)returnCorrectCellforIndexpath:(NSIndexPath *)indexPath forTableView:(UITableView *)tableView
+{
+    if (self.displayDirections) {
+        DirectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDirectionsCellID];
+        Direction *direction = self.directionsArray[indexPath.row];
+        cell.directionLabel.text = direction.step;
+        NSLog(@"step: %@", direction.step);
+        return cell;
+    }
+    else {
+        LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
+        NSArray *locations = [self arrayForSection:indexPath.section];
+
+        Location *location = [locations objectAtIndex:indexPath.row];
+
+        cell.infoLabel.text = location.name;
+        cell.indexPath = indexPath;
+        cell.delegate = self;
+        cell.addressLabel.text = location.address ? location.address : @"No Address";
+        cell.visitedButton.imageView.image =  [location.hasVisited  isEqual: @1] ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
+
+        int position = (int)indexPath.row;
+        cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
+
+        return cell;
+    }
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
-    NSArray *locations = [self arrayForSection:indexPath.section];
-
-    Location *location = [locations objectAtIndex:indexPath.row];
-
-    cell.infoLabel.text = location.name;
-    cell.indexPath = indexPath;
-    cell.delegate = self;
-    cell.addressLabel.text = location.address ? location.address : @"No Address";
-    cell.visitedButton.imageView.image =  [location.hasVisited  isEqual: @1] ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
-
-    int position = (int)indexPath.row;
-    cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
+    UITableViewCell *cell = [self returnCorrectCellforIndexpath:indexPath forTableView:tableView];
 
     return cell;
 }
@@ -153,18 +186,33 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40.0;
+    if (self.displayDirections) {
+        return 0.0;
+    }
+    else {
+        return 40.0;
+    }
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSArray *keyArray = [self.dictionary allKeys];
-    return keyArray.count;
+    if (self.displayDirections) {
+        return 1;
+    }
+    else {
+        NSArray *keyArray = [self.dictionary allKeys];
+        return keyArray.count;
+    }
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *arrayToCount = [self arrayForSection:section];
-    return arrayToCount.count;
+    if (self.displayDirections) {
+        return self.directionsArray.count;
+    }
+    else {
+        NSArray *arrayToCount = [self arrayForSection:section];
+        return arrayToCount.count;
+    }
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -188,18 +236,6 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     }
 }
 
--(void)onSuccessfulDeleteAtIndexPath:(NSIndexPath *)indexPath ofLocation:(Location *)location
-{
-    [self.dictionary[[self keyForSection:indexPath.section]] removeObject:location];
-    NSMutableArray *firstArray = [self.dictionary[kNeedToVisitString] mutableCopy];
-    [firstArray addObjectsFromArray:self.dictionary[kVisitedString]];
-    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-    sharedRegion.locations = firstArray;
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"ChangeLocationNotification" object:nil];
-    [self.tableView reloadData];
-
-}
-
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return true;
@@ -217,7 +253,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 
-    if (self.wantDirections == true)
+    if (self.wantDirections)
     {
         if (self.destinationSelector == 0)
         {
@@ -255,21 +291,6 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
         }
     }];
 
-}
-#pragma mark - ParseModelDataSource methods
-
--(void)didMoveLocationsIndex
-{
-    [self.tableView reloadData];
-}
-
-#pragma mark = MapModelDelegate
-
--(void)didGetDirections:(NSArray *)directionArray
-{
-    self.directionsArray = [NSArray arrayWithArray:directionArray];
-
-    [self performSegueWithIdentifier:kDirectionsSegue sender:self];
 }
 
 #pragma mark - LocationManagerDelegate methods
@@ -319,9 +340,6 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 {
     CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
     CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
-
-    NSLog(@"starting: %@  ending: %@", self.startingLocation, self.endingLocation);
-
     [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate andBlock:^(NSArray *directionArray, NSError *error) {
         if (error)
         {
@@ -329,7 +347,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
         }
         else
         {
-            NSLog(@"Directions: %@", directionArray);
+            self.directionsArray = [NSArray arrayWithArray:directionArray];
         }
     }];
 
@@ -355,6 +373,17 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     self.locationTwoLabel.backgroundColor = [UIColor lightGrayColor];
 }
 
+- (IBAction)switchTableViewDisplayOnTapped:(UISegmentedControl *)sender {
+    if (sender.selectedSegmentIndex == 0) {
+        self.displayDirections = false;
+    }
+    else {
+        self.displayDirections = true;
+    }
+    [self.tableView reloadData];
+}
+
+#pragma mark - Methods for movement of directionsView
 -(void)reduceDirectionsViewInViewDidLoad
 {
     self.goButtonWidthConstraint.constant = 0.0;
@@ -384,6 +413,8 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     }
 }
 
+
+#pragma mark - methods for finding correct key or value for dictionary
 -(NSString *)keyForSection:(NSInteger)section
 {
     return section == 0 ? kNeedToVisitString : kVisitedString;
@@ -399,6 +430,7 @@ static NSString *const kCheckMarkImageName = @"CheckMarkImage";
     return section == 0 ? self.dictionary[kNeedToVisitString] : self.dictionary[kVisitedString];
 }
 
+#pragma mark - method for moving position of locations
 -(void)moveLocation:(Location *)location FromSection:(NSInteger)section
 {
     NSMutableArray *forSection = section == 1 ? [self.dictionary[kVisitedString] mutableCopy] : [self.dictionary[kNeedToVisitString] mutableCopy];

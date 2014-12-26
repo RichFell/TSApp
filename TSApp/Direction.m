@@ -15,7 +15,7 @@
 {
     Direction *direction = [[Direction alloc]init];
 
-    direction.direction = [dictionary[@"html_instructions"] stringByStrippingHtml];
+    direction.step = [dictionary[@"html_instructions"] stringByStrippingHtml];
     direction.startingLatitude = [dictionary[@"start_location"][@"lat"] floatValue];
     direction.startingLongitude = [dictionary[@"start_location"][@"lng"]floatValue];
     direction.endingLatitude = [dictionary[@"end_location"][@"lat"]floatValue];

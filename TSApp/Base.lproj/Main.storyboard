@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="68" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="l6T-ZB-ebo">
-                                <rect key="frame" x="0.0" y="97" width="320" height="407"/>
+                                <rect key="frame" x="0.0" y="142" width="320" height="362"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="headerCell" rowHeight="40" id="wfy-zM-lHJ" customClass="HeaderTableViewCell">
@@ -111,6 +111,31 @@
                                             <outlet property="visitedButton" destination="Ry0-jE-hkl" id="EDC-tD-p6F"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DirectionCell" id="U88-O0-G31" customClass="DirectionTableViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U88-O0-G31" id="9ue-2V-7Fw">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tdY-9R-ouK">
+                                                    <rect key="frame" x="13" y="8" width="299" height="52"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="tdY-9R-ouK" firstAttribute="top" secondItem="9ue-2V-7Fw" secondAttribute="topMargin" id="3la-tA-JQq"/>
+                                                <constraint firstItem="tdY-9R-ouK" firstAttribute="bottom" secondItem="9ue-2V-7Fw" secondAttribute="bottomMargin" id="HVm-hG-NF7"/>
+                                                <constraint firstAttribute="centerX" secondItem="tdY-9R-ouK" secondAttribute="centerX" id="aq8-SQ-Csg"/>
+                                                <constraint firstItem="tdY-9R-ouK" firstAttribute="trailing" secondItem="9ue-2V-7Fw" secondAttribute="trailingMargin" id="c2M-jB-InS"/>
+                                                <constraint firstItem="tdY-9R-ouK" firstAttribute="leading" secondItem="9ue-2V-7Fw" secondAttribute="leadingMargin" constant="5" id="nps-X8-YNV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="directionLabel" destination="tdY-9R-ouK" id="rEK-hU-7OR"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="y2z-dT-rya" id="BLM-Yc-emS"/>
@@ -130,8 +155,22 @@
                                     <action selector="receiveDirections:" destination="y2z-dT-rya" eventType="touchUpInside" id="cJv-0E-tVo"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Dbm-ew-ec8">
+                                <rect key="frame" x="71" y="0.0" width="179" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="4Pc-Qq-Kba"/>
+                                    <constraint firstAttribute="width" constant="179" id="7WK-64-odZ"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Destinations"/>
+                                    <segment title="Directions"/>
+                                </segments>
+                                <connections>
+                                    <action selector="switchTableViewDisplayOnTapped:" destination="y2z-dT-rya" eventType="valueChanged" id="oTY-6e-uGC"/>
+                                </connections>
+                            </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwZ-x3-QGa">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="97"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="97"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location One" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMl-CK-Zy1">
                                         <rect key="frame" x="8" y="18" width="233" height="21"/>
@@ -194,12 +233,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="JwZ-x3-QGa" firstAttribute="leading" secondItem="v5h-52-mYc" secondAttribute="leadingMargin" constant="-16" id="6bU-WJ-1rj"/>
-                            <constraint firstItem="JwZ-x3-QGa" firstAttribute="top" secondItem="LxL-c1-3wy" secondAttribute="bottom" id="D2B-85-1Wx"/>
+                            <constraint firstItem="JwZ-x3-QGa" firstAttribute="top" secondItem="LxL-c1-3wy" secondAttribute="bottom" constant="44" id="D2B-85-1Wx"/>
+                            <constraint firstItem="Dbm-ew-ec8" firstAttribute="top" secondItem="LxL-c1-3wy" secondAttribute="bottom" id="KtI-fU-KMK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="l6T-ZB-ebo" secondAttribute="trailing" constant="-16" id="dlL-Uf-et9"/>
                             <constraint firstItem="awO-Tp-G2c" firstAttribute="top" secondItem="l6T-ZB-ebo" secondAttribute="bottom" id="gTH-b7-rlL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JwZ-x3-QGa" secondAttribute="trailing" constant="-16" id="gaq-LV-emb"/>
+                            <constraint firstAttribute="centerX" secondItem="Dbm-ew-ec8" secondAttribute="centerX" id="u3Y-LU-bcJ"/>
                             <constraint firstItem="l6T-ZB-ebo" firstAttribute="leading" secondItem="v5h-52-mYc" secondAttribute="leadingMargin" constant="-16" id="uyH-1t-lMi"/>
-                            <constraint firstItem="l6T-ZB-ebo" firstAttribute="top" secondItem="JwZ-x3-QGa" secondAttribute="bottom" id="xDX-DP-tmC"/>
+                            <constraint firstItem="l6T-ZB-ebo" firstAttribute="top" secondItem="JwZ-x3-QGa" secondAttribute="bottom" constant="1" id="xDX-DP-tmC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YGa-IL-Cft"/>
@@ -225,7 +266,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1294" y="-90"/>
+            <point key="canvasLocation" x="1294" y="-93"/>
         </scene>
         <!--Directions View Controller-->
         <scene sceneID="K94-Bu-y9T">
