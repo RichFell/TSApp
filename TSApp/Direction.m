@@ -21,6 +21,7 @@
     direction.endingLatitude = [dictionary[@"end_location"][@"lat"]floatValue];
     direction.endingLongitude = [dictionary[@"end_location"][@"lng"]floatValue];
     direction.distance = dictionary[@"distance"][@"text"];
+    direction.duration = dictionary[@"duration"][@"text"];
     return direction;
 }
 

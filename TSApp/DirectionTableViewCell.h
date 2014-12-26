@@ -10,5 +10,9 @@
 
 @interface DirectionTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *directionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *posLabel;
+@property (weak, nonatomic) IBOutlet UILabel *disLabel;
+@property (weak, nonatomic) IBOutlet UILabel *durLabel;
+
 
 @end

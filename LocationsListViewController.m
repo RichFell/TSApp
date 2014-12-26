@@ -144,7 +144,9 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
         DirectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDirectionsCellID];
         Direction *direction = self.directionsArray[indexPath.row];
         cell.directionLabel.text = direction.step;
-        NSLog(@"step: %@", direction.step);
+        cell.posLabel.text = [NSString stringWithFormat:@"%li", (long)indexPath.row + 1];
+        cell.disLabel.text = direction.distance;
+        cell.durLabel.text = direction.duration;
         return cell;
     }
     else {

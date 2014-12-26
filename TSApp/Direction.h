@@ -12,6 +12,7 @@
 
 @property NSString *step;
 @property NSString *distance;
+@property NSString *duration;
 @property float startingLatitude;
 @property float startingLongitude;
 @property float endingLatitude;
