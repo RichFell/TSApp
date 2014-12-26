@@ -27,6 +27,7 @@
 +(void)getDirectionsWithCoordinate:(CLLocationCoordinate2D)startingPosition andEndingPosition:(CLLocationCoordinate2D)endPosition andBlock:(void (^)(NSArray *, NSError *))completionHandler
 {
     NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=%f,%f&destination=%f,%f&key=AIzaSyCLR3ztaPMZugnESkzeeAWWTkxbHTpgCPA", startingPosition.latitude, startingPosition.longitude, endPosition.latitude, endPosition.longitude];
+    NSLog(@"%@", urlString);
     NSURL *url = [NSURL URLWithString:urlString];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -35,10 +36,19 @@
         NSError *jsonError = nil;
 
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-
         NSArray *theDirections = [NSArray arrayWithArray:dictionary[@"routes"]];
+        NSDictionary *legsDict = theDirections[0];
+        NSArray *dArray = legsDict[@"legs"];
+        NSDictionary *anotherDict = dArray[0];
+        NSArray *stepsArray = anotherDict[@"steps"];
 
-        completionHandler(theDirections, connectionError);
+        NSMutableArray *dirArray = [NSMutableArray new];
+
+        for (NSDictionary *dirDict in stepsArray) {
+            Direction *dir = [Direction initWithDictionary:dirDict];
+            [dirArray addObject:dir];
+        }
+        completionHandler(dirArray, connectionError);
     }];
 }
 @end
