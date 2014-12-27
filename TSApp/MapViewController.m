@@ -19,6 +19,7 @@
 #import "NetworkErrorAlert.h"
 #import "UserDefaults.h"
 #import "UniversalRegion.h"
+#import "Direction.h"
 
 static NSString *const kStoryboardID = @"Main";
 
@@ -28,7 +29,6 @@ static NSString *const kStoryboardID = @"Main";
 @property GMSMapView *mapView;
 @property NSMutableArray *locationsArray;
 @property NSMutableArray *markers;
-@property NSMutableArray *directions;
 @property RegionListViewController *regionListVC;
 @property Region *currentRegion;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerBottomeConstraint;
@@ -84,7 +84,6 @@ static float const kMapLocationZoom = 20.0;
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager requestAlwaysAuthorization];
     self.locationsArray = [NSMutableArray array];
-    self.directions = [NSMutableArray array];
     self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = YES;
@@ -108,6 +107,11 @@ static float const kMapLocationZoom = 20.0;
             [self placeMarker:location.coordinate string:location.name];
         }
     }];
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"DisplayPolyLine" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [self didGetListOfDirections];
+    }];
+
 }
 
 -(void)placeMarker:(PFGeoPoint *)geoPoint string: (NSString *)string
@@ -286,6 +290,23 @@ static float const kMapLocationZoom = 20.0;
     }];
     [textField resignFirstResponder];
     return true;
+}
+
+#pragma mark - Helper Method
+-(void)didGetListOfDirections
+{
+    GMSMutablePath *path = [GMSMutablePath path];
+    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+
+    for (Direction *direction in sharedRegion.directions)
+    {
+        [path addLatitude:direction.startingLatitude longitude:direction.startingLongitude];
+        [path addLatitude:direction.endingLatitude longitude:direction.endingLongitude];
+    }
+
+    GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];
+    polyLine.strokeWidth = 8.0;
+    polyLine.map = self.mapView;
 }
 
 #pragma mark - IBAction and methods to control the sliding of the container view

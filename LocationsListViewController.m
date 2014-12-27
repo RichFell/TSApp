@@ -60,6 +60,10 @@ static NSString *const kPlaceHolderImageName = @"PlaceHolderImage";
 static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 static NSString *const kDirectionsCellID = @"DirectionCell";
 
++(LocationsListViewController *)storyboardInstance {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    return [storyboard instantiateViewControllerWithIdentifier:@"LocationsViewController"];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -350,6 +354,9 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
         else
         {
             self.directionsArray = [NSArray arrayWithArray:directionArray];
+            UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+            sharedRegion.directions = directionArray;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"DisplayPolyLine" object:nil];
         }
     }];
 

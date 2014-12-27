@@ -12,7 +12,7 @@
 
 @synthesize region;
 @synthesize locations;
-@synthesize currentLocation;
+@synthesize directions;
 
 +(id)sharedRegion
 {

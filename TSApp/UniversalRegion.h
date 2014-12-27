@@ -12,7 +12,6 @@
 
 @property Region *region;
 @property NSArray *locations;
-@property CLLocationCoordinate2D currentLocation;
-
+@property NSArray *directions;
 +(id)sharedRegion;
 @end

@@ -11,8 +11,7 @@
 #import "Region.h"
 #import "Location.h"
 
+
 @interface LocationsListViewController : UIViewController
-
-
 
 @end

@@ -9,7 +9,7 @@
         <!--Locations List View Controller-->
         <scene sceneID="3lm-Zi-eQb">
             <objects>
-                <viewController id="y2z-dT-rya" customClass="LocationsListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y2z-dT-rya" customClass="LocationsListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LxL-c1-3wy"/>
                         <viewControllerLayoutGuide type="bottom" id="awO-Tp-G2c"/>
