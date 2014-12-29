@@ -26,6 +26,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *goButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *directionsButton;
+@property (weak, nonatomic) IBOutlet UIButton *transitButton;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *transportationButtons;
+
+
 @property CLLocationManager *locationManager;
 @property CLLocation *currentLocation;
 
@@ -44,6 +48,7 @@
 @property BOOL wantDirections;
 @property BOOL endingDestination;
 @property BOOL displayDirections;
+@property NSString *typeOfTransportation;
 
 @end
 
@@ -60,16 +65,13 @@ static NSString *const kPlaceHolderImageName = @"PlaceHolderImage";
 static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 static NSString *const kDirectionsCellID = @"DirectionCell";
 
-+(LocationsListViewController *)storyboardInstance {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    return [storyboard instantiateViewControllerWithIdentifier:@"LocationsViewController"];
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     self.endingDestination = false;
     self.displayDirections = false;
+    self.typeOfTransportation = @"driving";
     self.destinationSelector = 0;
     self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
@@ -249,10 +251,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-//
-//    Location *location = [self.locations objectAtIndex:sourceIndexPath.row];
-//    [self.locations removeObject: location];
-//    [self.locations insertObject:location atIndex:destinationIndexPath.row];
+
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -346,7 +345,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 {
     CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
     CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
-    [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate andBlock:^(NSArray *directionArray, NSError *error) {
+    [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate withTypeOfTransportation:self.typeOfTransportation andBlock:^(NSArray *directionArray    , NSError *error) {
         if (error)
         {
             [NetworkErrorAlert showAlertForViewController:self];
@@ -392,12 +391,41 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     [self.tableView reloadData];
 }
 
+- (IBAction)switchModeOnTransOnTapped:(UIButton *)sender {
+
+    switch (sender.tag) {
+        case 0:
+            //Selected to use Transit
+            self.typeOfTransportation = @"transit";
+            break;
+        case 1:
+            //Selected to Drive
+            self.typeOfTransportation = @"driving";
+            break;
+        case 2:
+            //Selected to Walk
+            self.typeOfTransportation = @"walking";
+            break;
+        case 3:
+            //Selected to Bike
+            self.typeOfTransportation = @"bicycling";
+            break;
+        default:
+            break;
+    }
+
+}
+
+
 #pragma mark - Methods for movement of directionsView
 -(void)reduceDirectionsViewInViewDidLoad
 {
     self.goButtonWidthConstraint.constant = 0.0;
     self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + 20;
     self.locationTwoLabel.hidden = true;
+    for (UIButton *button in self.transportationButtons) {
+        button.hidden = true;
+    }
 }
 
 -(void)expandDirectionsView
@@ -406,10 +434,13 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     if (self.wantDirections == false) {
         [UIView animateWithDuration:0.3 animations:^{
             self.goButtonWidthConstraint.constant = 40.0;
-            self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + self.locationTwoLabel.frame.size.height + 40;
+            self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + self.locationTwoLabel.frame.size.height + self.transitButton.frame.size.height + 60;
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
             self.locationTwoLabel.hidden = false;
+            for (UIButton *button in self.transportationButtons) {
+                button.hidden = false;
+            }
         }];
         self.wantDirections = true;
     }

@@ -19,6 +19,6 @@
 @property float endingLongitude;
 
 +(instancetype)initWithDictionary:(NSDictionary *)dictionary;
-+(void)getDirectionsWithCoordinate:(CLLocationCoordinate2D)startingPosition andEndingPosition:(CLLocationCoordinate2D)endPosition andBlock:(void (^)(NSArray *, NSError *))completionHandler;
++(void)getDirectionsWithCoordinate:(CLLocationCoordinate2D)startingPosition andEndingPosition:(CLLocationCoordinate2D)endPosition withTypeOfTransportation:(NSString *)transportation andBlock:(void (^)(NSArray *, NSError *))completionHandler;
 
 @end

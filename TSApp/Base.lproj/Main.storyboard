@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="68" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="l6T-ZB-ebo">
-                                <rect key="frame" x="0.0" y="142" width="320" height="362"/>
+                                <rect key="frame" x="0.0" y="187" width="320" height="317"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="headerCell" rowHeight="40" id="wfy-zM-lHJ" customClass="HeaderTableViewCell">
@@ -209,7 +209,7 @@
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwZ-x3-QGa">
-                                <rect key="frame" x="0.0" y="44" width="320" height="97"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="135"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location One" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMl-CK-Zy1">
                                         <rect key="frame" x="8" y="18" width="233" height="21"/>
@@ -254,17 +254,77 @@
                                             <action selector="getDirectionsOnTapped:" destination="y2z-dT-rya" eventType="touchUpInside" id="ybj-hp-fKd"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KqJ-Jg-LWA">
+                                        <rect key="frame" x="8" y="97" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="bVo-OX-9dG"/>
+                                            <constraint firstAttribute="width" constant="30" id="woV-1h-FsJ"/>
+                                        </constraints>
+                                        <state key="normal" title="T">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="switchModeOnTransOnTapped:" destination="y2z-dT-rya" eventType="touchUpInside" id="o6o-ar-omN"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwO-2d-X8Y">
+                                        <rect key="frame" x="70" y="97" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="7XS-0t-ofy"/>
+                                            <constraint firstAttribute="width" constant="30" id="WRh-tL-uPa"/>
+                                        </constraints>
+                                        <state key="normal" title="D">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="switchModeOnTransOnTapped:" destination="y2z-dT-rya" eventType="touchUpInside" id="2kR-H6-Iyd"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0X0-AY-PAg">
+                                        <rect key="frame" x="211" y="97" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="BSb-Lq-n9I"/>
+                                            <constraint firstAttribute="height" constant="30" id="cVf-mI-Fyy"/>
+                                        </constraints>
+                                        <state key="normal" title="B">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="switchModeOnTransOnTapped:" destination="y2z-dT-rya" eventType="touchUpInside" id="FRq-dg-YCY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yeh-jC-rdw">
+                                        <rect key="frame" x="145" y="97" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="8mm-k3-NBK"/>
+                                            <constraint firstAttribute="width" constant="30" id="ycm-am-hXG"/>
+                                        </constraints>
+                                        <state key="normal" title="W">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="switchModeOnTransOnTapped:" destination="y2z-dT-rya" eventType="touchUpInside" id="6KA-6d-ebj"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="qMl-CK-Zy1" firstAttribute="top" secondItem="JwZ-x3-QGa" secondAttribute="top" constant="18" id="12J-bV-RSV"/>
+                                    <constraint firstItem="Yeh-jC-rdw" firstAttribute="top" secondItem="M9b-UX-k3M" secondAttribute="bottom" constant="20" id="3z6-MV-Okk"/>
+                                    <constraint firstItem="Yeh-jC-rdw" firstAttribute="leading" secondItem="FwO-2d-X8Y" secondAttribute="trailing" constant="45" id="BhJ-Or-1pF"/>
+                                    <constraint firstItem="0X0-AY-PAg" firstAttribute="top" secondItem="M9b-UX-k3M" secondAttribute="bottom" constant="20" id="CU5-PE-zvT"/>
                                     <constraint firstItem="yw6-Go-ZL3" firstAttribute="top" secondItem="JwZ-x3-QGa" secondAttribute="top" constant="31" id="Fdt-zB-rc5"/>
                                     <constraint firstItem="M9b-UX-k3M" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" constant="8" id="I1q-iT-xoX"/>
                                     <constraint firstItem="yw6-Go-ZL3" firstAttribute="leading" secondItem="M9b-UX-k3M" secondAttribute="trailing" constant="21" id="M1D-Pa-nwn"/>
                                     <constraint firstItem="qMl-CK-Zy1" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" constant="8" id="PtR-0R-0f5"/>
+                                    <constraint firstItem="FwO-2d-X8Y" firstAttribute="top" secondItem="M9b-UX-k3M" secondAttribute="bottom" constant="20" id="Q2b-j3-zcP"/>
                                     <constraint firstItem="yw6-Go-ZL3" firstAttribute="leading" secondItem="qMl-CK-Zy1" secondAttribute="trailing" constant="21" id="TKn-xb-CKG"/>
+                                    <constraint firstItem="FwO-2d-X8Y" firstAttribute="leading" secondItem="KqJ-Jg-LWA" secondAttribute="trailing" constant="32" id="W7T-Rc-9fB"/>
                                     <constraint firstAttribute="trailing" secondItem="yw6-Go-ZL3" secondAttribute="trailing" constant="20" id="Yh7-YA-xK8"/>
-                                    <constraint firstAttribute="height" constant="97" id="wAx-m7-avI"/>
+                                    <constraint firstItem="KqJ-Jg-LWA" firstAttribute="top" secondItem="M9b-UX-k3M" secondAttribute="bottom" constant="20" id="kNh-fs-scU"/>
+                                    <constraint firstItem="0X0-AY-PAg" firstAttribute="leading" secondItem="Yeh-jC-rdw" secondAttribute="trailing" constant="36" id="orb-ho-VgO"/>
+                                    <constraint firstItem="KqJ-Jg-LWA" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" constant="8" id="sFo-fc-kJZ"/>
+                                    <constraint firstAttribute="height" constant="135" id="wAx-m7-avI"/>
                                     <constraint firstItem="M9b-UX-k3M" firstAttribute="top" secondItem="qMl-CK-Zy1" secondAttribute="bottom" constant="17" id="xcH-VT-Zys"/>
                                 </constraints>
                             </view>
@@ -279,7 +339,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="JwZ-x3-QGa" secondAttribute="trailing" constant="-16" id="gaq-LV-emb"/>
                             <constraint firstAttribute="centerX" secondItem="Dbm-ew-ec8" secondAttribute="centerX" id="u3Y-LU-bcJ"/>
                             <constraint firstItem="l6T-ZB-ebo" firstAttribute="leading" secondItem="v5h-52-mYc" secondAttribute="leadingMargin" constant="-16" id="uyH-1t-lMi"/>
-                            <constraint firstItem="l6T-ZB-ebo" firstAttribute="top" secondItem="JwZ-x3-QGa" secondAttribute="bottom" constant="1" id="xDX-DP-tmC"/>
+                            <constraint firstItem="l6T-ZB-ebo" firstAttribute="top" secondItem="JwZ-x3-QGa" secondAttribute="bottom" constant="8" id="xDX-DP-tmC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YGa-IL-Cft"/>
@@ -291,6 +351,11 @@
                         <outlet property="locationTwoLabel" destination="M9b-UX-k3M" id="4sB-Bs-e5j"/>
                         <outlet property="tableView" destination="l6T-ZB-ebo" id="Vco-zO-WoK"/>
                         <outlet property="topViewHeightConstraint" destination="wAx-m7-avI" id="k5h-OC-kVT"/>
+                        <outlet property="transitButton" destination="KqJ-Jg-LWA" id="Tq4-PQ-1jN"/>
+                        <outletCollection property="transportationButtons" destination="KqJ-Jg-LWA" id="Nre-8S-Mx2"/>
+                        <outletCollection property="transportationButtons" destination="FwO-2d-X8Y" id="6UE-jM-0ds"/>
+                        <outletCollection property="transportationButtons" destination="Yeh-jC-rdw" id="d2R-AJ-BE4"/>
+                        <outletCollection property="transportationButtons" destination="0X0-AY-PAg" id="oT0-Hr-Fux"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HxQ-Bv-nqk" userLabel="First Responder" sceneMemberID="firstResponder"/>
