@@ -38,6 +38,7 @@
 
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
         NSArray *theDirections = [NSArray arrayWithArray:dictionary[@"routes"]];
+        //This is to make sure that there are directions, for some modes of transportation there are not always directions available.
         if (theDirections.count != 0) {
             NSDictionary *legsDict = theDirections[0];
             NSArray *dArray = legsDict[@"legs"];

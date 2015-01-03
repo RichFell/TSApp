@@ -355,6 +355,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
             self.directionsArray = [NSArray arrayWithArray:directionArray];
             UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
             sharedRegion.directions = directionArray;
+            [self.tableView reloadData];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"DisplayPolyLine" object:nil];
         }
     }];
