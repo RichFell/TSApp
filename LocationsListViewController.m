@@ -29,15 +29,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *transitButton;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *transportationButtons;
 
-
 @property CLLocationManager *locationManager;
 @property CLLocation *currentLocation;
-
 @property UIView *locationsView;
 @property UITextField *locationOneTextField;
 @property UITextField *locationTwoTextField;
 @property UIButton *produceDirectionsButton;
-
 @property int destinationSelector;
 @property Location *startingLocation;
 @property Location *endingLocation;
@@ -65,8 +62,7 @@ static NSString *const kPlaceHolderImageName = @"PlaceHolderImage";
 static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 static NSString *const kDirectionsCellID = @"DirectionCell";
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     self.endingDestination = false;
@@ -90,19 +86,15 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 }
 
 #pragma mark - helper methods
--(void)sortLocations:(NSArray *)theLocations
-{
+-(void)sortLocations:(NSArray *)theLocations {
     NSMutableArray *visitedArray = [NSMutableArray new];
     NSMutableArray *notVisitedArray = [NSMutableArray new];
 
-    for (Location *location in theLocations)
-    {
-        if ([location.hasVisited isEqual: @0])
-        {
+    for (Location *location in theLocations) {
+        if ([location.hasVisited isEqual: @0]) {
             [notVisitedArray addObject:location];
         }
-        else
-        {
+        else {
             [visitedArray addObject:location];
         }
     }
@@ -111,18 +103,14 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     [self.tableView reloadData];
 }
 
--(void)queryForLocations
-{
-    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion])
-    {
+-(void)queryForLocations {
+    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion]) {
         [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
             [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
-                if (error)
-                {
+                if (error) {
                     [NetworkErrorAlert showAlertForViewController:self];
                 }
-                else
-                {
+                else {
                     [self sortLocations:locations];
                 }
             }];
@@ -132,8 +120,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 }
 
 ///Removes the deleted destination(Location) from the correct array after a successful delete
--(void)onSuccessfulDeleteAtIndexPath:(NSIndexPath *)indexPath ofLocation:(Location *)location
-{
+-(void)onSuccessfulDeleteAtIndexPath:(NSIndexPath *)indexPath ofLocation:(Location *)location {
     [self.dictionary[[self keyForSection:indexPath.section]] removeObject:location];
     NSMutableArray *firstArray = [self.dictionary[kNeedToVisitString] mutableCopy];
     [firstArray addObjectsFromArray:self.dictionary[kVisitedString]];
@@ -166,25 +153,21 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
         cell.delegate = self;
         cell.addressLabel.text = location.address ? location.address : @"No Address";
         cell.visitedButton.imageView.image =  [location.hasVisited  isEqual: @1] ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
-
         int position = (int)indexPath.row;
         cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
-
         return cell;
     }
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [self returnCorrectCellforIndexpath:indexPath forTableView:tableView];
 
     return cell;
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     HeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kHeaderCellID];
     NSArray *keyArray = [self.dictionary allKeys];
     NSString *key = keyArray[section];
@@ -192,8 +175,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (self.displayDirections) {
         return 0.0;
     }
@@ -202,8 +184,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     }
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.displayDirections) {
         return 1;
     }
@@ -223,34 +204,28 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     }
 }
 
--(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     //TODO: Need to update to delete from Arrays within the dictionary
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSArray *locations = [self arrayForSection:indexPath.section];
         Location *location = locations[indexPath.row];
         [location deleteLocationWithBlock:locations completed:^(BOOL result, NSError *error) {
 
-            if (error)
-            {
+            if (error) {
                 [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
             }
-            else
-            {
+            else {
                 [self onSuccessfulDeleteAtIndexPath:indexPath ofLocation:location];
             }
         }];
     }
 }
 
--(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return true;
 }
 
--(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
-{
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
 
 }
 
@@ -258,17 +233,14 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 
-    if (self.wantDirections)
-    {
-        if (self.destinationSelector == 0)
-        {
+    if (self.wantDirections) {
+        if (self.destinationSelector == 0) {
             self.endingLocation = self.dictionary[[self keyForSection:indexPath.section]][indexPath.row];
             self.locationTwoLabel.text = self.endingLocation.address;
             cell.backgroundColor = [UIColor blueColor];
             self.directionsButton.enabled = true;
         }
-        else
-        {
+        else {
             self.startingLocation = self.dictionary[[self keyForSection:indexPath.section]][indexPath.row];
             self.locationOneLabel.text = self.startingLocation.address;
             cell.backgroundColor = [UIColor greenColor];
@@ -285,12 +257,10 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     NSMutableArray *locations = [[self arrayForSection:indexPath.section]mutableCopy];
     Location *location = locations[indexPath.row];
     [location changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
-        if (error)
-        {
+        if (error) {
             [NetworkErrorAlert showAlertForViewController:self];
         }
-        else
-        {
+        else {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeLocationNotification" object:nil];
             [self moveLocation:location FromSection:indexPath.section];
         }
@@ -300,8 +270,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 
 #pragma mark - LocationManagerDelegate methods
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     for (CLLocation *location in locations) {
         if (location.verticalAccuracy < 1000 && location.horizontalAccuracy < 1000) {
             self.currentLocation = location;
@@ -313,45 +282,36 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 #pragma mark - IBActions
 
 
-- (IBAction)onPressedEnterEditingMode:(UIBarButtonItem *)sender
-{
-    if (sender.tag == 0)
-    {
+- (IBAction)onPressedEnterEditingMode:(UIBarButtonItem *)sender {
+    if (sender.tag == 0) {
         self.tableView.editing = YES;
         sender.tag = 1;
     }
-    else
-    {
+    else {
         self.tableView.editing = NO;
         sender.tag = 0;
     }
 }
 
-- (IBAction)onPressedSetDestinations:(UIButton *)sender
-{
-    if (sender.tag == 0)
-    {
+- (IBAction)onPressedSetDestinations:(UIButton *)sender {
+    if (sender.tag == 0) {
         sender.tag = 1;
         [sender setBackgroundColor:[UIColor orangeColor]];
     }
-    else
-    {
+    else {
         sender.tag = 0;
         [sender setBackgroundColor:[UIColor clearColor]];
     }
 }
 
-- (IBAction)getDirectionsOnTapped:(UIButton *)sender
-{
+- (IBAction)getDirectionsOnTapped:(UIButton *)sender {
     CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
     CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
     [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate withTypeOfTransportation:self.typeOfTransportation andBlock:^(NSArray *directionArray    , NSError *error) {
-        if (error)
-        {
+        if (error) {
             [NetworkErrorAlert showAlertForViewController:self];
         }
-        else
-        {
+        else {
             self.directionsArray = [NSArray arrayWithArray:directionArray];
             UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
             sharedRegion.directions = directionArray;
@@ -361,8 +321,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     }];
 
 }
-- (IBAction)didTapOnLocationOneLabel:(UITapGestureRecognizer *)sender
-{
+- (IBAction)didTapOnLocationOneLabel:(UITapGestureRecognizer *)sender {
     [self expandDirectionsView];
     if (self.endingDestination) {
         self.endingDestination = false;
@@ -376,8 +335,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     }
 }
 
-- (IBAction)didTapOnLocationTwoLabel:(UITapGestureRecognizer *)sender
-{
+- (IBAction)didTapOnLocationTwoLabel:(UITapGestureRecognizer *)sender {
     self.endingDestination = true;
     self.locationTwoLabel.backgroundColor = [UIColor lightGrayColor];
 }
@@ -419,8 +377,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 
 
 #pragma mark - Methods for movement of directionsView
--(void)reduceDirectionsViewInViewDidLoad
-{
+-(void)reduceDirectionsViewInViewDidLoad {
     self.goButtonWidthConstraint.constant = 0.0;
     self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + 20;
     self.locationTwoLabel.hidden = true;
@@ -430,9 +387,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 }
 
 //Expands directions View to display the full view and button animated
--(void)expandDirectionsView
-{
-
+-(void)expandDirectionsView {
     if (self.wantDirections == false) {
         [UIView animateWithDuration:0.3 animations:^{
             self.goButtonWidthConstraint.constant = 40.0;
@@ -457,24 +412,20 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 
 
 #pragma mark - methods for finding correct key or value for dictionary
--(NSString *)keyForSection:(NSInteger)section
-{
+-(NSString *)keyForSection:(NSInteger)section {
     return section == 0 ? kNeedToVisitString : kVisitedString;
 }
 
--(NSString *)keyForOppositeSection:(NSInteger)section
-{
+-(NSString *)keyForOppositeSection:(NSInteger)section {
     return section == 0 ? kVisitedString : kNeedToVisitString;
 }
 
--(NSArray *)arrayForSection:(NSInteger)section
-{
+-(NSArray *)arrayForSection:(NSInteger)section {
     return section == 0 ? self.dictionary[kNeedToVisitString] : self.dictionary[kVisitedString];
 }
 
 #pragma mark - method for moving position of locations
--(void)moveLocation:(Location *)location FromSection:(NSInteger)section
-{
+-(void)moveLocation:(Location *)location FromSection:(NSInteger)section {
     NSMutableArray *forSection = section == 1 ? [self.dictionary[kVisitedString] mutableCopy] : [self.dictionary[kNeedToVisitString] mutableCopy];
     [forSection removeObject:location];
     NSMutableArray *toSection = section == 1 ? [self.dictionary[kNeedToVisitString]mutableCopy] : [self.dictionary[kVisitedString]mutableCopy];
