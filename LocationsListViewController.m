@@ -428,6 +428,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     }
 }
 
+//Expands directions View to display the full view and button animated
 -(void)expandDirectionsView
 {
 

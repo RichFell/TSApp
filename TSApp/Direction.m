@@ -38,18 +38,25 @@
 
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
         NSArray *theDirections = [NSArray arrayWithArray:dictionary[@"routes"]];
-        NSDictionary *legsDict = theDirections[0];
-        NSArray *dArray = legsDict[@"legs"];
-        NSDictionary *anotherDict = dArray[0];
-        NSArray *stepsArray = anotherDict[@"steps"];
+        if (theDirections.count != 0) {
+            NSDictionary *legsDict = theDirections[0];
+            NSArray *dArray = legsDict[@"legs"];
+            NSDictionary *anotherDict = dArray[0];
+            NSArray *stepsArray = anotherDict[@"steps"];
 
-        NSMutableArray *dirArray = [NSMutableArray new];
+            NSMutableArray *dirArray = [NSMutableArray new];
 
-        for (NSDictionary *dirDict in stepsArray) {
-            Direction *dir = [Direction initWithDictionary:dirDict];
-            [dirArray addObject:dir];
+            for (NSDictionary *dirDict in stepsArray) {
+                Direction *dir = [Direction initWithDictionary:dirDict];
+                [dirArray addObject:dir];
+            }
+            completionHandler(dirArray, connectionError);
+
         }
-        completionHandler(dirArray, connectionError);
+        else {
+            completionHandler(nil, nil);
+        }
+
     }];
 }
 @end

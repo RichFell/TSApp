@@ -101,11 +101,7 @@ static float const kMapLocationZoom = 20.0;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
     [[NSNotificationCenter defaultCenter]addObserverForName:@"ChangeLocationNotification" object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
-        [self.mapView clear];
-        UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-        for (Location *location in sharedRegion.locations) {
-            [self placeMarker:location.coordinate string:location.name];
-        }
+        [self resetAllMarkers];
     }];
 
     [[NSNotificationCenter defaultCenter] addObserverForName:@"DisplayPolyLine" object:nil queue:nil usingBlock:^(NSNotification *note) {
@@ -163,6 +159,14 @@ static float const kMapLocationZoom = 20.0;
         [self.mapView animateToLocation:self.mapView.myLocation.coordinate];
     }
 
+}
+
+-(void)resetAllMarkers {
+    [self.mapView clear];
+    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+    for (Location *location in sharedRegion.locations) {
+        [self placeMarker:location.coordinate string:location.name];
+    }
 }
 
 -(void)performQueryForLocationsWithRegion: (Region *)theRegion
@@ -295,6 +299,7 @@ static float const kMapLocationZoom = 20.0;
 #pragma mark - Helper Method
 -(void)didGetListOfDirections
 {
+    [self resetAllMarkers];
     GMSMutablePath *path = [GMSMutablePath path];
     UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
 
@@ -305,7 +310,7 @@ static float const kMapLocationZoom = 20.0;
     }
 
     GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];
-    polyLine.strokeWidth = 8.0;
+    polyLine.strokeWidth = 5.0;
     polyLine.map = self.mapView;
 }
 
