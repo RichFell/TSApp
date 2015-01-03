@@ -315,37 +315,12 @@ static float const kMapLocationZoom = 20.0;
 }
 
 #pragma mark - IBAction and methods to control the sliding of the container view
-- (IBAction)didStartSlidingUpContainer:(UIPanGestureRecognizer *)sender
-{
-    CGPoint currentPosition;
-    switch (sender.state)
-    {
-        case UIGestureRecognizerStateBegan:
-            self.panStartPoint = [sender locationInView:self.view];
-            break;
-
-        case UIGestureRecognizerStateChanged:
-            currentPosition = [sender translationInView:self.view];
-            CGFloat deltaY = self.panStartPoint.y + currentPosition.y;
-            self.imageViewTopConstraint.constant = deltaY;
-            self.containerBottomeConstraint.constant = -deltaY;
-            break;
-
-        case UIGestureRecognizerStateEnded:
-            if (self.imageViewTopConstraint.constant < self.view.frame.size.height/2)
-            {
-                [self animateContainerUp];
-            }
-            else
-            {
-                [self animateContainerDown];
-            }
-            break;
-        case UIGestureRecognizerStateCancelled:
-            break;
-
-        default:
-            break;
+- (IBAction)onArrowTapped:(UITapGestureRecognizer *)sender {
+    if ([sender locationInView:self.view].y > self.view.frame.size.height / 2) {
+        [self animateContainerUp];
+    }
+    else {
+        [self animateContainerDown];
     }
 }
 

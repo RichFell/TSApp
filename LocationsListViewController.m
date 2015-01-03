@@ -114,7 +114,6 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
                     [self sortLocations:locations];
                 }
             }];
-            
         }];
     }
 }
@@ -193,6 +192,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
         return keyArray.count;
     }
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.displayDirections) {
@@ -280,30 +280,6 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 }
 
 #pragma mark - IBActions
-
-
-- (IBAction)onPressedEnterEditingMode:(UIBarButtonItem *)sender {
-    if (sender.tag == 0) {
-        self.tableView.editing = YES;
-        sender.tag = 1;
-    }
-    else {
-        self.tableView.editing = NO;
-        sender.tag = 0;
-    }
-}
-
-- (IBAction)onPressedSetDestinations:(UIButton *)sender {
-    if (sender.tag == 0) {
-        sender.tag = 1;
-        [sender setBackgroundColor:[UIColor orangeColor]];
-    }
-    else {
-        sender.tag = 0;
-        [sender setBackgroundColor:[UIColor clearColor]];
-    }
-}
-
 - (IBAction)getDirectionsOnTapped:(UIButton *)sender {
     CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
     CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
@@ -319,8 +295,8 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
             [[NSNotificationCenter defaultCenter] postNotificationName:@"DisplayPolyLine" object:nil];
         }
     }];
-
 }
+
 - (IBAction)didTapOnLocationOneLabel:(UITapGestureRecognizer *)sender {
     [self expandDirectionsView];
     if (self.endingDestination) {

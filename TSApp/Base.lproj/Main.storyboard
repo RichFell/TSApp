@@ -1066,7 +1066,7 @@
                                     <constraint firstAttribute="height" constant="30" id="pJj-ef-QL1"/>
                                 </constraints>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="7uq-eC-fAx" appends="YES" id="fAY-20-2QG"/>
+                                    <outletCollection property="gestureRecognizers" destination="DId-qC-l89" appends="YES" id="6Kk-J7-d2g"/>
                                 </connections>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8LK-Dz-1RL">
@@ -1106,11 +1106,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BeX-6l-gCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="7uq-eC-fAx">
+                <tapGestureRecognizer id="DId-qC-l89">
                     <connections>
-                        <action selector="didStartSlidingUpContainer:" destination="v5a-Rt-M6e" id="kG6-hG-ITF"/>
+                        <action selector="onArrowTapped:" destination="v5a-Rt-M6e" id="feg-mP-1yh"/>
                     </connections>
-                </panGestureRecognizer>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1294" y="-752"/>
         </scene>
