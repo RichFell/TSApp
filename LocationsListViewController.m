@@ -30,17 +30,12 @@
 
 @property CLLocationManager *locationManager;
 @property CLLocation *currentLocation;
-@property UIView *locationsView;
-@property UITextField *locationOneTextField;
-@property UITextField *locationTwoTextField;
-@property UIButton *produceDirectionsButton;
 @property int destinationSelector;
 @property Location *startingLocation;
 @property Location *endingLocation;
 @property NSArray *directionsArray;
 @property Region *region;
 @property NSDictionary *dictionary;
-@property NSMutableArray *allLocations;
 @property BOOL wantDirections;
 @property BOOL endingDestination;
 @property BOOL displayDirections;
@@ -75,7 +70,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
-    self.allLocations = [NSMutableArray new];
     self.wantDirections = false;
     self.searchBarOne.text = @"Current Location";
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
@@ -308,7 +302,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 - (IBAction)switchModeOnTransOnTapped:(UIButton *)sender {
     for (UIButton *button in self.transportationButtons) {
-        button.highlighted = false;
+        [button setHighlighted: false];
     }
 
     switch (sender.tag) {
@@ -332,6 +326,9 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
             break;
     }
     [sender setHighlighted:true];
+    for (UIButton * button in self.transportationButtons) {
+        button.backgroundColor = button.highlighted == true ? [UIColor orangeColor] : [UIColor clearColor];
+    }
 }
 
 
@@ -340,9 +337,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     self.goButtonWidthConstraint.constant = 0.0;
     self.topViewHeightConstraint.constant = self.searchBarOne.frame.size.height + 20;
     self.searchBarTwo.hidden = true;
-    for (UIButton *button in self.transportationButtons) {
-        button.hidden = true;
-    }
 }
 
 //Expands directions View to display the full view and button animated
