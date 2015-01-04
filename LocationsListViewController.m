@@ -70,7 +70,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
-    self.wantDirections = false;
+     self.wantDirections = false;
     self.searchBarOne.text = @"Current Location";
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
