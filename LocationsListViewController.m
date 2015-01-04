@@ -17,17 +17,17 @@
 #import "DirectionTableViewCell.h"
 
 
-@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate>
+@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *callDirectionsButton;
-@property (weak, nonatomic) IBOutlet UILabel *locationTwoLabel;
-@property (weak, nonatomic) IBOutlet UILabel *locationOneLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *goButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *directionsButton;
 @property (weak, nonatomic) IBOutlet UIButton *transitButton;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *transportationButtons;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBarOne;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBarTwo;
 
 @property CLLocationManager *locationManager;
 @property CLLocation *currentLocation;
@@ -45,6 +45,7 @@
 @property BOOL wantDirections;
 @property BOOL endingDestination;
 @property BOOL displayDirections;
+@property BOOL firstTapOnCurrentPosition;
 @property NSString *typeOfTransportation;
 
 @end
@@ -61,12 +62,15 @@ static NSString *const kNewLocationNotification = @"NewLocationNotification";
 static NSString *const kPlaceHolderImageName = @"PlaceHolderImage";
 static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 static NSString *const kDirectionsCellID = @"DirectionCell";
+static NSString *const kChangeLocationNotif = @"ChangeLocationNotification";
+static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.endingDestination = false;
     self.displayDirections = false;
+    self.firstTapOnCurrentPosition = true;
     self.typeOfTransportation = @"driving";
     self.destinationSelector = 0;
     self.locationManager = [CLLocationManager new];
@@ -75,6 +79,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     self.callDirectionsButton.enabled = false;
     self.allLocations = [NSMutableArray new];
     self.wantDirections = false;
+    self.searchBarOne.text = @"Current Location";
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.callDirectionsButton.backgroundColor = [UIColor customOrange];
@@ -125,7 +130,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     [firstArray addObjectsFromArray:self.dictionary[kVisitedString]];
     UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
     sharedRegion.locations = firstArray;
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"ChangeLocationNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:kChangeLocationNotif object:nil];
     [self.tableView reloadData];
 }
 
@@ -162,7 +167,6 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [self returnCorrectCellforIndexpath:indexPath forTableView:tableView];
-
     return cell;
 }
 
@@ -236,13 +240,14 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     if (self.wantDirections) {
         if (self.destinationSelector == 0) {
             self.endingLocation = self.dictionary[[self keyForSection:indexPath.section]][indexPath.row];
-            self.locationTwoLabel.text = self.endingLocation.address;
+            self.searchBarTwo.text = self.endingLocation.address;
             cell.backgroundColor = [UIColor blueColor];
             self.directionsButton.enabled = true;
         }
         else {
             self.startingLocation = self.dictionary[[self keyForSection:indexPath.section]][indexPath.row];
-            self.locationOneLabel.text = self.startingLocation.address;
+//            self.locationOneLabel.text = self.startingLocation.address;
+            self.searchBarOne.text = @"Current Location";
             cell.backgroundColor = [UIColor greenColor];
 
             self.callDirectionsButton.enabled = true;
@@ -261,11 +266,10 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
             [NetworkErrorAlert showAlertForViewController:self];
         }
         else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeLocationNotification" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kChangeLocationNotif object:nil];
             [self moveLocation:location FromSection:indexPath.section];
         }
     }];
-
 }
 
 #pragma mark - LocationManagerDelegate methods
@@ -292,28 +296,9 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
             UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
             sharedRegion.directions = directionArray;
             [self.tableView reloadData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"DisplayPolyLine" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDisplayPolyLineNotif object:nil];
         }
     }];
-}
-
-- (IBAction)didTapOnLocationOneLabel:(UITapGestureRecognizer *)sender {
-    [self expandDirectionsView];
-    if (self.endingDestination) {
-        self.endingDestination = false;
-        self.locationOneLabel.backgroundColor = [UIColor lightGrayColor];
-        self.locationTwoLabel.backgroundColor = [UIColor whiteColor];
-    }
-
-    if (self.startingLocation == nil) {
-        self.startingLocation = [Location new];
-        self.startingLocation.coordinate = [PFGeoPoint geoPointWithLocation: self.currentLocation];
-    }
-}
-
-- (IBAction)didTapOnLocationTwoLabel:(UITapGestureRecognizer *)sender {
-    self.endingDestination = true;
-    self.locationTwoLabel.backgroundColor = [UIColor lightGrayColor];
 }
 
 - (IBAction)switchTableViewDisplayOnTapped:(UISegmentedControl *)sender {
@@ -355,8 +340,8 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 #pragma mark - Methods for movement of directionsView
 -(void)reduceDirectionsViewInViewDidLoad {
     self.goButtonWidthConstraint.constant = 0.0;
-    self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + 20;
-    self.locationTwoLabel.hidden = true;
+    self.topViewHeightConstraint.constant = self.searchBarOne.frame.size.height + 20;
+    self.searchBarTwo.hidden = true;
     for (UIButton *button in self.transportationButtons) {
         button.hidden = true;
     }
@@ -367,10 +352,12 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     if (self.wantDirections == false) {
         [UIView animateWithDuration:0.3 animations:^{
             self.goButtonWidthConstraint.constant = 40.0;
-            self.topViewHeightConstraint.constant = self.locationOneLabel.frame.size.height + self.locationTwoLabel.frame.size.height + self.transitButton.frame.size.height + 60;
+            self.topViewHeightConstraint.constant = self.searchBarOne.frame.size.height + self.searchBarTwo.frame.size.height + self.transitButton.frame.size.height + 60;
+            [self.searchBarOne resignFirstResponder];
+            self.searchBarOne.userInteractionEnabled = false;
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
-            self.locationTwoLabel.hidden = false;
+            self.searchBarTwo.hidden = false;
             for (UIButton *button in self.transportationButtons) {
                 button.hidden = false;
             }
@@ -409,6 +396,13 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
     [self.dictionary[[self keyForSection:section]] removeObject:location];
     [self.dictionary[[self keyForOppositeSection:section]] addObject:location];
     [self.tableView reloadData];
+}
+
+#pragma mark - searchBarDelegate Methods
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    if ([searchBar isEqual:self.searchBarOne] && self.firstTapOnCurrentPosition == true) {
+        [self expandDirectionsView];
+    }
 }
 
 @end
