@@ -20,7 +20,6 @@
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIButton *callDirectionsButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *goButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *directionsButton;
@@ -76,13 +75,11 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
-    self.callDirectionsButton.enabled = false;
     self.allLocations = [NSMutableArray new];
     self.wantDirections = false;
     self.searchBarOne.text = @"Current Location";
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
-    self.callDirectionsButton.backgroundColor = [UIColor customOrange];
     [self reduceDirectionsViewInViewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserverForName:kNewLocationNotification object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
         [self queryForLocations];
@@ -249,8 +246,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 //            self.locationOneLabel.text = self.startingLocation.address;
             self.searchBarOne.text = @"Current Location";
             cell.backgroundColor = [UIColor greenColor];
-
-            self.callDirectionsButton.enabled = true;
         }
     }
 }
@@ -312,6 +307,9 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 - (IBAction)switchModeOnTransOnTapped:(UIButton *)sender {
+    for (UIButton *button in self.transportationButtons) {
+        button.highlighted = false;
+    }
 
     switch (sender.tag) {
         case 0:
@@ -333,7 +331,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
         default:
             break;
     }
-
+    [sender setHighlighted:true];
 }
 
 
@@ -401,6 +399,9 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 #pragma mark - searchBarDelegate Methods
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     if ([searchBar isEqual:self.searchBarOne] && self.firstTapOnCurrentPosition == true) {
+        Location *location = [Location new];
+        location.coordinate = [PFGeoPoint geoPointWithLocation:self.currentLocation];
+        self.startingLocation = location;
         [self expandDirectionsView];
     }
 }

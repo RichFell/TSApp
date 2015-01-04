@@ -336,7 +336,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="YGa-IL-Cft"/>
                     <connections>
-                        <outlet property="callDirectionsButton" destination="DD9-Q6-XXF" id="xWp-CV-9q1"/>
                         <outlet property="directionsButton" destination="yw6-Go-ZL3" id="C5W-BR-wYJ"/>
                         <outlet property="goButtonWidthConstraint" destination="TWK-lt-QF6" id="2hj-WP-d7n"/>
                         <outlet property="searchBarOne" destination="dZy-H7-SEb" id="zTP-7Q-Dq3"/>
