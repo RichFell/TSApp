@@ -15,6 +15,7 @@
 #import "Direction.h"
 #import <CoreLocation/CoreLocation.h>
 #import "DirectionTableViewCell.h"
+#import "MapModel.h"
 
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
@@ -70,7 +71,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
-     self.wantDirections = false;
+    self.wantDirections = false;
     self.searchBarOne.text = @"Current Location";
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
@@ -152,6 +153,24 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
         cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
         return cell;
     }
+}
+
+///does the call for directions between the startingCoordinate and the endingCoordinate
+-(void)askForDirections {
+    CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
+    CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
+    [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate withTypeOfTransportation:self.typeOfTransportation andBlock:^(NSArray *directionArray    , NSError *error) {
+        if (error) {
+            [NetworkErrorAlert showAlertForViewController:self];
+        }
+        else {
+            self.directionsArray = [NSArray arrayWithArray:directionArray];
+            UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+            sharedRegion.directions = directionArray;
+            [self.tableView reloadData];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDisplayPolyLineNotif object:nil];
+        }
+    }];
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods
@@ -237,7 +256,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
         }
         else {
             self.startingLocation = self.dictionary[[self keyForSection:indexPath.section]][indexPath.row];
-//            self.locationOneLabel.text = self.startingLocation.address;
             self.searchBarOne.text = @"Current Location";
             cell.backgroundColor = [UIColor greenColor];
         }
@@ -274,20 +292,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 #pragma mark - IBActions
 - (IBAction)getDirectionsOnTapped:(UIButton *)sender {
-    CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
-    CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
-    [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate withTypeOfTransportation:self.typeOfTransportation andBlock:^(NSArray *directionArray    , NSError *error) {
-        if (error) {
-            [NetworkErrorAlert showAlertForViewController:self];
-        }
-        else {
-            self.directionsArray = [NSArray arrayWithArray:directionArray];
-            UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-            sharedRegion.directions = directionArray;
-            [self.tableView reloadData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kDisplayPolyLineNotif object:nil];
-        }
-    }];
+    [self askForDirections];
 }
 
 - (IBAction)switchTableViewDisplayOnTapped:(UISegmentedControl *)sender {
@@ -398,6 +403,69 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
         self.startingLocation = location;
         [self expandDirectionsView];
     }
+}
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    NSLog(@"Did change Text");
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [MapModel geocodeString:searchBar.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
+        if (error) {
+            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+        }
+        else {
+            [self askToSaveLocationAlert:coordinate atAddress:searchBar.text];
+            Location *location = [Location new];
+            location.coordinate = [PFGeoPoint geoPointWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+            location.address = searchBar.text;
+            if ([searchBar isEqual:self.searchBarOne]) {
+                self.startingLocation = location;
+            }
+            else {
+                self.endingLocation = location;
+            }
+            [self askForDirections];
+        }
+    }];
+}
+
+-(void)askToSaveLocationAlert:(CLLocationCoordinate2D)coordinate atAddress:(NSString *)address {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Would you like to save this to your location list?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self saveLocationAlertForCoordinate:coordinate andAddress:address];
+    }];
+    [alertController addAction:yesAction];
+    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:noAction];
+    [self presentViewController:alertController animated:true completion:nil];
+}
+
+-(void)saveLocationAlertForCoordinate:(CLLocationCoordinate2D)coordinate andAddress:(NSString *)address {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Give the Location a name" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Add name here";
+    }];
+    UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UITextField *textField = alertController.textFields[0];
+        NSMutableArray *array = self.dictionary[[self keyForSection:0]];
+        UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
+        [Location createLocation:coordinate andName:textField.text array: array currentRegion:sharedRegion.region andAddress:address completion:^(Location *theLocation, NSError *error) {
+            if (error) {
+                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            }
+            else {
+                NSMutableArray *array = self.dictionary[[self keyForSection:0]];
+                [array addObject:theLocation];
+                [self.dictionary setValue:array forKey:[self keyForSection:0]];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kChangeLocationNotif object:nil];
+            }
+        }];
+    }];
+    [alertController addAction:saveAction];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction: cancelAction];
+    [self presentViewController:alertController animated:true completion:nil];
 }
 
 @end
