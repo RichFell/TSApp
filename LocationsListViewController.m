@@ -16,14 +16,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "DirectionTableViewCell.h"
 #import "MapModel.h"
-#import "MapViewController.h"
-
-typedef enum {
-    Driving,
-    Walking,
-    Transit,
-    Biking,
-}DirectionType;
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
