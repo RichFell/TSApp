@@ -18,9 +18,8 @@
 @interface RegionListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property NSDictionary *regionDictionary;
 @property NSMutableArray *regionsArray;
-
+@property NSArray *titleArray;
 @end
 
 @implementation RegionListViewController
@@ -40,13 +39,8 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.regionDictionary = [NSDictionary new];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:true];
     [self queryForTrips];
+    self.titleArray = @[kNeedToVisitKey, kVisitedKey];
 }
 
 #pragma mark - Helper methods
@@ -57,7 +51,7 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
     [Region queryForRegionsWithBlock:^(NSArray *regions, NSError *error) {
         if (error == nil)
         {
-            [self createDictionaryOfRegions:regions];
+            [self createArrayOfRegions:regions];
         }
         else
         {
@@ -67,7 +61,7 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
     }];
 }
 
--(void)createDictionaryOfRegions:(NSArray *)theRegions
+-(void)createArrayOfRegions:(NSArray *)theRegions
 {
     NSMutableArray *needToVisitRegions = [NSMutableArray array];
     NSMutableArray *visitedRegions = [NSMutableArray array];
@@ -82,9 +76,8 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
             [needToVisitRegions addObject:region];
         }
     }
-    self.regionDictionary = @{kNeedToVisitKey: needToVisitRegions, kVisitedKey: visitedRegions};
+    [self.regionsArray addObjectsFromArray: @[needToVisitRegions, visitedRegions]];
     [self.tableView reloadData];
-
 }
 
 #pragma mark - TableView Delegate methods
@@ -92,7 +85,7 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RegionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
-    Region *region = [self correctArrayForSection:indexPath.section][indexPath.row];
+    Region *region = self.regionsArray[indexPath.section][indexPath.row];
 
     cell.infoLabel.text = region.name;
     cell.numberLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)indexPath.row];
@@ -107,7 +100,7 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     HeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
-    NSString *title = [self.regionDictionary allKeys][section];
+    NSString *title = self.titleArray[section];
     cell.headerTitleLabel.text = title;
     return cell;
 }
@@ -115,18 +108,19 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.regionDictionary allKeys].count;
+    return self.titleArray.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self correctArrayForSection:section].count;
+    NSArray *array = self.regionsArray.count == 0 ? @[] : self.regionsArray[section];
+    return array.count;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:true];
-    Region *region = self.regionDictionary[[self keyForSection:indexPath.section]][indexPath.row];
+    Region *region = self.regionsArray[indexPath.section][indexPath.row];
     [UserDefaults setDefaultRegion:region];
     [self dismissViewControllerAnimated:true completion:nil];
 }
@@ -135,7 +129,7 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        Region *region = [self correctArrayForSection:indexPath.section][indexPath.row];
+        Region *region = self.regionsArray[indexPath.section][indexPath.row];
         [region deleteRegionWithBlock:^(BOOL result, NSError *error) {
             if (error)
             {
@@ -143,30 +137,11 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
             }
             else
             {
-                [self removeRegionAfterDeleteAtIndexPath:indexPath];
+                [self.regionsArray[indexPath.section] removeObject:region];
+                [self.tableView reloadData];
             }
         }];
     }
-}
-
--(void)removeRegionAfterDeleteAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.regionDictionary[[self keyForSection:indexPath.section]] removeObjectAtIndex:indexPath.row];
-    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-    sharedRegion.region = self.regionDictionary[kNeedToVisitKey][0] ? self.regionDictionary[kNeedToVisitKey][0] : [Region new];
-    [self.tableView reloadData];
-}
-
-#pragma mark - Dictionary Helper Methods
-
--(NSArray *)correctArrayForSection:(NSInteger)section
-{
-    return section == 0 ? self.regionDictionary[kNeedToVisitKey] : self.regionDictionary[kVisitedKey];
-}
-
--(NSString *)keyForSection:(NSInteger)section
-{
-    return section == 0 ? kNeedToVisitKey : kVisitedKey;
 }
 
 @end
