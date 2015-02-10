@@ -41,7 +41,7 @@
 @property BOOL firstTapOnCurrentPosition;
 @property NSString *typeOfTransportation;
 @property NSArray *titleArray;
-@property NSArray *locationsArray;
+@property NSMutableArray *locationsArray;
 
 @end
 
@@ -88,7 +88,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
     NSMutableArray *visitedArray = [NSMutableArray new];
     NSMutableArray *notVisitedArray = [NSMutableArray new];
-
+    self.locationsArray = [NSMutableArray array];
     for (Location *location in theLocations) {
         if ([location.hasVisited isEqual: @0]) {
             [notVisitedArray addObject:location];
@@ -97,7 +97,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
             [visitedArray addObject:location];
         }
     }
-    self.locationsArray = @[notVisitedArray, visitedArray];
+    [self.locationsArray addObjectsFromArray:@[notVisitedArray, visitedArray]];
     [self.tableView reloadData];
 }
 
@@ -249,6 +249,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
             [NetworkErrorAlert showAlertForViewController:self];
         }
         else {
+            [self moveLocation:location FromSection:indexPath.section];
             [self.delegate didMoveLocation:location];
         }
     }];
@@ -349,10 +350,14 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 //#pragma mark - method for moving position of locations
 -(void)moveLocation:(Location *)location FromSection:(NSInteger)section {
 
-    NSMutableArray *forSection = section == 1 ? [self.locationsArray[1] mutableCopy]: [self.locationsArray[0] mutableCopy];
-    [forSection removeObject:location];
-    NSMutableArray *toSection = section == 1 ? [self.locationsArray[0]mutableCopy] : [self.locationsArray[1]mutableCopy];
-    [toSection addObject:location];
+    if (section == 0) {
+        [self.locationsArray[0]removeObject:location];
+        [self.locationsArray[1] addObject:location];
+    }
+    else {
+        [self.locationsArray[1] removeObject:location];
+        [self.locationsArray[0] addObject:location];
+    }
     [self.tableView reloadData];
 }
 
@@ -409,15 +414,13 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }];
     UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UITextField *textField = alertController.textFields[0];
-        NSMutableArray *array = [self.locationsArray[0]mutableCopy];
         UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-        [Location createLocation:coordinate andName:textField.text array: array currentRegion:sharedRegion.region andAddress:address completion:^(Location *theLocation, NSError *error) {
+        [Location createLocation:coordinate andName:textField.text array: self.locationsArray[0] currentRegion:sharedRegion.region andAddress:address completion:^(Location *theLocation, NSError *error) {
             if (error) {
                 [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
             }
             else {
-                NSMutableArray *array = [self.locationsArray[0]mutableCopy];
-                [array addObject:theLocation];
+                [self.locationsArray[0] addObject:theLocation];
                 [self.delegate didAddNewLocation:theLocation];
             }
         }];
