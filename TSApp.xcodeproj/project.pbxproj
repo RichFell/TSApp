@@ -10,7 +10,6 @@
 		9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */; };
 		9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF319E37A89001ADB3E /* RegionListViewController.m */; };
 		9B14DAF719E37D04001ADB3E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF619E37D04001ADB3E /* MapViewController.m */; };
-		9B15128F19B406CC00F6F505 /* DirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B15128E19B406CC00F6F505 /* DirectionsViewController.m */; };
 		9B1C6E4319A6E82C00D8B804 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4219A6E82C00D8B804 /* User.m */; };
 		9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4519A6F26100D8B804 /* InitialViewController.m */; };
 		9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */; };
@@ -47,7 +46,6 @@
 		9BB0B881197AF79500D545C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0B880197AF79500D545C1 /* main.m */; };
 		9BB0B885197AF79500D545C1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0B884197AF79500D545C1 /* AppDelegate.m */; };
 		9BB0B888197AF79500D545C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BB0B886197AF79500D545C1 /* Main.storyboard */; };
-		9BB0B88B197AF79500D545C1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0B88A197AF79500D545C1 /* ViewController.m */; };
 		9BB0B88D197AF79500D545C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BB0B88C197AF79500D545C1 /* Images.xcassets */; };
 		9BB0B894197AF79500D545C1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0B893197AF79500D545C1 /* XCTest.framework */; };
 		9BB0B895197AF79500D545C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0B874197AF79500D545C1 /* Foundation.framework */; };
@@ -93,8 +91,6 @@
 		9B14DAF319E37A89001ADB3E /* RegionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionListViewController.m; sourceTree = "<group>"; };
 		9B14DAF519E37D04001ADB3E /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		9B14DAF619E37D04001ADB3E /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
-		9B15128D19B406CC00F6F505 /* DirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsViewController.h; sourceTree = "<group>"; };
-		9B15128E19B406CC00F6F505 /* DirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsViewController.m; sourceTree = "<group>"; };
 		9B1C6E4119A6E82C00D8B804 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		9B1C6E4219A6E82C00D8B804 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		9B1C6E4419A6F26100D8B804 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
@@ -145,8 +141,6 @@
 		9BB0B883197AF79500D545C1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9BB0B884197AF79500D545C1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9BB0B887197AF79500D545C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9BB0B889197AF79500D545C1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9BB0B88A197AF79500D545C1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9BB0B88C197AF79500D545C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9BB0B892197AF79500D545C1 /* TSAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TSAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BB0B893197AF79500D545C1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -390,8 +384,6 @@
 		9BF72551199448AF00BFCA34 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9BB0B889197AF79500D545C1 /* ViewController.h */,
-				9BB0B88A197AF79500D545C1 /* ViewController.m */,
 				9B14DAF519E37D04001ADB3E /* MapViewController.h */,
 				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
 				9BBB0F931997F21300C5321D /* LocationsListViewController.h */,
@@ -404,8 +396,6 @@
 				9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */,
 				9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */,
 				9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */,
-				9B15128D19B406CC00F6F505 /* DirectionsViewController.h */,
-				9B15128E19B406CC00F6F505 /* DirectionsViewController.m */,
 				9B14DAF219E37A89001ADB3E /* RegionListViewController.h */,
 				9B14DAF319E37A89001ADB3E /* RegionListViewController.m */,
 				9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */,
@@ -523,7 +513,6 @@
 				9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */,
 				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
 				9BC6CC8319B4D6900020C14D /* Direction.m in Sources */,
-				9BB0B88B197AF79500D545C1 /* ViewController.m in Sources */,
 				9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */,
 				9B14DAF719E37D04001ADB3E /* MapViewController.m in Sources */,
 				9B86822A1A36AAC5009F9AD0 /* MapNavigationViewController.m in Sources */,
@@ -536,7 +525,6 @@
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
 				9B8681ED1A353525009F9AD0 /* HeaderTableViewCell.m in Sources */,
 				9B36F2DE1A28EFAD0061DB17 /* UserDefaults.m in Sources */,
-				9B15128F19B406CC00F6F505 /* DirectionsViewController.m in Sources */,
 				9BB0B881197AF79500D545C1 /* main.m in Sources */,
 				9BBB112B199AEA3400C5321D /* Region.m in Sources */,
 				9BC6CC8619B4FA780020C14D /* NSString+StringCategory.m in Sources */,
