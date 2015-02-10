@@ -392,6 +392,8 @@
 			children = (
 				9BB0B889197AF79500D545C1 /* ViewController.h */,
 				9BB0B88A197AF79500D545C1 /* ViewController.m */,
+				9B14DAF519E37D04001ADB3E /* MapViewController.h */,
+				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
 				9BBB0F931997F21300C5321D /* LocationsListViewController.h */,
 				9BBB0F941997F21300C5321D /* LocationsListViewController.m */,
 				9B1C6E4419A6F26100D8B804 /* InitialViewController.h */,
@@ -408,8 +410,6 @@
 				9B14DAF319E37A89001ADB3E /* RegionListViewController.m */,
 				9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */,
 				9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */,
-				9B14DAF519E37D04001ADB3E /* MapViewController.h */,
-				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
 				9B8681E61A3513C5009F9AD0 /* CustomInfoWindow.xib */,
 				9B8682281A36AAC5009F9AD0 /* MapNavigationViewController.h */,
 				9B8682291A36AAC5009F9AD0 /* MapNavigationViewController.m */,

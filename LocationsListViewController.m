@@ -16,7 +16,14 @@
 #import <CoreLocation/CoreLocation.h>
 #import "DirectionTableViewCell.h"
 #import "MapModel.h"
+#import "MapViewController.h"
 
+typedef enum {
+    Driving,
+    Walking,
+    Transit,
+    Biking,
+}DirectionType;
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
@@ -122,8 +129,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [firstArray addObjectsFromArray:self.dictionary[kVisitedString]];
     UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
     sharedRegion.locations = firstArray;
-    [[NSNotificationCenter defaultCenter]postNotificationName:kChangeLocationNotif object:nil];
-    [self.tableView reloadData];
+    [self.delegate didDeleteLocation:location];
 }
 
 ///Returns the correct cell we want to display whether we want to show directions, or to show the destinations
@@ -159,16 +165,15 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 -(void)askForDirections {
     CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
     CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
-    [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate withTypeOfTransportation:self.typeOfTransportation andBlock:^(NSArray *directionArray    , NSError *error) {
+    NSString *directionType = self.typeOfTransportation != nil ? self.typeOfTransportation : @"driving";
+    [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate withTypeOfTransportation:directionType andBlock:^(NSArray *directionArray, NSError *error) {
         if (error) {
             [NetworkErrorAlert showAlertForViewController:self];
         }
         else {
             self.directionsArray = [NSArray arrayWithArray:directionArray];
-            UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-            sharedRegion.directions = directionArray;
+            [self.delegate didGetNewDirections:self.directionsArray];
             [self.tableView reloadData];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kDisplayPolyLineNotif object:nil];
         }
     }];
 }
@@ -189,33 +194,18 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (self.displayDirections) {
-        return 0.0;
-    }
-    else {
-        return 40.0;
-    }
+
+    return self.displayDirections ? 0.0 : 40.0;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.displayDirections) {
-        return 1;
-    }
-    else {
-        NSArray *keyArray = [self.dictionary allKeys];
-        return keyArray.count;
-    }
+
+    return self.displayDirections ? 1 : [self.dictionary allKeys].count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.displayDirections) {
-        return self.directionsArray.count;
-    }
-    else {
-        NSArray *arrayToCount = [self arrayForSection:section];
-        return arrayToCount.count;
-    }
+    return self.displayDirections ? self.directionsArray.count : [self arrayForSection:section].count;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -273,8 +263,8 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
             [NetworkErrorAlert showAlertForViewController:self];
         }
         else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kChangeLocationNotif object:nil];
             [self moveLocation:location FromSection:indexPath.section];
+            [self.delegate didMoveLocation:location];
         }
     }];
 }
@@ -458,7 +448,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
                 NSMutableArray *array = self.dictionary[[self keyForSection:0]];
                 [array addObject:theLocation];
                 [self.dictionary setValue:array forKey:[self keyForSection:0]];
-                [[NSNotificationCenter defaultCenter] postNotificationName:kChangeLocationNotif object:nil];
+                [self.delegate didAddNewLocation:theLocation];
             }
         }];
     }];
@@ -467,5 +457,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [alertController addAction: cancelAction];
     [self presentViewController:alertController animated:true completion:nil];
 }
+
 
 @end

@@ -11,7 +11,16 @@
 #import "Region.h"
 #import "Location.h"
 
+@protocol LocationsListVCDelegate <NSObject>
+
+-(void)didDeleteLocation:(Location *)deletedLocation;
+-(void)didMoveLocation:(Location *)movedLocation;
+-(void)didAddNewLocation:(Location *)newLocation;
+-(void)didGetNewDirections:(NSArray *)directions;
+
+@end
 
 @interface LocationsListViewController : UIViewController
+@property id<LocationsListVCDelegate>delegate;
 
 @end

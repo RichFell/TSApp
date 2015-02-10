@@ -1063,7 +1063,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8LK-Dz-1RL">
                                 <rect key="frame" x="0.0" y="95" width="320" height="504"/>
                                 <connections>
-                                    <segue destination="y2z-dT-rya" kind="embed" id="FRt-5i-W3C"/>
+                                    <segue destination="y2z-dT-rya" kind="embed" identifier="LocationListSegue" id="FRt-5i-W3C"/>
                                 </connections>
                             </containerView>
                         </subviews>

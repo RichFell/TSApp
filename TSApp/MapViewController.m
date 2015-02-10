@@ -20,10 +20,11 @@
 #import "UserDefaults.h"
 #import "UniversalRegion.h"
 #import "Direction.h"
+#import "LocationsListViewController.h"
 
 static NSString *const kStoryboardID = @"Main";
 
-@interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate>
+@interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
 @property GMSMapView *mapView;
@@ -101,11 +102,7 @@ static float const kMapLocationZoom = 20.0;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
     [[NSNotificationCenter defaultCenter]addObserverForName:@"ChangeLocationNotification" object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
-        [self resetAllMarkers];
-    }];
 
-    [[NSNotificationCenter defaultCenter] addObserverForName:@"DisplayPolyLine" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        [self didGetListOfDirections];
     }];
 
 }
@@ -159,14 +156,6 @@ static float const kMapLocationZoom = 20.0;
         [self.mapView animateToLocation:self.mapView.myLocation.coordinate];
     }
 
-}
-
--(void)resetAllMarkers {
-    [self.mapView clear];
-    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-    for (Location *location in sharedRegion.locations) {
-        [self placeMarker:location.coordinate string:location.name];
-    }
 }
 
 -(void)performQueryForLocationsWithRegion: (Region *)theRegion
@@ -233,7 +222,7 @@ static float const kMapLocationZoom = 20.0;
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"New Destination's name";
     }];
-    UIAlertAction *saveAction =[UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *saveAction =[UIAlertAction actionWithTitle:@"SAVE" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
         UITextField *nameTextfield = [alert.textFields firstObject];
         [self reverseGeocodeCoordinate:coordinate andName:nameTextfield.text];
@@ -241,11 +230,12 @@ static float const kMapLocationZoom = 20.0;
     }];
     [alert addAction:saveAction];
 
-    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"CANCEL" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:noAction];
 
     [self presentViewController:alert animated:true completion:nil];
 }
+
 -(void)reverseGeocodeCoordinate:(CLLocationCoordinate2D)coordinate andName:(NSString *)theName
 {
     [MapModel reverseGeoCode:coordinate withBlock:^(GMSReverseGeocodeResponse *response, NSError *error) {
@@ -296,24 +286,6 @@ static float const kMapLocationZoom = 20.0;
     return true;
 }
 
-#pragma mark - Helper Method
--(void)didGetListOfDirections
-{
-    [self resetAllMarkers];
-    GMSMutablePath *path = [GMSMutablePath path];
-    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-
-    for (Direction *direction in sharedRegion.directions)
-    {
-        [path addLatitude:direction.startingLatitude longitude:direction.startingLongitude];
-        [path addLatitude:direction.endingLatitude longitude:direction.endingLongitude];
-    }
-
-    GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];
-    polyLine.strokeWidth = 5.0;
-    polyLine.map = self.mapView;
-}
-
 #pragma mark - IBAction and methods to control the sliding of the container view
 - (IBAction)onArrowTapped:(UITapGestureRecognizer *)sender {
     if ([sender locationInView:self.view].y > self.view.frame.size.height / 2) {
@@ -324,8 +296,7 @@ static float const kMapLocationZoom = 20.0;
     }
 }
 
--(void)animateContainerUp
-{
+-(void)animateContainerUp {
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.containerBottomeConstraint.constant = 0;
         self.imageViewTopConstraint.constant = kImageViewConstraintConstantOpen;
@@ -335,8 +306,7 @@ static float const kMapLocationZoom = 20.0;
     }];
 }
 
--(void)animateContainerDown
-{
+-(void)animateContainerDown {
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.containerBottomeConstraint.constant = -self.view.frame.size.height + kConstraintConstantBuffer;
         self.imageViewTopConstraint.constant = self.view.frame.size.height - kConstraintConstantBuffer;
@@ -368,5 +338,50 @@ static float const kMapLocationZoom = 20.0;
     }
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"LocationListSegue"]) {
+        LocationsListViewController *locationVC = segue.destinationViewController;
+        locationVC.delegate = self;
+    }
+}
+#pragma mark - LocationListVCDelegate Methods
+
+-(void)didMoveLocation:(Location *)movedLocation {
+    [self resetAllMarkers];
+}
+
+-(void)didDeleteLocation:(Location *)deletedLocation {
+    [self.locationsArray removeObject:deletedLocation];
+    [self resetAllMarkers];
+}
+
+-(void)didAddNewLocation:(Location *)newLocation {
+    [self.locationsArray addObject:newLocation];
+    [self resetAllMarkers];
+}
+
+-(void)didGetNewDirections:(NSArray *)directions {
+    [self resetAllMarkers];
+    GMSMutablePath *path = [GMSMutablePath path];
+
+    for (Direction *direction in directions)
+    {
+        [path addLatitude:direction.startingLatitude longitude:direction.startingLongitude];
+        [path addLatitude:direction.endingLatitude longitude:direction.endingLongitude];
+    }
+
+    GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];
+    polyLine.strokeWidth = 5.0;
+    polyLine.map = self.mapView;
+}
+
+#pragma  mark -resetAllMarkers method
+-(void)resetAllMarkers {
+    
+    [self.mapView clear];
+    for (Location *location in self.locationsArray) {
+        [self placeMarker:location.coordinate string:location.name];
+    }
+}
 
 @end
