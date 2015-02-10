@@ -35,12 +35,13 @@
 @property Location *endingLocation;
 @property NSArray *directionsArray;
 @property Region *region;
-@property NSDictionary *dictionary;
 @property BOOL wantDirections;
 @property BOOL endingDestination;
 @property BOOL displayDirections;
 @property BOOL firstTapOnCurrentPosition;
 @property NSString *typeOfTransportation;
+@property NSArray *titleArray;
+@property NSArray *locationsArray;
 
 @end
 
@@ -72,6 +73,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [self.locationManager startUpdatingLocation];
     self.wantDirections = false;
     self.searchBarOne.text = @"Current Location";
+    self.titleArray = @[kNeedToVisitString, kVisitedString];
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self reduceDirectionsViewInViewDidLoad];
@@ -83,6 +85,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 #pragma mark - helper methods
 -(void)sortLocations:(NSArray *)theLocations {
+
     NSMutableArray *visitedArray = [NSMutableArray new];
     NSMutableArray *notVisitedArray = [NSMutableArray new];
 
@@ -94,8 +97,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
             [visitedArray addObject:location];
         }
     }
-
-    self.dictionary = @{kNeedToVisitString: notVisitedArray, kVisitedString: visitedArray};
+    self.locationsArray = @[notVisitedArray, visitedArray];
     [self.tableView reloadData];
 }
 
@@ -116,11 +118,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 ///Removes the deleted destination(Location) from the correct array after a successful delete
 -(void)onSuccessfulDeleteAtIndexPath:(NSIndexPath *)indexPath ofLocation:(Location *)location {
-    [self.dictionary[[self keyForSection:indexPath.section]] removeObject:location];
-    NSMutableArray *firstArray = [self.dictionary[kNeedToVisitString] mutableCopy];
-    [firstArray addObjectsFromArray:self.dictionary[kVisitedString]];
-    UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-    sharedRegion.locations = firstArray;
+    [self.locationsArray[indexPath.row] removeObject:location];
     [self.delegate didDeleteLocation:location];
 }
 
@@ -138,9 +136,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }
     else {
         LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
-        NSArray *locations = [self arrayForSection:indexPath.section];
-
-        Location *location = [locations objectAtIndex:indexPath.row];
+        Location *location = self.locationsArray[indexPath.section][indexPath.row];
 
         cell.infoLabel.text = location.name;
         cell.indexPath = indexPath;
@@ -179,9 +175,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     HeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kHeaderCellID];
-    NSArray *keyArray = [self.dictionary allKeys];
-    NSString *key = keyArray[section];
-    cell.headerTitleLabel.text = key;
+    cell.headerTitleLabel.text = self.titleArray[section];
     return cell;
 }
 
@@ -192,19 +186,20 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return self.displayDirections ? 1 : [self.dictionary allKeys].count;
+    return self.displayDirections ? 1 : self.titleArray.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.displayDirections ? self.directionsArray.count : [self arrayForSection:section].count;
+    NSArray *array = self.locationsArray[section];
+    return self.displayDirections ? self.directionsArray.count : array.count;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     //TODO: Need to update to delete from Arrays within the dictionary
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSArray *locations = [self arrayForSection:indexPath.section];
-        Location *location = locations[indexPath.row];
+        NSArray *locations = self.locationsArray[indexPath.section];
+        Location *location = locations[indexPath.section][indexPath.row];
         [location deleteLocationWithBlock:locations completed:^(BOOL result, NSError *error) {
 
             if (error) {
@@ -231,13 +226,13 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
     if (self.wantDirections) {
         if (self.destinationSelector == 0) {
-            self.endingLocation = self.dictionary[[self keyForSection:indexPath.section]][indexPath.row];
+            self.endingLocation = self.locationsArray[indexPath.section][indexPath.row];
             self.searchBarTwo.text = self.endingLocation.address;
             cell.backgroundColor = [UIColor blueColor];
             self.directionsButton.enabled = true;
         }
         else {
-            self.startingLocation = self.dictionary[[self keyForSection:indexPath.section]][indexPath.row];
+            self.startingLocation = self.locationsArray[indexPath.row];
             self.searchBarOne.text = @"Current Location";
             cell.backgroundColor = [UIColor greenColor];
         }
@@ -248,14 +243,12 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 -(void)didTapVisitedButtonAtIndexPath:(NSIndexPath *)indexPath
 {
     //TODO: update for the dictionary
-    NSMutableArray *locations = [[self arrayForSection:indexPath.section]mutableCopy];
-    Location *location = locations[indexPath.row];
+    Location *location = self.locationsArray[indexPath.section][indexPath.row];
     [location changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
         if (error) {
             [NetworkErrorAlert showAlertForViewController:self];
         }
         else {
-            [self moveLocation:location FromSection:indexPath.section];
             [self.delegate didMoveLocation:location];
         }
     }];
@@ -353,27 +346,13 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 
-#pragma mark - methods for finding correct key or value for dictionary
--(NSString *)keyForSection:(NSInteger)section {
-    return section == 0 ? kNeedToVisitString : kVisitedString;
-}
-
--(NSString *)keyForOppositeSection:(NSInteger)section {
-    return section == 0 ? kVisitedString : kNeedToVisitString;
-}
-
--(NSArray *)arrayForSection:(NSInteger)section {
-    return section == 0 ? self.dictionary[kNeedToVisitString] : self.dictionary[kVisitedString];
-}
-
-#pragma mark - method for moving position of locations
+//#pragma mark - method for moving position of locations
 -(void)moveLocation:(Location *)location FromSection:(NSInteger)section {
-    NSMutableArray *forSection = section == 1 ? [self.dictionary[kVisitedString] mutableCopy] : [self.dictionary[kNeedToVisitString] mutableCopy];
+
+    NSMutableArray *forSection = section == 1 ? [self.locationsArray[1] mutableCopy]: [self.locationsArray[0] mutableCopy];
     [forSection removeObject:location];
-    NSMutableArray *toSection = section == 1 ? [self.dictionary[kNeedToVisitString]mutableCopy] : [self.dictionary[kVisitedString]mutableCopy];
+    NSMutableArray *toSection = section == 1 ? [self.locationsArray[0]mutableCopy] : [self.locationsArray[1]mutableCopy];
     [toSection addObject:location];
-    [self.dictionary[[self keyForSection:section]] removeObject:location];
-    [self.dictionary[[self keyForOppositeSection:section]] addObject:location];
     [self.tableView reloadData];
 }
 
@@ -430,16 +409,15 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }];
     UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UITextField *textField = alertController.textFields[0];
-        NSMutableArray *array = self.dictionary[[self keyForSection:0]];
+        NSMutableArray *array = [self.locationsArray[0]mutableCopy];
         UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
         [Location createLocation:coordinate andName:textField.text array: array currentRegion:sharedRegion.region andAddress:address completion:^(Location *theLocation, NSError *error) {
             if (error) {
                 [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
             }
             else {
-                NSMutableArray *array = self.dictionary[[self keyForSection:0]];
+                NSMutableArray *array = [self.locationsArray[0]mutableCopy];
                 [array addObject:theLocation];
-                [self.dictionary setValue:array forKey:[self keyForSection:0]];
                 [self.delegate didAddNewLocation:theLocation];
             }
         }];
