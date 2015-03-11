@@ -24,17 +24,10 @@
 
 @implementation RegionListViewController
 
-static NSString *const kMainStoryboard = @"Main";
 static NSString *const kRegionListVC = @"RegionListViewController";
 static NSString *const kCellID = @"CellID";
 static NSString *const kVisitedKey = @"Completed";
 static NSString *const kNeedToVisitKey = @"Haven't Completed";
-
-+(RegionListViewController *)newStoryboardInstance
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kMainStoryboard bundle:nil];
-    return [storyboard instantiateViewControllerWithIdentifier:kRegionListVC];
-}
 
 - (void)viewDidLoad
 {

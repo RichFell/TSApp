@@ -12,7 +12,4 @@
 
 @interface RegionListViewController : UIViewController
 
-
-+(RegionListViewController *)newStoryboardInstance;
-
 @end

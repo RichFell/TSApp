@@ -20,6 +20,7 @@
 		9B36F2E51A2B7F500061DB17 /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */; };
 		9B36F2E91A2C17AC0061DB17 /* CreateTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */; };
 		9B4326141A3AA04F00F6549E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4326131A3AA04F00F6549E /* libsqlite3.dylib */; };
+		9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B68B5471AAFF21300AF3493 /* FBSessionManager.m */; };
 		9B68D1241A3AA46000299694 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68D1231A3AA46000299694 /* FacebookSDK.framework */; };
 		9B68D1261A3AA5D500299694 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68D1251A3AA5D500299694 /* Accounts.framework */; };
 		9B8681DF1A32C3CB009F9AD0 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8681DD1A32C3CB009F9AD0 /* FBAudienceNetwork.framework */; };
@@ -107,6 +108,8 @@
 		9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateTripViewController.h; sourceTree = "<group>"; };
 		9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateTripViewController.m; sourceTree = "<group>"; };
 		9B4326131A3AA04F00F6549E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		9B68B5461AAFF21300AF3493 /* FBSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSessionManager.h; sourceTree = "<group>"; };
+		9B68B5471AAFF21300AF3493 /* FBSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSessionManager.m; sourceTree = "<group>"; };
 		9B68D1231A3AA46000299694 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		9B68D1251A3AA5D500299694 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		9B8681DD1A32C3CB009F9AD0 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
@@ -377,6 +380,8 @@
 				9B1C6E4219A6E82C00D8B804 /* User.m */,
 				9BF7255519944E9100BFCA34 /* MapModel.h */,
 				9BF7255619944E9100BFCA34 /* MapModel.m */,
+				9B68B5461AAFF21300AF3493 /* FBSessionManager.h */,
+				9B68B5471AAFF21300AF3493 /* FBSessionManager.m */,
 			);
 			name = "Model Objects";
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 				9BB0B885197AF79500D545C1 /* AppDelegate.m in Sources */,
 				9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */,
 				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
+				9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */,
 				9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */,
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
 				9B8681ED1A353525009F9AD0 /* HeaderTableViewCell.m in Sources */,

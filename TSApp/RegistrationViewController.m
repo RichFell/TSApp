@@ -21,8 +21,7 @@
 
 @implementation RegistrationViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.createAccountButton.backgroundColor = [UIColor customOrange];
     self.passwordTextFieldOne.backgroundColor = [UIColor customLightGrey];
@@ -30,18 +29,15 @@
     self.usernameTextField.backgroundColor = [UIColor customLightGrey];
 }
 
-- (IBAction)createAccountOnTapped:(UIButton *)sender
-{
-    if ([self.passwordTextFieldOne.text isEqualToString:self.passwordTextFieldTwo.text])
-    {
-        [User signUpNewUserWithUsername:self.usernameTextField.text withPassword:self.passwordTextFieldTwo.text withEmail:nil andCompletion:^(PFUser *user, NSError *error) {
-            if (error)
-            {
+- (IBAction)createAccountOnTapped:(UIButton *)sender {
+    if ([self.passwordTextFieldOne.text isEqualToString:self.passwordTextFieldTwo.text]) {
+
+        User *newUser = [[User alloc]initWithUsername:self.usernameTextField.text withPassword:self.passwordTextFieldOne.text andEmail:nil completion:^(BOOL result, NSError *error) {
+            if (error) {
                 [NetworkErrorAlert showAlertForViewController:self];
             }
-            else
-            {
-                [self performSegueWithIdentifier:@"loggedInSegue" sender:self];
+            else {
+                [self performSegueWithIdentifier:@"loggedInSegue" sender:newUser];
             }
         }];
     }
@@ -49,36 +45,29 @@
 }
 
 #pragma mark - TextField Delegate methods
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     return true;
 }
 
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    if (textField == self.passwordTextFieldTwo)
-    {
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.passwordTextFieldTwo) {
         [self moveTheView:0];
     }
-    else if (textField == self.passwordTextFieldOne)
-    {
+    else if (textField == self.passwordTextFieldOne) {
         [self moveTheView:1];
     }
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.view endEditing:true];
     return true;
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
+-(void)textFieldDidEndEditing:(UITextField *)textField {
     [self moveTheView:2];
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:true];
 }
 
@@ -88,8 +77,7 @@
 
     CGFloat y;
 
-    switch (decider)
-    {
+    switch (decider) {
         case 0:
             y = -100.0;
             break;

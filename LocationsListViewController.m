@@ -179,7 +179,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-
     return self.displayDirections ? 0.0 : 40.0;
 }
 

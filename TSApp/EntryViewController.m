@@ -9,6 +9,7 @@
 #import "EntryViewController.h"
 #import <Parse/Parse.h>
 #import "NetworkErrorAlert.h"
+#import "FBSessionManager.h"
 
 @interface EntryViewController ()
 
@@ -24,24 +25,32 @@
     [self setupButtonBackground];
 }
 
--(void)setupButtonBackground
-{
-    for (UIButton *button in self.buttonsCollection)
-    {
+-(void)setupButtonBackground {
+    for (UIButton *button in self.buttonsCollection) {
         button.backgroundColor = [UIColor customOrange];
     }
 }
 
-+(EntryViewController *)newStoryboardInstance
-{
++(EntryViewController *)newStoryboardInstance {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     return [storyboard instantiateViewControllerWithIdentifier:@"EntryViewController"];
 }
 
 
-- (IBAction)connectWithFacebookOnTapped:(UIButton *)sender
-{
-    [NetworkErrorAlert showAlertForViewController:self];
+- (IBAction)connectWithFacebookOnTapped:(UIButton *)sender {
+    [FBSessionManager createNewSessionWithBlock:^(BOOL result, NSError *error) {
+        if (result == true) {
+
+        }
+        else {
+            [self showAlertWithTitle:@"There was a problem" andMessage:error.localizedDescription];
+        }
+    }];
+}
+
+-(void)showAlertWithTitle:(NSString *)title andMessage:(NSString *)message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 @end
