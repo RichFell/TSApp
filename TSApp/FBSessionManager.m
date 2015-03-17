@@ -11,18 +11,15 @@
 
 @implementation FBSessionManager
 
-+(void)checkForActiveSession {
++(void)checkForActiveSessionWithBlock:(void (^)(BOOL, NSError *))completionHandler {
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
 
         // If there's one, just open the session silently, without showing the user the login UI
-        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
-                                           allowLoginUI:NO
-                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
-                                          // Handler for session state changes
-                                          // Call this method EACH time the session state changes,
-                                          //  NOT just when the session open
-//                                          [self sessionStateChanged:session state:state error:error];
-                                      }];
+        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"] allowLoginUI:NO completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+            if (state == FBSessionStateOpen) {
+                completionHandler(true, error);
+            }
+        }];
     }
 }
 
@@ -49,8 +46,7 @@
     [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, id<FBGraphUser> user, NSError *error) {
         if (!error) {
             NSString *email = [user objectForKey:@"email"];
-            User *user = [[User alloc] initWithUsername:email withPassword:email andEmail:email completion:^(BOOL result, NSError *error) {
-                NSLog(@"%@", user);
+            [User createUserWithUserName:email withPassword:email andEmail:email completion:^(BOOL result, NSError *error) {
                 completionHandler(result, error);
             }];
         }

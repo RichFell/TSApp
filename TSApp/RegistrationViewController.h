@@ -10,4 +10,5 @@
 
 @interface RegistrationViewController : UIViewController
 
++(RegistrationViewController *)storyboardInstance;
 @end

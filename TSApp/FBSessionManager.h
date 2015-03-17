@@ -11,6 +11,6 @@
 
 @interface FBSessionManager : NSObject
 
-+(void)checkForActiveSession;
++(void)checkForActiveSessionWithBlock:(void (^)(BOOL result, NSError *error))completionHandler;
 +(void)createNewSessionWithBlock:(void (^)(BOOL result, NSError *error))completionHandler;
 @end

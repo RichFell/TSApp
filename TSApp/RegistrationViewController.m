@@ -21,6 +21,10 @@
 
 @implementation RegistrationViewController
 
++(RegistrationViewController *)storyboardInstance {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    return [storyboard instantiateViewControllerWithIdentifier:@"RegistrationVC"];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.createAccountButton.backgroundColor = [UIColor customOrange];
@@ -32,12 +36,12 @@
 - (IBAction)createAccountOnTapped:(UIButton *)sender {
     if ([self.passwordTextFieldOne.text isEqualToString:self.passwordTextFieldTwo.text]) {
 
-        User *newUser = [[User alloc]initWithUsername:self.usernameTextField.text withPassword:self.passwordTextFieldOne.text andEmail:nil completion:^(BOOL result, NSError *error) {
+        [User createUserWithUserName:self.usernameTextField.text withPassword:self.passwordTextFieldOne.text andEmail:nil completion:^(BOOL result, NSError *error) {
             if (error) {
                 [NetworkErrorAlert showAlertForViewController:self];
             }
             else {
-                [self performSegueWithIdentifier:@"loggedInSegue" sender:newUser];
+                [self performSegueWithIdentifier:@"loggedInSegue" sender:nil];
             }
         }];
     }

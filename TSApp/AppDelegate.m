@@ -26,8 +26,6 @@
                   clientKey:@"RWXNAF7TiGqnVaQJERLfLivu4LgRD6RJTJfzCvt1"];
     [Parse enableLocalDatastore];
 
-    [FBSessionManager checkForActiveSession];
-
     [Region registerSubclass];
     [Location registerSubclass];
     [User registerSubclass];

@@ -7,7 +7,6 @@
 //
 
 #import "User.h"
-#import <FacebookSDK/FacebookSDK.h>
 
 @implementation User
 
@@ -20,14 +19,20 @@
 {
     return (User *)[PFUser currentUser];
 }
--(instancetype)initWithUsername:(NSString *)username withPassword: (NSString *)password andEmail: (NSString *)email completion:(void(^)(BOOL , NSError *))completionHandler {
+
++(void)createUserWithUserName:(NSString *)username withPassword:(NSString *)password andEmail:(NSString *)email completion:(void (^)(BOOL, NSError *))completionHandler {
+
+    User *user = [[User alloc] initWithUsername:username withPassword:password andEmail:email];
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        completionHandler(succeeded, error);
+    }];
+
+}
+-(instancetype)initWithUsername:(NSString *)username withPassword: (NSString *)password andEmail: (NSString *)email {
     self = [super init];
     self.username = username;
     self.password = password;
     self.email = email;
-    [self signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        completionHandler(succeeded, error);
-    }];
     return self;
 }
 

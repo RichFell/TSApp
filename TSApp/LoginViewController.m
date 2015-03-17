@@ -9,12 +9,14 @@
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
 #import "User.h"
+#import "RegistrationViewController.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 @end
 
@@ -46,12 +48,17 @@ static CGFloat const kYForKeyboardAnimation = -200.0;
         }
     }];
 }
+- (IBAction)goToCreateAccountOnTap:(UIButton *)sender {
+    RegistrationViewController *regVC = [RegistrationViewController storyboardInstance];
+    [self presentViewController:regVC animated:true completion:nil];
+}
 
 -(void)setupElements
 {
     self.usernameTextField.backgroundColor = [UIColor customLightGrey];
     self.passwordTextField.backgroundColor = [UIColor customLightGrey];
     self.loginButton.backgroundColor = [UIColor customOrange];
+    self.createAccountButton.tintColor = [UIColor customOrange];
 }
 
 #pragma mark - TextField Delegate Methods
@@ -75,11 +82,6 @@ static CGFloat const kYForKeyboardAnimation = -200.0;
         self.view.frame = CGRectMake(0, kYForKeyboardAnimation, self.view.frame.size.width, self.view.frame.size.height);
     }];
 }
-
-//-(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user
-//{
-////    [self.parseModel userSignUp:user.name andPassword:user.password andEmail:user.email];
-//}
 
 -(void)errorMessage: (NSString *)title andMessage: (NSString *)message
 {

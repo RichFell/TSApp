@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ouo-xp-z2H">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ouo-xp-z2H">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -500,7 +500,7 @@
                                     <constraint firstAttribute="height" constant="40" id="QDU-8H-YAJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="kco-ij-gBt" id="FUR-2V-S0u"/>
                                 </connections>
@@ -521,6 +521,21 @@
                                     <action selector="onPressedLogin:" destination="kco-ij-gBt" eventType="touchUpInside" id="3ft-8W-C5J"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UB6-rm-DZI">
+                                <rect key="frame" x="107" y="506" width="107" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="OzS-3T-SAQ"/>
+                                    <constraint firstAttribute="width" constant="107" id="YDm-Ud-cU9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="Create Account">
+                                    <color key="titleColor" red="1" green="0.74194137354540413" blue="0.26233262160270054" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="goToCreateAccountOnTap:" destination="kco-ij-gBt" eventType="touchUpInside" id="ooL-0y-WPU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -530,11 +545,14 @@
                             <constraint firstAttribute="centerX" secondItem="brl-vf-96H" secondAttribute="centerX" id="Fug-1N-7dT"/>
                             <constraint firstItem="brl-vf-96H" firstAttribute="top" secondItem="pYh-AJ-zbs" secondAttribute="bottom" constant="15" id="HLN-2w-GJi"/>
                             <constraint firstItem="kZ2-wS-sTX" firstAttribute="top" secondItem="brl-vf-96H" secondAttribute="bottom" constant="16" id="I56-jd-lsK"/>
+                            <constraint firstItem="UB6-rm-DZI" firstAttribute="top" secondItem="kZ2-wS-sTX" secondAttribute="bottom" constant="17" id="OHV-nE-C9w"/>
+                            <constraint firstAttribute="centerX" secondItem="UB6-rm-DZI" secondAttribute="centerX" id="fsJ-S9-sNW"/>
                             <constraint firstItem="pYh-AJ-zbs" firstAttribute="top" secondItem="2Pk-cB-6Tg" secondAttribute="bottom" constant="75" id="g9E-2g-yUB"/>
                             <constraint firstAttribute="centerX" secondItem="kZ2-wS-sTX" secondAttribute="centerX" id="nPW-KT-ZnR"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="createAccountButton" destination="UB6-rm-DZI" id="H9K-hq-Uc8"/>
                         <outlet property="loginButton" destination="kZ2-wS-sTX" id="UJt-0M-Qj3"/>
                         <outlet property="passwordTextField" destination="brl-vf-96H" id="E8k-og-44t"/>
                         <outlet property="usernameTextField" destination="pYh-AJ-zbs" id="klZ-8b-NJd"/>
@@ -548,7 +566,7 @@
         <!--Registration View Controller-->
         <scene sceneID="mZB-ve-8gu">
             <objects>
-                <viewController id="DeC-EM-M4t" customClass="RegistrationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegistrationVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DeC-EM-M4t" customClass="RegistrationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TA1-8u-3q8"/>
                         <viewControllerLayoutGuide type="bottom" id="gwN-Hc-a2l"/>
@@ -614,7 +632,7 @@
                                     <constraint firstAttribute="width" constant="288" id="fSA-eB-soN"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="DeC-EM-M4t" id="Rfg-bb-GEK"/>
                                 </connections>
@@ -803,7 +821,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="tiX-dX-keP" id="cH5-5G-1hy"/>
-                        <segue destination="Keu-kB-DQd" kind="custom" identifier="unwind" id="G2b-Jr-RGE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n5d-Iz-SZm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1065,7 +1082,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Oiy-u0-nea"/>
-        <segue reference="G2b-Jr-RGE"/>
+        <segue reference="rcw-hg-mPT"/>
     </inferredMetricsTieBreakers>
 </document>
