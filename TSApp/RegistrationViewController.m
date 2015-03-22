@@ -25,6 +25,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     return [storyboard instantiateViewControllerWithIdentifier:@"RegistrationVC"];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.createAccountButton.backgroundColor = [UIColor customOrange];
@@ -78,7 +79,6 @@
 #pragma mark - helper method
 -(void)moveTheView:(int)decider
 {
-
     CGFloat y;
 
     switch (decider) {
