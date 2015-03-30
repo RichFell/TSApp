@@ -19,37 +19,27 @@
 @dynamic longitude;
 @dynamic latitude;
 @dynamic locations;
-@synthesize vistedLocations = _vistedLocations;
-@synthesize notVisitedLocations = _notVisitedLocations;
+@dynamic objectId;
+@synthesize arrayOfLocations = _arrayOfLocations;
 
 
 #pragma mark - Getter and setter methods for certain properties.
--(NSArray *)vistedLocations {
-    NSMutableArray *array = [NSMutableArray new];
+-(NSArray *)arrayOfLocations {
+    NSMutableArray *visited = [NSMutableArray new];
+    NSMutableArray *notVisited = [NSMutableArray new];
     for (CDLocation *location in self.locations) {
         if (location.hasVisited == true) {
-            [array addObject:location];
+            [visited addObject:location];
+        }
+        else {
+            [notVisited addObject:location];
         }
     }
-    return [self sortArrayByIndex:array];
+    return @[[self sortArrayByIndex:notVisited], [self sortArrayByIndex:visited]];
 }
 
--(void)setVistedLocations:(NSArray *)vistedLocations {
-    _vistedLocations = self.vistedLocations;
-}
-
--(NSArray *)notVisitedLocations {
-    NSMutableArray *array = [NSMutableArray new];
-    for (CDLocation *location in self.locations) {
-        if (location.hasVisited == false) {
-            [array addObject:location];
-        }
-    }
-    return [self sortArrayByIndex:array];
-}
-
--(void)setNotVisitedLocations:(NSArray *)notVisited {
-    _notVisitedLocations = self.notVisitedLocations;
+-(void)setArrayOfLocations:(NSArray *)arrayOfLocations {
+    _arrayOfLocations = self.arrayOfLocations;
 }
 
 -(BOOL)hasCompleted {
@@ -82,8 +72,9 @@
 
 +(void)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint completed:(void(^)(BOOL result, CDRegion *region))completionHandler {
     CDRegion *region = [[CDRegion alloc]initWithName:name andGeoPoint:geoPoint];
-    [region.managedObjectContext save:nil];
     [Region createRegion:name withGeoPoint:geoPoint compeletion:^(Region *newRegion, NSError *error) {
+        region.objectId = newRegion.objectId;
+        [region.managedObjectContext save:nil];
         completionHandler(error ? false : true, region);
     }];
 }

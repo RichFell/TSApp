@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSString * engAddress;
 @property (nonatomic, retain) NSString * localAddress;
 @property (nonatomic, retain) CDRegion *region;
+@property (nonatomic, retain) NSString *objectId;
 @property BOOL hasVisited;
 
 @end

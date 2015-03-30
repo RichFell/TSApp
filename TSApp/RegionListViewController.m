@@ -89,7 +89,7 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
     [tableView deselectRowAtIndexPath:indexPath animated:true];
     Region *region = self.regionsArray[indexPath.section][indexPath.row];
     [UserDefaults setDefaultRegion:region];
-    [self dismissViewControllerAnimated:true completion:nil];
+    [self.navigationController popViewControllerAnimated:true];
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

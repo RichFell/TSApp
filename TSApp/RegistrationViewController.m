@@ -42,11 +42,10 @@
                 [NetworkErrorAlert showAlertForViewController:self];
             }
             else {
-                [self performSegueWithIdentifier:@"loggedInSegue" sender:nil];
+                [self.presentingViewController dismissViewControllerAnimated:true completion:nil];
             }
         }];
     }
-
 }
 
 #pragma mark - TextField Delegate methods

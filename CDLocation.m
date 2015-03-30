@@ -21,6 +21,7 @@
 @dynamic engAddress;
 @dynamic localAddress;
 @dynamic region;
+@dynamic objectId;
 
 -(BOOL)hasVisited {
     return [self.visited boolValue];

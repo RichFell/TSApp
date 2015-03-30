@@ -7,6 +7,8 @@
 //
 
 #import "MapNavigationViewController.h"
+#import <Parse/Parse.h>
+#import "EntryViewController.h"
 
 @interface MapNavigationViewController ()
 
@@ -17,6 +19,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:true];
+    if ([PFUser currentUser] == nil) {
+        EntryViewController *entryVC = [EntryViewController newStoryboardInstance];
+        [self presentViewController:entryVC animated:true completion:nil];
+    }
 }
 
 +(MapNavigationViewController *)storyboardInstanceOfMapNavVC

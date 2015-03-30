@@ -17,8 +17,8 @@
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSSet *locations;
-@property NSArray *vistedLocations;
-@property NSArray *notVisitedLocations;
+@property (nonatomic, retain) NSString *objectId;
+@property NSArray *arrayOfLocations;
 @property BOOL hasCompleted;
 
 /**

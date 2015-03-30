@@ -44,7 +44,7 @@ static CGFloat const kYForKeyboardAnimation = -200.0;
         }
         else
         {
-            [self performSegueWithIdentifier:kMoveForwardSegue sender:self];
+            [self.presentingViewController dismissViewControllerAnimated:true completion:nil];
         }
     }];
 }

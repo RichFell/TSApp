@@ -24,20 +24,23 @@
 @dynamic region;
 @dynamic address;
 
-
-+(void)createLocation:(CLLocationCoordinate2D)coordinate andName:(NSString *)name array:(NSMutableArray *)array currentRegion:(Region *)region andAddress:(NSString *)theAddress completion:(void (^)(Location *, NSError *))completionHandler
-{
-    Location *newLocation = [Location new];
+-(instancetype)initWithName:(NSString *)name andCoordinate: (CLLocationCoordinate2D)coordinate currentRegion:(Region *)region andAddress:(NSString *)address andIndex:(NSNumber *)index {
+    self = [super init];
+    self.name = name;
     PFGeoPoint *geoPoint = [PFGeoPoint new];
     geoPoint.latitude = coordinate.latitude;
     geoPoint.longitude = coordinate.longitude;
-    newLocation.coordinate = geoPoint;
-    newLocation.name = name;
-    NSUInteger index = array.count + 1;
-    newLocation.index = [NSNumber numberWithUnsignedInteger:index];
-    newLocation.hasVisited = @0;
-    newLocation.region = region;
-    newLocation.address = theAddress;
+    self.coordinate = geoPoint;
+    self.index = index;
+    self.address = address;
+    self.region = region;
+    self.hasVisited = @0;
+    return self;
+}
+
++(void)createLocation:(CLLocationCoordinate2D)coordinate andName:(NSString *)name array:(NSMutableArray *)array currentRegion:(Region *)region andAddress:(NSString *)theAddress completion:(void (^)(Location *, NSError *))completionHandler
+{
+    Location *newLocation = [[Location alloc] initWithName:name andCoordinate:coordinate currentRegion:region andAddress:theAddress andIndex:[NSNumber numberWithUnsignedInteger:array.count + 1]];
     [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 
         completionHandler(newLocation, error);
