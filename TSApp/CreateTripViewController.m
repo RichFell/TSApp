@@ -59,6 +59,7 @@ static CGFloat const kYKeyboardClosed = 0.0;
 -(void)saveRegionWithGeoPoint: (PFGeoPoint *)geoPoint
 {
     [CDRegion createNewRegionWithName:self.tripNameTextField.text andGeoPoint:geoPoint completed:^(BOOL result, CDRegion *region) {
+        [UserDefaults setDefaultRegion:region];
             [self dismissViewControllerAnimated:true completion:^{
             [[self presentingViewController].navigationController popViewControllerAnimated:true];
         }];

@@ -88,6 +88,7 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:true];
     CDRegion *region = self.regionsArray[indexPath.section][indexPath.row];
+    [UserDefaults setDefaultRegion:region];
     [self.delegate regionListVC:self selectedRegion:region];
     [self.navigationController popViewControllerAnimated:true];
 }

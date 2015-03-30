@@ -23,6 +23,7 @@
 #import "LocationsListViewController.h"
 #import "CDLocation.h"
 #import "TSMarker.h"
+#import "AppDelegate.h"
 
 static NSString *const kStoryboardID = @"Main";
 
@@ -70,15 +71,16 @@ static float const kMapLocationZoom = 20.0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [self setup];
+
+    [self fetchDefaultRegion];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:true];
-//    [self queryForTrip];
+    self.title = self.currentRegion ? self.currentRegion.name : @"TravelSages";
 }
+
 
 #pragma mark - Helper Methods
 
@@ -103,10 +105,6 @@ static float const kMapLocationZoom = 20.0;
     self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
-    [[NSNotificationCenter defaultCenter]addObserverForName:@"ChangeLocationNotification" object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
-
-    }];
-
 }
 
 -(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string
@@ -135,6 +133,14 @@ static float const kMapLocationZoom = 20.0;
     [self.mapView setSelectedMarker:marker];
 }
 
+-(void)fetchDefaultRegion {
+    [UserDefaults getDefaultRegionWithBlock:^(CDRegion *region, NSError *error) {
+        self.currentRegion = region;
+        self.title = region.name;
+        [self resetAllMarkers];
+    }];
+}
+
 #pragma mark - GMSMapViewDelegate Methods
 
 -(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
@@ -146,8 +152,6 @@ static float const kMapLocationZoom = 20.0;
         }
         else
         {
-;
-
             [self resetAllMarkers];
             [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare];
         }
@@ -222,7 +226,7 @@ static float const kMapLocationZoom = 20.0;
         {
             [self.mapView animateToLocation:coordinate];
             [self.mapView animateToZoom:kMapLocationZoom];
-//            [self placeMarker:[PFGeoPoint geoPointWithLatitude:coordinate.latitude longitude:coordinate.longitude] string:@"Tap to save destination"];
+            [self placeMarker:coordinate string:@"Tap to save destination"];
         }
     }];
     [textField resignFirstResponder];

@@ -103,15 +103,15 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 -(void)queryForLocations {
     if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion]) {
-        [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
-            [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
-                if (error) {
-                    [NetworkErrorAlert showAlertForViewController:self];
-                }
-                else {
-                    [self sortLocations:locations];
-                }
-            }];
+        [UserDefaults getDefaultRegionWithBlock:^(CDRegion *region, NSError *error) {
+//            [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
+//                if (error) {
+//                    [NetworkErrorAlert showAlertForViewController:self];
+//                }
+//                else {
+//                    [self sortLocations:locations];
+//                }
+//            }];
         }];
     }
 }

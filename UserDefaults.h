@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Region.h"
+#import "CDRegion.h"
 
 @interface UserDefaults : NSObject
 
-+(void)setDefaultRegion:(Region *) theRegion;
-+(void)getDefaultRegionWithBlock: (void(^)(Region *region, NSError *error))completionHandler;
++(void)setDefaultRegion:(CDRegion *)region;
++(void)getDefaultRegionWithBlock: (void(^)(CDRegion *region, NSError *error))completionHandler;
 @end
