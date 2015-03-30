@@ -10,4 +10,7 @@
 #import "CDLocation.h"
 @interface TSMarker : GMSMarker
 @property CDLocation *location;
+
+-(instancetype)initWithLocation:(CDLocation *)location;
+-(instancetype)initWithPosition:(CLLocationCoordinate2D)position withSnippet:(NSString *)snippet forMap:(GMSMapView *)mapView;
 @end

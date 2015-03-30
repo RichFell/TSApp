@@ -109,27 +109,13 @@ static float const kMapLocationZoom = 20.0;
 
 -(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string
 {
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = coordinate;
-    marker.map = self.mapView;
-    marker.appearAnimation = kGMSMarkerAnimationPop;
-    marker.tappable = YES;
-    marker.title = @"Tap to create new destination" ;
-    marker.snippet = string;
-    marker.icon = [GMSMarker markerImageWithColor:[UIColor redColor]];
-
+    TSMarker *marker = [[TSMarker alloc]initWithPosition:coordinate withSnippet:string forMap:self.mapView];
     [self.mapView setSelectedMarker:marker];
 }
 
 -(void)placeMarkerForLocation:(CDLocation *)location {
-    TSMarker *marker = [TSMarker markerWithPosition:location.coordinate];
-    marker.snippet = location.localAddress ? location.localAddress : @"No address";
-    marker.tappable = true;
+    TSMarker *marker = [[TSMarker alloc]initWithLocation:location];
     marker.map = self.mapView;
-    marker.appearAnimation = kGMSMarkerAnimationPop;
-    marker.title = location.name;
-    marker.snippet = location.localAddress;
-    marker.icon = location.hasVisited == true ? [GMSMarker markerImageWithColor:[UIColor blueColor]] : [GMSMarker markerImageWithColor:[UIColor redColor]];
     [self.mapView setSelectedMarker:marker];
 }
 
@@ -158,18 +144,13 @@ static float const kMapLocationZoom = 20.0;
     }];
 }
 
--(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
-{
-
-    TSMarker *theMarker = (TSMarker *)marker;
-    theMarker.snippet = theMarker.location.localAddress;
-    theMarker.tappable = true;
-    return false;
-}
-
 -(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
 {
-    [self displayAlertToCreateNewLocation:marker.position];
+    TSMarker *theMarker = (TSMarker *)marker;
+    NSLog(@"%@", theMarker.location);
+    if (!theMarker.location) {
+        [self displayAlertToCreateNewLocation:marker.position];
+    }
 }
 
 -(void)displayAlertToCreateNewLocation: (CLLocationCoordinate2D) coordinate
