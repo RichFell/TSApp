@@ -61,13 +61,6 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 static NSString *const kNewLocationNotification = @"NewLocationNotification";
 static float const kMapLocationZoom = 20.0;
 
-+(MapViewController *)storyboardInstanceOfMapVC
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardID bundle:nil];
-    MapViewController *mapVC = [storyboard instantiateViewControllerWithIdentifier:@"MapViewController"];
-    return mapVC;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
