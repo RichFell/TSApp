@@ -20,7 +20,8 @@
 @dynamic latitude;
 @dynamic locations;
 @dynamic objectId;
-@synthesize arrayOfLocations = _arrayOfLocations;
+@synthesize sortedArrayOfLocations = _sortedArrayOfLocations;
+@synthesize allLocations = _allLocations;
 
 
 #pragma mark - Getter and setter methods for certain properties.
@@ -39,7 +40,19 @@
 }
 
 -(void)setArrayOfLocations:(NSArray *)arrayOfLocations {
-    _arrayOfLocations = self.arrayOfLocations;
+    _sortedArrayOfLocations = self.sortedArrayOfLocations;
+}
+
+-(NSArray *)allLocations {
+    return [self.locations allObjects];
+}
+
+-(void)setAllLocations:(NSArray *)allLocations {
+    for (CDLocation *location in allLocations) {
+        if (![self.locations containsObject:location]) {
+            [self addLocationsObject:location];
+        }
+    }
 }
 
 -(BOOL)hasCompleted {
@@ -48,6 +61,15 @@
 
 -(void)setHasCompleted:(BOOL)hasCompleted {
     self.completed = [NSNumber numberWithBool:hasCompleted];
+}
+
+-(CLLocationCoordinate2D)coordinate {
+    return  CLLocationCoordinate2DMake(self.latitude.doubleValue, self.longitude.doubleValue);
+}
+
+-(void)setCoordinate:(CLLocationCoordinate2D)coordinate {
+    self.latitude = [NSNumber numberWithDouble:coordinate.latitude];
+    self.longitude = [NSNumber numberWithDouble:coordinate.longitude];
 }
 
 //Used to sort our visited and notVisited Arrays.
@@ -72,9 +94,8 @@
 
 +(void)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint completed:(void(^)(BOOL result, CDRegion *region))completionHandler {
     CDRegion *region = [[CDRegion alloc]initWithName:name andGeoPoint:geoPoint];
-    [Region createRegion:name withGeoPoint:geoPoint compeletion:^(Region *newRegion, NSError *error) {
-        region.objectId = newRegion.objectId;
-        [region.managedObjectContext save:nil];
+    [region.managedObjectContext save:nil];
+    [Region createRegion:name withGeoPoint:geoPoint andObjectID:[NSString stringWithFormat:@"%@", region.objectID] compeletion:^(Region *newRegion, NSError *error) {
         completionHandler(error ? false : true, region);
     }];
 }

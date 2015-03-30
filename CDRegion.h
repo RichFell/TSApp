@@ -18,14 +18,16 @@
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSSet *locations;
 @property (nonatomic, retain) NSString *objectId;
-@property NSArray *arrayOfLocations;
+@property NSArray *sortedArrayOfLocations;
+@property NSArray *allLocations;
 @property BOOL hasCompleted;
+@property CLLocationCoordinate2D coordinate;
 
 /**
  Description: Creates a new CDRegion in Core Data, as well as will save a new Region object to Parse
  :name: NSString parameter which is the name of the Region
  :geoPoint: The PFGeoPoint where the user wants this trip to be fore
- :returns: BOOL telling whether it saved successfully to Parse, the newly created CDRegion
+ :returns: BOOL telling whether it saved successfully to Parse, & the newly created CDRegion
  */
 +(void)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint completed:(void(^)(BOOL result, CDRegion *region))completionHandler;
 

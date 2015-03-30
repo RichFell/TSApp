@@ -8,6 +8,7 @@
 
 #import <Parse/Parse.h>
 #import "Region.h"
+#import "CDRegion.h"
 
 @interface Location : PFObject <PFSubclassing>
 
@@ -22,7 +23,7 @@
 @property PFGeoPoint *coordinate;
 @property NSString *address;
 
-+(void )createLocation: (CLLocationCoordinate2D) coordinate andName:(NSString *)name array: (NSMutableArray *)array currentRegion: (Region *)region andAddress:(NSString *)theAddress completion: (void (^)(Location *theLocation, NSError *error))completionHandler;
++(void)createLocation:(CLLocationCoordinate2D)coordinate andName:(NSString *)name atIndex:(NSNumber *)index currentRegion:(CDRegion *)region andAddress:(NSString *)theAddress withID:(NSString *)iD completion:(void (^)(Location *, NSError *))completionHandler;
 
 +(void)queryForLocations:(Region *) region completed: (void(^)(NSArray * locations, NSError *error))completionHandler;
 

@@ -15,6 +15,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "DirectionTableViewCell.h"
 #import "MapModel.h"
+#import "CDLocation.h"
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
@@ -412,16 +413,16 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }];
     UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UITextField *textField = alertController.textFields[0];
-        UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-        [Location createLocation:coordinate andName:textField.text array: self.locationsArray[0] currentRegion:sharedRegion.region andAddress:address completion:^(Location *theLocation, NSError *error) {
-            if (error) {
-                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-            }
-            else {
-                [self.locationsArray[0] addObject:theLocation];
-                [self.delegate didAddNewLocation:theLocation];
-            }
-        }];
+        
+//        [Location createLocation:coordinate andName:textField.text array: self.locationsArray[0] currentRegion:sharedRegion.region andAddress:address completion:^(Location *theLocation, NSError *error) {
+//            if (error) {
+//                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+//            }
+//            else {
+//                [self.locationsArray[0] addObject:theLocation];
+//                [self.delegate didAddNewLocation:theLocation];
+//            }
+//        }];
     }];
     [alertController addAction:saveAction];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];

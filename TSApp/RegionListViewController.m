@@ -14,7 +14,7 @@
 #import "RegionTableViewCell.h"
 #import "CreateTripViewController.h"
 #import "HeaderTableViewCell.h"
-#import "CDRegion.h"
+
 
 @interface RegionListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -87,8 +87,8 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:true];
-    Region *region = self.regionsArray[indexPath.section][indexPath.row];
-    [UserDefaults setDefaultRegion:region];
+    CDRegion *region = self.regionsArray[indexPath.section][indexPath.row];
+    [self.delegate regionListVC:self selectedRegion:region];
     [self.navigationController popViewControllerAnimated:true];
 }
 
@@ -96,18 +96,18 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        Region *region = self.regionsArray[indexPath.section][indexPath.row];
-        [region deleteRegionWithBlock:^(BOOL result, NSError *error) {
-            if (error)
-            {
-                [NetworkErrorAlert showAlertForViewController:self];
-            }
-            else
-            {
-                [self.regionsArray[indexPath.section] removeObject:region];
-                [self.tableView reloadData];
-            }
-        }];
+//        Region *region = self.regionsArray[indexPath.section][indexPath.row];
+//        [region deleteRegionWithBlock:^(BOOL result, NSError *error) {
+//            if (error)
+//            {
+//                [NetworkErrorAlert showAlertForViewController:self];
+//            }
+//            else
+//            {
+//                [self.regionsArray[indexPath.section] removeObject:region];
+//                [self.tableView reloadData];
+//            }
+//        }];
     }
 }
 

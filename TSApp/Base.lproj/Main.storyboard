@@ -1024,7 +1024,7 @@
                     <navigationItem key="navigationItem" id="bIj-YA-rKy">
                         <barButtonItem key="rightBarButtonItem" title="Trips" id="Hgk-eN-g6L">
                             <connections>
-                                <segue destination="gqU-SK-xg8" kind="push" id="VkJ-70-wET"/>
+                                <segue destination="gqU-SK-xg8" kind="push" identifier="RegionList" id="VkJ-70-wET"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

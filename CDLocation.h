@@ -24,5 +24,8 @@
 @property (nonatomic, retain) CDRegion *region;
 @property (nonatomic, retain) NSString *objectId;
 @property BOOL hasVisited;
+@property CLLocationCoordinate2D coordinate;
+
++(void)createNewLocationWithName:(NSString *)name atCoordinate:(CLLocationCoordinate2D)coordinate atIndex:(NSNumber *)index forRegion:(CDRegion *)region atAddress:(NSString *)address completion:(void(^)(CDLocation *location, BOOL result))completionHandler;
 
 @end

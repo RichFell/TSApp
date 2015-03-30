@@ -24,7 +24,7 @@
 @dynamic region;
 @dynamic address;
 
--(instancetype)initWithName:(NSString *)name andCoordinate: (CLLocationCoordinate2D)coordinate currentRegion:(Region *)region andAddress:(NSString *)address andIndex:(NSNumber *)index {
+-(instancetype)initWithName:(NSString *)name andCoordinate: (CLLocationCoordinate2D)coordinate currentRegion:(Region *)region andAddress:(NSString *)address andIndex:(NSNumber *)index andID:(NSString *)objectId {
     self = [super init];
     self.name = name;
     PFGeoPoint *geoPoint = [PFGeoPoint new];
@@ -35,15 +35,20 @@
     self.address = address;
     self.region = region;
     self.hasVisited = @0;
+    self.objectID = objectId;
     return self;
 }
 
-+(void)createLocation:(CLLocationCoordinate2D)coordinate andName:(NSString *)name array:(NSMutableArray *)array currentRegion:(Region *)region andAddress:(NSString *)theAddress completion:(void (^)(Location *, NSError *))completionHandler
++(void)createLocation:(CLLocationCoordinate2D)coordinate andName:(NSString *)name atIndex:(NSNumber *)index currentRegion:(CDRegion *)region andAddress:(NSString *)theAddress withID:(NSString *)iD completion:(void (^)(Location *, NSError *))completionHandler
 {
-    Location *newLocation = [[Location alloc] initWithName:name andCoordinate:coordinate currentRegion:region andAddress:theAddress andIndex:[NSNumber numberWithUnsignedInteger:array.count + 1]];
-    [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-
-        completionHandler(newLocation, error);
+    [Region queryForRegionWithObjectId:region.objectId completion:^(Region *defaultRegion, NSError *error) {
+        Location *newLocation = [[Location alloc] initWithName:name andCoordinate:coordinate currentRegion:defaultRegion andAddress:theAddress andIndex:index andID:iD];
+        [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded == false) {
+                [newLocation saveEventually];
+            }
+            completionHandler(newLocation, error);
+        }];
     }];
 }
 

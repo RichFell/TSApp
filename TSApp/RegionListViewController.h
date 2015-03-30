@@ -8,8 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "Region.h"
+#import "CDRegion.h"
 
+@class RegionListViewController;
+
+@protocol RegionListVCDelegate <NSObject>
+
+-(void)regionListVC:(RegionListViewController *)viewController selectedRegion:(CDRegion *)region;
+
+@end
 
 @interface RegionListViewController : UIViewController
+
+@property id<RegionListVCDelegate>delegate;
 
 @end

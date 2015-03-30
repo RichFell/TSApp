@@ -21,17 +21,19 @@
 #import "UniversalRegion.h"
 #import "Direction.h"
 #import "LocationsListViewController.h"
+#import "CDLocation.h"
+#import "TSMarker.h"
 
 static NSString *const kStoryboardID = @"Main";
 
-@interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate>
+@interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate, RegionListVCDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
 @property GMSMapView *mapView;
 @property NSMutableArray *locationsArray;
 @property NSMutableArray *markers;
 @property RegionListViewController *regionListVC;
-@property Region *currentRegion;
+@property CDRegion *currentRegion;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerBottomeConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
 @property CGFloat startingImageViewConstant;
@@ -75,7 +77,7 @@ static float const kMapLocationZoom = 20.0;
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:true];
-    [self queryForTrip];
+//    [self queryForTrip];
 }
 
 #pragma mark - Helper Methods
@@ -107,77 +109,30 @@ static float const kMapLocationZoom = 20.0;
 
 }
 
--(void)placeMarker:(PFGeoPoint *)geoPoint string: (NSString *)string
+-(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string
 {
-    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
-    Location *location = [self locationForCoordinate:coordinate];
     GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+    marker.position = coordinate;
     marker.map = self.mapView;
     marker.appearAnimation = kGMSMarkerAnimationPop;
     marker.tappable = YES;
-    if (location.address == nil)
-    {
-        
-    }
-    marker.title = location ? location.name : @"Tap to create new destination" ;
-    marker.snippet = location ? location.address : string;
-    marker.icon = [location.hasVisited isEqualToNumber:@0] ? [GMSMarker markerImageWithColor:[UIColor redColor]] : [GMSMarker markerImageWithColor:[UIColor blueColor]];
+    marker.title = @"Tap to create new destination" ;
+    marker.snippet = string;
+    marker.icon = [GMSMarker markerImageWithColor:[UIColor redColor]];
 
     [self.mapView setSelectedMarker:marker];
 }
 
--(void)queryForTrip
-{
-    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion] != nil)
-    {
-        [UserDefaults getDefaultRegionWithBlock:^(Region *region, NSError *error) {
-            if (error == nil && region != nil)
-            {
-                self.title = region.name;
-                self.currentRegion = region;
-
-                UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-                sharedRegion.region = region;
-                CLLocationCoordinate2D destinationCoordinate = CLLocationCoordinate2DMake(region.destinationPoint.latitude, region.destinationPoint.longitude);
-                [self.mapView animateToLocation:destinationCoordinate];
-                [self performQueryForLocationsWithRegion:region];
-
-            }
-            else
-            {
-                [NetworkErrorAlert showAlertForViewController:self];
-            }
-        }];
-
-    }
-    else
-    {
-        [self.mapView animateToLocation:self.mapView.myLocation.coordinate];
-    }
-
-}
-
--(void)performQueryForLocationsWithRegion: (Region *)theRegion
-{
-
-    [Location queryForLocations:theRegion completed:^(NSArray *locations, NSError *error) {
-        if (error == nil)
-        {
-            self.locationsArray = [locations mutableCopy];
-            UniversalRegion *sharedRegion = [UniversalRegion sharedRegion];
-            sharedRegion.locations = locations;
-            for (Location *location in locations)
-            {
-                [self placeMarker:location.coordinate string:location.name];
-            }
-        }
-        else
-        {
-            //TODO: Here is where two alerts are being shown if there is a network error
-            [NetworkErrorAlert showAlertForViewController:self];
-        }
-    }];
+-(void)placeMarkerForLocation:(CDLocation *)location {
+    TSMarker *marker = [TSMarker markerWithPosition:location.coordinate];
+    marker.snippet = location.localAddress ? location.localAddress : @"No address";
+    marker.tappable = true;
+    marker.map = self.mapView;
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    marker.title = location.name;
+    marker.snippet = location.localAddress;
+    marker.icon = location.hasVisited == true ? [GMSMarker markerImageWithColor:[UIColor blueColor]] : [GMSMarker markerImageWithColor:[UIColor redColor]];
+    [self.mapView setSelectedMarker:marker];
 }
 
 #pragma mark - GMSMapViewDelegate Methods
@@ -191,12 +146,10 @@ static float const kMapLocationZoom = 20.0;
         }
         else
         {
-            PFGeoPoint *geoPoint = [[PFGeoPoint alloc]init];
-            geoPoint.latitude = response.firstResult.coordinate.latitude;
-            geoPoint.longitude = response.firstResult.coordinate.longitude;
+;
 
-            [self refreshMarkers];
-            [self placeMarker:geoPoint string:response.firstResult.thoroughfare];
+            [self resetAllMarkers];
+            [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare];
         }
     }];
 }
@@ -204,10 +157,9 @@ static float const kMapLocationZoom = 20.0;
 -(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker
 {
 
-    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(marker.position.latitude, marker.position.longitude);
-    Location *location = [self locationForCoordinate:coordinate];
-    marker.snippet = location.address ? location.address : @"No address";
-    marker.tappable = true;
+    TSMarker *theMarker = (TSMarker *)marker;
+    theMarker.snippet = theMarker.location.localAddress;
+    theMarker.tappable = true;
     return false;
 }
 
@@ -252,18 +204,9 @@ static float const kMapLocationZoom = 20.0;
 
 -(void)createNewLocationWithName:(NSString *)theName andAddress:(NSString *)theAddress andCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    [Location createLocation:coordinate andName:theName array:self.locationsArray currentRegion:self.currentRegion andAddress:theAddress completion:^(Location *theLocation, NSError *error) {
 
-        if (error)
-        {
-            [NetworkErrorAlert showAlertForViewController:self];
-        }
-        else
-        {
-            [self.locationsArray addObject:theLocation];
-            [self refreshMarkers];
-            [[NSNotificationCenter defaultCenter]postNotificationName:kNewLocationNotification object:nil];
-        }
+    [CDLocation createNewLocationWithName:theName atCoordinate:coordinate atIndex:@0 forRegion:self.currentRegion atAddress:theAddress completion:^(CDLocation *location, BOOL result) {
+        [self resetAllMarkers];
     }];
 
 }
@@ -279,7 +222,7 @@ static float const kMapLocationZoom = 20.0;
         {
             [self.mapView animateToLocation:coordinate];
             [self.mapView animateToZoom:kMapLocationZoom];
-            [self placeMarker:[PFGeoPoint geoPointWithLatitude:coordinate.latitude longitude:coordinate.longitude] string:@"Tap to save destination"];
+//            [self placeMarker:[PFGeoPoint geoPointWithLatitude:coordinate.latitude longitude:coordinate.longitude] string:@"Tap to save destination"];
         }
     }];
     [textField resignFirstResponder];
@@ -316,32 +259,14 @@ static float const kMapLocationZoom = 20.0;
     }];
 }
 
--(Location *)locationForCoordinate:(CLLocationCoordinate2D)coordinate
-{
-    for (Location *location in self.locationsArray)
-    {
-        CLLocationCoordinate2D locationsCoordinate = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);
-        if (locationsCoordinate.latitude ==  coordinate.latitude && locationsCoordinate.longitude == coordinate.longitude)
-        {
-             return location;
-        }
-    }
-    return nil;
-}
-
--(void)refreshMarkers
-{
-    [self.mapView clear];
-    for (Location *location in self.locationsArray)
-    {
-        [self placeMarker:location.coordinate string:location.address];
-    }
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"LocationListSegue"]) {
         LocationsListViewController *locationVC = segue.destinationViewController;
         locationVC.delegate = self;
+    }
+    else if([segue.identifier isEqualToString:@"RegionList"]) {
+        RegionListViewController *regionVC = segue.destinationViewController;
+        regionVC.delegate = self;
     }
 }
 #pragma mark - LocationListVCDelegate Methods
@@ -377,11 +302,16 @@ static float const kMapLocationZoom = 20.0;
 
 #pragma  mark -resetAllMarkers method
 -(void)resetAllMarkers {
-    
     [self.mapView clear];
-    for (Location *location in self.locationsArray) {
-        [self placeMarker:location.coordinate string:location.name];
+    for (CDLocation *location in self.currentRegion.allLocations) {
+        [self placeMarkerForLocation:location];
     }
+}
+
+#pragma mark- RegionsListVCDelegate
+-(void)regionListVC:(RegionListViewController *)viewController selectedRegion:(CDRegion *)region {
+    self.currentRegion = region;
+    [self resetAllMarkers];
 }
 
 @end
