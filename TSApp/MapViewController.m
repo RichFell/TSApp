@@ -43,6 +43,7 @@ static NSString *const kStoryboardID = @"Main";
 @property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+@property LocationsListViewController *locationsVC;
 
 @end
 
@@ -116,6 +117,7 @@ static float const kMapLocationZoom = 20.0;
     [UserDefaults getDefaultRegionWithBlock:^(CDRegion *region, NSError *error) {
         self.currentRegion = region;
         self.title = region.name;
+        [self.locationsVC giveCurrentRegion:region];
         [self resetAllMarkers];
     }];
 }
@@ -239,8 +241,8 @@ static float const kMapLocationZoom = 20.0;
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"LocationListSegue"]) {
-        LocationsListViewController *locationVC = segue.destinationViewController;
-        locationVC.delegate = self;
+        self.locationsVC = segue.destinationViewController;
+        self.locationsVC.delegate = self;
     }
     else if([segue.identifier isEqualToString:@"RegionList"]) {
         RegionListViewController *regionVC = segue.destinationViewController;

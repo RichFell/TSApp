@@ -25,7 +25,7 @@
 
 
 #pragma mark - Getter and setter methods for certain properties.
--(NSArray *)arrayOfLocations {
+-(NSArray *)sortedArrayOfLocations {
     NSMutableArray *visited = [NSMutableArray new];
     NSMutableArray *notVisited = [NSMutableArray new];
     for (CDLocation *location in self.locations) {
@@ -39,7 +39,7 @@
     return @[[self sortArrayByIndex:notVisited], [self sortArrayByIndex:visited]];
 }
 
--(void)setArrayOfLocations:(NSArray *)arrayOfLocations {
+-(void)setSortedArrayOfLocations:(NSArray *)arrayOfLocations {
     _sortedArrayOfLocations = self.sortedArrayOfLocations;
 }
 

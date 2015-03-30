@@ -22,5 +22,6 @@
 
 @interface LocationsListViewController : UIViewController
 @property id<LocationsListVCDelegate>delegate;
+-(void)giveCurrentRegion:(CDRegion *)region;
 
 @end

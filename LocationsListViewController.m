@@ -34,7 +34,6 @@
 @property Location *startingLocation;
 @property Location *endingLocation;
 @property NSArray *directionsArray;
-@property Region *region;
 @property BOOL wantDirections;
 @property BOOL endingDestination;
 @property BOOL displayDirections;
@@ -42,6 +41,7 @@
 @property NSString *typeOfTransportation;
 @property NSArray *titleArray;
 @property NSMutableArray *locationsArray;
+@property CDRegion *currentRegion;
 
 @end
 
@@ -60,6 +60,7 @@ static NSString *const kDirectionsCellID = @"DirectionCell";
 static NSString *const kChangeLocationNotif = @"ChangeLocationNotification";
 static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -77,44 +78,14 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self reduceDirectionsViewInViewDidLoad];
-    [[NSNotificationCenter defaultCenter]addObserverForName:kNewLocationNotification object:nil queue:NSOperationQueuePriorityNormal usingBlock:^(NSNotification *note) {
-        [self queryForLocations];
-    }];
-    [self queryForLocations];
 }
 
-#pragma mark - helper methods
--(void)sortLocations:(NSArray *)theLocations {
-
-    NSMutableArray *visitedArray = [NSMutableArray new];
-    NSMutableArray *notVisitedArray = [NSMutableArray new];
-    self.locationsArray = [NSMutableArray array];
-    for (Location *location in theLocations) {
-        if ([location.hasVisited isEqual: @0]) {
-            [notVisitedArray addObject:location];
-        }
-        else {
-            [visitedArray addObject:location];
-        }
-    }
-    [self.locationsArray addObjectsFromArray:@[notVisitedArray, visitedArray]];
+-(void)giveCurrentRegion:(CDRegion *)region {
+    self.currentRegion = region;
     [self.tableView reloadData];
 }
+#pragma mark - helper methods
 
--(void)queryForLocations {
-    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion]) {
-        [UserDefaults getDefaultRegionWithBlock:^(CDRegion *region, NSError *error) {
-//            [Location queryForLocations:region completed:^(NSArray *locations, NSError *error) {
-//                if (error) {
-//                    [NetworkErrorAlert showAlertForViewController:self];
-//                }
-//                else {
-//                    [self sortLocations:locations];
-//                }
-//            }];
-        }];
-    }
-}
 
 ///Removes the deleted destination(Location) from the correct array after a successful delete
 -(void)onSuccessfulDeleteAtIndexPath:(NSIndexPath *)indexPath ofLocation:(Location *)location {
@@ -136,13 +107,13 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }
     else {
         LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
-        Location *location = self.locationsArray[indexPath.section][indexPath.row];
+        CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
 
         cell.infoLabel.text = location.name;
         cell.indexPath = indexPath;
         cell.delegate = self;
-        cell.addressLabel.text = location.address ? location.address : @"No Address";
-        cell.visitedButton.imageView.image =  [location.hasVisited  isEqual: @1] ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
+        cell.addressLabel.text = location.localAddress ? location.localAddress : @"No Address";
+        cell.visitedButton.imageView.image =  location.hasVisited == false ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
         int position = (int)indexPath.row;
         cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
         return cell;
@@ -190,7 +161,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *array = self.locationsArray[section];
+    NSArray *array = self.currentRegion.sortedArrayOfLocations[section];
     return self.displayDirections ? self.directionsArray.count : array.count;
 }
 
@@ -413,16 +384,9 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }];
     UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UITextField *textField = alertController.textFields[0];
-        
-//        [Location createLocation:coordinate andName:textField.text array: self.locationsArray[0] currentRegion:sharedRegion.region andAddress:address completion:^(Location *theLocation, NSError *error) {
-//            if (error) {
-//                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-//            }
-//            else {
-//                [self.locationsArray[0] addObject:theLocation];
-//                [self.delegate didAddNewLocation:theLocation];
-//            }
-//        }];
+        [CDLocation createNewLocationWithName:textField.text atCoordinate:coordinate atIndex:[NSNumber numberWithInteger:self.currentRegion.allLocations.count] forRegion:self.currentRegion atAddress:address completion:^(CDLocation *location, BOOL result) {
+
+        }];
     }];
     [alertController addAction:saveAction];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
