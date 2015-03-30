@@ -14,6 +14,7 @@
 #import "RegionTableViewCell.h"
 #import "CreateTripViewController.h"
 #import "HeaderTableViewCell.h"
+#import "CDRegion.h"
 
 @interface RegionListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -41,36 +42,9 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 -(void)queryForTrips
 {
     self.regionsArray = [NSMutableArray array];
-    [Region queryForRegionsWithBlock:^(NSArray *regions, NSError *error) {
-        if (error == nil)
-        {
-            [self createArrayOfRegions:regions];
-        }
-        else
-        {
-            //TODO: Here is an error message for us to evaluate
-            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-        }
+    [CDRegion fetchRegionsWithBlock:^(NSArray *sortedRegions) {
+        self.regionsArray = [NSMutableArray arrayWithArray:sortedRegions];
     }];
-}
-
--(void)createArrayOfRegions:(NSArray *)theRegions
-{
-    NSMutableArray *needToVisitRegions = [NSMutableArray array];
-    NSMutableArray *visitedRegions = [NSMutableArray array];
-    for (Region *region in theRegions)
-    {
-        if (region.completed == true)
-        {
-            [visitedRegions addObject:region];
-        }
-        else
-        {
-            [needToVisitRegions addObject:region];
-        }
-    }
-    [self.regionsArray addObjectsFromArray: @[needToVisitRegions, visitedRegions]];
-    [self.tableView reloadData];
 }
 
 #pragma mark - TableView Delegate methods
@@ -78,7 +52,7 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RegionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
-    Region *region = self.regionsArray[indexPath.section][indexPath.row];
+    CDRegion *region = self.regionsArray[indexPath.section][indexPath.row];
 
     cell.infoLabel.text = region.name;
     cell.numberLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)indexPath.row];

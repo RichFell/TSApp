@@ -24,6 +24,7 @@
 @dynamic region;
 @dynamic address;
 
+
 +(void)createLocation:(CLLocationCoordinate2D)coordinate andName:(NSString *)name array:(NSMutableArray *)array currentRegion:(Region *)region andAddress:(NSString *)theAddress completion:(void (^)(Location *, NSError *))completionHandler
 {
     Location *newLocation = [Location new];

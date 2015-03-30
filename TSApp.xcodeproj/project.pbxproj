@@ -72,6 +72,9 @@
 		9BC6CC8319B4D6900020C14D /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8219B4D6900020C14D /* Direction.m */; };
 		9BC6CC8619B4FA780020C14D /* NSString+StringCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */; };
 		9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8819B5318C0020C14D /* RegionTableViewCell.m */; };
+		9BE7978C1ABE848B00ED236C /* CDRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE7978B1ABE848B00ED236C /* CDRegion.m */; };
+		9BE7978F1ABE848C00ED236C /* CDLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE7978E1ABE848C00ED236C /* CDLocation.m */; };
+		9BE797931ABE850100ED236C /* CDMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE797921ABE850100ED236C /* CDMapper.m */; };
 		9BF7255719944E9100BFCA34 /* MapModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF7255619944E9100BFCA34 /* MapModel.m */; };
 /* End PBXBuildFile section */
 
@@ -178,6 +181,12 @@
 		9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringCategory.m"; sourceTree = "<group>"; };
 		9BC6CC8719B5318C0020C14D /* RegionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionTableViewCell.h; sourceTree = "<group>"; };
 		9BC6CC8819B5318C0020C14D /* RegionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionTableViewCell.m; sourceTree = "<group>"; };
+		9BE7978A1ABE848B00ED236C /* CDRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDRegion.h; path = ../CDRegion.h; sourceTree = "<group>"; };
+		9BE7978B1ABE848B00ED236C /* CDRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDRegion.m; path = ../CDRegion.m; sourceTree = "<group>"; };
+		9BE7978D1ABE848C00ED236C /* CDLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDLocation.h; path = ../CDLocation.h; sourceTree = "<group>"; };
+		9BE7978E1ABE848C00ED236C /* CDLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDLocation.m; path = ../CDLocation.m; sourceTree = "<group>"; };
+		9BE797911ABE850100ED236C /* CDMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMapper.h; sourceTree = "<group>"; };
+		9BE797921ABE850100ED236C /* CDMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDMapper.m; sourceTree = "<group>"; };
 		9BF7255519944E9100BFCA34 /* MapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapModel.h; path = ../MapModel.h; sourceTree = "<group>"; };
 		9BF7255619944E9100BFCA34 /* MapModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapModel.m; path = ../MapModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -245,6 +254,32 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		9B6A3A331AC9BF8E00521CDA /* Regions */ = {
+			isa = PBXGroup;
+			children = (
+				9B14DAF219E37A89001ADB3E /* RegionListViewController.h */,
+				9B14DAF319E37A89001ADB3E /* RegionListViewController.m */,
+				9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */,
+				9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */,
+			);
+			name = Regions;
+			sourceTree = "<group>";
+		};
+		9B6A3A341AC9BFAD00521CDA /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				9B1C6E4419A6F26100D8B804 /* InitialViewController.h */,
+				9B1C6E4519A6F26100D8B804 /* InitialViewController.m */,
+				9B8681E01A32CB81009F9AD0 /* EntryViewController.h */,
+				9B8681E11A32CB81009F9AD0 /* EntryViewController.m */,
+				9B1C6E4719A6F29E00D8B804 /* LoginViewController.h */,
+				9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */,
+				9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */,
+				9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		9BB0B868197AF79500D545C1 = {
 			isa = PBXGroup;
 			children = (
@@ -305,6 +340,7 @@
 		9BB0B87A197AF79500D545C1 /* TSApp */ = {
 			isa = PBXGroup;
 			children = (
+				9BE797901ABE849B00ED236C /* ManagedObjects */,
 				9BBB1124199AC9F400C5321D /* Custom Cells */,
 				9B36F2E61A2B83320061DB17 /* Utilities */,
 				9BF72551199448AF00BFCA34 /* View Controllers */,
@@ -363,6 +399,19 @@
 			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
+		9BE797901ABE849B00ED236C /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				9BE7978D1ABE848C00ED236C /* CDLocation.h */,
+				9BE7978E1ABE848C00ED236C /* CDLocation.m */,
+				9BE7978A1ABE848B00ED236C /* CDRegion.h */,
+				9BE7978B1ABE848B00ED236C /* CDRegion.m */,
+				9BE797911ABE850100ED236C /* CDMapper.h */,
+				9BE797921ABE850100ED236C /* CDMapper.m */,
+			);
+			name = ManagedObjects;
+			sourceTree = "<group>";
+		};
 		9BF72550199448A200BFCA34 /* Model Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,22 +438,12 @@
 		9BF72551199448AF00BFCA34 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9B6A3A341AC9BFAD00521CDA /* Login */,
+				9B6A3A331AC9BF8E00521CDA /* Regions */,
 				9B14DAF519E37D04001ADB3E /* MapViewController.h */,
 				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
 				9BBB0F931997F21300C5321D /* LocationsListViewController.h */,
 				9BBB0F941997F21300C5321D /* LocationsListViewController.m */,
-				9B1C6E4419A6F26100D8B804 /* InitialViewController.h */,
-				9B1C6E4519A6F26100D8B804 /* InitialViewController.m */,
-				9B8681E01A32CB81009F9AD0 /* EntryViewController.h */,
-				9B8681E11A32CB81009F9AD0 /* EntryViewController.m */,
-				9B1C6E4719A6F29E00D8B804 /* LoginViewController.h */,
-				9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */,
-				9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */,
-				9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */,
-				9B14DAF219E37A89001ADB3E /* RegionListViewController.h */,
-				9B14DAF319E37A89001ADB3E /* RegionListViewController.m */,
-				9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */,
-				9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */,
 				9B8681E61A3513C5009F9AD0 /* CustomInfoWindow.xib */,
 				9B8682281A36AAC5009F9AD0 /* MapNavigationViewController.h */,
 				9B8682291A36AAC5009F9AD0 /* MapNavigationViewController.m */,
@@ -520,6 +559,7 @@
 				9BC6CC8319B4D6900020C14D /* Direction.m in Sources */,
 				9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */,
 				9B14DAF719E37D04001ADB3E /* MapViewController.m in Sources */,
+				9BE797931ABE850100ED236C /* CDMapper.m in Sources */,
 				9B86822A1A36AAC5009F9AD0 /* MapNavigationViewController.m in Sources */,
 				9BA3D8D71A4DBBD7000C4F4B /* DirectionTableViewCell.m in Sources */,
 				9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */,
@@ -530,7 +570,9 @@
 				9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */,
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
 				9B8681ED1A353525009F9AD0 /* HeaderTableViewCell.m in Sources */,
+				9BE7978F1ABE848C00ED236C /* CDLocation.m in Sources */,
 				9B36F2DE1A28EFAD0061DB17 /* UserDefaults.m in Sources */,
+				9BE7978C1ABE848B00ED236C /* CDRegion.m in Sources */,
 				9BB0B881197AF79500D545C1 /* main.m in Sources */,
 				9BBB112B199AEA3400C5321D /* Region.m in Sources */,
 				9BC6CC8619B4FA780020C14D /* NSString+StringCategory.m in Sources */,

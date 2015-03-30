@@ -33,13 +33,18 @@
     }];
 }
 
+-(instancetype)initWithName:(NSString *)name destinationPoint:(PFGeoPoint *)point {
+    self = [super init];
+    self.name = name;
+    self.destinationPoint = point;
+    self.user = [PFUser currentUser];
+    self.completed = false;
+    return self;
+}
+
 +(void)createRegion:(NSString *)regionName withGeoPoint:(PFGeoPoint *)geoPoint compeletion:(void (^)(Region *, NSError *))completionHandler
 {
-    Region *theRegion = [[Region alloc]init];
-    theRegion.name = regionName;
-    theRegion.destinationPoint = geoPoint;
-    theRegion.user = [PFUser currentUser];
-    theRegion.completed = false;
+    Region *theRegion = [[Region alloc]initWithName:regionName destinationPoint:geoPoint];
     [theRegion saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         completionHandler(theRegion, error);
     }];

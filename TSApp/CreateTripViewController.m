@@ -11,6 +11,7 @@
 #import "NetworkErrorAlert.h"
 #import "MapModel.h"
 #import "MapNavigationViewController.h"
+#import "CDRegion.h"
 
 @interface CreateTripViewController () <UITextFieldDelegate>
 
@@ -57,20 +58,10 @@ static CGFloat const kYKeyboardClosed = 0.0;
 ///Sages a new region to Parse
 -(void)saveRegionWithGeoPoint: (PFGeoPoint *)geoPoint
 {
-
-    [Region createRegion:self.tripNameTextField.text withGeoPoint:geoPoint compeletion:^(Region *newRegion, NSError *error) {
-        if (error != nil)
-        {
-            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-        }
-        else
-        {
-            [UserDefaults setDefaultRegion:newRegion];
-//            [self dismissViewControllerAnimated:true completion:nil];
-            MapNavigationViewController *mapVC = [MapNavigationViewController storyboardInstanceOfMapNavVC];
-            [self presentViewController:mapVC animated:true completion:nil];
-
-        }
+    [CDRegion createNewRegionWithName:self.tripNameTextField.text andGeoPoint:geoPoint completed:^(BOOL result, CDRegion *region) {
+            [self dismissViewControllerAnimated:true completion:^{
+            [[self presentingViewController].navigationController popViewControllerAnimated:true];
+        }];
     }];
 }
 
