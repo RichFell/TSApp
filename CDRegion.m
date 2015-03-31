@@ -92,12 +92,14 @@
     return self;
 }
 
-+(void)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint completed:(void(^)(BOOL result, CDRegion *region))completionHandler {
++(CDRegion *)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint {
     CDRegion *region = [[CDRegion alloc]initWithName:name andGeoPoint:geoPoint];
+    NSLog(@"%@", region.objectID);
     [region.managedObjectContext save:nil];
     [Region createRegion:name withGeoPoint:geoPoint andObjectID:[NSString stringWithFormat:@"%@", region.objectID] compeletion:^(Region *newRegion, NSError *error) {
-        completionHandler(error ? false : true, region);
+
     }];
+    return region;
 }
 
 +(void)fetchRegionsWithBlock:(void(^)(NSArray * sortedRegions))completed {

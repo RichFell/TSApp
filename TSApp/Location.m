@@ -64,29 +64,28 @@
 
 +(void)deleteLocationWithID:(NSString *)obID completed:(void (^)(BOOL, NSError *))completionHandler
 {
-    PFQuery *query = [Location query];
-    [query whereKey:@"objectID" equalTo:obID];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        if (object) {
-            [object deleteEventually];
+    [Location queryForLocationWithID:obID completed:^(Location *location, NSError *error) {
+        if (location) {
+            [location deleteEventually];
         }
     }];
 }
 
--(void)changeVisitedStatusWithBlock:(void (^)(BOOL, NSError *))completionHandler
-{
-    if ([self.hasVisited isEqual: @0])
-    {
-        self.hasVisited = @1;
-    }
-    else
-    {
-        self.hasVisited = @0;
-    }
++(void)changeVisitedStatusForLocationWithID:(NSString *)obID WithBlock:(void (^)(BOOL, NSError *))completionHandler {
+    [Location queryForLocationWithID:obID completed:^(Location *location, NSError *error) {
+        if (location) {
+            location.hasVisited = [location.hasVisited  isEqual: @0] ? @1 : @0;
+            [location saveEventually];
+        }
+        completionHandler(error ? false: true, error);
+    }];
+}
 
-    [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-
-        completionHandler(succeeded, error);
++(void)queryForLocationWithID:(NSString *)obID completed:(void(^)(Location *location, NSError *error))completionHandler {
+    PFQuery *query = [Location query];
+    [query whereKey:@"objectID" equalTo:obID];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        completionHandler((Location *)object, error);
     }];
 }
 

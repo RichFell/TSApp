@@ -28,7 +28,7 @@
 +(void)queryForLocations:(Region *) region completed: (void(^)(NSArray * locations, NSError *error))completionHandler;
 
 +(void)deleteLocationWithID:(NSString *)obID completed:(void (^)(BOOL, NSError *))completionHandler;
--(void)changeVisitedStatusWithBlock: (void(^)(BOOL result, NSError *error))completionHandler;
++(void)changeVisitedStatusForLocationWithID:(NSString *)obID WithBlock: (void(^)(BOOL result, NSError *error))completionHandler;
 -(void)changeIndexOfLocations: (NSArray *)locations completion: (void(^)(BOOL result, NSError *error))completionHandler;
 @end
 

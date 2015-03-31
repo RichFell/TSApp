@@ -36,7 +36,7 @@ static CGFloat const kYForKeyboardAnimation = -200.0;
 {
     [self.view endEditing:true];
     [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
-        if (error)
+        if (!user)
         {
             //TODO: Here is an error message for us to evaluate
             [self errorMessage:@"Sorry either the username or password entered were incorrect, please try again" andMessage:@"If you forgot your username or password, you can use the forgot password button to receive a change of password email"];
@@ -44,7 +44,7 @@ static CGFloat const kYForKeyboardAnimation = -200.0;
         }
         else
         {
-            [self.presentingViewController dismissViewControllerAnimated:true completion:nil];
+            [self.presentingViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
         }
     }];
 }

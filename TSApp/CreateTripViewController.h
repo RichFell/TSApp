@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "Region.h"
+#import "CDRegion.h"
+@class CreateTripViewController;
+
+@protocol CreateTripVCDelegate <NSObject>
+
+-(void)createTripViewController:(CreateTripViewController *)viewController didSaveNewRegion:(CDRegion *)region;
+
+@end
 
 @interface CreateTripViewController : UIViewController
+
+@property id<CreateTripVCDelegate>delegate;
 
 @end

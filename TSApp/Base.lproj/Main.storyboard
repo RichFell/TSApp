@@ -190,9 +190,6 @@
                                 <state key="normal" title="Directions">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="receiveDirections:" destination="y2z-dT-rya" eventType="touchUpInside" id="cJv-0E-tVo"/>
-                                </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Dbm-ew-ec8">
                                 <rect key="frame" x="71" y="0.0" width="179" height="29"/>
@@ -340,13 +337,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="YGa-IL-Cft"/>
                     <connections>
-                        <outlet property="directionsButton" destination="yw6-Go-ZL3" id="C5W-BR-wYJ"/>
                         <outlet property="goButtonWidthConstraint" destination="TWK-lt-QF6" id="2hj-WP-d7n"/>
                         <outlet property="searchBarOne" destination="dZy-H7-SEb" id="zTP-7Q-Dq3"/>
                         <outlet property="searchBarTwo" destination="MWq-ik-4T9" id="k1e-As-6VY"/>
                         <outlet property="tableView" destination="l6T-ZB-ebo" id="Vco-zO-WoK"/>
                         <outlet property="topViewHeightConstraint" destination="wAx-m7-avI" id="k5h-OC-kVT"/>
-                        <outlet property="transitButton" destination="KqJ-Jg-LWA" id="Tq4-PQ-1jN"/>
                         <outletCollection property="transportationButtons" destination="KqJ-Jg-LWA" id="Nre-8S-Mx2"/>
                         <outletCollection property="transportationButtons" destination="FwO-2d-X8Y" id="6UE-jM-0ds"/>
                         <outletCollection property="transportationButtons" destination="Yeh-jC-rdw" id="d2R-AJ-BE4"/>
@@ -354,16 +349,8 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HxQ-Bv-nqk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Unr-5h-pN5">
-                    <connections>
-                        <action selector="didTapOnLocationOneLabel:" destination="y2z-dT-rya" id="LEw-ft-45M"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="qsm-xk-8Sw">
-                    <connections>
-                        <action selector="didTapOnLocationTwoLabel:" destination="y2z-dT-rya" id="wfB-WK-nD8"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Unr-5h-pN5"/>
+                <tapGestureRecognizer id="qsm-xk-8Sw"/>
             </objects>
             <point key="canvasLocation" x="1294" y="-102"/>
         </scene>
@@ -809,7 +796,7 @@
                     <navigationItem key="navigationItem" title="Your Trips" id="aUo-n3-q42">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="go7-7a-ZgF">
                             <connections>
-                                <segue destination="Keu-kB-DQd" kind="modal" id="Im3-v5-Fzk"/>
+                                <segue destination="Keu-kB-DQd" kind="modal" identifier="CreateSegue" id="Im3-v5-Fzk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

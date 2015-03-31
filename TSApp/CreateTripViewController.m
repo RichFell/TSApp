@@ -38,6 +38,7 @@ static CGFloat const kYKeyboardClosed = 0.0;
 
 - (IBAction)saveNewRegionOnTap:(UIButton *)sender
 {
+    sender.enabled = false;
     [MapModel geocodeString:self.destinationTextField.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
         if (error)
         {
@@ -55,15 +56,13 @@ static CGFloat const kYKeyboardClosed = 0.0;
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
-///Sages a new region to Parse
+
 -(void)saveRegionWithGeoPoint: (PFGeoPoint *)geoPoint
 {
-    [CDRegion createNewRegionWithName:self.tripNameTextField.text andGeoPoint:geoPoint completed:^(BOOL result, CDRegion *region) {
-        [UserDefaults setDefaultRegion:region];
-            [self dismissViewControllerAnimated:true completion:^{
-            [[self presentingViewController].navigationController popViewControllerAnimated:true];
-        }];
-    }];
+    CDRegion *region = [CDRegion createNewRegionWithName:self.tripNameTextField.text andGeoPoint:geoPoint];
+    [UserDefaults setDefaultRegion:region];
+    [self dismissViewControllerAnimated:true completion:nil];
+    [self.delegate createTripViewController:self didSaveNewRegion:region];
 }
 
 -(void)animateViewWhenKeyboardOpenedToY: (CGFloat)y

@@ -17,7 +17,7 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 +(void)setDefaultRegion:(CDRegion *)theRegion
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:theRegion.objectId forKey:kDefaultRegion];
+    [defaults setObject:[NSString stringWithFormat:@"%@", theRegion.objectID] forKey:kDefaultRegion];
     [NSUserDefaults.standardUserDefaults synchronize];
 }
 
@@ -26,15 +26,15 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 {
     if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion] != nil)
     {
-
-        NSString *defaultId = [NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId == %@", defaultId];
-        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([CDRegion class])];
-        request.predicate = predicate;
-        AppDelegate *appDel = [[UIApplication sharedApplication]delegate];
-        NSManagedObjectContext *moc = appDel.managedObjectContext;
-        NSArray *regions = [moc executeFetchRequest:request error:nil];
-        completionHandler(regions[0], nil);
+//
+//        NSString *defaultId = [NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion];
+//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectID == %@", defaultId];
+//        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([CDRegion class])];
+//        request.predicate = predicate;
+//        AppDelegate *appDel = [[UIApplication sharedApplication]delegate];
+//        NSManagedObjectContext *moc = appDel.managedObjectContext;
+//        NSArray *regions = [moc executeFetchRequest:request error:nil];
+//        completionHandler(regions[0], nil);
     }
     else
     {

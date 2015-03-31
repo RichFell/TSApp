@@ -16,7 +16,7 @@
 #import "HeaderTableViewCell.h"
 
 
-@interface RegionListViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface RegionListViewController ()<UITableViewDataSource, UITableViewDelegate, CreateTripVCDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSMutableArray *regionsArray;
@@ -37,6 +37,12 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
     self.titleArray = @[kNeedToVisitKey, kVisitedKey];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"CreateSegue"]) {
+        CreateTripViewController *createVC = segue.destinationViewController;
+        createVC.delegate = self;
+    }
+}
 #pragma mark - Helper methods
 
 -(void)queryForTrips
@@ -97,19 +103,14 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-//        Region *region = self.regionsArray[indexPath.section][indexPath.row];
-//        [region deleteRegionWithBlock:^(BOOL result, NSError *error) {
-//            if (error)
-//            {
-//                [NetworkErrorAlert showAlertForViewController:self];
-//            }
-//            else
-//            {
-//                [self.regionsArray[indexPath.section] removeObject:region];
-//                [self.tableView reloadData];
-//            }
-//        }];
+
     }
+}
+
+#pragma mark - CreateTripVCDelegate
+-(void)createTripViewController:(CreateTripViewController *)viewController didSaveNewRegion:(CDRegion *)region {
+    [self.navigationController popViewControllerAnimated:true];
+    [self.delegate regionListVC:self selectedRegion:region];
 }
 
 @end

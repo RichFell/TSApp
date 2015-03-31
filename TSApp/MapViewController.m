@@ -291,6 +291,7 @@ static float const kMapLocationZoom = 20.0;
 #pragma mark- RegionsListVCDelegate
 -(void)regionListVC:(RegionListViewController *)viewController selectedRegion:(CDRegion *)region {
     self.currentRegion = region;
+    [self.mapView animateToLocation:region.coordinate];
     [self resetAllMarkers];
 }
 

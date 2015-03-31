@@ -22,8 +22,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *goButtonWidthConstraint;
-@property (weak, nonatomic) IBOutlet UIButton *directionsButton;
-@property (weak, nonatomic) IBOutlet UIButton *transitButton;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *transportationButtons;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarOne;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarTwo;
@@ -192,7 +190,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
             self.endingLocation = self.locationsArray[indexPath.section][indexPath.row];
             self.searchBarTwo.text = self.endingLocation.address;
             cell.backgroundColor = [UIColor blueColor];
-            self.directionsButton.enabled = true;
         }
         else {
             self.startingLocation = self.locationsArray[indexPath.row];
@@ -206,16 +203,18 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 -(void)didTapVisitedButtonAtIndexPath:(NSIndexPath *)indexPath
 {
     //TODO: update for the dictionary
-    Location *location = self.locationsArray[indexPath.section][indexPath.row];
-    [location changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
-        if (error) {
-            [NetworkErrorAlert showAlertForViewController:self];
-        }
-        else {
-            [self moveLocation:location FromSection:indexPath.section];
-            [self.delegate didMoveLocation:location];
-        }
-    }];
+    CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+    location.hasVisited = !location.hasVisited;
+    
+//    [location changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
+//        if (error) {
+//            [NetworkErrorAlert showAlertForViewController:self];
+//        }
+//        else {
+//            [self moveLocation:location FromSection:indexPath.section];
+//            [self.delegate didMoveLocation:location];
+//        }
+//    }];
 }
 
 #pragma mark - LocationManagerDelegate methods
@@ -277,6 +276,9 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     self.goButtonWidthConstraint.constant = 0.0;
     self.topViewHeightConstraint.constant = self.searchBarOne.frame.size.height + 20;
     self.searchBarTwo.hidden = true;
+    for (UIButton *button in self.transportationButtons) {
+        button.hidden = true;
+    }
 }
 
 //Expands directions View to display the full view and button animated
@@ -284,7 +286,9 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     if (self.wantDirections == false) {
         [UIView animateWithDuration:0.3 animations:^{
             self.goButtonWidthConstraint.constant = 40.0;
-            self.topViewHeightConstraint.constant = self.searchBarOne.frame.size.height + self.searchBarTwo.frame.size.height + self.transitButton.frame.size.height + 60;
+            UIButton *button = self.transportationButtons[0];
+            CGFloat buttonHeight = button.frame.size.height;
+            self.topViewHeightConstraint.constant = self.searchBarOne.frame.size.height + self.searchBarTwo.frame.size.height + buttonHeight + 60;
             [self.searchBarOne resignFirstResponder];
             self.searchBarOne.userInteractionEnabled = false;
             [self.view layoutIfNeeded];

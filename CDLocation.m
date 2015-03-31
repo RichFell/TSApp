@@ -31,6 +31,9 @@
 
 -(void)setHasVisited:(BOOL)hasVisited {
     self.visited = [NSNumber numberWithBool:hasVisited];
+    [Location changeVisitedStatusForLocationWithID: [NSString stringWithFormat:@"%@", self.objectID] WithBlock:^(BOOL result, NSError *error) {
+        NSLog(@"%@", error.localizedDescription);
+    }];
 }
 
 -(CLLocationCoordinate2D)coordinate {
