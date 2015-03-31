@@ -17,28 +17,9 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 +(void)setDefaultRegion:(CDRegion *)theRegion
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSString stringWithFormat:@"%@", theRegion.objectID] forKey:kDefaultRegion];
+    [defaults setObject:theRegion.objectId forKey:kDefaultRegion];
     [NSUserDefaults.standardUserDefaults synchronize];
 }
 
-///Gets the default Region by seeing if there is a default Region, and if there is then doing a query for it based on the stored objectId
-+(void)getDefaultRegionWithBlock:(void (^)(CDRegion *, NSError *))completionHandler
-{
-    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion] != nil)
-    {
-//
-//        NSString *defaultId = [NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion];
-//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectID == %@", defaultId];
-//        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([CDRegion class])];
-//        request.predicate = predicate;
-//        AppDelegate *appDel = [[UIApplication sharedApplication]delegate];
-//        NSManagedObjectContext *moc = appDel.managedObjectContext;
-//        NSArray *regions = [moc executeFetchRequest:request error:nil];
-//        completionHandler(regions[0], nil);
-    }
-    else
-    {
-        completionHandler(nil, nil);
-    }
-}
+
 @end

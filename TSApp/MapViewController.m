@@ -114,9 +114,10 @@ static float const kMapLocationZoom = 20.0;
 }
 
 -(void)fetchDefaultRegion {
-    [UserDefaults getDefaultRegionWithBlock:^(CDRegion *region, NSError *error) {
+    [CDRegion getDefaultRegionWithBlock:^(CDRegion *region, NSError *error) {
         self.currentRegion = region;
         self.title = region.name;
+        [self.mapView animateToLocation:region.coordinate];
         [self.locationsVC giveCurrentRegion:region];
         [self resetAllMarkers];
     }];

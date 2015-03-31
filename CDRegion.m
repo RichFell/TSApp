@@ -14,6 +14,8 @@
 
 @implementation CDRegion
 
+static NSString *const kDefaultRegion = @"defaultRegion";
+
 @dynamic name;
 @dynamic completed;
 @dynamic longitude;
@@ -94,10 +96,10 @@
 
 +(CDRegion *)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint {
     CDRegion *region = [[CDRegion alloc]initWithName:name andGeoPoint:geoPoint];
-    NSLog(@"%@", region.objectID);
-    [region.managedObjectContext save:nil];
-    [Region createRegion:name withGeoPoint:geoPoint andObjectID:[NSString stringWithFormat:@"%@", region.objectID] compeletion:^(Region *newRegion, NSError *error) {
 
+    [Region createRegion:name withGeoPoint:geoPoint andObjectID:[NSString stringWithFormat:@"%@", region.objectID] compeletion:^(Region *newRegion, NSError *error) {
+        region.objectId = newRegion.objectId;
+        [region.managedObjectContext save:nil];
     }];
     return region;
 }
@@ -132,6 +134,23 @@
     [self.managedObjectContext deleteObject:location];
     [self.managedObjectContext save:nil];
     completionHandler(true);
+}
+
+///Gets the default Region by seeing if there is a default Region, and if there is then doing a query for it based on the stored objectId
++(void)getDefaultRegionWithBlock:(void (^)(CDRegion *, NSError *))completionHandler {
+    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion] != nil) {
+        NSString *defaultId = [NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId == %@", defaultId];
+        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([CDRegion class])];
+        request.predicate = predicate;
+        AppDelegate *appDel = [[UIApplication sharedApplication]delegate];
+        NSManagedObjectContext *moc = appDel.managedObjectContext;
+        NSArray *regions = [moc executeFetchRequest:request error:nil];
+        completionHandler(regions[0], nil);
+    }
+    else {
+        completionHandler(nil, nil);
+    }
 }
 
 @end

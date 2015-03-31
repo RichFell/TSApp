@@ -45,6 +45,9 @@
  */
 -(void)removeLocationFromLocations:(CDLocation *)location completed:(void(^)(BOOL result))completionHandler;
 
++(void)getDefaultRegionWithBlock: (void(^)(CDRegion *region, NSError *error))completionHandler;
+
+
 @end
 
 @interface CDRegion (CoreDataGeneratedAccessors)

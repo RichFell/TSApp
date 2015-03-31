@@ -12,5 +12,4 @@
 @interface UserDefaults : NSObject
 
 +(void)setDefaultRegion:(CDRegion *)region;
-+(void)getDefaultRegionWithBlock: (void(^)(CDRegion *region, NSError *error))completionHandler;
 @end
