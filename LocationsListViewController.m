@@ -168,16 +168,9 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     //TODO: Need to update to delete from Arrays within the dictionary
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSArray *locations = self.locationsArray[indexPath.section];
-        Location *location = locations[indexPath.section][indexPath.row];
-        [location deleteLocationWithBlock:locations completed:^(BOOL result, NSError *error) {
-
-            if (error) {
-                [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-            }
-            else {
-                [self onSuccessfulDeleteAtIndexPath:indexPath ofLocation:location];
-            }
+        CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+        [self.currentRegion removeLocationFromLocations:location completed:^(BOOL result) {
+            [self.tableView reloadData];
         }];
     }
 }
