@@ -87,8 +87,8 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 ///Removes the deleted destination(Location) from the correct array after a successful delete
 -(void)onSuccessfulDeleteAtIndexPath:(NSIndexPath *)indexPath ofLocation:(Location *)location {
-    [self.locationsArray[indexPath.row] removeObject:location];
-    [self.delegate didDeleteLocation:location];
+
+//    [self.delegate didDeleteLocation:location];
 }
 
 ///Returns the correct cell we want to display whether we want to show directions, or to show the destinations
@@ -164,12 +164,13 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    //TODO: Need to update to delete from Arrays within the dictionary
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
-        [self.currentRegion removeLocationFromLocations:location completed:^(BOOL result) {
-            [self.tableView reloadData];
-        }];
+    if (!self.displayDirections) {
+        if (editingStyle == UITableViewCellEditingStyleDelete) {
+            CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+            [self.currentRegion removeLocationFromLocations:location completed:^(BOOL result) {
+                [self.tableView reloadData];
+            }];
+        }
     }
 }
 
@@ -202,19 +203,10 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 #pragma mark - LocationTableViewCellDelegate method
 -(void)didTapVisitedButtonAtIndexPath:(NSIndexPath *)indexPath
 {
-    //TODO: update for the dictionary
     CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
     location.hasVisited = !location.hasVisited;
-    
-//    [location changeVisitedStatusWithBlock:^(BOOL result, NSError *error) {
-//        if (error) {
-//            [NetworkErrorAlert showAlertForViewController:self];
-//        }
-//        else {
-//            [self moveLocation:location FromSection:indexPath.section];
-//            [self.delegate didMoveLocation:location];
-//        }
-//    }];
+    [self.tableView reloadData];
+    [self.delegate didMoveLocation:location];
 }
 
 #pragma mark - LocationManagerDelegate methods

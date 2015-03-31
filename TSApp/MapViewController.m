@@ -251,7 +251,6 @@ static float const kMapLocationZoom = 20.0;
     }
 }
 #pragma mark - LocationListVCDelegate Methods
-
 -(void)didMoveLocation:(Location *)movedLocation {
     [self resetAllMarkers];
 }

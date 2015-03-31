@@ -45,6 +45,11 @@
  */
 -(void)removeLocationFromLocations:(CDLocation *)location completed:(void(^)(BOOL result))completionHandler;
 
+
+/**
+ Description: Using UserDefaults, will return the default Region, that was last selected by the user for when they return to the application.
+ :returns: The CDRegion that was set as the default, and an error, if there was an error.
+*/
 +(void)getDefaultRegionWithBlock: (void(^)(CDRegion *region, NSError *error))completionHandler;
 
 

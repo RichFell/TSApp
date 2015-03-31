@@ -31,6 +31,7 @@
 
 -(void)setHasVisited:(BOOL)hasVisited {
     self.visited = [NSNumber numberWithBool:hasVisited];
+    [self.managedObjectContext save:nil];
     [Location changeVisitedStatusForLocationWithID: [NSString stringWithFormat:@"%@", self.objectID] WithBlock:^(BOOL result, NSError *error) {
         NSLog(@"%@", error.localizedDescription);
     }];
