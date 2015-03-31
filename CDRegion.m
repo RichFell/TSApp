@@ -7,9 +7,9 @@
 //
 
 #import "CDRegion.h"
-#import "CDLocation.h"
 #import "AppDelegate.h"
 #import "Region.h"
+#import "Location.h"
 
 
 @implementation CDRegion
@@ -121,6 +121,15 @@
         }
     }
     return mArray;
+}
+
+-(void)removeLocationFromLocations:(CDLocation *)location completed:(void(^)(BOOL result))completionHandler {
+    [self removeLocationsObject:location];
+    [Location deleteLocationWithID:[NSString stringWithFormat:@"%@",(location.objectID)] completed:^(BOOL result, NSError *error) {
+    }];
+    [self.managedObjectContext deleteObject:location];
+    [self.managedObjectContext save:nil];
+    completionHandler(true);
 }
 
 @end

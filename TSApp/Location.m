@@ -62,10 +62,14 @@
     }];
 }
 
--(void)deleteLocationWithBlock:(NSArray *)locations completed:(void (^)(BOOL, NSError *))completionHandler
++(void)deleteLocationWithID:(NSString *)obID completed:(void (^)(BOOL, NSError *))completionHandler
 {
-    [self deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        completionHandler(succeeded, error);
+    PFQuery *query = [Location query];
+    [query whereKey:@"objectID" equalTo:obID];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (object) {
+            [object deleteEventually];
+        }
     }];
 }
 

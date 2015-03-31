@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "CDLocation.h"
 
 
 @interface CDRegion : NSManagedObject
@@ -37,6 +38,12 @@
  */
 +(void)fetchRegionsWithBlock:(void(^)(NSArray * sortedRegions))completed;
 
+/**
+ Description: Removes the CDLocation from CoreData, as well as removes the Location object from the Parse Backend.
+ :location: The CDLocation that is to be removed.
+ :returns: Block callback with boolean to tell the result.
+ */
+-(void)removeLocationFromLocations:(CDLocation *)location completed:(void(^)(BOOL result))completionHandler;
 
 @end
 

@@ -183,7 +183,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return true;
+    return false;
 }
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
@@ -242,12 +242,8 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 - (IBAction)switchTableViewDisplayOnTapped:(UISegmentedControl *)sender {
-    if (sender.selectedSegmentIndex == 0) {
-        self.displayDirections = false;
-    }
-    else {
-        self.displayDirections = true;
-    }
+
+    self.displayDirections = sender.selectedSegmentIndex == 0 ? false : true;
     [self.tableView reloadData];
 }
 
