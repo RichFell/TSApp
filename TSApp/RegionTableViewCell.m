@@ -23,6 +23,7 @@
     self.numberLabel.backgroundColor = [UIColor customOrange];
     self.numberLabel.layer.cornerRadius = 20.0;
     self.numberLabel.clipsToBounds = true;
+    self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

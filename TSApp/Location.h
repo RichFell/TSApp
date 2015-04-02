@@ -17,7 +17,6 @@
 
 @property NSString *name;
 @property NSNumber *index;
-@property NSString *objectID;
 @property NSNumber *hasVisited;
 @property PFObject *region;
 @property PFGeoPoint *coordinate;

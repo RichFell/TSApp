@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class CDRegion;
 
@@ -27,5 +28,11 @@
 @property CLLocationCoordinate2D coordinate;
 
 +(void)createNewLocationWithName:(NSString *)name atCoordinate:(CLLocationCoordinate2D)coordinate atIndex:(NSNumber *)index forRegion:(CDRegion *)region atAddress:(NSString *)address completion:(void(^)(CDLocation *location, BOOL result))completionHandler;
+
+-(instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate andName:(NSString *)name atIndex:(NSNumber *)index forRegion:(CDRegion *)region atAddress:(NSString *)address;
+
+-(instancetype)initWithDefault:(CLLocationCoordinate2D)coordinate;
+
+-(void)saveLocation;
 
 @end

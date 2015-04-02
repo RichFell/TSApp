@@ -18,7 +18,6 @@
 #import "Region.h"
 #import "NetworkErrorAlert.h"
 #import "UserDefaults.h"
-#import "UniversalRegion.h"
 #import "Direction.h"
 #import "LocationsListViewController.h"
 #import "CDLocation.h"

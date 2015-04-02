@@ -25,20 +25,19 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *transportationButtons;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarOne;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarTwo;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
 @property CLLocationManager *locationManager;
 @property CLLocation *currentLocation;
-@property int destinationSelector;
-@property Location *startingLocation;
-@property Location *endingLocation;
+@property CDLocation *startingLocation;
+@property CDLocation *endingLocation;
 @property NSArray *directionsArray;
 @property BOOL wantDirections;
-@property BOOL endingDestination;
 @property BOOL displayDirections;
 @property BOOL firstTapOnCurrentPosition;
+@property BOOL selectFirstPostion;
 @property NSString *typeOfTransportation;
 @property NSArray *titleArray;
-@property NSMutableArray *locationsArray;
 @property CDRegion *currentRegion;
 
 @end
@@ -62,11 +61,9 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.endingDestination = false;
     self.displayDirections = false;
     self.firstTapOnCurrentPosition = true;
     self.typeOfTransportation = @"driving";
-    self.destinationSelector = 0;
     self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
@@ -84,13 +81,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 #pragma mark - helper methods
 
-
-///Removes the deleted destination(Location) from the correct array after a successful delete
--(void)onSuccessfulDeleteAtIndexPath:(NSIndexPath *)indexPath ofLocation:(Location *)location {
-
-//    [self.delegate didDeleteLocation:location];
-}
-
 ///Returns the correct cell we want to display whether we want to show directions, or to show the destinations
 -(UITableViewCell *)returnCorrectCellforIndexpath:(NSIndexPath *)indexPath forTableView:(UITableView *)tableView
 {
@@ -106,6 +96,15 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     else {
         LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
         CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+        if (location == self.startingLocation) {
+            cell.backgroundColor = [UIColor greenColor];
+        }
+        else if (location == self.endingLocation) {
+            cell.backgroundColor = [UIColor blueColor];
+        }
+        else {
+            cell.backgroundColor = [UIColor whiteColor];
+        }
 
         cell.infoLabel.text = location.name;
         cell.indexPath = indexPath;
@@ -120,16 +119,18 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 ///does the call for directions between the startingCoordinate and the endingCoordinate
 -(void)askForDirections {
-    CLLocationCoordinate2D startingCoordinate = CLLocationCoordinate2DMake(self.startingLocation.coordinate.latitude, self.startingLocation.coordinate.longitude);
-    CLLocationCoordinate2D endingCoordinate = CLLocationCoordinate2DMake(self.endingLocation.coordinate.latitude, self.endingLocation.coordinate.longitude);
+
     NSString *directionType = self.typeOfTransportation != nil ? self.typeOfTransportation : @"driving";
-    [Direction getDirectionsWithCoordinate:startingCoordinate andEndingPosition:endingCoordinate withTypeOfTransportation:directionType andBlock:^(NSArray *directionArray, NSError *error) {
+    [Direction getDirectionsWithCoordinate:self.startingLocation.coordinate andEndingPosition:self.endingLocation.coordinate withTypeOfTransportation:directionType andBlock:^(NSArray *directionArray, NSError *error) {
         if (error) {
             [NetworkErrorAlert showAlertForViewController:self];
         }
         else {
             self.directionsArray = [NSArray arrayWithArray:directionArray];
             [self.delegate didGetNewDirections:self.directionsArray];
+            self.segmentedControl.momentary = NO;
+            self.segmentedControl.selectedSegmentIndex = 1;
+            self.displayDirections = true;
             [self.tableView reloadData];
         }
     }];
@@ -164,13 +165,20 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (!self.displayDirections) {
-        if (editingStyle == UITableViewCellEditingStyleDelete) {
-            CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
-            [self.currentRegion removeLocationFromLocations:location completed:^(BOOL result) {
-                [self.tableView reloadData];
-            }];
-        }
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+        [self.currentRegion removeLocationFromLocations:location completed:^(BOOL result) {
+            [self.tableView reloadData];
+        }];
+    }
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.displayDirections) {
+        return false;
+    }
+    else {
+        return true;
     }
 }
 
@@ -185,19 +193,21 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    CDLocation *selectedLocation = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
 
     if (self.wantDirections) {
-        if (self.destinationSelector == 0) {
-            self.endingLocation = self.locationsArray[indexPath.section][indexPath.row];
-            self.searchBarTwo.text = self.endingLocation.address;
+        if (!self.selectFirstPostion) {
+            self.endingLocation = selectedLocation;
+            self.searchBarTwo.text = self.endingLocation.localAddress;
             cell.backgroundColor = [UIColor blueColor];
         }
         else {
-            self.startingLocation = self.locationsArray[indexPath.row];
-            self.searchBarOne.text = @"Current Location";
+            self.startingLocation = selectedLocation;
+            self.searchBarOne.text = self.startingLocation.localAddress;
             cell.backgroundColor = [UIColor greenColor];
         }
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
 }
 
 #pragma mark - LocationTableViewCellDelegate method
@@ -280,12 +290,11 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
             self.goButtonWidthConstraint.constant = 40.0;
             UIButton *button = self.transportationButtons[0];
             CGFloat buttonHeight = button.frame.size.height;
-            self.topViewHeightConstraint.constant = self.searchBarOne.frame.size.height + self.searchBarTwo.frame.size.height + buttonHeight + 60;
-            [self.searchBarOne resignFirstResponder];
-            self.searchBarOne.userInteractionEnabled = false;
+            self.topViewHeightConstraint.constant = self.searchBarOne.frame.size.height + self.searchBarTwo.frame.size.height + buttonHeight + 20.0;
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
             self.searchBarTwo.hidden = false;
+            [self.view endEditing:true];
             for (UIButton *button in self.transportationButtons) {
                 button.hidden = false;
             }
@@ -301,28 +310,18 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }
 }
 
-
-//#pragma mark - method for moving position of locations
--(void)moveLocation:(Location *)location FromSection:(NSInteger)section {
-
-    if (section == 0) {
-        [self.locationsArray[0]removeObject:location];
-        [self.locationsArray[1] addObject:location];
-    }
-    else {
-        [self.locationsArray[1] removeObject:location];
-        [self.locationsArray[0] addObject:location];
-    }
-    [self.tableView reloadData];
-}
-
 #pragma mark - searchBarDelegate Methods
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if ([searchBar isEqual:self.searchBarOne] && self.firstTapOnCurrentPosition == true) {
-        Location *location = [Location new];
-        location.coordinate = [PFGeoPoint geoPointWithLocation:self.currentLocation];
-        self.startingLocation = location;
-        [self expandDirectionsView];
+    if ([searchBar isEqual:self.searchBarOne]) {
+        if (self.firstTapOnCurrentPosition == true) {
+            CDLocation *location = [[CDLocation alloc]initWithDefault:self.currentLocation.coordinate];
+            self.startingLocation = location;
+            self.firstTapOnCurrentPosition = !self.firstTapOnCurrentPosition;
+            [self expandDirectionsView];
+        }
+        else {
+            self.selectFirstPostion = true;
+        }
     }
 }
 
@@ -336,10 +335,11 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
             [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
         }
         else {
-            [self askToSaveLocationAlert:coordinate atAddress:searchBar.text];
-            Location *location = [Location new];
-            location.coordinate = [PFGeoPoint geoPointWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-            location.address = searchBar.text;
+
+            NSArray *array = self.currentRegion.sortedArrayOfLocations[0];
+            NSNumber *index = [NSNumber numberWithLong:array.count];
+            CDLocation *location = [[CDLocation alloc]initWithCoordinate:coordinate andName:@"" atIndex:index forRegion:self.currentRegion atAddress:searchBar.text];
+            [self askToSaveLocationAlert:location];
             if ([searchBar isEqual:self.searchBarOne]) {
                 self.startingLocation = location;
             }
@@ -351,10 +351,10 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }];
 }
 
--(void)askToSaveLocationAlert:(CLLocationCoordinate2D)coordinate atAddress:(NSString *)address {
+-(void)askToSaveLocationAlert:(CDLocation *)location {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Would you like to save this to your location list?" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self saveLocationAlertForCoordinate:coordinate andAddress:address];
+        [self saveLocationAlertForLocation:location];
     }];
     [alertController addAction:yesAction];
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
@@ -362,16 +362,15 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [self presentViewController:alertController animated:true completion:nil];
 }
 
--(void)saveLocationAlertForCoordinate:(CLLocationCoordinate2D)coordinate andAddress:(NSString *)address {
+-(void)saveLocationAlertForLocation:(CDLocation *)location {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Give the Location a name" message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Add name here";
     }];
     UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UITextField *textField = alertController.textFields[0];
-        [CDLocation createNewLocationWithName:textField.text atCoordinate:coordinate atIndex:[NSNumber numberWithInteger:self.currentRegion.allLocations.count] forRegion:self.currentRegion atAddress:address completion:^(CDLocation *location, BOOL result) {
-
-        }];
+        location.name = textField.text;
+        [location saveLocation];
     }];
     [alertController addAction:saveAction];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];

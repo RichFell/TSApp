@@ -20,7 +20,6 @@
 @dynamic index;
 @dynamic coordinate;
 @dynamic hasVisited;
-@dynamic objectID;
 @dynamic region;
 @dynamic address;
 
@@ -35,7 +34,6 @@
     self.address = address;
     self.region = region;
     self.hasVisited = @0;
-    self.objectID = objectId;
     return self;
 }
 

@@ -340,6 +340,7 @@
                         <outlet property="goButtonWidthConstraint" destination="TWK-lt-QF6" id="2hj-WP-d7n"/>
                         <outlet property="searchBarOne" destination="dZy-H7-SEb" id="zTP-7Q-Dq3"/>
                         <outlet property="searchBarTwo" destination="MWq-ik-4T9" id="k1e-As-6VY"/>
+                        <outlet property="segmentedControl" destination="Dbm-ew-ec8" id="pKN-jT-5bp"/>
                         <outlet property="tableView" destination="l6T-ZB-ebo" id="Vco-zO-WoK"/>
                         <outlet property="topViewHeightConstraint" destination="wAx-m7-avI" id="k5h-OC-kVT"/>
                         <outletCollection property="transportationButtons" destination="KqJ-Jg-LWA" id="Nre-8S-Mx2"/>

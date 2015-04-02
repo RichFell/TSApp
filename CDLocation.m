@@ -46,6 +46,25 @@
     self.longitude = [NSNumber numberWithDouble:coordinate.longitude];
 }
 
+-(instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate andName:(NSString *)name atIndex:(NSNumber *)index forRegion:(CDRegion *)region atAddress:(NSString *)address {
+    AppDelegate *appDel = [[UIApplication sharedApplication] delegate];
+    self = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CDLocation class]) inManagedObjectContext:appDel.managedObjectContext];
+    self.name = name;
+    self.localAddress = address;
+    self.coordinate = coordinate;
+    self.region = region;
+    return self;
+}
+
+-(instancetype)initWithDefault:(CLLocationCoordinate2D)coordinate {
+    AppDelegate *appDel = [[UIApplication sharedApplication] delegate];
+    self = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CDLocation class]) inManagedObjectContext:appDel.managedObjectContext];
+    self.name = @"Current Location";
+    self.localAddress = self.name;
+    self.coordinate = coordinate;
+    return self;
+}
+
 -(instancetype)initWithName:(NSString *)name atCoordinate:(CLLocationCoordinate2D)coordinate atIndex:(NSNumber *)index forRegion:(CDRegion *)region atAddress:(NSString *)address {
     AppDelegate *appDel = [[UIApplication sharedApplication] delegate];
     self = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CDLocation class]) inManagedObjectContext:appDel.managedObjectContext];
@@ -62,8 +81,18 @@
     CDLocation *nLocation = [[CDLocation alloc]initWithName:name atCoordinate:coordinate atIndex:index forRegion:region atAddress:address];
     [nLocation.managedObjectContext save:nil];
     [Location createLocation:coordinate andName:name atIndex:index currentRegion:region andAddress:address withID:[NSString stringWithFormat:@"%@",nLocation.objectID] completion:^(Location *location, NSError *error) {
-        nLocation.objectId = location.objectID;
+        nLocation.objectId = location.objectId;
         completionHandler(nLocation, error ? false : true);
+    }];
+}
+
+-(void)saveLocation {
+
+    [Location createLocation:self.coordinate andName:self.name atIndex:self.index currentRegion:self.region andAddress:self.localAddress withID:self.objectId completion:^(Location *saveLocation, NSError *error) {
+        if (!error) {
+            self.objectId = saveLocation.objectId;
+        }
+        [self.managedObjectContext save:nil];
     }];
 }
 

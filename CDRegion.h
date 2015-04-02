@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "CDLocation.h"
+#import <CoreLocation/CoreLocation.h>
+#import <Parse/Parse.h>
 
 
 @interface CDRegion : NSManagedObject

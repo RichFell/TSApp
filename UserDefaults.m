@@ -21,5 +21,4 @@ static NSString *const kDefaultRegion = @"defaultRegion";
     [NSUserDefaults.standardUserDefaults synchronize];
 }
 
-
 @end
