@@ -33,7 +33,7 @@ static NSString *const kStoryboardID = @"Main";
 @property NSMutableArray *locationsArray;
 @property NSMutableArray *markers;
 @property RegionListViewController *regionListVC;
-@property CDRegion *currentRegion;
+@property (nonatomic) CDRegion *currentRegion;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerBottomeConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
 @property CGFloat startingImageViewConstant;
@@ -61,6 +61,14 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 static NSString *const kNewLocationNotification = @"NewLocationNotification";
 static float const kMapLocationZoom = 20.0;
 
+#pragma mark - Getters and Setters
+-(void)setCurrentRegion:(CDRegion *)currentRegion {
+    _currentRegion = currentRegion;
+    [self.locationsVC giveCurrentRegion:self.currentRegion];
+    [self resetAllMarkers];
+}
+
+#pragma mark - View LifeCycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -109,17 +117,19 @@ static float const kMapLocationZoom = 20.0;
 -(void)placeMarkerForLocation:(CDLocation *)location {
     TSMarker *marker = [[TSMarker alloc]initWithLocation:location];
     marker.map = self.mapView;
-    [self.mapView setSelectedMarker:marker];
 }
 
 -(void)fetchDefaultRegion {
     [CDRegion getDefaultRegionWithBlock:^(CDRegion *region, NSError *error) {
         self.currentRegion = region;
         self.title = region.name;
-        [self.mapView animateToLocation:region.coordinate];
-        [self.locationsVC giveCurrentRegion:region];
-        [self resetAllMarkers];
+        [self animateMapViewToCoordinate:region.coordinate];
     }];
+}
+
+-(void)animateMapViewToCoordinate:(CLLocationCoordinate2D)coordinate {
+    [self.mapView animateToLocation:coordinate];
+    [self.mapView animateToZoom:12.0];
 }
 
 #pragma mark - GMSMapViewDelegate Methods
@@ -187,6 +197,7 @@ static float const kMapLocationZoom = 20.0;
 
     [CDLocation createNewLocationWithName:theName atCoordinate:coordinate atIndex:@0 forRegion:self.currentRegion atAddress:theAddress completion:^(CDLocation *location, BOOL result) {
         [self resetAllMarkers];
+        [self.locationsVC reloadTableView];
     }];
 
 }
@@ -255,12 +266,10 @@ static float const kMapLocationZoom = 20.0;
 }
 
 -(void)didDeleteLocation:(Location *)deletedLocation {
-    [self.locationsArray removeObject:deletedLocation];
     [self resetAllMarkers];
 }
 
 -(void)didAddNewLocation:(Location *)newLocation {
-    [self.locationsArray addObject:newLocation];
     [self resetAllMarkers];
 }
 
@@ -291,7 +300,6 @@ static float const kMapLocationZoom = 20.0;
 -(void)regionListVC:(RegionListViewController *)viewController selectedRegion:(CDRegion *)region {
     self.currentRegion = region;
     [self.mapView animateToLocation:region.coordinate];
-    [self resetAllMarkers];
 }
 
 @end

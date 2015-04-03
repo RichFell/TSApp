@@ -75,8 +75,13 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [self reduceDirectionsViewInViewDidLoad];
 }
 
+#pragma mark - Instance Methods for displaying correct data
 -(void)giveCurrentRegion:(CDRegion *)region {
     self.currentRegion = region;
+    [self.tableView reloadData];
+}
+
+-(void)reloadTableView {
     [self.tableView reloadData];
 }
 #pragma mark - helper methods
