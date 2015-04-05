@@ -23,26 +23,31 @@
 #import "CDLocation.h"
 #import "TSMarker.h"
 #import "AppDelegate.h"
+#import "DirectionsViewController.h"
 
 static NSString *const kStoryboardID = @"Main";
 
 @interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate, RegionListVCDelegate>
 
+#pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerBottomeConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
+@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
+
+#pragma mark - Variables
+@property (nonatomic) CDRegion *currentRegion;
+@property CGFloat startingImageViewConstant;
+@property CGFloat startingContainerBottomConstant;
+@property CGPoint panStartPoint;
+@property CLLocationManager *locationManager;
 @property GMSMapView *mapView;
 @property NSMutableArray *locationsArray;
 @property NSMutableArray *markers;
 @property RegionListViewController *regionListVC;
-@property (nonatomic) CDRegion *currentRegion;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerBottomeConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
-@property CGFloat startingImageViewConstant;
-@property CGFloat startingContainerBottomConstant;
-@property CGPoint panStartPoint;
-@property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
-@property CLLocationManager *locationManager;
-@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
-@property LocationsListViewController *locationsVC;
+//@property LocationsListViewController *locationsVC;
 
 @end
 
@@ -64,7 +69,6 @@ static float const kMapLocationZoom = 20.0;
 #pragma mark - Getters and Setters
 -(void)setCurrentRegion:(CDRegion *)currentRegion {
     _currentRegion = currentRegion;
-    [self.locationsVC giveCurrentRegion:self.currentRegion];
     [self resetAllMarkers];
 }
 
@@ -80,8 +84,21 @@ static float const kMapLocationZoom = 20.0;
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:true];
     self.title = self.currentRegion ? self.currentRegion.name : @"TravelSages";
+    self.segmentControl.selectedSegmentIndex = 0;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ListSegue"]) {
+        UINavigationController *navVC = segue.destinationViewController;
+        LocationsListViewController * locationsVC = navVC.childViewControllers.firstObject;
+        locationsVC.delegate = self;
+        locationsVC.currentRegion = self.currentRegion;
+    }
+    else if([segue.destinationViewController isKindOfClass: [RegionListViewController class]]) {
+        RegionListViewController *regionVC = segue.destinationViewController;
+        regionVC.delegate = self;
+    }
+}
 
 #pragma mark - Helper Methods
 
@@ -197,7 +214,6 @@ static float const kMapLocationZoom = 20.0;
 
     [CDLocation createNewLocationWithName:theName atCoordinate:coordinate atIndex:@0 forRegion:self.currentRegion atAddress:theAddress completion:^(CDLocation *location, BOOL result) {
         [self resetAllMarkers];
-        [self.locationsVC reloadTableView];
     }];
 
 }
@@ -220,7 +236,7 @@ static float const kMapLocationZoom = 20.0;
     return true;
 }
 
-#pragma mark - IBAction and methods to control the sliding of the container view
+#pragma mark - IBActions
 - (IBAction)onArrowTapped:(UITapGestureRecognizer *)sender {
     if ([sender locationInView:self.view].y > self.view.frame.size.height / 2) {
         [self animateContainerUp];
@@ -229,6 +245,15 @@ static float const kMapLocationZoom = 20.0;
         [self animateContainerDown];
     }
 }
+
+- (IBAction)segementSelectOnTap:(UISegmentedControl *)sender {
+    if (sender.selectedSegmentIndex == 1) {
+        [self performSegueWithIdentifier:@"ListSegue" sender:nil];
+    }
+}
+
+
+#pragma mark - Helper Methods for sliding of the container view
 
 -(void)animateContainerUp {
     [UIView animateWithDuration:kAnimationDuration animations:^{
@@ -250,16 +275,6 @@ static float const kMapLocationZoom = 20.0;
     }];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"LocationListSegue"]) {
-        self.locationsVC = segue.destinationViewController;
-        self.locationsVC.delegate = self;
-    }
-    else if([segue.identifier isEqualToString:@"RegionList"]) {
-        RegionListViewController *regionVC = segue.destinationViewController;
-        regionVC.delegate = self;
-    }
-}
 #pragma mark - LocationListVCDelegate Methods
 -(void)didMoveLocation:(Location *)movedLocation {
     [self resetAllMarkers];

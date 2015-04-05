@@ -40,7 +40,6 @@
 @property BOOL selectFirstPostion;
 @property NSString *typeOfTransportation;
 @property NSArray *titleArray;
-@property CDRegion *currentRegion;
 
 @end
 
@@ -77,15 +76,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self reduceDirectionsViewInViewDidLoad];
-}
-
-#pragma mark - Instance Methods for displaying correct data
--(void)giveCurrentRegion:(CDRegion *)region {
-    self.currentRegion = region;
-    [self.tableView reloadData];
-}
-
--(void)reloadTableView {
     [self.tableView reloadData];
 }
 
