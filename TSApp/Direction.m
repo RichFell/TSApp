@@ -36,28 +36,32 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSError *jsonError = nil;
 
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-        NSArray *theDirections = [NSArray arrayWithArray:dictionary[@"routes"]];
-        //This is to make sure that there are directions, for some modes of transportation there are not always directions available.
-        if (theDirections.count != 0) {
-            NSDictionary *legsDict = theDirections[0];
-            NSArray *dArray = legsDict[@"legs"];
-            NSDictionary *anotherDict = dArray[0];
-            NSArray *stepsArray = anotherDict[@"steps"];
+        if (data != nil) {
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+            NSArray *theDirections = [NSArray arrayWithArray:dictionary[@"routes"]];
+            //This is to make sure that there are directions, for some modes of transportation there are not always directions available.
+            if (theDirections.count != 0) {
+                NSDictionary *legsDict = theDirections[0];
+                NSArray *dArray = legsDict[@"legs"];
+                NSDictionary *anotherDict = dArray[0];
+                NSArray *stepsArray = anotherDict[@"steps"];
 
-            NSMutableArray *dirArray = [NSMutableArray new];
+                NSMutableArray *dirArray = [NSMutableArray new];
 
-            for (NSDictionary *dirDict in stepsArray) {
-                Direction *dir = [Direction initWithDictionary:dirDict];
-                [dirArray addObject:dir];
+                for (NSDictionary *dirDict in stepsArray) {
+                    Direction *dir = [Direction initWithDictionary:dirDict];
+                    [dirArray addObject:dir];
+                }
+                completionHandler(dirArray, connectionError);
+                
             }
-            completionHandler(dirArray, connectionError);
-
+            else {
+                completionHandler(nil, nil);
+            }
         }
         else {
-            completionHandler(nil, nil);
+            completionHandler(nil, connectionError);
         }
-
     }];
 }
 @end

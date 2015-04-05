@@ -19,6 +19,7 @@
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
+#pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *goButtonWidthConstraint;
@@ -27,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarTwo;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
+#pragma mark - Variables
 @property CLLocationManager *locationManager;
 @property CLLocation *currentLocation;
 @property CDLocation *startingLocation;
@@ -44,6 +46,7 @@
 
 @implementation LocationsListViewController
 
+#pragma mark - Constants
 static NSString *const kDirectionsSegue = @"DirectionsSegue";
 static NSString *const kLocationCellId = @"LocationTableViewCell";
 static NSString *const kNeedToVisitString = @"Need To Visit";
@@ -58,6 +61,7 @@ static NSString *const kChangeLocationNotif = @"ChangeLocationNotification";
 static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 
+#pragma mark - View LifeCycle
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -84,8 +88,8 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 -(void)reloadTableView {
     [self.tableView reloadData];
 }
-#pragma mark - helper methods
 
+#pragma mark - helper methods
 ///Returns the correct cell we want to display whether we want to show directions, or to show the destinations
 -(UITableViewCell *)returnCorrectCellforIndexpath:(NSIndexPath *)indexPath forTableView:(UITableView *)tableView
 {
@@ -127,16 +131,16 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
     NSString *directionType = self.typeOfTransportation != nil ? self.typeOfTransportation : @"driving";
     [Direction getDirectionsWithCoordinate:self.startingLocation.coordinate andEndingPosition:self.endingLocation.coordinate withTypeOfTransportation:directionType andBlock:^(NSArray *directionArray, NSError *error) {
-        if (error) {
-            [NetworkErrorAlert showAlertForViewController:self];
-        }
-        else {
+        if (directionArray != nil) {
             self.directionsArray = [NSArray arrayWithArray:directionArray];
             [self.delegate didGetNewDirections:self.directionsArray];
             self.segmentedControl.momentary = NO;
             self.segmentedControl.selectedSegmentIndex = 1;
             self.displayDirections = true;
             [self.tableView reloadData];
+        }
+        else {
+            [NetworkErrorAlert showAlertForViewController:self];
         }
     }];
 }
@@ -189,10 +193,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return false;
-}
-
--(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -250,7 +250,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     for (UIButton *button in self.transportationButtons) {
         [button setHighlighted: false];
     }
-
     switch (sender.tag) {
         case 0:
             //Selected to use Transit
@@ -330,10 +329,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }
 }
 
--(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    NSLog(@"Did change Text");
-}
-
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [MapModel geocodeString:searchBar.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
         if (error) {
@@ -356,6 +351,8 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }];
 }
 
+
+#pragma mark - Save Location Alerts
 -(void)askToSaveLocationAlert:(CDLocation *)location {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Would you like to save this to your location list?" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
