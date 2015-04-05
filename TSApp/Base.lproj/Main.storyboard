@@ -285,6 +285,7 @@
                         <outletCollection property="transportationButtons" destination="FwO-2d-X8Y" id="6UE-jM-0ds"/>
                         <outletCollection property="transportationButtons" destination="Yeh-jC-rdw" id="d2R-AJ-BE4"/>
                         <outletCollection property="transportationButtons" destination="0X0-AY-PAg" id="oT0-Hr-Fux"/>
+                        <segue destination="6eS-jo-uYE" kind="push" identifier="DirectionSegue" id="qvF-1f-o07"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HxQ-Bv-nqk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -292,6 +293,37 @@
                 <tapGestureRecognizer id="qsm-xk-8Sw"/>
             </objects>
             <point key="canvasLocation" x="2107" y="-620"/>
+        </scene>
+        <!--Directions List View Controller-->
+        <scene sceneID="rfh-Et-lcv">
+            <objects>
+                <viewController id="6eS-jo-uYE" customClass="DirectionsListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MH8-Zh-B2b"/>
+                        <viewControllerLayoutGuide type="bottom" id="6EF-9z-WnO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3hJ-Lt-TQF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nuL-EJ-MXC">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nuL-EJ-MXC" firstAttribute="leading" secondItem="3hJ-Lt-TQF" secondAttribute="leadingMargin" constant="-16" id="5Es-7k-bkI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nuL-EJ-MXC" secondAttribute="trailing" constant="-16" id="9ZU-Zh-o8w"/>
+                            <constraint firstItem="6EF-9z-WnO" firstAttribute="top" secondItem="nuL-EJ-MXC" secondAttribute="bottom" id="cq3-q2-G4c"/>
+                            <constraint firstItem="nuL-EJ-MXC" firstAttribute="top" secondItem="3hJ-Lt-TQF" secondAttribute="topMargin" id="mJG-2X-nDD"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="SQ3-dM-l8H"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fZ1-2l-Oe9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2495" y="-620"/>
         </scene>
         <!--Entry View Controller-->
         <scene sceneID="aYi-oK-9ym">
@@ -599,29 +631,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mAk-VH-QNN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="467" y="-1338"/>
-        </scene>
-        <!--Initial View Controller-->
-        <scene sceneID="fgc-uK-RE4">
-            <objects>
-                <viewController id="Ouo-xp-z2H" customClass="InitialViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="kCB-lt-tvb"/>
-                        <viewControllerLayoutGuide type="bottom" id="p26-Qe-oGJ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Sc3-0Y-cbK">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TravelSagesInitialImage" translatesAutoresizingMaskIntoConstraints="NO" id="6Ol-fM-qjW">
-                                <rect key="frame" x="85" y="209" width="150" height="150"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MHp-fa-lC4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="210" y="0.0"/>
         </scene>
         <!--Your Trips-->
         <scene sceneID="hEu-fZ-3f2">

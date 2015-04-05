@@ -1,5 +1,5 @@
 //
-//  DirectionsViewController.h
+//  DirectionsListViewController.h
 //  TSApp
 //
 //  Created by Rich Fellure on 4/5/15.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CDLocation.h"
 
-@interface DirectionsViewController : UIViewController
+@interface DirectionsListViewController : UIViewController
 
 @property CDLocation *selectedLocation;
 

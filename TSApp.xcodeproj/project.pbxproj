@@ -30,7 +30,6 @@
 		9B8681E71A3513C5009F9AD0 /* CustomInfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8681E61A3513C5009F9AD0 /* CustomInfoWindow.xib */; };
 		9B8681ED1A353525009F9AD0 /* HeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681EC1A353525009F9AD0 /* HeaderTableViewCell.m */; };
 		9B86822A1A36AAC5009F9AD0 /* MapNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8682291A36AAC5009F9AD0 /* MapNavigationViewController.m */; };
-		9BA3D8D71A4DBBD7000C4F4B /* DirectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3D8D61A4DBBD7000C4F4B /* DirectionTableViewCell.m */; };
 		9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */; };
 		9BAA8D7319889193000BC9A9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */; };
 		9BAA8D77198891C1000BC9A9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D76198891C1000BC9A9 /* MobileCoreServices.framework */; };
@@ -73,6 +72,7 @@
 		9BC6CC8619B4FA780020C14D /* NSString+StringCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8519B4FA780020C14D /* NSString+StringCategory.m */; };
 		9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC6CC8819B5318C0020C14D /* RegionTableViewCell.m */; };
 		9BCB5B631AD184B50026D5B9 /* DirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB5B621AD184B50026D5B9 /* DirectionsViewController.m */; };
+		9BCB5B661AD193CE0026D5B9 /* DirectionsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB5B651AD193CE0026D5B9 /* DirectionsListViewController.m */; };
 		9BE7978C1ABE848B00ED236C /* CDRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE7978B1ABE848B00ED236C /* CDRegion.m */; };
 		9BE7978F1ABE848C00ED236C /* CDLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE7978E1ABE848C00ED236C /* CDLocation.m */; };
 		9BF7255719944E9100BFCA34 /* MapModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF7255619944E9100BFCA34 /* MapModel.m */; };
@@ -127,8 +127,6 @@
 		9B8681EC1A353525009F9AD0 /* HeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderTableViewCell.m; sourceTree = "<group>"; };
 		9B8682281A36AAC5009F9AD0 /* MapNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapNavigationViewController.h; sourceTree = "<group>"; };
 		9B8682291A36AAC5009F9AD0 /* MapNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapNavigationViewController.m; sourceTree = "<group>"; };
-		9BA3D8D51A4DBBD7000C4F4B /* DirectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionTableViewCell.h; sourceTree = "<group>"; };
-		9BA3D8D61A4DBBD7000C4F4B /* DirectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionTableViewCell.m; sourceTree = "<group>"; };
 		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9BAA8D74198891AE000BC9A9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -183,6 +181,8 @@
 		9BC6CC8819B5318C0020C14D /* RegionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionTableViewCell.m; sourceTree = "<group>"; };
 		9BCB5B611AD184B50026D5B9 /* DirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsViewController.h; sourceTree = "<group>"; };
 		9BCB5B621AD184B50026D5B9 /* DirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsViewController.m; sourceTree = "<group>"; };
+		9BCB5B641AD193CE0026D5B9 /* DirectionsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsListViewController.h; sourceTree = "<group>"; };
+		9BCB5B651AD193CE0026D5B9 /* DirectionsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsListViewController.m; sourceTree = "<group>"; };
 		9BE7978A1ABE848B00ED236C /* CDRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDRegion.h; path = ../CDRegion.h; sourceTree = "<group>"; };
 		9BE7978B1ABE848B00ED236C /* CDRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDRegion.m; path = ../CDRegion.m; sourceTree = "<group>"; };
 		9BE7978D1ABE848C00ED236C /* CDLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDLocation.h; path = ../CDLocation.h; sourceTree = "<group>"; };
@@ -257,6 +257,8 @@
 		9B6A3A331AC9BF8E00521CDA /* Regions */ = {
 			isa = PBXGroup;
 			children = (
+				9BC6CC8719B5318C0020C14D /* RegionTableViewCell.h */,
+				9BC6CC8819B5318C0020C14D /* RegionTableViewCell.m */,
 				9B14DAF219E37A89001ADB3E /* RegionListViewController.h */,
 				9B14DAF319E37A89001ADB3E /* RegionListViewController.m */,
 				9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */,
@@ -381,14 +383,13 @@
 		9BB0B87A197AF79500D545C1 /* TSApp */ = {
 			isa = PBXGroup;
 			children = (
-				9BBB1124199AC9F400C5321D /* Custom Cells */,
+				9BBB1124199AC9F400C5321D /* Header Cells */,
 				9B36F2E61A2B83320061DB17 /* Utilities */,
 				9BF72551199448AF00BFCA34 /* UI */,
 				9BF72550199448A200BFCA34 /* Model Objects */,
 				9BB0B883197AF79500D545C1 /* AppDelegate.h */,
 				9BB0B884197AF79500D545C1 /* AppDelegate.m */,
 				9BB0B886197AF79500D545C1 /* Main.storyboard */,
-				9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */,
 				9BB0B88C197AF79500D545C1 /* Images.xcassets */,
 				9BB0B87B197AF79500D545C1 /* Supporting Files */,
 			);
@@ -424,28 +425,26 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9BBB1124199AC9F400C5321D /* Custom Cells */ = {
+		9BBB1124199AC9F400C5321D /* Header Cells */ = {
 			isa = PBXGroup;
 			children = (
-				9BBB1121199AC72300C5321D /* LocationTableViewCell.h */,
-				9BBB1122199AC72300C5321D /* LocationTableViewCell.m */,
-				9BC6CC8719B5318C0020C14D /* RegionTableViewCell.h */,
-				9BC6CC8819B5318C0020C14D /* RegionTableViewCell.m */,
 				9B8681EB1A353525009F9AD0 /* HeaderTableViewCell.h */,
 				9B8681EC1A353525009F9AD0 /* HeaderTableViewCell.m */,
-				9BA3D8D51A4DBBD7000C4F4B /* DirectionTableViewCell.h */,
-				9BA3D8D61A4DBBD7000C4F4B /* DirectionTableViewCell.m */,
 			);
-			name = "Custom Cells";
+			name = "Header Cells";
 			sourceTree = "<group>";
 		};
 		9BCB5B601AD1848A0026D5B9 /* Directions/Locations */ = {
 			isa = PBXGroup;
 			children = (
+				9BBB1121199AC72300C5321D /* LocationTableViewCell.h */,
+				9BBB1122199AC72300C5321D /* LocationTableViewCell.m */,
 				9BBB0F931997F21300C5321D /* LocationsListViewController.h */,
 				9BBB0F941997F21300C5321D /* LocationsListViewController.m */,
 				9BCB5B611AD184B50026D5B9 /* DirectionsViewController.h */,
 				9BCB5B621AD184B50026D5B9 /* DirectionsViewController.m */,
+				9BCB5B641AD193CE0026D5B9 /* DirectionsListViewController.h */,
+				9BCB5B651AD193CE0026D5B9 /* DirectionsListViewController.m */,
 			);
 			name = Directions/Locations;
 			sourceTree = "<group>";
@@ -453,6 +452,7 @@
 		9BE797901ABE849B00ED236C /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
+				9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */,
 				9BE7978D1ABE848C00ED236C /* CDLocation.h */,
 				9BE7978E1ABE848C00ED236C /* CDLocation.m */,
 				9BE7978A1ABE848B00ED236C /* CDRegion.h */,
@@ -591,7 +591,6 @@
 				9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */,
 				9B14DAF719E37D04001ADB3E /* MapViewController.m in Sources */,
 				9B86822A1A36AAC5009F9AD0 /* MapNavigationViewController.m in Sources */,
-				9BA3D8D71A4DBBD7000C4F4B /* DirectionTableViewCell.m in Sources */,
 				9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */,
 				9BB0B885197AF79500D545C1 /* AppDelegate.m in Sources */,
 				9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */,
@@ -599,6 +598,7 @@
 				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
 				9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */,
 				9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */,
+				9BCB5B661AD193CE0026D5B9 /* DirectionsListViewController.m in Sources */,
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
 				9B8681ED1A353525009F9AD0 /* HeaderTableViewCell.m in Sources */,
 				9BE7978F1ABE848C00ED236C /* CDLocation.m in Sources */,

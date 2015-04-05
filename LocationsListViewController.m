@@ -16,6 +16,7 @@
 #import "DirectionTableViewCell.h"
 #import "MapModel.h"
 #import "CDLocation.h"
+#import "DirectionsViewController.h"
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
@@ -80,6 +81,11 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [self.tableView reloadData];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    DirectionsViewController *directionsVC = segue.destinationViewController;
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    directionsVC.selectedLocation = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+}
 #pragma mark - helper methods
 
 ///does the call for directions between the startingCoordinate and the endingCoordinate
@@ -185,6 +191,9 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
             self.searchBarOne.text = self.startingLocation.localAddress;
             cell.backgroundColor = [UIColor greenColor];
         }
+    }
+    else {
+        [self performSegueWithIdentifier:@"DirectionSegue" sender:nil];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:true];
 }
