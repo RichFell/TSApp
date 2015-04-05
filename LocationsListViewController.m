@@ -76,45 +76,11 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self reduceDirectionsViewInViewDidLoad];
+    self.segmentedControl.selectedSegmentIndex = 1;
     [self.tableView reloadData];
 }
 
 #pragma mark - helper methods
-///Returns the correct cell we want to display whether we want to show directions, or to show the destinations
--(UITableViewCell *)returnCorrectCellforIndexpath:(NSIndexPath *)indexPath forTableView:(UITableView *)tableView
-{
-    if (self.displayDirections) {
-        DirectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDirectionsCellID];
-        Direction *direction = self.directionsArray[indexPath.row];
-        cell.directionLabel.text = direction.step;
-        cell.posLabel.text = [NSString stringWithFormat:@"%li", (long)indexPath.row + 1];
-        cell.disLabel.text = direction.distance;
-        cell.durLabel.text = direction.duration;
-        return cell;
-    }
-    else {
-        LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
-        CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
-        if (location == self.startingLocation) {
-            cell.backgroundColor = [UIColor greenColor];
-        }
-        else if (location == self.endingLocation) {
-            cell.backgroundColor = [UIColor blueColor];
-        }
-        else {
-            cell.backgroundColor = [UIColor whiteColor];
-        }
-
-        cell.infoLabel.text = location.name;
-        cell.indexPath = indexPath;
-        cell.delegate = self;
-        cell.addressLabel.text = location.localAddress ? location.localAddress : @"No Address";
-        cell.visitedButton.imageView.image =  location.hasVisited == false ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
-        int position = (int)indexPath.row;
-        cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
-        return cell;
-    }
-}
 
 ///does the call for directions between the startingCoordinate and the endingCoordinate
 -(void)askForDirections {
@@ -138,7 +104,25 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 #pragma mark - UITableViewDataSource Delegate Methods
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self returnCorrectCellforIndexpath:indexPath forTableView:tableView];
+    LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
+    CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+    if (location == self.startingLocation) {
+        cell.backgroundColor = [UIColor greenColor];
+    }
+    else if (location == self.endingLocation) {
+        cell.backgroundColor = [UIColor blueColor];
+    }
+    else {
+        cell.backgroundColor = [UIColor whiteColor];
+    }
+
+    cell.infoLabel.text = location.name;
+    cell.indexPath = indexPath;
+    cell.delegate = self;
+    cell.addressLabel.text = location.localAddress ? location.localAddress : @"No Address";
+    cell.visitedButton.imageView.image =  location.hasVisited == false ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
+    int position = (int)indexPath.row;
+    cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
     return cell;
 }
 
@@ -160,7 +144,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSArray *array = self.currentRegion.sortedArrayOfLocations[section];
-    return self.displayDirections ? self.directionsArray.count : array.count;
+    return array.count;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -230,10 +214,11 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [self askForDirections];
 }
 
-- (IBAction)switchTableViewDisplayOnTapped:(UISegmentedControl *)sender {
+- (IBAction)flipBackToMapOnTap:(UISegmentedControl *)sender {
+    if (sender.selectedSegmentIndex == 0) {
+        [self.presentingViewController dismissViewControllerAnimated:true completion:nil];
+    }
 
-    self.displayDirections = sender.selectedSegmentIndex == 0 ? false : true;
-    [self.tableView reloadData];
 }
 
 - (IBAction)switchModeOnTransOnTapped:(UIButton *)sender {
