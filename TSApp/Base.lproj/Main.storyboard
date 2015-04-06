@@ -924,6 +924,20 @@
                                     <constraint firstAttribute="height" constant="56" id="JcX-n9-8R1"/>
                                 </constraints>
                             </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Z1D-uI-0xD">
+                                <rect key="frame" x="119" y="128" width="83" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="HyC-Sj-kWw"/>
+                                    <constraint firstAttribute="width" constant="83" id="Kbw-BE-iNg"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Map"/>
+                                    <segment title="List"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segementSelectOnTap:" destination="v5a-Rt-M6e" eventType="valueChanged" id="iI6-z6-ruZ"/>
+                                </connections>
+                            </segmentedControl>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-EZ-P03">
                                 <rect key="frame" x="145" y="175" width="30" height="30"/>
                                 <gestureRecognizers/>
@@ -941,20 +955,6 @@
                                     <segue destination="zEX-Qi-iDZ" kind="embed" id="fxb-N0-nxc"/>
                                 </connections>
                             </containerView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Z1D-uI-0xD">
-                                <rect key="frame" x="119" y="128" width="83" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="HyC-Sj-kWw"/>
-                                    <constraint firstAttribute="width" constant="83" id="Kbw-BE-iNg"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="Map"/>
-                                    <segment title="List"/>
-                                </segments>
-                                <connections>
-                                    <action selector="segementSelectOnTap:" destination="v5a-Rt-M6e" eventType="valueChanged" id="iI6-z6-ruZ"/>
-                                </connections>
-                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -996,7 +996,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1294" y="-752"/>
+            <point key="canvasLocation" x="1350" y="-1263"/>
         </scene>
         <!--Directions View Controller-->
         <scene sceneID="wHo-bS-GDc">
@@ -1028,7 +1028,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PFX-ig-b0u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1294" y="-93"/>
+            <point key="canvasLocation" x="1319" y="-9"/>
         </scene>
         <!--Map Navigation View Controller-->
         <scene sceneID="J6W-YG-xCL">

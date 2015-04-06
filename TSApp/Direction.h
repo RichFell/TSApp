@@ -21,6 +21,8 @@
 @property (nonatomic, retain) NSNumber * startingLongitude;
 @property (nonatomic, retain) NSNumber * endingLatitude;
 @property (nonatomic, retain) NSNumber * endingLongitude;
+@property (nonatomic, retain) NSString *distanceString;
+@property (nonatomic, retain) NSString *durationString;
 @property (nonatomic, retain) DirectionSet *directionSet;
 
 /**

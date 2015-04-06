@@ -22,6 +22,11 @@
     return [self.directions allObjects];
 }
 
++(void)createNewDirectionSetWithDirections:(NSArray *)directions andStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation {
+    DirectionSet *directionSet = [[DirectionSet alloc]initWithDirections:directions andStartingLocation:startingLocation andEndingLocation:endingLocation];
+    [directionSet.managedObjectContext save:nil];
+}
+
 -(instancetype)initWithDirections:(NSArray *)directions andStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation {
     AppDelegate *appdel = [[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *moc = appdel.managedObjectContext;
@@ -29,7 +34,6 @@
     [self addDirections:[NSSet setWithArray:directions]];
     self.locationTo = startingLocation;
     self.locationFrom = endingLocation;
-    [moc save:nil];
     return self;
 }
 

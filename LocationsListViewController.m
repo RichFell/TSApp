@@ -16,6 +16,7 @@
 #import "MapModel.h"
 #import "CDLocation.h"
 #import "DirectionsViewController.h"
+#import "DirectionSet.h"
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
@@ -94,11 +95,8 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [Direction getDirectionsWithCoordinate:self.startingLocation.coordinate andEndingPosition:self.endingLocation.coordinate withTypeOfTransportation:directionType andBlock:^(NSArray *directionArray, NSError *error) {
         if (directionArray != nil) {
             self.directionsArray = [NSArray arrayWithArray:directionArray];
+
             [self.delegate didGetNewDirections:self.directionsArray];
-            self.segmentedControl.momentary = NO;
-            self.segmentedControl.selectedSegmentIndex = 1;
-            self.displayDirections = true;
-            [self.tableView reloadData];
         }
         else {
             [NetworkErrorAlert showAlertForViewController:self];
@@ -120,7 +118,6 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     else {
         cell.backgroundColor = [UIColor whiteColor];
     }
-
     cell.infoLabel.text = location.name;
     cell.indexPath = indexPath;
     cell.delegate = self;
@@ -138,12 +135,12 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return self.displayDirections ? 0.0 : 40.0;
+    return 40.0;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return self.displayDirections ? 1 : self.titleArray.count;
+    return self.titleArray.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -335,7 +332,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
 }
 
 
-#pragma mark - Save Location Alerts
+#pragma mark - Save Alerts
 -(void)askToSaveLocationAlert:(CDLocation *)location {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Would you like to save this to your location list?" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -363,5 +360,15 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [self presentViewController:alertController animated:true completion:nil];
 }
 
+-(void)alertToSaveDirectionSet {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Would you like to save these directions?" message:@"You can save these directions for later use, and be able to view them at anytime." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:noAction];
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [DirectionSet createNewDirectionSetWithDirections:self.directionsArray andStartingLocation:self.startingLocation andEndingLocation:self.endingLocation];
+    }];
+    [alert addAction:yesAction];
+    [self presentViewController:alert animated:true completion:nil];
+}
 
 @end

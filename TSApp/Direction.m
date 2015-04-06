@@ -22,6 +22,8 @@
 @dynamic endingLatitude;
 @dynamic endingLongitude;
 @dynamic directionSet;
+@dynamic distanceString;
+@dynamic durationString;
 
 +(void)getDirectionsWithCoordinate:(CLLocationCoordinate2D)startingPosition andEndingPosition:(CLLocationCoordinate2D)endPosition withTypeOfTransportation:(NSString *)transportation andBlock:(void (^)(NSArray *, NSError *))completionHandler
 {
@@ -68,13 +70,15 @@
     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *moc = appDelegate.managedObjectContext;
     self = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Direction class]) inManagedObjectContext:moc];
-        self.steps = [dictionary[@"html_instructions"] stringByStrippingHtml];
-        self.startingLatitude = [NSNumber numberWithFloat:[dictionary[@"start_location"][@"lat"] floatValue] ];
-        self.startingLongitude = [NSNumber numberWithFloat:[dictionary[@"start_location"][@"lng"]floatValue]];
-        self.endingLatitude = [NSNumber numberWithFloat:[dictionary[@"end_location"][@"lat"]floatValue]];
-        self.endingLongitude = [NSNumber numberWithFloat: [dictionary[@"end_location"][@"lng"]floatValue]];
-        self.distance = dictionary[@"distance"][@"text"];
-        self.totalTime = dictionary[@"duration"][@"text"];
+    self.steps = [dictionary[@"html_instructions"] stringByStrippingHtml];
+    self.startingLatitude = [NSNumber numberWithFloat:[dictionary[@"start_location"][@"lat"] floatValue] ];
+    self.startingLongitude = [NSNumber numberWithFloat:[dictionary[@"start_location"][@"lng"]floatValue]];
+    self.endingLatitude = [NSNumber numberWithFloat:[dictionary[@"end_location"][@"lat"]floatValue]];
+    self.endingLongitude = [NSNumber numberWithFloat: [dictionary[@"end_location"][@"lng"]floatValue]];
+    self.distance = dictionary[@"distance"][@"value"];
+    self.totalTime = dictionary[@"duration"][@"value"];
+    self.durationString = dictionary[@"duration"][@"text"];
+    self.distanceString = dictionary[@"distance"][@"text"];
     return self;
 }
 

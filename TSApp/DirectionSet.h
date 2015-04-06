@@ -18,7 +18,7 @@
 @property (nonatomic, retain) NSSet *directions;
 @property (nonatomic) NSArray *directionsArray;
 
--(instancetype)initWithDirections:(NSArray *)directions andStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation;
++(void)createNewDirectionSetWithDirections:(NSArray *)directions andStartingLocation:(CDLocation *)startingLocation andEndingLocation: (CDLocation *)endingLocation;
 
 +(NSArray *)fetchDirectionSetWithStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation;
 
