@@ -20,8 +20,9 @@
 		9B36F2E51A2B7F500061DB17 /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */; };
 		9B36F2E91A2C17AC0061DB17 /* CreateTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */; };
 		9B4326141A3AA04F00F6549E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4326131A3AA04F00F6549E /* libsqlite3.dylib */; };
-		9B47B7C21AD2E2A0007EB0C2 /* CDLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7C11AD2E2A0007EB0C2 /* CDLocation.m */; };
-		9B47B7C51AD2E393007EB0C2 /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7C41AD2E393007EB0C2 /* Direction.m */; };
+		9B47B7CB1AD2EE07007EB0C2 /* CDLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7CA1AD2EE07007EB0C2 /* CDLocation.m */; };
+		9B47B7CE1AD2EE07007EB0C2 /* DirectionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7CD1AD2EE07007EB0C2 /* DirectionSet.m */; };
+		9B47B7D11AD2EE08007EB0C2 /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7D01AD2EE08007EB0C2 /* Direction.m */; };
 		9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B68B5471AAFF21300AF3493 /* FBSessionManager.m */; };
 		9B68D1241A3AA46000299694 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68D1231A3AA46000299694 /* FacebookSDK.framework */; };
 		9B68D1261A3AA5D500299694 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68D1251A3AA5D500299694 /* Accounts.framework */; };
@@ -111,10 +112,12 @@
 		9B36F2E71A2C17AC0061DB17 /* CreateTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateTripViewController.h; sourceTree = "<group>"; };
 		9B36F2E81A2C17AC0061DB17 /* CreateTripViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateTripViewController.m; sourceTree = "<group>"; };
 		9B4326131A3AA04F00F6549E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		9B47B7C01AD2E2A0007EB0C2 /* CDLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLocation.h; sourceTree = "<group>"; };
-		9B47B7C11AD2E2A0007EB0C2 /* CDLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLocation.m; sourceTree = "<group>"; };
-		9B47B7C31AD2E393007EB0C2 /* Direction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Direction.h; sourceTree = "<group>"; };
-		9B47B7C41AD2E393007EB0C2 /* Direction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Direction.m; sourceTree = "<group>"; };
+		9B47B7C91AD2EE07007EB0C2 /* CDLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDLocation.h; sourceTree = "<group>"; };
+		9B47B7CA1AD2EE07007EB0C2 /* CDLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLocation.m; sourceTree = "<group>"; };
+		9B47B7CC1AD2EE07007EB0C2 /* DirectionSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionSet.h; sourceTree = "<group>"; };
+		9B47B7CD1AD2EE07007EB0C2 /* DirectionSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionSet.m; sourceTree = "<group>"; };
+		9B47B7CF1AD2EE08007EB0C2 /* Direction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Direction.h; sourceTree = "<group>"; };
+		9B47B7D01AD2EE08007EB0C2 /* Direction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Direction.m; sourceTree = "<group>"; };
 		9B68B5461AAFF21300AF3493 /* FBSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSessionManager.h; sourceTree = "<group>"; };
 		9B68B5471AAFF21300AF3493 /* FBSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSessionManager.m; sourceTree = "<group>"; };
 		9B68D1231A3AA46000299694 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -451,10 +454,12 @@
 			isa = PBXGroup;
 			children = (
 				9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */,
-				9B47B7C31AD2E393007EB0C2 /* Direction.h */,
-				9B47B7C41AD2E393007EB0C2 /* Direction.m */,
-				9B47B7C01AD2E2A0007EB0C2 /* CDLocation.h */,
-				9B47B7C11AD2E2A0007EB0C2 /* CDLocation.m */,
+				9B47B7CF1AD2EE08007EB0C2 /* Direction.h */,
+				9B47B7D01AD2EE08007EB0C2 /* Direction.m */,
+				9B47B7CC1AD2EE07007EB0C2 /* DirectionSet.h */,
+				9B47B7CD1AD2EE07007EB0C2 /* DirectionSet.m */,
+				9B47B7C91AD2EE07007EB0C2 /* CDLocation.h */,
+				9B47B7CA1AD2EE07007EB0C2 /* CDLocation.m */,
 				9BE7978A1ABE848B00ED236C /* CDRegion.h */,
 				9BE7978B1ABE848B00ED236C /* CDRegion.m */,
 			);
@@ -585,12 +590,10 @@
 				9BF7255719944E9100BFCA34 /* MapModel.m in Sources */,
 				9B8681E51A32D1E5009F9AD0 /* RegistrationViewController.m in Sources */,
 				9B36F2E91A2C17AC0061DB17 /* CreateTripViewController.m in Sources */,
-				9B47B7C51AD2E393007EB0C2 /* Direction.m in Sources */,
 				9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */,
 				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
 				9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */,
 				9B14DAF719E37D04001ADB3E /* MapViewController.m in Sources */,
-				9B47B7C21AD2E2A0007EB0C2 /* CDLocation.m in Sources */,
 				9B86822A1A36AAC5009F9AD0 /* MapNavigationViewController.m in Sources */,
 				9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */,
 				9BB0B885197AF79500D545C1 /* AppDelegate.m in Sources */,
@@ -603,6 +606,7 @@
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
 				9B8681ED1A353525009F9AD0 /* HeaderTableViewCell.m in Sources */,
 				9B36F2DE1A28EFAD0061DB17 /* UserDefaults.m in Sources */,
+				9B47B7CB1AD2EE07007EB0C2 /* CDLocation.m in Sources */,
 				9BE7978C1ABE848B00ED236C /* CDRegion.m in Sources */,
 				9BB0B881197AF79500D545C1 /* main.m in Sources */,
 				9BBB112B199AEA3400C5321D /* Region.m in Sources */,
@@ -611,6 +615,8 @@
 				9BCB5B631AD184B50026D5B9 /* DirectionsViewController.m in Sources */,
 				9BBB1123199AC72300C5321D /* LocationTableViewCell.m in Sources */,
 				9B36F2E51A2B7F500061DB17 /* UIColor+CustomColors.m in Sources */,
+				9B47B7CE1AD2EE07007EB0C2 /* DirectionSet.m in Sources */,
+				9B47B7D11AD2EE08007EB0C2 /* Direction.m in Sources */,
 				9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

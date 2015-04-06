@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <CoreLocation/CoreLocation.h>
 
-@class CDRegion, Direction;
+@class CDRegion;
 
 @interface CDLocation : NSManagedObject
 
@@ -23,9 +23,10 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * objectId;
 @property (nonatomic, retain) NSNumber * visited;
-@property (nonatomic, retain) NSSet *directionsFrom;
-@property (nonatomic, retain) NSSet *directionsTo;
 @property (nonatomic, retain) CDRegion *region;
+@property (nonatomic, retain) NSSet *directionSetTo;
+@property (nonatomic, retain) NSSet *directionSetsFrom;
+
 @property BOOL hasVisited;
 @property CLLocationCoordinate2D coordinate;
 
@@ -36,24 +37,18 @@
 -(instancetype)initWithDefault:(CLLocationCoordinate2D)coordinate;
 
 -(void)saveLocation;
-
 @end
 
 @interface CDLocation (CoreDataGeneratedAccessors)
 
-- (void)addDirectionsFromObject:(Direction *)value;
-- (void)removeDirectionsFromObject:(Direction *)value;
-- (void)addDirectionsFrom:(NSSet *)values;
-- (void)removeDirectionsFrom:(NSSet *)values;
+- (void)addDirectionSetToObject:(NSManagedObject *)value;
+- (void)removeDirectionSetToObject:(NSManagedObject *)value;
+- (void)addDirectionSetTo:(NSSet *)values;
+- (void)removeDirectionSetTo:(NSSet *)values;
 
-- (void)addDirectionsToObject:(Direction *)value;
-- (void)removeDirectionsToObject:(Direction *)value;
-- (void)addDirectionsTo:(NSSet *)values;
-- (void)removeDirectionsTo:(NSSet *)values;
-
-
-
-
-
+- (void)addDirectionSetsFromObject:(NSManagedObject *)value;
+- (void)removeDirectionSetsFromObject:(NSManagedObject *)value;
+- (void)addDirectionSetsFrom:(NSSet *)values;
+- (void)removeDirectionSetsFrom:(NSSet *)values;
 
 @end

@@ -8,7 +8,6 @@
 
 #import "CDLocation.h"
 #import "CDRegion.h"
-#import "Direction.h"
 #import "Location.h"
 #import "AppDelegate.h"
 
@@ -24,9 +23,9 @@
 @dynamic name;
 @dynamic objectId;
 @dynamic visited;
-@dynamic directionsFrom;
-@dynamic directionsTo;
 @dynamic region;
+@dynamic directionSetTo;
+@dynamic directionSetsFrom;
 
 -(BOOL)hasVisited {
     return [self.visited boolValue];

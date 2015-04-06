@@ -7,16 +7,21 @@
 //
 
 #import "Direction.h"
+#import "DirectionSet.h"
+#import "NSString+StringCategory.h"
+#import "AppDelegate.h"
 #import "CDLocation.h"
-
 
 @implementation Direction
 
 @dynamic distance;
 @dynamic steps;
 @dynamic totalTime;
-@dynamic fromLocation;
-@dynamic toLocation;
+@dynamic startingLatitude;
+@dynamic startingLongitude;
+@dynamic endingLatitude;
+@dynamic endingLongitude;
+@dynamic directionSet;
 
 +(void)getDirectionsWithCoordinate:(CLLocationCoordinate2D)startingPosition andEndingPosition:(CLLocationCoordinate2D)endPosition withTypeOfTransportation:(NSString *)transportation andBlock:(void (^)(NSArray *, NSError *))completionHandler
 {
@@ -46,7 +51,7 @@
                     [dirArray addObject:dir];
                 }
                 completionHandler(dirArray, connectionError);
-                
+
             }
             else {
                 completionHandler(nil, nil);
@@ -60,17 +65,21 @@
 
 -(instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
-    self = [super init];
-
-//    direction.step = [dictionary[@"html_instructions"] stringByStrippingHtml];
-//    direction.startingLatitude = [dictionary[@"start_location"][@"lat"] floatValue];
-//    direction.startingLongitude = [dictionary[@"start_location"][@"lng"]floatValue];
-//    direction.endingLatitude = [dictionary[@"end_location"][@"lat"]floatValue];
-//    direction.endingLongitude = [dictionary[@"end_location"][@"lng"]floatValue];
-//    direction.distance = dictionary[@"distance"][@"text"];
-//    direction.duration = dictionary[@"duration"][@"text"];
+    AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *moc = appDelegate.managedObjectContext;
+    self = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Direction class]) inManagedObjectContext:moc];
+        self.steps = [dictionary[@"html_instructions"] stringByStrippingHtml];
+        self.startingLatitude = [NSNumber numberWithFloat:[dictionary[@"start_location"][@"lat"] floatValue] ];
+        self.startingLongitude = [NSNumber numberWithFloat:[dictionary[@"start_location"][@"lng"]floatValue]];
+        self.endingLatitude = [NSNumber numberWithFloat:[dictionary[@"end_location"][@"lat"]floatValue]];
+        self.endingLongitude = [NSNumber numberWithFloat: [dictionary[@"end_location"][@"lng"]floatValue]];
+        self.distance = dictionary[@"distance"][@"text"];
+        self.totalTime = dictionary[@"duration"][@"text"];
     return self;
 }
 
++(void)saveArrayOfDirections:(NSArray *)directions forStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation {
+    
+}
 
 @end

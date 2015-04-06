@@ -294,8 +294,8 @@ static float const kMapLocationZoom = 20.0;
 
     for (Direction *direction in directions)
     {
-        [path addLatitude:direction.startingLatitude longitude:direction.startingLongitude];
-        [path addLatitude:direction.endingLatitude longitude:direction.endingLongitude];
+        [path addLatitude:direction.startingLatitude.doubleValue longitude:direction.startingLongitude.doubleValue];
+        [path addLatitude:direction.endingLatitude.doubleValue longitude:direction.endingLongitude.doubleValue];
     }
 
     GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];

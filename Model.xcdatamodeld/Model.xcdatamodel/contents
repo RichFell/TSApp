@@ -10,8 +10,8 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="visited" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="directionsFrom" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Direction" inverseName="fromLocation" inverseEntity="Direction" syncable="YES"/>
-        <relationship name="directionsTo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Direction" inverseName="toLocation" inverseEntity="Direction" syncable="YES"/>
+        <relationship name="directionSetsFrom" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DirectionSet" inverseName="locationFrom" inverseEntity="DirectionSet" syncable="YES"/>
+        <relationship name="directionSetTo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DirectionSet" inverseName="locationTo" inverseEntity="DirectionSet" syncable="YES"/>
         <relationship name="region" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRegion" inverseName="locations" inverseEntity="CDRegion" syncable="YES"/>
     </entity>
     <entity name="CDRegion" representedClassName="CDRegion" syncable="YES">
@@ -30,12 +30,17 @@
         <attribute name="startingLongitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="steps" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="fromLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDLocation" inverseName="directionsFrom" inverseEntity="CDLocation" syncable="YES"/>
-        <relationship name="toLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDLocation" inverseName="directionsTo" inverseEntity="CDLocation" syncable="YES"/>
+        <relationship name="directionSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DirectionSet" inverseName="directions" inverseEntity="DirectionSet" syncable="YES"/>
+    </entity>
+    <entity name="DirectionSet" representedClassName="DirectionSet" syncable="YES">
+        <relationship name="directions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Direction" inverseName="directionSet" inverseEntity="Direction" syncable="YES"/>
+        <relationship name="locationFrom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDLocation" inverseName="directionSetsFrom" inverseEntity="CDLocation" syncable="YES"/>
+        <relationship name="locationTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDLocation" inverseName="directionSetTo" inverseEntity="CDLocation" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Direction" positionX="-63" positionY="72" width="128" height="178"/>
+        <element name="Direction" positionX="-63" positionY="72" width="128" height="163"/>
         <element name="CDLocation" positionX="-63" positionY="-18" width="128" height="223"/>
         <element name="CDRegion" positionX="-54" positionY="54" width="128" height="135"/>
+        <element name="DirectionSet" positionX="-54" positionY="99" width="128" height="88"/>
     </elements>
 </model>

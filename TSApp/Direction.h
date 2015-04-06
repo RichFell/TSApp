@@ -10,32 +10,25 @@
 #import <CoreData/CoreData.h>
 #import <CoreLocation/CoreLocation.h>
 
-@class CDLocation;
+@class DirectionSet, CDLocation;
 
 @interface Direction : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * distance;
 @property (nonatomic, retain) NSString * steps;
 @property (nonatomic, retain) NSNumber * totalTime;
-@property (nonatomic, retain) CDLocation *fromLocation;
-@property (nonatomic, retain) CDLocation *toLocation;
-@property (nonatomic, retain)float startingLatitude;
-@property (nonatomic, retain)float startingLongitude;
-@property (nonatomic, retain)float endingLatitude;
-@property (nonatomic, retain)float endingLongitude;
+@property (nonatomic, retain) NSNumber * startingLatitude;
+@property (nonatomic, retain) NSNumber * startingLongitude;
+@property (nonatomic, retain) NSNumber * endingLatitude;
+@property (nonatomic, retain) NSNumber * endingLongitude;
+@property (nonatomic, retain) DirectionSet *directionSet;
 
-+(void)getDirectionsWithCoordinate:(CLLocationCoordinate2D)startingPosition andEndingPosition:(CLLocationCoordinate2D)endPosition withTypeOfTransportation:(NSString *)transportation andBlock:(void (^)(NSArray *, NSError *))completionHandler;
-
-/*
-
- From Direction.h
- @property NSString *step;
- @property NSString *distance;
- @property NSString *duration;
-
-
- +(instancetype)initWithDictionary:(NSDictionary *)dictionary;
-
+/**
+ Description: Makes call to GoogleDirections API in order to return the information for the Directions
+ :startingPosition: CLLocationCoordinate2D that is the beginning location for the directions being asked for
+ :endingPosition: CLLocationCoordinate2D that is the ending location for the directions being asked for.
+ :transportation: The transportation type the the user is wanting to use
  */
+ +(void)getDirectionsWithCoordinate:(CLLocationCoordinate2D)startingPosition andEndingPosition:(CLLocationCoordinate2D)endPosition withTypeOfTransportation:(NSString *)transportation andBlock:(void (^)(NSArray *, NSError *))completionHandler;
 
 @end
