@@ -2,28 +2,31 @@
 //  CDLocation.m
 //  TSApp
 //
-//  Created by Rich Fellure on 3/21/15.
+//  Created by Rich Fellure on 4/6/15.
 //  Copyright (c) 2015 TravelSages. All rights reserved.
 //
 
 #import "CDLocation.h"
 #import "CDRegion.h"
-#import "AppDelegate.h"
+#import "Direction.h"
 #import "Location.h"
+#import "AppDelegate.h"
 
 
 @implementation CDLocation
 
-@dynamic name;
-@dynamic index;
-@dynamic id;
-@dynamic visited;
-@dynamic latitude;
-@dynamic longitude;
 @dynamic engAddress;
+@dynamic id;
+@dynamic index;
+@dynamic latitude;
 @dynamic localAddress;
-@dynamic region;
+@dynamic longitude;
+@dynamic name;
 @dynamic objectId;
+@dynamic visited;
+@dynamic directionsFrom;
+@dynamic directionsTo;
+@dynamic region;
 
 -(BOOL)hasVisited {
     return [self.visited boolValue];

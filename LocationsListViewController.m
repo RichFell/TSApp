@@ -13,7 +13,6 @@
 #import "HeaderTableViewCell.h"
 #import "Direction.h"
 #import <CoreLocation/CoreLocation.h>
-#import "DirectionTableViewCell.h"
 #import "MapModel.h"
 #import "CDLocation.h"
 #import "DirectionsViewController.h"
