@@ -11,3 +11,10 @@
 NSString *const kSomeString = @"some String";
 NSString *const kSelectedDirectionNotification = @"selectedDirectionNotification";
 NSString *const kDirectionSetKey = @"selectedDirectionSet";
+NSString *const kUpArrowImage = @"TSOrangeUpArrow";
+NSString *const kDownArrowImage = @"TSOrangeDownArrow";
+NSString *const kNeedToVisitString = @"Need To Visit";
+NSString *const kVisitedString = @"Visited";
+NSString *const kPlaceHolderImage = @"PlaceHolderImage";
+CGFloat const kAnimationDuration = 0.5;
+CGFloat const kImageViewConstraintConstantOpen = 70.0;

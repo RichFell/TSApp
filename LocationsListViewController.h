@@ -10,12 +10,10 @@
 #import <Parse/Parse.h>
 #import "Region.h"
 #import "Location.h"
-@class LocationsListViewController;
+@class LocationsListViewController, CDLocation;
 @protocol LocationsListVCDelegate <NSObject>
 
--(void)didDeleteLocation:(CDLocation *)deletedLocation;
--(void)didMoveLocation:(CDLocation *)movedLocation;
--(void)didAddNewLocation:(CDLocation *)newLocation;
+-(void)locationListVC:(LocationsListViewController *)viewController didChangeLocation:(CDLocation *)location;
 -(void)didGetNewDirections:(NSArray *)directions;
 
 @end

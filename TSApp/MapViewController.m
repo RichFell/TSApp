@@ -47,7 +47,6 @@ static NSString *const kStoryboardID = @"Main";
 @property NSMutableArray *locationsArray;
 @property NSMutableArray *markers;
 @property RegionListViewController *regionListVC;
-//@property LocationsListViewController *locationsVC;
 
 @end
 
@@ -56,14 +55,8 @@ static NSString *const kStoryboardID = @"Main";
 static NSString *const kNotVisitedImage = @"PlacHolderImage";
 static NSString *const kHasVisitedImage = @"CheckMarkImage";
 static NSString *const rwfLocationString = @"Tap to save destination";
-static NSString *const kUpArrowImage = @"TSOrangeUpArrow";
-static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 static CGFloat const kMapZoom = 10.0;
-static NSString *const kDefaultRegion = @"defaultRegion";
-static NSString *const kNewLocationNotification = @"NewLocationNotification";
 static float const kMapLocationZoom = 20.0;
-static CGFloat const kImageViewConstraintConstantOpen = 70.0;
-static CGFloat const kAnimationDuration = 0.5;
 
 #pragma mark - Getters and Setters
 -(void)setCurrentRegion:(CDRegion *)currentRegion {

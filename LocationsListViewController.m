@@ -57,14 +57,9 @@
 static NSString *const kLocationCellId = @"LocationTableViewCell";
 static NSString *const kHeaderCellID = @"headerCell";
 static NSString *const kDirectionsCellID = @"DirectionCell";
-static NSString *const kNeedToVisitString = @"Need To Visit";
-static NSString *const kVisitedString = @"Visited";
-static NSString *const kUpArrowImage = @"TSOrangeUpArrow";
-static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
-static NSString *const kPlaceHolderImage = @"PlaceHolderImage";
 static NSString *const kCheckMarkImageName = @"CheckMarkImage";
-static CGFloat const kAnimationDuration = 0.5;
-static CGFloat const kImageViewConstraintConstantOpen = 70.0;
+static NSString *const kDirectionSegue = @"DirectionSegue";
+
 
 #pragma mark - View LifeCycle
 - (void)viewDidLoad {
@@ -229,7 +224,7 @@ static CGFloat const kImageViewConstraintConstantOpen = 70.0;
         }
     }
     else {
-        [self performSegueWithIdentifier:@"DirectionSegue" sender:nil];
+        [self performSegueWithIdentifier:kDirectionSegue sender:nil];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:true];
 }
@@ -240,7 +235,7 @@ static CGFloat const kImageViewConstraintConstantOpen = 70.0;
     CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
     location.hasVisited = !location.hasVisited;
     [self.tableView reloadData];
-    [self.delegate didMoveLocation:location];
+    [self.delegate locationListVC:self didChangeLocation:location];
 }
 
 #pragma mark - LocationManagerDelegate methods
@@ -354,6 +349,9 @@ static CGFloat const kImageViewConstraintConstantOpen = 70.0;
         else {
             self.selectFirstPostion = true;
         }
+    }
+    else {
+        self.selectFirstPostion = false;
     }
 }
 
