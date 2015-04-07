@@ -18,7 +18,6 @@
 #import "DirectionsViewController.h"
 #import "DirectionsListViewController.h"
 #import "DirectionSet.h"
-#import "Constants.h"
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 

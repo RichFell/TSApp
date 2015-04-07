@@ -20,7 +20,17 @@
 @synthesize directionsArray;
 
 -(NSArray *)directionsArray {
-    return [self.directions allObjects];
+    return [self sortArrayByIndex:[self.directions allObjects]];
+}
+
+-(NSArray *)sortArrayByIndex:(NSArray *)arrayToSort {
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"index"
+                                                 ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray;
+    sortedArray = [arrayToSort sortedArrayUsingDescriptors:sortDescriptors];
+    return sortedArray;
 }
 
 +(void)createNewDirectionSetWithDirections:(NSArray *)directions andStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation {

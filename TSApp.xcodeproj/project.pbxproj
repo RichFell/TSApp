@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B0F01061AD464C4005DEFA8 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0F01051AD464C4005DEFA8 /* Constants.m */; };
 		9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */; };
 		9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF319E37A89001ADB3E /* RegionListViewController.m */; };
 		9B14DAF719E37D04001ADB3E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF619E37D04001ADB3E /* MapViewController.m */; };
@@ -90,6 +91,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B0F01041AD464C4005DEFA8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		9B0F01051AD464C4005DEFA8 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		9B14DAEF19E2D257001ADB3E /* NetworkErrorAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkErrorAlert.h; sourceTree = "<group>"; };
 		9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkErrorAlert.m; sourceTree = "<group>"; };
 		9B14DAF219E37A89001ADB3E /* RegionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionListViewController.h; sourceTree = "<group>"; };
@@ -393,6 +396,8 @@
 				9BB0B886197AF79500D545C1 /* Main.storyboard */,
 				9BB0B88C197AF79500D545C1 /* Images.xcassets */,
 				9BB0B87B197AF79500D545C1 /* Supporting Files */,
+				9B0F01041AD464C4005DEFA8 /* Constants.h */,
+				9B0F01051AD464C4005DEFA8 /* Constants.m */,
 			);
 			path = TSApp;
 			sourceTree = "<group>";
@@ -590,6 +595,7 @@
 				9BF7255719944E9100BFCA34 /* MapModel.m in Sources */,
 				9B8681E51A32D1E5009F9AD0 /* RegistrationViewController.m in Sources */,
 				9B36F2E91A2C17AC0061DB17 /* CreateTripViewController.m in Sources */,
+				9B0F01061AD464C4005DEFA8 /* Constants.m in Sources */,
 				9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */,
 				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
 				9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */,

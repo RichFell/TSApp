@@ -24,6 +24,11 @@
 @property (nonatomic, retain) NSString *distanceString;
 @property (nonatomic, retain) NSString *durationString;
 @property (nonatomic, retain) DirectionSet *directionSet;
+@property (nonatomic, retain) NSNumber *index;
+
+//These are not persisted, but use a custom getter
+@property (nonatomic) CLLocationCoordinate2D startingCoordinate;
+@property (nonatomic) CLLocationCoordinate2D endingCoordinate;
 
 /**
  Description: Makes call to GoogleDirections API in order to return the information for the Directions

@@ -24,6 +24,17 @@
 @dynamic directionSet;
 @dynamic distanceString;
 @dynamic durationString;
+@dynamic index;
+@synthesize startingCoordinate;
+@synthesize endingCoordinate;
+
+-(CLLocationCoordinate2D)startingCoordinate {
+    return  CLLocationCoordinate2DMake(self.startingLatitude.doubleValue, self.startingLongitude.doubleValue);
+}
+
+-(CLLocationCoordinate2D)endingCoordinate {
+    return CLLocationCoordinate2DMake(self.endingLatitude.doubleValue, self.endingLongitude.doubleValue);
+}
 
 +(void)getDirectionsWithCoordinate:(CLLocationCoordinate2D)startingPosition andEndingPosition:(CLLocationCoordinate2D)endPosition withTypeOfTransportation:(NSString *)transportation andBlock:(void (^)(NSArray *, NSError *))completionHandler
 {
@@ -49,7 +60,7 @@
                 NSMutableArray *dirArray = [NSMutableArray new];
 
                 for (NSDictionary *dirDict in stepsArray) {
-                    Direction *dir = [[Direction alloc] initWithDictionary:dirDict];
+                    Direction *dir = [[Direction alloc] initWithDictionary:dirDict andIndex:[stepsArray indexOfObject:dirDict]];
                     [dirArray addObject:dir];
                 }
                 completionHandler(dirArray, connectionError);
@@ -65,7 +76,7 @@
     }];
 }
 
--(instancetype)initWithDictionary:(NSDictionary *)dictionary
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary andIndex:(NSInteger) index
 {
     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *moc = appDelegate.managedObjectContext;
@@ -79,6 +90,7 @@
     self.totalTime = dictionary[@"duration"][@"value"];
     self.durationString = dictionary[@"duration"][@"text"];
     self.distanceString = dictionary[@"distance"][@"text"];
+    self.index = [NSNumber numberWithInteger:index];
     return self;
 }
 

@@ -22,9 +22,8 @@
 #import "LocationsListViewController.h"
 #import "CDLocation.h"
 #import "TSMarker.h"
-#import "AppDelegate.h"
 #import "DirectionsViewController.h"
-#import "Constants.h"
+#import "DirectionSet.h"
 
 static NSString *const kStoryboardID = @"Main";
 
@@ -77,8 +76,8 @@ static CGFloat const kAnimationDuration = 0.5;
 {
     [super viewDidLoad];
     [self setup];
-
     [self fetchDefaultRegion];
+    [self setupNotificationListeners];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -125,6 +124,14 @@ static CGFloat const kAnimationDuration = 0.5;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
 }
 
+-(void)setupNotificationListeners {
+    [[NSNotificationCenter defaultCenter] addObserverForName:kSelectedDirectionNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        NSDictionary *info = note.userInfo;
+        DirectionSet *dSet = info[kDirectionSetKey];
+        [self placePolylineForDirections:dSet.directionsArray];
+    }];
+}
+
 -(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string
 {
     TSMarker *marker = [[TSMarker alloc]initWithPosition:coordinate withSnippet:string forMap:self.mapView];
@@ -147,6 +154,21 @@ static CGFloat const kAnimationDuration = 0.5;
 -(void)animateMapViewToCoordinate:(CLLocationCoordinate2D)coordinate {
     [self.mapView animateToLocation:coordinate];
     [self.mapView animateToZoom:12.0];
+}
+
+-(void)placePolylineForDirections:(NSArray *)directions {
+    [self resetAllMarkers];
+    GMSMutablePath *path = [GMSMutablePath path];
+
+    for (Direction *direction in directions)
+    {
+        [path addCoordinate:direction.startingCoordinate];
+        [path addCoordinate:direction.endingCoordinate];
+    }
+
+    GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];
+    polyLine.strokeWidth = 5.0;
+    polyLine.map = self.mapView;
 }
 
 #pragma mark - GMSMapViewDelegate Methods
@@ -289,18 +311,7 @@ static CGFloat const kAnimationDuration = 0.5;
 }
 
 -(void)didGetNewDirections:(NSArray *)directions {
-    [self resetAllMarkers];
-    GMSMutablePath *path = [GMSMutablePath path];
-
-    for (Direction *direction in directions)
-    {
-        [path addLatitude:direction.startingLatitude.doubleValue longitude:direction.startingLongitude.doubleValue];
-        [path addLatitude:direction.endingLatitude.doubleValue longitude:direction.endingLongitude.doubleValue];
-    }
-
-    GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];
-    polyLine.strokeWidth = 5.0;
-    polyLine.map = self.mapView;
+    [self placePolylineForDirections:directions];
 }
 
 #pragma  mark -resetAllMarkers method
