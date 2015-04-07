@@ -20,7 +20,7 @@
 
 +(void)createNewDirectionSetWithDirections:(NSArray *)directions andStartingLocation:(CDLocation *)startingLocation andEndingLocation: (CDLocation *)endingLocation;
 
-+(NSArray *)fetchDirectionSetWithStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation;
++(NSArray *)fetchDirectionSetsWithLocation:(CDLocation *)location;
 
 @end
 

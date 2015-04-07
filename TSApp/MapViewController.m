@@ -24,6 +24,7 @@
 #import "TSMarker.h"
 #import "AppDelegate.h"
 #import "DirectionsViewController.h"
+#import "Constants.h"
 
 static NSString *const kStoryboardID = @"Main";
 
@@ -58,13 +59,12 @@ static NSString *const kHasVisitedImage = @"CheckMarkImage";
 static NSString *const rwfLocationString = @"Tap to save destination";
 static NSString *const kUpArrowImage = @"TSOrangeUpArrow";
 static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
-static CGFloat const kConstraintConstantBuffer = 40.0;
-static CGFloat const kImageViewConstraintConstantOpen = 70.0;
 static CGFloat const kMapZoom = 10.0;
-static CGFloat const kAnimationDuration = 0.5;
 static NSString *const kDefaultRegion = @"defaultRegion";
 static NSString *const kNewLocationNotification = @"NewLocationNotification";
 static float const kMapLocationZoom = 20.0;
+static CGFloat const kImageViewConstraintConstantOpen = 70.0;
+static CGFloat const kAnimationDuration = 0.5;
 
 #pragma mark - Getters and Setters
 -(void)setCurrentRegion:(CDRegion *)currentRegion {
@@ -118,8 +118,8 @@ static float const kMapLocationZoom = 20.0;
     [self.view sendSubviewToBack:self.mapView];
     self.regionBarButtonItem.tag = 0;
 
-    self.imageViewTopConstraint.constant = self.view.frame.size.height - kConstraintConstantBuffer;
-    self.containerBottomeConstraint.constant = -self.view.frame.size.height + kConstraintConstantBuffer;
+    self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
+    self.containerBottomeConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
     self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
@@ -267,8 +267,8 @@ static float const kMapLocationZoom = 20.0;
 
 -(void)animateContainerDown {
     [UIView animateWithDuration:kAnimationDuration animations:^{
-        self.containerBottomeConstraint.constant = -self.view.frame.size.height + kConstraintConstantBuffer;
-        self.imageViewTopConstraint.constant = self.view.frame.size.height - kConstraintConstantBuffer;
+        self.containerBottomeConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
+        self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CDLocation.h"
+@class CDLocation;
 
 @interface DirectionsListViewController : UIViewController
 

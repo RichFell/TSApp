@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CDLocation.h"
 
 @interface DirectionsViewController : UIViewController
 
-@property CDLocation *selectedLocation;
+-(void)displayDirections:(NSArray *)directions;
 
 @end

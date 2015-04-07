@@ -9,6 +9,7 @@
 #import "DirectionSet.h"
 #import "Direction.h"
 #import "AppDelegate.h"
+#import "CDLocation.h"
 
 
 @implementation DirectionSet
@@ -37,12 +38,26 @@
     return self;
 }
 
-+(NSArray *)fetchDirectionSetWithStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation {
++(NSArray *)fetchDirectionSetsWithLocation:(CDLocation *)location {
     AppDelegate *appdel = [[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *moc = appdel.managedObjectContext;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([DirectionSet class])];
-    request.predicate = [NSPredicate predicateWithFormat:@"locationTo == %@ && locationFrom == %@", startingLocation, endingLocation];
-    return [moc executeFetchRequest:request error:nil];
+    request.predicate = [NSPredicate predicateWithFormat:@"locationTo.objectId == %@ || locationFrom.objectId == %@", location.objectId, location.objectId];
+    return [self separateToAndFromDirectionSets:[moc executeFetchRequest:request error:nil] forLocation:location];
+}
+
++(NSArray *)separateToAndFromDirectionSets:(NSArray *)directionSets forLocation:(CDLocation *)location {
+    NSMutableArray *toArray = [NSMutableArray new];
+    NSMutableArray *fromArray = [NSMutableArray new];
+    for (DirectionSet *directionSet in directionSets) {
+        if ([directionSet.locationFrom isEqual:location]) {
+            [fromArray addObject:directionSet];
+        }
+        else {
+            [toArray addObject:directionSet];
+        }
+    }
+    return @[fromArray, toArray];
 }
 
 @end

@@ -16,7 +16,9 @@
 #import "MapModel.h"
 #import "CDLocation.h"
 #import "DirectionsViewController.h"
+#import "DirectionsListViewController.h"
 #import "DirectionSet.h"
+#import "Constants.h"
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
@@ -28,38 +30,42 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarOne;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarTwo;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewBottomConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
 
 #pragma mark - Variables
 @property CLLocationManager *locationManager;
 @property CLLocation *currentLocation;
 @property CDLocation *startingLocation;
 @property CDLocation *endingLocation;
-@property NSArray *directionsArray;
 @property BOOL wantDirections;
 @property BOOL displayDirections;
 @property BOOL firstTapOnCurrentPosition;
 @property BOOL selectFirstPostion;
 @property NSString *typeOfTransportation;
 @property NSArray *titleArray;
+@property CGFloat startingContainerBottomConstant;
+@property CGFloat startingImageViewConstant;
+@property DirectionsViewController *directionsVC;
 
 @end
 
 @implementation LocationsListViewController
 
 #pragma mark - Constants
-static NSString *const kDirectionsSegue = @"DirectionsSegue";
+
 static NSString *const kLocationCellId = @"LocationTableViewCell";
+static NSString *const kHeaderCellID = @"headerCell";
+static NSString *const kDirectionsCellID = @"DirectionCell";
 static NSString *const kNeedToVisitString = @"Need To Visit";
 static NSString *const kVisitedString = @"Visited";
-static NSString *const kHeaderCellID = @"headerCell";
-static NSString *const kDefaultRegion = @"defaultRegion";
-static NSString *const kNewLocationNotification = @"NewLocationNotification";
-static NSString *const kPlaceHolderImageName = @"PlaceHolderImage";
+static NSString *const kUpArrowImage = @"TSOrangeUpArrow";
+static NSString *const kDownArrowImage = @"TSOrangeDownArrow";
+static NSString *const kPlaceHolderImage = @"PlaceHolderImage";
 static NSString *const kCheckMarkImageName = @"CheckMarkImage";
-static NSString *const kDirectionsCellID = @"DirectionCell";
-static NSString *const kChangeLocationNotif = @"ChangeLocationNotification";
-static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
-
+static CGFloat const kAnimationDuration = 0.5;
+static CGFloat const kImageViewConstraintConstantOpen = 70.0;
 
 #pragma mark - View LifeCycle
 - (void)viewDidLoad {
@@ -81,26 +87,61 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [self.tableView reloadData];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:true];
+    self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
+    self.containerViewBottomConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
+    self.startingContainerBottomConstant = self.containerViewBottomConstraint.constant;
+    self.startingImageViewConstant = self.imageViewTopConstraint.constant;
+    self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    DirectionsViewController *directionsVC = segue.destinationViewController;
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    directionsVC.selectedLocation = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+    if ([segue.destinationViewController isKindOfClass:[DirectionsViewController class]]) {
+        self.directionsVC = segue.destinationViewController;
+    }
+    else if ([segue.destinationViewController isKindOfClass:[DirectionsListViewController class]]) {
+        DirectionsListViewController *vc = segue.destinationViewController;
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        vc.selectedLocation = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+    }
 }
 #pragma mark - helper methods
 
 ///does the call for directions between the startingCoordinate and the endingCoordinate
 -(void)askForDirections {
-
     NSString *directionType = self.typeOfTransportation != nil ? self.typeOfTransportation : @"driving";
     [Direction getDirectionsWithCoordinate:self.startingLocation.coordinate andEndingPosition:self.endingLocation.coordinate withTypeOfTransportation:directionType andBlock:^(NSArray *directionArray, NSError *error) {
         if (directionArray != nil) {
-            self.directionsArray = [NSArray arrayWithArray:directionArray];
-
-            [self.delegate didGetNewDirections:self.directionsArray];
+            [self alertToSaveDirectionSetWithDirections:directionArray];
+            [self.delegate didGetNewDirections:directionArray];
+            [self.directionsVC displayDirections:directionArray];
         }
         else {
             [NetworkErrorAlert showAlertForViewController:self];
         }
+    }];
+}
+
+#pragma mark - Helper Methods for sliding of the container view
+
+-(void)animateContainerUp {
+    [UIView animateWithDuration:kAnimationDuration animations:^{
+        self.containerViewBottomConstraint.constant = 0;
+        self.imageViewTopConstraint.constant = kImageViewConstraintConstantOpen;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.slidingImageView.image = [UIImage imageNamed:kDownArrowImage];
+    }];
+}
+
+-(void)animateContainerDown {
+    [UIView animateWithDuration:kAnimationDuration animations:^{
+        self.containerViewBottomConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
+        self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
     }];
 }
 
@@ -122,7 +163,7 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     cell.indexPath = indexPath;
     cell.delegate = self;
     cell.addressLabel.text = location.localAddress ? location.localAddress : @"No Address";
-    cell.visitedButton.imageView.image =  location.hasVisited == false ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImageName];
+    cell.visitedButton.imageView.image =  location.hasVisited == false ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImage];
     int position = (int)indexPath.row;
     cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
     return cell;
@@ -256,6 +297,14 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     }
 }
 
+- (IBAction)arrowTapped:(UITapGestureRecognizer *)sender {
+    if ([sender locationInView:self.view].y > self.view.frame.size.height / 2) {
+        [self animateContainerUp];
+    }
+    else {
+        [self animateContainerDown];
+    }
+}
 
 #pragma mark - Methods for movement of directionsView
 -(void)reduceDirectionsViewInViewDidLoad {
@@ -360,12 +409,12 @@ static NSString *const kDisplayPolyLineNotif = @"DisplayPolyLine";
     [self presentViewController:alertController animated:true completion:nil];
 }
 
--(void)alertToSaveDirectionSet {
+-(void)alertToSaveDirectionSetWithDirections:(NSArray *)directions {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Would you like to save these directions?" message:@"You can save these directions for later use, and be able to view them at anytime." preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:noAction];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [DirectionSet createNewDirectionSetWithDirections:self.directionsArray andStartingLocation:self.startingLocation andEndingLocation:self.endingLocation];
+        [DirectionSet createNewDirectionSetWithDirections:directions andStartingLocation:self.startingLocation andEndingLocation:self.endingLocation];
     }];
     [alert addAction:yesAction];
     [self presentViewController:alert animated:true completion:nil];
