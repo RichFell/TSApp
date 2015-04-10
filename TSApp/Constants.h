@@ -18,3 +18,4 @@ extern NSString *const kVisitedString;
 extern NSString *const kPlaceHolderImage;
 extern CGFloat const kAnimationDuration;
 extern CGFloat const kImageViewConstraintConstantOpen;
+extern CGFloat const kTSSpacing;

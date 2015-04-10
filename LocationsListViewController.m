@@ -155,10 +155,17 @@ static NSIndexPath *endingIndexPath;
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     HeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kHeaderCellID];
     cell.headerTitleLabel.text = self.titleArray[section];
+
+    if (self.currentRegion.sortedArrayOfLocations.count <= 0) {
+        cell = nil;
+    }
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (self.currentRegion.sortedArrayOfLocations.count <= 0) {
+        return 0;
+    }
     return 40.0;
 }
 
@@ -281,7 +288,7 @@ static NSIndexPath *endingIndexPath;
     self.wantDirections = false;
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.topContainerHeightConstraint.constant = 0.0;
-        self.tableViewTopConstraint.constant = 1.0;
+        self.tableViewTopConstraint.constant = kTSSpacing;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (finished) {
