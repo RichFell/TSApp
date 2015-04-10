@@ -72,10 +72,14 @@ static NSString *const kNeedToVisitKey = @"Haven't Completed";
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    HeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
-    NSString *title = self.titleArray[section];
-    cell.headerTitleLabel.text = title;
-    return cell;
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor lightGrayColor];
+    CGRect insetFromLeftRect = CGRectMake(10, 0, CGRectGetWidth(self.tableView.frame), kTableViewHeaderHeight);
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:insetFromLeftRect];
+    headerLabel.text = self.titleArray[section];
+    [headerView addSubview:headerLabel];
+
+    return headerView;
 }
 
 

@@ -153,20 +153,24 @@ static NSIndexPath *endingIndexPath;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    HeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kHeaderCellID];
-    cell.headerTitleLabel.text = self.titleArray[section];
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor lightGrayColor];
+    CGRect insetFromLeftRect = CGRectMake(10, 0, CGRectGetWidth(self.tableView.frame), kTableViewHeaderHeight);
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:insetFromLeftRect];
+    headerLabel.text = self.titleArray[section];
+    [headerView addSubview:headerLabel];
 
     if (self.currentRegion.sortedArrayOfLocations.count <= 0) {
-        cell = nil;
+        headerView = nil;
     }
-    return cell;
+    return headerView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (self.currentRegion.sortedArrayOfLocations.count <= 0) {
         return 0;
     }
-    return 40.0;
+    return kTableViewHeaderHeight;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
