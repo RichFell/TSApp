@@ -33,9 +33,11 @@ static NSString *typeOfTransportation = @"driving";
 -(void)giveALocation:(CDLocation *)location {
     if (self.selectFirstPosition) {
         self.startingLocation = location;
+        [self.searchBarOne resignFirstResponder];
         self.searchBarOne.text = self.startingLocation.localAddress;
     }
     else {
+        [self.searchBarTwo resignFirstResponder];
         self.endingLocation = location;
         self.searchBarTwo.text = self.endingLocation.localAddress;
     }
@@ -98,6 +100,7 @@ static NSString *typeOfTransportation = @"driving";
     else {
         self.selectFirstPosition = false;
     }
+    [self.delegate locationSelectionVC:self isSettingStartingLocation:self.selectFirstPosition];
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {

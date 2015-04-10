@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B0D2FBA1AD6249A00683722 /* TSButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0D2FB91AD6249A00683722 /* TSButton.m */; };
 		9B0F01061AD464C4005DEFA8 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0F01051AD464C4005DEFA8 /* Constants.m */; };
 		9B0F01091AD4923D005DEFA8 /* LocationSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0F01081AD4923D005DEFA8 /* LocationSelectionViewController.m */; };
 		9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */; };
@@ -92,6 +93,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B0D2FB81AD6249A00683722 /* TSButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSButton.h; sourceTree = "<group>"; };
+		9B0D2FB91AD6249A00683722 /* TSButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSButton.m; sourceTree = "<group>"; };
 		9B0F01041AD464C4005DEFA8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9B0F01051AD464C4005DEFA8 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		9B0F01071AD4923C005DEFA8 /* LocationSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationSelectionViewController.h; sourceTree = "<group>"; };
@@ -250,6 +253,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B0D2FB71AD6245900683722 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				9B0D2FB81AD6249A00683722 /* TSButton.h */,
+				9B0D2FB91AD6249A00683722 /* TSButton.m */,
+			);
+			name = Elements;
+			sourceTree = "<group>";
+		};
 		9B0F010B1AD492B2005DEFA8 /* Locations */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,7 +418,6 @@
 			isa = PBXGroup;
 			children = (
 				9BF72551199448AF00BFCA34 /* UI */,
-				9BBB1124199AC9F400C5321D /* Header Cells */,
 				9B36F2E61A2B83320061DB17 /* Utilities */,
 				9BF72550199448A200BFCA34 /* Model Objects */,
 				9BB0B883197AF79500D545C1 /* AppDelegate.h */,
@@ -496,6 +507,8 @@
 		9BF72551199448AF00BFCA34 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9BBB1124199AC9F400C5321D /* Header Cells */,
+				9B0D2FB71AD6245900683722 /* Elements */,
 				9B0F010B1AD492B2005DEFA8 /* Locations */,
 				9BCB5B601AD1848A0026D5B9 /* Directions */,
 				9B6A3A351AC9CEDB00521CDA /* Map */,
@@ -621,6 +634,7 @@
 				9B0F01091AD4923D005DEFA8 /* LocationSelectionViewController.m in Sources */,
 				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
 				9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */,
+				9B0D2FBA1AD6249A00683722 /* TSButton.m in Sources */,
 				9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */,
 				9BCB5B661AD193CE0026D5B9 /* DirectionsListViewController.m in Sources */,
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,

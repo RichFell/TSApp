@@ -10,20 +10,10 @@
 
 @implementation HeaderTableViewCell
 
-- (void)awakeFromNib
-{
+-(void)awakeFromNib {
     self.backgroundColor = [UIColor customLightGrey];
-}
-
--(void)prepareForInterfaceBuilder {
-    self.backgroundColor = [UIColor customLightGrey];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    self.headerTitleLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:17.0];
+    self.headerTitleLabel.tintColor = [UIColor whiteColor];
 }
 
 @end

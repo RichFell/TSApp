@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KYq-iv-Dee">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KYq-iv-Dee">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -157,7 +157,7 @@
                                     <segue destination="JNC-AX-aDq" kind="embed" id="GY3-lz-NOa"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjI-Mz-82Z">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjI-Mz-82Z" customClass="TSButton">
                                 <rect key="frame" x="57" y="57" width="207" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Njj-cK-arM"/>
@@ -210,8 +210,6 @@
                         <outlet property="getDirectionsButton" destination="xjI-Mz-82Z" id="QRW-QZ-XBU"/>
                         <outlet property="goButtonWidthConstraint" destination="TWK-lt-QF6" id="2hj-WP-d7n"/>
                         <outlet property="imageViewTopConstraint" destination="WTh-dy-UMA" id="R0d-lo-qSa"/>
-                        <outlet property="searchBarOne" destination="dZy-H7-SEb" id="zTP-7Q-Dq3"/>
-                        <outlet property="searchBarTwo" destination="MWq-ik-4T9" id="k1e-As-6VY"/>
                         <outlet property="segmentedControl" destination="M5D-F7-gE6" id="f3i-lg-h5f"/>
                         <outlet property="slidingImageView" destination="ZNp-ZV-gc8" id="9iw-Ow-dyk"/>
                         <outlet property="tableView" destination="l6T-ZB-ebo" id="Vco-zO-WoK"/>
@@ -315,47 +313,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ya-t3-0c0">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ya-t3-0c0" customClass="TSButton">
                                 <rect key="frame" x="16" y="343" width="288" height="40"/>
-                                <color key="backgroundColor" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="0pf-Wg-zwM"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="15"/>
                                 <state key="normal" title="Connect With Facebook">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="coloredIn" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="connectWithFacebookOnTapped:" destination="Jh7-IJ-6Rt" eventType="touchUpInside" id="UeN-uB-JmA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bh8-P9-Se8">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bh8-P9-Se8" customClass="TSButton">
                                 <rect key="frame" x="16" y="398" width="288" height="40"/>
-                                <color key="backgroundColor" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="HTR-Yh-NEx"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Register With Email">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="coloredIn" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="DeC-EM-M4t" kind="modal" id="UMK-3c-QnQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9c9-yd-97U">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9c9-yd-97U" customClass="TSButton">
                                 <rect key="frame" x="16" y="457" width="288" height="40"/>
-                                <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="1lb-4N-UZH"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Log In With Email">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="coloredIn" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="kco-ij-gBt" kind="modal" id="YWu-os-lHe"/>
                                 </connections>
@@ -441,31 +442,31 @@
                                     <outlet property="delegate" destination="kco-ij-gBt" id="FUR-2V-S0u"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZ2-wS-sTX">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZ2-wS-sTX" customClass="TSButton">
                                 <rect key="frame" x="16" y="449" width="288" height="40"/>
-                                <color key="backgroundColor" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="H3F-Df-5RB"/>
                                     <constraint firstAttribute="width" constant="288" id="XfB-eM-7d2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Log In">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="coloredIn" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="onPressedLogin:" destination="kco-ij-gBt" eventType="touchUpInside" id="3ft-8W-C5J"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UB6-rm-DZI">
-                                <rect key="frame" x="107" y="506" width="107" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UB6-rm-DZI" customClass="TSButton">
+                                <rect key="frame" x="83" y="506" width="154" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="OzS-3T-SAQ"/>
-                                    <constraint firstAttribute="width" constant="107" id="YDm-Ud-cU9"/>
+                                    <constraint firstAttribute="width" constant="154" id="YDm-Ud-cU9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Create Account">
-                                    <color key="titleColor" red="1" green="0.74194137354540413" blue="0.26233262160270054" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -517,18 +518,19 @@
                                     <constraint firstAttribute="width" constant="120" id="nbV-Rn-037"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oec-z6-OEH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oec-z6-OEH" customClass="TSButton">
                                 <rect key="frame" x="16" y="403" width="288" height="40"/>
-                                <color key="backgroundColor" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="185-Qq-SlR"/>
                                     <constraint firstAttribute="width" constant="288" id="GAp-O7-Sti"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Create Account">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="coloredIn" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="createAccountOnTapped:" destination="DeC-EM-M4t" eventType="touchUpInside" id="DCg-Mp-BuP"/>
                                 </connections>
@@ -546,7 +548,7 @@
                                     <outlet property="delegate" destination="DeC-EM-M4t" id="pbZ-N5-bzg"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Create Passsword" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mXV-Ci-bqX">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Create Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mXV-Ci-bqX">
                                 <rect key="frame" x="16" y="279" width="288" height="40"/>
                                 <color key="backgroundColor" red="0.76078431369999999" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -800,17 +802,18 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WqE-zZ-PQB">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WqE-zZ-PQB" customClass="TSButton">
                                 <rect key="frame" x="54" y="442" width="213" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="213" id="Fpv-xC-dsX"/>
                                     <constraint firstAttribute="height" constant="30" id="IpP-Ql-tcM"/>
                                 </constraints>
                                 <state key="normal" title="Save">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="coloredIn" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="saveNewRegionOnTap:" destination="Keu-kB-DQd" eventType="touchUpInside" id="7f3-pT-HU6"/>
                                 </connections>
@@ -825,17 +828,18 @@
                                 <color key="textColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bC6-XU-yvP">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bC6-XU-yvP" customClass="TSButton">
                                 <rect key="frame" x="54" y="493" width="213" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="213" id="HiG-yJ-tZs"/>
                                     <constraint firstAttribute="height" constant="30" id="ZFB-Hs-MrY"/>
                                 </constraints>
                                 <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="coloredIn" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="dismissViewOnTapped:" destination="Keu-kB-DQd" eventType="touchUpInside" id="yni-aH-eYn"/>
                                     <action selector="saveNewRegionOnTap:" destination="Keu-kB-DQd" eventType="touchUpInside" id="RSK-0j-qtW"/>
@@ -1063,22 +1067,23 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwZ-x3-QGa">
                                 <rect key="frame" x="0.0" y="-4" width="320" height="135"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yw6-Go-ZL3">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yw6-Go-ZL3" customClass="TSButton">
                                         <rect key="frame" x="262" y="31" width="38" height="35"/>
-                                        <color key="backgroundColor" red="1" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="NKm-Ob-Ihj"/>
                                             <constraint firstAttribute="width" constant="38" id="TWK-lt-QF6"/>
                                         </constraints>
                                         <state key="normal" title="Go">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="coloredIn" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="getDirectionsOnTapped:" destination="y2z-dT-rya" eventType="touchUpInside" id="ybj-hp-fKd"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KqJ-Jg-LWA">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KqJ-Jg-LWA" customClass="TSButton">
                                         <rect key="frame" x="8" y="97" width="30" height="30"/>
                                         <color key="backgroundColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                         <constraints>
@@ -1093,7 +1098,7 @@
                                             <action selector="switchModeOnTransOnTapped:" destination="y2z-dT-rya" eventType="touchUpInside" id="o6o-ar-omN"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwO-2d-X8Y">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwO-2d-X8Y" customClass="TSButton">
                                         <rect key="frame" x="70" y="97" width="30" height="30"/>
                                         <color key="backgroundColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                         <constraints>
@@ -1108,7 +1113,7 @@
                                             <action selector="switchModeOnTransOnTapped:" destination="JNC-AX-aDq" eventType="touchUpInside" id="j1p-le-UCO"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0X0-AY-PAg">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0X0-AY-PAg" customClass="TSButton">
                                         <rect key="frame" x="211" y="97" width="30" height="30"/>
                                         <color key="backgroundColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                         <constraints>
@@ -1123,7 +1128,7 @@
                                             <action selector="switchModeOnTransOnTapped:" destination="JNC-AX-aDq" eventType="touchUpInside" id="uYI-ND-PVG"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yeh-jC-rdw">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yeh-jC-rdw" customClass="TSButton">
                                         <rect key="frame" x="145" y="97" width="30" height="30"/>
                                         <color key="backgroundColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                         <constraints>
@@ -1146,7 +1151,7 @@
                                         </constraints>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <outlet property="delegate" destination="y2z-dT-rya" id="8Fy-mw-aJV"/>
+                                            <outlet property="delegate" destination="JNC-AX-aDq" id="V1s-Qr-1dk"/>
                                         </connections>
                                     </searchBar>
                                     <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="MWq-ik-4T9">
@@ -1157,7 +1162,7 @@
                                         </constraints>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <outlet property="delegate" destination="y2z-dT-rya" id="zVd-0R-SmR"/>
+                                            <outlet property="delegate" destination="JNC-AX-aDq" id="4c9-18-RJG"/>
                                         </connections>
                                     </searchBar>
                                 </subviews>
@@ -1180,10 +1185,10 @@
                                     <constraint firstAttribute="height" constant="135" id="wAx-m7-avI"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfU-iJ-eV5">
-                                <rect key="frame" x="78" y="139" width="164" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfU-iJ-eV5" customClass="TSButton">
+                                <rect key="frame" x="60" y="139" width="201" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="164" id="o2v-1X-CB7"/>
+                                    <constraint firstAttribute="width" constant="201" id="o2v-1X-CB7"/>
                                     <constraint firstAttribute="height" constant="30" id="qs1-rg-FGY"/>
                                 </constraints>
                                 <state key="normal" title="Done Getting Directions">

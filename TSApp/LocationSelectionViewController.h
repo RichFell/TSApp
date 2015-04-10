@@ -12,6 +12,7 @@
 @protocol LocationSelectionVCDelegate <NSObject>
 
 -(void)locationSelectionVC:(LocationSelectionViewController *)viewController didTapDone:(BOOL)done;
+-(void)locationSelectionVC:(LocationSelectionViewController *)viewController isSettingStartingLocation:(BOOL)isStartingLocation;
 
 @end
 

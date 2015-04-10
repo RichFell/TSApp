@@ -40,7 +40,7 @@
 @property BOOL wantDirections;
 @property BOOL displayDirections;
 @property BOOL firstTapOnCurrentPosition;
-@property (nonatomic) BOOL selectFirstPostion;
+@property (nonatomic) BOOL selectFirstPosition;
 @property NSString *typeOfTransportation;
 @property NSArray *titleArray;
 @property CGFloat startingContainerBottomConstant;
@@ -66,7 +66,8 @@ static NSString *const kDirectionSegue = @"DirectionSegue";
 
 #pragma mark - static variables
 static CGFloat topViewStartingHeight;
-
+static NSIndexPath *startingIndexPath;
+static NSIndexPath *endingIndexPath;
 
 #pragma mark - View LifeCycle
 - (void)viewDidLoad {
@@ -80,7 +81,6 @@ static CGFloat topViewStartingHeight;
     [self.locationManager startUpdatingLocation];
     self.wantDirections = false;
     self.titleArray = @[kNeedToVisitString, kVisitedString];
-    self.view.backgroundColor = [UIColor customTableViewBackgroundGrey];
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self reduceDirectionsViewInViewDidLoad];
     self.segmentedControl.selectedSegmentIndex = 1;
@@ -141,15 +141,7 @@ static CGFloat topViewStartingHeight;
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLocationCellId];
     CDLocation *location = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
-//    if (location == self.startingLocation) {
-//        cell.backgroundColor = [UIColor greenColor];
-//    }
-//    else if (location == self.endingLocation) {
-//        cell.backgroundColor = [UIColor blueColor];
-//    }
-//    else {
-//        cell.backgroundColor = [UIColor whiteColor];
-//    }
+    cell.backgroundColor = [indexPath isEqual: startingIndexPath] ? [UIColor lightGrayColor] : [indexPath isEqual: endingIndexPath] ? [UIColor darkGrayColor] : [UIColor whiteColor];
     cell.infoLabel.text = location.name;
     cell.indexPath = indexPath;
     cell.delegate = self;
@@ -211,10 +203,12 @@ static CGFloat topViewStartingHeight;
     if (self.wantDirections) {
         [self.locationSelectionVC giveALocation:selectedLocation];
         if (!self.selectFirstPostion) {
-            cell.backgroundColor = [UIColor blueColor];
+            cell.backgroundColor = [UIColor customDarkGrey];
+            endingIndexPath = indexPath;
         }
         else {
-            cell.backgroundColor = [UIColor greenColor];
+            cell.backgroundColor = [UIColor customLightGrey];
+            startingIndexPath = indexPath;
         }
     }
     else {
@@ -274,6 +268,7 @@ static CGFloat topViewStartingHeight;
 
 //Expands directions View to display the full view and button animated
 -(void)expandDirectionsView {
+    self.wantDirections = true;
     self.getDirectionsButton.hidden = true;
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.tableViewTopConstraint.constant = topViewStartingHeight - self.getDirectionsButton.frame.size.height;
@@ -283,6 +278,7 @@ static CGFloat topViewStartingHeight;
 }
 
 -(void)animateDirectionsViewClosed {
+    self.wantDirections = false;
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.topContainerHeightConstraint.constant = 0.0;
         self.tableViewTopConstraint.constant = 1.0;
@@ -299,6 +295,8 @@ static CGFloat topViewStartingHeight;
     [self animateDirectionsViewClosed];
 }
 
-
+-(void)locationSelectionVC:(LocationSelectionViewController *)viewController isSettingStartingLocation:(BOOL)isStartingLocation {
+    self.selectFirstPosition = isStartingLocation;
+}
 
 @end

@@ -291,15 +291,7 @@ static float const kMapLocationZoom = 20.0;
 }
 
 #pragma mark - LocationListVCDelegate Methods
--(void)didMoveLocation:(Location *)movedLocation {
-    [self resetAllMarkers];
-}
-
--(void)didDeleteLocation:(Location *)deletedLocation {
-    [self resetAllMarkers];
-}
-
--(void)didAddNewLocation:(Location *)newLocation {
+-(void)locationListVC:(LocationsListViewController *)viewController didChangeLocation:(CDLocation *)location {
     [self resetAllMarkers];
 }
 
