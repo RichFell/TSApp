@@ -146,7 +146,7 @@ static NSIndexPath *endingIndexPath;
     cell.indexPath = indexPath;
     cell.delegate = self;
     cell.addressLabel.text = location.localAddress ? location.localAddress : @"No Address";
-    cell.visitedButton.imageView.image =  location.hasVisited == false ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImage];
+    [cell.visitedButton setImage: location.hasVisited == true ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImage] forState:UIControlStateNormal];
     int position = (int)indexPath.row;
     cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
     return cell;
@@ -235,6 +235,7 @@ static NSIndexPath *endingIndexPath;
     location.hasVisited = !location.hasVisited;
     [self.tableView reloadData];
     [self.delegate locationListVC:self didChangeLocation:location];
+    NSLog(@"%@", location);
 }
 
 #pragma mark - LocationManagerDelegate methods

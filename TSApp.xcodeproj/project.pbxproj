@@ -253,13 +253,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9B0D2FB71AD6245900683722 /* Elements */ = {
+		9B0D2FB71AD6245900683722 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				9B0D2FB81AD6249A00683722 /* TSButton.h */,
 				9B0D2FB91AD6249A00683722 /* TSButton.m */,
 			);
-			name = Elements;
+			name = Buttons;
 			sourceTree = "<group>";
 		};
 		9B0F010B1AD492B2005DEFA8 /* Locations */ = {
@@ -508,7 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				9BBB1124199AC9F400C5321D /* Header Cells */,
-				9B0D2FB71AD6245900683722 /* Elements */,
+				9B0D2FB71AD6245900683722 /* Buttons */,
 				9B0F010B1AD492B2005DEFA8 /* Locations */,
 				9BCB5B601AD1848A0026D5B9 /* Directions */,
 				9B6A3A351AC9CEDB00521CDA /* Map */,
