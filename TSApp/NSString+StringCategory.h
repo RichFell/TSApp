@@ -11,5 +11,6 @@
 @interface NSString (StringCategory)
 
 -(NSString *)stringByStrippingHtml;
++(NSString *)base64ForData:(NSString *)data;
 
 @end

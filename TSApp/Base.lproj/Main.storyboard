@@ -1056,14 +1056,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwZ-x3-QGa">
                                 <rect key="frame" x="0.0" y="-4" width="320" height="135"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KqJ-Jg-LWA" customClass="TSButton">
-                                        <rect key="frame" x="8" y="97" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KqJ-Jg-LWA" customClass="TSButton">
+                                        <rect key="frame" x="8" y="92" width="40" height="40"/>
                                         <color key="backgroundColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="bVo-OX-9dG"/>
-                                            <constraint firstAttribute="width" constant="30" id="woV-1h-FsJ"/>
+                                            <constraint firstAttribute="height" constant="40" id="bVo-OX-9dG"/>
+                                            <constraint firstAttribute="width" constant="40" id="woV-1h-FsJ"/>
                                         </constraints>
-                                        <state key="normal" title="T">
+                                        <state key="normal" image="Train">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1071,14 +1071,14 @@
                                             <action selector="switchModeOnTransOnTapped:" destination="y2z-dT-rya" eventType="touchUpInside" id="o6o-ar-omN"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwO-2d-X8Y" customClass="TSButton">
-                                        <rect key="frame" x="99" y="97" width="30" height="30"/>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwO-2d-X8Y" customClass="TSButton">
+                                        <rect key="frame" x="107" y="92" width="40" height="40"/>
                                         <color key="backgroundColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="7XS-0t-ofy"/>
-                                            <constraint firstAttribute="width" constant="30" id="WRh-tL-uPa"/>
+                                            <constraint firstAttribute="height" constant="40" id="7XS-0t-ofy"/>
+                                            <constraint firstAttribute="width" constant="40" id="WRh-tL-uPa"/>
                                         </constraints>
-                                        <state key="normal" title="D">
+                                        <state key="normal" image="Car">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1086,14 +1086,14 @@
                                             <action selector="switchModeOnTransOnTapped:" destination="JNC-AX-aDq" eventType="touchUpInside" id="j1p-le-UCO"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0X0-AY-PAg" customClass="TSButton">
-                                        <rect key="frame" x="282" y="97" width="30" height="30"/>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0X0-AY-PAg" customClass="TSButton">
+                                        <rect key="frame" x="272" y="92" width="40" height="40"/>
                                         <color key="backgroundColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="BSb-Lq-n9I"/>
-                                            <constraint firstAttribute="height" constant="30" id="cVf-mI-Fyy"/>
+                                            <constraint firstAttribute="width" constant="40" id="BSb-Lq-n9I"/>
+                                            <constraint firstAttribute="height" constant="40" id="cVf-mI-Fyy"/>
                                         </constraints>
-                                        <state key="normal" title="B">
+                                        <state key="normal" image="Bike">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1122,7 +1122,7 @@
                                         </connections>
                                     </searchBar>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yeh-jC-rdw" customClass="TSButton">
-                                        <rect key="frame" x="198" y="97" width="30" height="30"/>
+                                        <rect key="frame" x="205" y="97" width="30" height="30"/>
                                         <color key="backgroundColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="8mm-k3-NBK"/>
@@ -1139,19 +1139,19 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="FwO-2d-X8Y" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="7" id="9NQ-Ii-8pH"/>
-                                    <constraint firstItem="Yeh-jC-rdw" firstAttribute="leading" secondItem="FwO-2d-X8Y" secondAttribute="trailing" constant="69" id="BhJ-Or-1pF"/>
+                                    <constraint firstItem="FwO-2d-X8Y" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="2" id="9NQ-Ii-8pH"/>
+                                    <constraint firstItem="Yeh-jC-rdw" firstAttribute="leading" secondItem="FwO-2d-X8Y" secondAttribute="trailing" constant="58" id="BhJ-Or-1pF"/>
                                     <constraint firstAttribute="trailing" secondItem="dZy-H7-SEb" secondAttribute="trailing" id="ESg-rA-GDb"/>
-                                    <constraint firstItem="0X0-AY-PAg" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="7" id="JUT-Oj-1RT"/>
+                                    <constraint firstItem="0X0-AY-PAg" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="2" id="JUT-Oj-1RT"/>
                                     <constraint firstItem="Yeh-jC-rdw" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="7" id="L1R-mA-vC0"/>
                                     <constraint firstAttribute="trailing" secondItem="MWq-ik-4T9" secondAttribute="trailing" id="T3x-Vy-H9j"/>
-                                    <constraint firstItem="FwO-2d-X8Y" firstAttribute="leading" secondItem="KqJ-Jg-LWA" secondAttribute="trailing" constant="61" id="W7T-Rc-9fB"/>
+                                    <constraint firstItem="FwO-2d-X8Y" firstAttribute="leading" secondItem="KqJ-Jg-LWA" secondAttribute="trailing" constant="59" id="W7T-Rc-9fB"/>
                                     <constraint firstItem="MWq-ik-4T9" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" id="WLx-yK-jzT"/>
                                     <constraint firstItem="dZy-H7-SEb" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" id="ibp-it-957"/>
                                     <constraint firstItem="MWq-ik-4T9" firstAttribute="top" secondItem="dZy-H7-SEb" secondAttribute="bottom" constant="2" id="jVb-F4-54Q"/>
                                     <constraint firstItem="dZy-H7-SEb" firstAttribute="top" secondItem="JwZ-x3-QGa" secondAttribute="top" id="jiq-iB-RKX"/>
-                                    <constraint firstItem="KqJ-Jg-LWA" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="7" id="ma9-dC-cbq"/>
-                                    <constraint firstItem="0X0-AY-PAg" firstAttribute="leading" secondItem="Yeh-jC-rdw" secondAttribute="trailing" constant="54" id="orb-ho-VgO"/>
+                                    <constraint firstItem="KqJ-Jg-LWA" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="2" id="ma9-dC-cbq"/>
+                                    <constraint firstItem="0X0-AY-PAg" firstAttribute="leading" secondItem="Yeh-jC-rdw" secondAttribute="trailing" constant="37" id="orb-ho-VgO"/>
                                     <constraint firstItem="KqJ-Jg-LWA" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" constant="8" id="sFo-fc-kJZ"/>
                                     <constraint firstAttribute="height" constant="135" id="wAx-m7-avI"/>
                                 </constraints>
@@ -1210,8 +1210,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Bike" width="40" height="40"/>
+        <image name="Car" width="40" height="40"/>
         <image name="CheckMarkImage" width="30" height="30"/>
         <image name="TSOrangeUpArrow" width="40" height="30"/>
+        <image name="Train" width="40" height="40"/>
         <image name="TravelSagesInitialImage" width="150" height="150"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
