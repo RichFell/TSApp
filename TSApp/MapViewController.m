@@ -25,7 +25,12 @@
 #import "DirectionsViewController.h"
 #import "DirectionSet.h"
 
-static NSString *const kStoryboardID = @"Main";
+
+typedef NS_ENUM(NSInteger, MarkerType) {
+    Marker_New,
+    Marker_Visited,
+    Marker_NotVisited
+};
 
 @interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate, RegionListVCDelegate>
 
@@ -56,8 +61,6 @@ static NSString *const kStoryboardID = @"Main";
 static NSString *const kNotVisitedImage = @"PlacHolderImage";
 static NSString *const kHasVisitedImage = @"CheckMarkImage";
 static NSString *const rwfLocationString = @"Tap to save destination";
-static CGFloat const kMapZoom = 10.0;
-static float const kMapLocationZoom = 20.0;
 
 #pragma mark - Getters and Setters
 -(void)setCurrentRegion:(CDRegion *)currentRegion {
@@ -106,7 +109,7 @@ static float const kMapLocationZoom = 20.0;
     self.mapView.settings.myLocationButton = YES;
     self.markers = [NSMutableArray array];
 
-    [self.mapView animateToZoom:kMapZoom];
+    [self.mapView animateToZoom:kMapViewZoom];
     [self.view addSubview:self.mapView];
     [self.view sendSubviewToBack:self.mapView];
 
@@ -120,14 +123,25 @@ static float const kMapLocationZoom = 20.0;
 -(void)setupNotificationListeners {
     [[NSNotificationCenter defaultCenter] addObserverForName:kSelectedDirectionNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         NSDictionary *info = note.userInfo;
-        DirectionSet *dSet = info[kDirectionSetKey];
-        [self placePolylineForDirections:dSet.directionsArray];
+        NSArray *directions = info[kDirectionArrayKey];
+        [self placePolylineForDirections:directions];
     }];
 }
 
--(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string
+-(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string forMarkerType:(MarkerType)type
 {
     TSMarker *marker = [[TSMarker alloc]initWithPosition:coordinate withSnippet:string forMap:self.mapView];
+    switch (type) {
+        case Marker_New:
+            marker.icon = [GMSMarker markerImageWithColor:[UIColor customOrange]];
+            break;
+        case Marker_NotVisited:
+            marker.icon = [GMSMarker markerImageWithColor:[UIColor redColor]];
+        case Marker_Visited:
+            marker.icon = [GMSMarker markerImageWithColor:[UIColor blueColor]];
+        default:
+            break;
+    }
     [self.mapView setSelectedMarker:marker];
 }
 
@@ -200,7 +214,7 @@ static float const kMapLocationZoom = 20.0;
         else
         {
             [self resetAllMarkers];
-            [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare];
+            [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare forMarkerType:Marker_New];
         }
     }];
 }
@@ -267,8 +281,8 @@ static float const kMapLocationZoom = 20.0;
         else
         {
             [self.mapView animateToLocation:coordinate];
-            [self.mapView animateToZoom:kMapLocationZoom];
-            [self placeMarker:coordinate string:@"Tap to save destination"];
+            [self.mapView animateToZoom:kMapViewZoom];
+            [self placeMarker:coordinate string:@"Tap to save destination" forMarkerType:Marker_New];
         }
     }];
     [textField resignFirstResponder];

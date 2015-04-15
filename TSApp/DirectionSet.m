@@ -36,8 +36,6 @@
 +(void)createNewDirectionSetWithDirections:(NSArray *)directions andStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation {
     DirectionSet *directionSet = [[DirectionSet alloc]initWithDirections:directions andStartingLocation:startingLocation andEndingLocation:endingLocation];
     [directionSet.managedObjectContext save:nil];
-    NSDictionary *info = @{kDirectionSetKey: directionSet};
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedDirectionNotification object:nil userInfo:info];
 }
 
 -(instancetype)initWithDirections:(NSArray *)directions andStartingLocation:(CDLocation *)startingLocation andEndingLocation:(CDLocation *)endingLocation {

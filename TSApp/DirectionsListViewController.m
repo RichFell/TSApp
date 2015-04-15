@@ -67,7 +67,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     [self.navigationController popViewControllerAnimated:true];
-    NSDictionary *info = @{kDirectionSetKey: self.directionSets[indexPath.section][indexPath.row]};
+    NSDictionary *info = @{kDirectionArrayKey: self.directionSets[indexPath.section][indexPath.row]};
     [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedDirectionNotification object:nil userInfo:info];
     [self.presentingViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
 }

@@ -8,9 +8,10 @@
 
 #import "Constants.h"
 
+NSString *const kStoryboardID = @"Main";
 NSString *const kSomeString = @"some String";
 NSString *const kSelectedDirectionNotification = @"selectedDirectionNotification";
-NSString *const kDirectionSetKey = @"selectedDirectionSet";
+NSString *const kDirectionArrayKey = @"selectedDirections";
 NSString *const kUpArrowImage = @"TSOrangeUpArrow";
 NSString *const kDownArrowImage = @"TSOrangeDownArrow";
 NSString *const kNeedToVisitString = @"Need To Visit";

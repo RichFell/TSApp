@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const kStoryboardID;
 extern NSString *const kSomeString;
 extern NSString *const kSelectedDirectionNotification;
-extern NSString *const kDirectionSetKey;
+extern NSString *const kDirectionArrayKey;
 extern NSString *const kUpArrowImage;
 extern NSString *const kDownArrowImage;
 extern NSString *const kNeedToVisitString;

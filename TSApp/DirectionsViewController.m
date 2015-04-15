@@ -29,8 +29,8 @@
 -(void)setUpNotificationListeners {
     [[NSNotificationCenter defaultCenter] addObserverForName:kSelectedDirectionNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         NSDictionary *info = note.userInfo;
-        DirectionSet *dSet = info[kDirectionSetKey];
-        [self displayDirections:dSet.directionsArray];
+        NSArray *directions = info[kDirectionArrayKey];
+        [self displayDirections:directions];
     }];
 }
 

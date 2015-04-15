@@ -1180,7 +1180,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="finishedGettingDirectionsOnTap:" destination="JNC-AX-aDq" eventType="touchUpInside" id="nki-qm-kqQ"/>
+                                    <action selector="getDirectionsOnTap:" destination="JNC-AX-aDq" eventType="touchUpInside" id="ADq-RK-gpj"/>
                                 </connections>
                             </button>
                         </subviews>

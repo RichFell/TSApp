@@ -74,6 +74,11 @@ static NSString *typeOfTransportation = @"driving";
     }
 }
 
+- (IBAction)getDirectionsOnTap:(UIButton *)sender {
+    [self askForDirections];
+}
+
+
 - (IBAction)finishedGettingDirectionsOnTap:(UIButton *)sender {
     [self.delegate locationSelectionVC:self didTapDone:true];
 }
@@ -83,13 +88,17 @@ static NSString *typeOfTransportation = @"driving";
     [Direction getDirectionsWithCoordinate:self.startingLocation.coordinate andEndingPosition:self.endingLocation.coordinate withTypeOfTransportation:typeOfTransportation andBlock:^(NSArray *directionArray, NSError *error) {
         if (directionArray != nil) {
             [self alertToSaveDirectionSetWithDirections:directionArray];
-//            [self.delegate didGetNewDirections:directionArray];
-//            [self.directionsVC displayDirections:directionArray];
+            [self postNotificationForDirections:directionArray];
         }
         else {
             [NetworkErrorAlert showAlertForViewController:self];
         }
     }];
+}
+
+-(void)postNotificationForDirections:(NSArray *)directions {
+    NSDictionary *info = @{kDirectionArrayKey: directions};
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedDirectionNotification object:nil userInfo:info];
 }
 
 #pragma mark - searchBarDelegate Methods
@@ -161,7 +170,7 @@ static NSString *typeOfTransportation = @"driving";
         [DirectionSet createNewDirectionSetWithDirections:directions andStartingLocation:self.startingLocation andEndingLocation:self.endingLocation];
     }];
     [alert addAction:yesAction];
-    [self presentViewController:alert animated:true completion:nil];
+    [self.parentViewController presentViewController:alert animated:true completion:nil];
 }
 
 @end
