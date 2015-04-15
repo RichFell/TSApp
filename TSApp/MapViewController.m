@@ -146,17 +146,29 @@ static float const kMapLocationZoom = 20.0;
 
 -(void)animateMapViewToRegion:(CDRegion *)region {
     if (region.allLocations.count > 0) {
-        GMSCoordinateBounds *bounds = [GMSCoordinateBounds new];
-        for (CDLocation *location in region.allLocations) {
-            bounds = [bounds includingCoordinate:location.coordinate];
-        }
-//        GMSCameraPosition *cameraPos = [self.mapView cameraForBounds:bounds insets:UIEdgeInsetsZero];
-        [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:30.0]];
+        [self animateMapViewToLocations:region.allLocations];
     }
     else {
         [self.mapView animateToLocation:region.coordinate];
-        [self.mapView animateToZoom:12.0];
+        [self.mapView animateToZoom:kMapViewZoom];
     }
+}
+
+-(void)animateMapViewToLocations:(NSArray *)locations {
+    GMSCoordinateBounds *bounds = [GMSCoordinateBounds new];
+    for (CDLocation *location in locations) {
+        bounds = [bounds includingCoordinate:location.coordinate];
+    }
+    [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:kMapViewPadding]];
+}
+
+-(void)animateMapViewToDirections:(NSArray *)directions {
+    GMSCoordinateBounds *bounds = [GMSCoordinateBounds new];
+    for (Direction *direction in directions) {
+        bounds = [bounds includingCoordinate:direction.startingCoordinate];
+        bounds = [bounds includingCoordinate:direction.endingCoordinate];
+    }
+    [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:kMapViewPadding]];
 }
 
 -(void)placePolylineForDirections:(NSArray *)directions {
@@ -170,8 +182,10 @@ static float const kMapLocationZoom = 20.0;
     }
 
     GMSPolyline *polyLine = [GMSPolyline polylineWithPath:path];
-    polyLine.strokeWidth = 5.0;
+    polyLine.strokeWidth = kMapViewPolylineWidth;
     polyLine.map = self.mapView;
+
+    [self animateMapViewToDirections:directions];
 }
 
 #pragma mark - GMSMapViewDelegate Methods

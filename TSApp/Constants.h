@@ -20,3 +20,6 @@ extern CGFloat const kAnimationDuration;
 extern CGFloat const kImageViewConstraintConstantOpen;
 extern CGFloat const kTSSpacing;
 extern CGFloat const kTableViewHeaderHeight;
+extern CGFloat const kMapViewPadding;
+extern CGFloat const kMapViewZoom;
+extern CGFloat const kMapViewPolylineWidth;
