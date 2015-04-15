@@ -132,12 +132,6 @@
                                     <action selector="segementSelectOnTap:" destination="v5a-Rt-M6e" eventType="valueChanged" id="QLd-Yt-4db"/>
                                 </connections>
                             </segmentedControl>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyx-v6-69E">
-                                <rect key="frame" x="0.0" y="273" width="320" height="504"/>
-                                <connections>
-                                    <segue destination="zEX-Qi-iDZ" kind="embed" id="iZk-sz-QCO"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rBa-un-JXV">
                                 <rect key="frame" x="0.0" y="44" width="320" height="177"/>
                                 <constraints>
@@ -160,6 +154,12 @@
                                     <action selector="expandDirectionsViewOnTap:" destination="y2z-dT-rya" eventType="touchUpInside" id="mhm-2s-x1Z"/>
                                 </connections>
                             </button>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyx-v6-69E">
+                                <rect key="frame" x="0.0" y="273" width="320" height="504"/>
+                                <connections>
+                                    <segue destination="zEX-Qi-iDZ" kind="embed" id="iZk-sz-QCO"/>
+                                </connections>
+                            </containerView>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="ZNp-ZV-gc8">
                                 <rect key="frame" x="145" y="242" width="30" height="30"/>
                                 <gestureRecognizers/>
@@ -197,6 +197,7 @@
                     <navigationItem key="navigationItem" id="YGa-IL-Cft"/>
                     <connections>
                         <outlet property="containerViewBottomConstraint" destination="evA-NN-Yke" id="SGJ-YQ-d7l"/>
+                        <outlet property="directionContainterTopConstraint" destination="cAZ-t6-0y2" id="SG8-6f-6mL"/>
                         <outlet property="getDirectionsButton" destination="xjI-Mz-82Z" id="QRW-QZ-XBU"/>
                         <outlet property="imageViewTopConstraint" destination="WTh-dy-UMA" id="R0d-lo-qSa"/>
                         <outlet property="segmentedControl" destination="M5D-F7-gE6" id="f3i-lg-h5f"/>
@@ -1224,6 +1225,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fxb-N0-nxc"/>
+        <segue reference="iZk-sz-QCO"/>
     </inferredMetricsTieBreakers>
 </document>

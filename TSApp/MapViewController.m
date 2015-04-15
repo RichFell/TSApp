@@ -43,6 +43,7 @@ typedef NS_ENUM(NSInteger, MarkerType) {
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
 
+
 #pragma mark - Variables
 @property (nonatomic) CDRegion *currentRegion;
 @property CGFloat startingImageViewConstant;
@@ -128,20 +129,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     }];
 }
 
--(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string forMarkerType:(MarkerType)type
+-(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string
 {
     TSMarker *marker = [[TSMarker alloc]initWithPosition:coordinate withSnippet:string forMap:self.mapView];
-    switch (type) {
-        case Marker_New:
-            marker.icon = [GMSMarker markerImageWithColor:[UIColor customOrange]];
-            break;
-        case Marker_NotVisited:
-            marker.icon = [GMSMarker markerImageWithColor:[UIColor redColor]];
-        case Marker_Visited:
-            marker.icon = [GMSMarker markerImageWithColor:[UIColor blueColor]];
-        default:
-            break;
-    }
+    marker.icon = [GMSMarker markerImageWithColor:[UIColor customOrange]];
     [self.mapView setSelectedMarker:marker];
 }
 
@@ -214,7 +205,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         else
         {
             [self resetAllMarkers];
-            [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare forMarkerType:Marker_New];
+            [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare];
         }
     }];
 }
@@ -278,11 +269,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         if (error) {
             [NetworkErrorAlert showAlertForViewController:self];
         }
-        else
-        {
+        else {
             [self.mapView animateToLocation:coordinate];
             [self.mapView animateToZoom:kMapViewZoom];
-            [self placeMarker:coordinate string:@"Tap to save destination" forMarkerType:Marker_New];
+            [self placeMarker:coordinate string:@"Tap to save destination"];
         }
     }];
     [textField resignFirstResponder];

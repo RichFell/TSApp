@@ -32,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *getDirectionsButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topContainerHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
-@property LocationSelectionViewController *locationSelectionVC;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionContainterTopConstraint;
 
 #pragma mark - Variables
 @property CLLocationManager *locationManager;
@@ -46,6 +46,7 @@
 @property CGFloat startingContainerBottomConstant;
 @property CGFloat startingImageViewConstant;
 @property DirectionsViewController *directionsVC;
+@property LocationSelectionViewController *locationSelectionVC;
 
 @end
 
@@ -85,6 +86,7 @@ static NSIndexPath *endingIndexPath;
     [self reduceDirectionsViewInViewDidLoad];
     self.segmentedControl.selectedSegmentIndex = 1;
     [self.tableView reloadData];
+    self.directionContainterTopConstraint.constant = -300.0;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -130,6 +132,7 @@ static NSIndexPath *endingIndexPath;
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.containerViewBottomConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
         self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
+        self.directionContainterTopConstraint.constant = 1.0;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
@@ -145,7 +148,7 @@ static NSIndexPath *endingIndexPath;
     cell.infoLabel.text = location.name;
     cell.indexPath = indexPath;
     cell.delegate = self;
-    cell.addressLabel.text = location.localAddress ? location.localAddress : @"No Address";
+    cell.addressLabel.text = location.localAddress ? location.localAddress : @"No Addres    s";
     [cell.visitedButton setImage: location.hasVisited == true ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImage] forState:UIControlStateNormal];
     int position = (int)indexPath.row;
     cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];
@@ -235,7 +238,6 @@ static NSIndexPath *endingIndexPath;
     location.hasVisited = !location.hasVisited;
     [self.tableView reloadData];
     [self.delegate locationListVC:self didChangeLocation:location];
-    NSLog(@"%@", location);
 }
 
 #pragma mark - LocationManagerDelegate methods
@@ -259,7 +261,6 @@ static NSIndexPath *endingIndexPath;
     if (sender.selectedSegmentIndex == 0) {
         [self.presentingViewController dismissViewControllerAnimated:true completion:nil];
     }
-
 }
 
 - (IBAction)arrowTapped:(UITapGestureRecognizer *)sender {
