@@ -36,6 +36,7 @@ static NSString *const kStoryboardID = @"Main";
 @property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
+@property (weak, nonatomic) IBOutlet UIView *searchView;
 
 #pragma mark - Variables
 @property (nonatomic) CDRegion *currentRegion;
@@ -99,7 +100,7 @@ static float const kMapLocationZoom = 20.0;
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager requestAlwaysAuthorization];
     self.locationsArray = [NSMutableArray array];
-    self.mapView = [[GMSMapView alloc] initWithFrame:self.view.frame];
+    self.mapView = [[GMSMapView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.searchView.frame), CGRectGetMaxY(self.searchView.frame), CGRectGetWidth(self.view.frame),CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.searchView.frame))];
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = YES;
     self.mapView.settings.myLocationButton = YES;
@@ -108,7 +109,6 @@ static float const kMapLocationZoom = 20.0;
     [self.mapView animateToZoom:kMapZoom];
     [self.view addSubview:self.mapView];
     [self.view sendSubviewToBack:self.mapView];
-    self.regionBarButtonItem.tag = 0;
 
     self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
     self.containerBottomeConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
@@ -140,13 +140,23 @@ static float const kMapLocationZoom = 20.0;
     [CDRegion getDefaultRegionWithBlock:^(CDRegion *region, NSError *error) {
         self.currentRegion = region;
         self.title = region.name;
-        [self animateMapViewToCoordinate:region.coordinate];
+        [self animateMapViewToRegion:region];
     }];
 }
 
--(void)animateMapViewToCoordinate:(CLLocationCoordinate2D)coordinate {
-    [self.mapView animateToLocation:coordinate];
-    [self.mapView animateToZoom:12.0];
+-(void)animateMapViewToRegion:(CDRegion *)region {
+    if (region.allLocations.count > 0) {
+        GMSCoordinateBounds *bounds = [GMSCoordinateBounds new];
+        for (CDLocation *location in region.allLocations) {
+            bounds = [bounds includingCoordinate:location.coordinate];
+        }
+//        GMSCameraPosition *cameraPos = [self.mapView cameraForBounds:bounds insets:UIEdgeInsetsZero];
+        [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:30.0]];
+    }
+    else {
+        [self.mapView animateToLocation:region.coordinate];
+        [self.mapView animateToZoom:12.0];
+    }
 }
 
 -(void)placePolylineForDirections:(NSArray *)directions {

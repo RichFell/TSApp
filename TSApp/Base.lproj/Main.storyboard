@@ -955,6 +955,7 @@
                         <outlet property="imageViewTopConstraint" destination="eIg-3Q-6k4" id="NY3-LP-RoA"/>
                         <outlet property="regionBarButtonItem" destination="Hgk-eN-g6L" id="Zne-ik-MFN"/>
                         <outlet property="searchTextField" destination="lJg-wk-K9m" id="mmU-G5-eNV"/>
+                        <outlet property="searchView" destination="aHH-1c-tPc" id="ugW-T6-Mk7"/>
                         <outlet property="segmentControl" destination="Z1D-uI-0xD" id="V1h-hP-fwB"/>
                         <outlet property="slidingImageView" destination="Cob-EZ-P03" id="j9U-dv-6SA"/>
                         <segue destination="9A0-eO-p5Q" kind="modal" identifier="ListSegue" modalTransitionStyle="flipHorizontal" id="1Aw-Nk-z8Y"/>
@@ -1223,6 +1224,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="iZk-sz-QCO"/>
+        <segue reference="fxb-N0-nxc"/>
     </inferredMetricsTieBreakers>
 </document>
