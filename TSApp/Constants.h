@@ -24,3 +24,9 @@ extern CGFloat const kTableViewHeaderHeight;
 extern CGFloat const kMapViewPadding;
 extern CGFloat const kMapViewZoom;
 extern CGFloat const kMapViewPolylineWidth;
+
+
+//API Keys
+extern NSString *const kGoogleAPIKey;
+extern NSString *const kParseAppId;
+extern NSString *const kParseClientKey;

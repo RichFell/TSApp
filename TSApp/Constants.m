@@ -24,3 +24,9 @@ CGFloat const kTableViewHeaderHeight = 40.0;
 CGFloat const kMapViewPadding = 30.0;
 CGFloat const kMapViewZoom = 12.0;
 CGFloat const kMapViewPolylineWidth = 5.0;
+
+//API Keys
+
+NSString *const kGoogleAPIKey = @"AIzaSyCLR3ztaPMZugnESkzeeAWWTkxbHTpgCPA";
+NSString *const kParseAppId = @"tODHHsxlD4kr43TJG7T0TB74doArNn9w370bG4s9";
+NSString *const kParseClientKey = @"RWXNAF7TiGqnVaQJERLfLivu4LgRD6RJTJfzCvt1";
