@@ -30,3 +30,25 @@ extern CGFloat const kMapViewPolylineWidth;
 extern NSString *const kGoogleAPIKey;
 extern NSString *const kParseAppId;
 extern NSString *const kParseClientKey;
+
+extern NSString *const kYelpConsumerKey;
+extern NSString *const kYelpConsumerSecret;
+extern NSString *const kYelpToken;
+extern NSString *const kYelpTokenSecret;
+
+//Yelp url constructors
+
+extern NSString *const kYelpHost;
+extern NSString *const kYelpRequestPath;
+extern NSString *const kYelpQueryType;
+extern NSString *const kYelpQueryKey;
+extern NSString *const kYelpBoundsKey;
+extern NSString *const kYelpLimitKey;
+extern NSString *const kYelpSortKey;
+extern NSString *const kYelpQueryLimit;
+extern NSString *const kYelpSortType;
+
+
+
+
+

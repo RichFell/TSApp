@@ -30,3 +30,20 @@ CGFloat const kMapViewPolylineWidth = 5.0;
 NSString *const kGoogleAPIKey = @"AIzaSyCLR3ztaPMZugnESkzeeAWWTkxbHTpgCPA";
 NSString *const kParseAppId = @"tODHHsxlD4kr43TJG7T0TB74doArNn9w370bG4s9";
 NSString *const kParseClientKey = @"RWXNAF7TiGqnVaQJERLfLivu4LgRD6RJTJfzCvt1";
+
+NSString *const kYelpConsumerKey = @"srBbZz5ZOzUQ193e5_NSWQ";
+NSString *const kYelpConsumerSecret = @"1xnmtgQnpfeokQC-U1ScIzD9CNc";
+NSString *const kYelpToken = @"e5wyV6TxSDrFa7V8vQOA-ndqe3FIF_Py";
+NSString *const kYelpTokenSecret = @"6f2dyu0xmUE4waLLsOkusYnoMJ0";
+
+//Yelp URL constructors
+NSString *const kYelpHost = @"api.yelp.com";
+NSString *const kYelpRequestPath = @"/v2/search";
+NSString *const kYelpQueryType = @"Business";
+NSString *const kYelpQueryKey = @"query";
+NSString *const kYelpBoundsKey = @"bounds";
+NSString *const kYelpLimitKey = @"limit";
+NSString *const kYelpSortKey = @"sort";
+NSString *const kYelpQueryLimit = @"20";
+NSString *const kYelpSortType = @"0";
+

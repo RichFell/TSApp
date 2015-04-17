@@ -24,6 +24,7 @@
 #import "TSMarker.h"
 #import "DirectionsViewController.h"
 #import "DirectionSet.h"
+#import "YPBusiness.h"
 
 
 typedef NS_ENUM(NSInteger, MarkerType) {
@@ -218,6 +219,14 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         [self displayAlertToCreateNewLocation:marker.position];
     }
 }
+
+-(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
+    [YPBusiness fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight completed:^(NSArray *businesses) {
+
+    }];
+}
+
+#pragma mark - Map related helper methods
 
 -(void)displayAlertToCreateNewLocation: (CLLocationCoordinate2D) coordinate
 {

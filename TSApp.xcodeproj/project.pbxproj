@@ -16,6 +16,8 @@
 		9B1C6E4319A6E82C00D8B804 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4219A6E82C00D8B804 /* User.m */; };
 		9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4519A6F26100D8B804 /* InitialViewController.m */; };
 		9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */; };
+		9B2CCAEA1AE0323F00C691BF /* TDOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2CCAE91AE0323F00C691BF /* TDOAuth.m */; };
+		9B2CCAED1AE037F000C691BF /* YPBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2CCAEC1AE037F000C691BF /* YPBusiness.m */; };
 		9B325EF91A3A98EC00C67667 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B325EF81A3A98EC00C67667 /* ParseUI.framework */; };
 		9B325EFF1A3A98FE00C67667 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B325EFB1A3A98FE00C67667 /* Parse.framework */; };
 		9B325F011A3A98FE00C67667 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B325EFD1A3A98FE00C67667 /* ParseFacebookUtils.framework */; };
@@ -111,6 +113,10 @@
 		9B1C6E4519A6F26100D8B804 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		9B1C6E4719A6F29E00D8B804 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		9B2CCAE81AE0323F00C691BF /* TDOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDOAuth.h; sourceTree = "<group>"; };
+		9B2CCAE91AE0323F00C691BF /* TDOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDOAuth.m; sourceTree = "<group>"; };
+		9B2CCAEB1AE037F000C691BF /* YPBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBusiness.h; sourceTree = "<group>"; };
+		9B2CCAEC1AE037F000C691BF /* YPBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBusiness.m; sourceTree = "<group>"; };
 		9B325EF81A3A98EC00C67667 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		9B325EFB1A3A98FE00C67667 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9B325EFD1A3A98FE00C67667 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
@@ -278,6 +284,8 @@
 		9B36F2E61A2B83320061DB17 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9B2CCAE81AE0323F00C691BF /* TDOAuth.h */,
+				9B2CCAE91AE0323F00C691BF /* TDOAuth.m */,
 				9B0F01041AD464C4005DEFA8 /* Constants.h */,
 				9B0F01051AD464C4005DEFA8 /* Constants.m */,
 				9B14DAEF19E2D257001ADB3E /* NetworkErrorAlert.h */,
@@ -500,6 +508,8 @@
 				9B6A3AB01ACB771D00521CDA /* Default/Managers */,
 				9B6A3A361AC9D13E00521CDA /* Parse Objects */,
 				9BE797901ABE849B00ED236C /* ManagedObjects */,
+				9B2CCAEB1AE037F000C691BF /* YPBusiness.h */,
+				9B2CCAEC1AE037F000C691BF /* YPBusiness.m */,
 			);
 			name = "Model Objects";
 			sourceTree = "<group>";
@@ -636,6 +646,7 @@
 				9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */,
 				9B0D2FBA1AD6249A00683722 /* TSButton.m in Sources */,
 				9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */,
+				9B2CCAEA1AE0323F00C691BF /* TDOAuth.m in Sources */,
 				9BCB5B661AD193CE0026D5B9 /* DirectionsListViewController.m in Sources */,
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
 				9B8681ED1A353525009F9AD0 /* HeaderTableViewCell.m in Sources */,
@@ -649,6 +660,7 @@
 				9BCB5B631AD184B50026D5B9 /* DirectionsViewController.m in Sources */,
 				9BBB1123199AC72300C5321D /* LocationTableViewCell.m in Sources */,
 				9B36F2E51A2B7F500061DB17 /* UIColor+CustomColors.m in Sources */,
+				9B2CCAED1AE037F000C691BF /* YPBusiness.m in Sources */,
 				9B47B7CE1AD2EE07007EB0C2 /* DirectionSet.m in Sources */,
 				9B47B7D11AD2EE08007EB0C2 /* Direction.m in Sources */,
 				9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */,
