@@ -15,11 +15,20 @@
 -(instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     self.name = dictionary[@"name"];
-    self.address = dictionary[@"location"][@"display_address"];
-    NSNumber *lat = dictionary[@"location"][@"latitude"];
-    NSNumber *longi = dictionary[@"location"][@"longitude"];
+    self.address = [self addressStringFromArray: dictionary[@"location"][@"display_address"]];
+    NSLog(@"%@", self.address);
+    NSNumber *lat = dictionary[@"location"][@"coordinate"][@"latitude"];
+    NSNumber *longi = dictionary[@"location"][@"coordinate"][@"longitude"];
     self.coordinate = CLLocationCoordinate2DMake(lat.floatValue, longi.floatValue);
     return self;
+}
+
+-(NSString *)addressStringFromArray:(NSArray *)array {
+    NSMutableString *mString = [NSMutableString new];
+    for (NSString *string in array) {
+        [mString appendString:string];
+    }
+    return mString;
 }
 
 +(void)fetchBusinessesFromYelpForBounds:(CLLocationCoordinate2D)neCoordinate andSEBounds:(CLLocationCoordinate2D)seCoordinate completed:(void (^)(NSArray *))completionHandler {

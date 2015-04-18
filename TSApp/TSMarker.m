@@ -20,7 +20,7 @@
     self.snippet = location.localAddress;
     self.appearAnimation = kGMSMarkerAnimationPop;
     self.title = location.name;
-    self.type = !location.hasVisited ? Marker_NotVisited : Marker_Visited;
+    self.markerType = !location.hasVisited ? Marker_NotVisited : Marker_Visited;
     self.icon = location.hasVisited == true ? [GMSMarker markerImageWithColor:[UIColor blueColor]] : [GMSMarker markerImageWithColor:[UIColor redColor]];
 
     return self;
@@ -34,7 +34,7 @@
     self.title = @"Tap here to save this location.";
     self.snippet = @"If you tap, you can save this location to access later.";
     self.icon = [GMSMarker markerImageWithColor:[UIColor redColor]];
-    self.type = Marker_NotVisited;
+    self.markerType = Marker_NotVisited;
     self.appearAnimation = kGMSMarkerAnimationPop;
     return self;
 }
@@ -44,7 +44,7 @@
     self.business = business;
     self.position = business.coordinate;
     self.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
-    self.type = Marker_Business;
+    self.markerType = Marker_Business;
     self.tappable = true;
     self.appearAnimation = kGMSMarkerAnimationPop;
     self.title = business.name;

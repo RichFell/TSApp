@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, MarkerType) {
 
 @property CDLocation *location;
 @property YPBusiness *business;
-@property MarkerType type;
+@property MarkerType markerType;
 
 -(instancetype)initWithLocation:(CDLocation *)location;
 -(instancetype)initWithPosition:(CLLocationCoordinate2D)position withSnippet:(NSString *)snippet forMap:(GMSMapView *)mapView;
