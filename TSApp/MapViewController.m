@@ -27,11 +27,6 @@
 #import "YPBusiness.h"
 
 
-typedef NS_ENUM(NSInteger, MarkerType) {
-    Marker_New,
-    Marker_Visited,
-    Marker_NotVisited
-};
 
 @interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate, RegionListVCDelegate>
 
@@ -142,6 +137,11 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     marker.map = self.mapView;
 }
 
+-(void)placeMarkerForBusiness:(YPBusiness *)business {
+    TSMarker *marker = [[TSMarker alloc]initWithBusiness:business];
+    marker.map = self.mapView;
+}
+
 -(void)fetchDefaultRegion {
     [CDRegion getDefaultRegionWithBlock:^(CDRegion *region, NSError *error) {
         self.currentRegion = region;
@@ -222,7 +222,9 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
     [YPBusiness fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight completed:^(NSArray *businesses) {
-
+        for (YPBusiness *business in businesses) {
+            [self placeMarkerForBusiness:business];
+        }
     }];
 }
 

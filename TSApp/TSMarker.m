@@ -7,6 +7,8 @@
 //
 
 #import "TSMarker.h"
+#import "CDLocation.h"
+#import "YPBusiness.h"
 
 @implementation TSMarker
 
@@ -18,6 +20,7 @@
     self.snippet = location.localAddress;
     self.appearAnimation = kGMSMarkerAnimationPop;
     self.title = location.name;
+    self.type = !location.hasVisited ? Marker_NotVisited : Marker_Visited;
     self.icon = location.hasVisited == true ? [GMSMarker markerImageWithColor:[UIColor blueColor]] : [GMSMarker markerImageWithColor:[UIColor redColor]];
 
     return self;
@@ -29,8 +32,23 @@
     self.snippet = snippet;
     self.map = mapView;
     self.title = @"Tap here to save this location.";
+    self.snippet = @"If you tap, you can save this location to access later.";
     self.icon = [GMSMarker markerImageWithColor:[UIColor redColor]];
+    self.type = Marker_NotVisited;
     self.appearAnimation = kGMSMarkerAnimationPop;
+    return self;
+}
+
+-(instancetype)initWithBusiness:(YPBusiness *)business {
+    self = [super init];
+    self.business = business;
+    self.position = business.coordinate;
+    self.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
+    self.type = Marker_Business;
+    self.tappable = true;
+    self.appearAnimation = kGMSMarkerAnimationPop;
+    self.title = business.name;
+    self.snippet = business.address;
     return self;
 }
 

@@ -7,10 +7,22 @@
 //
 
 #import <GoogleMaps/GoogleMaps.h>
-#import "CDLocation.h"
+@class CDLocation, YPBusiness;
+
+typedef NS_ENUM(NSInteger, MarkerType) {
+    Marker_New,
+    Marker_Visited,
+    Marker_NotVisited,
+    Marker_Business
+};
+
 @interface TSMarker : GMSMarker
+
 @property CDLocation *location;
+@property YPBusiness *business;
+@property MarkerType type;
 
 -(instancetype)initWithLocation:(CDLocation *)location;
 -(instancetype)initWithPosition:(CLLocationCoordinate2D)position withSnippet:(NSString *)snippet forMap:(GMSMapView *)mapView;
+-(instancetype)initWithBusiness:(YPBusiness *)business;
 @end
