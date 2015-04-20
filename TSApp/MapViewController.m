@@ -138,21 +138,6 @@ static bool notFirstLoad;
 }
 
 -(void)placeMarkerForLocation:(CDLocation *)location {
-
-    //TODO: need to figure out filtering out array.
-//    if (self.markers.count > 0) {
-//        NSArray *currentMarkers = [NSArray arrayWithArray: self.markers];
-//        for (TSMarker *marker in currentMarkers) {
-//            if (marker.position.latitude != location.coordinate.latitude
-//                && marker.position.longitude != location.coordinate.longitude) {
-//                [self markerCreate:nil orLocation:location];
-//            }
-//        }
-//        NSLog(@"CURRENTMAKERS: %@", currentMarkers);
-//    }
-//    else {
-//        [self markerCreate:nil orLocation:location];
-//    }
     [self markerCreate:nil orLocation:location];
 }
 
@@ -173,9 +158,7 @@ static bool notFirstLoad;
         self.title = region.name;
         [self animateMapViewToRegion:region];
         if (!notFirstLoad) {
-//            [YPBusiness fetchBusinessesFromYelpForBounds:self.mapView.projection.visibleRegion.farLeft andSEBounds:self.mapView.projection.visibleRegion.nearRight completed:^(NSArray *businesses) {
             [YPBusiness fetchBusinessesFromYelpForBounds:self.mapView.projection.visibleRegion.farLeft andSEBounds:self.mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
-
                 for (YPBusiness *business in businesses) {
                     [self placeMarkerForBusiness:business];
                 }
