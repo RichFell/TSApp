@@ -178,7 +178,6 @@
                             <constraint firstItem="l6T-ZB-ebo" firstAttribute="top" secondItem="xjI-Mz-82Z" secondAttribute="bottom" constant="8" id="Jrk-oE-nMt"/>
                             <constraint firstAttribute="centerX" secondItem="xjI-Mz-82Z" secondAttribute="centerX" id="Rme-bt-fLN"/>
                             <constraint firstAttribute="centerX" secondItem="ZNp-ZV-gc8" secondAttribute="centerX" id="VeI-Hu-Iq2"/>
-                            <constraint firstItem="ZNp-ZV-gc8" firstAttribute="top" secondItem="v5h-52-mYc" secondAttribute="topMargin" constant="242" id="WTh-dy-UMA"/>
                             <constraint firstItem="lyx-v6-69E" firstAttribute="leading" secondItem="v5h-52-mYc" secondAttribute="leadingMargin" constant="-16" id="Y6f-9R-e6d"/>
                             <constraint firstItem="lyx-v6-69E" firstAttribute="top" secondItem="ZNp-ZV-gc8" secondAttribute="bottom" constant="1" id="cAZ-t6-0y2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lyx-v6-69E" secondAttribute="trailing" constant="-16" id="dAD-x6-2fm"/>
@@ -191,6 +190,7 @@
                             <constraint firstItem="l6T-ZB-ebo" firstAttribute="leading" secondItem="v5h-52-mYc" secondAttribute="leadingMargin" constant="-16" id="uyH-1t-lMi"/>
                             <constraint firstItem="M5D-F7-gE6" firstAttribute="top" secondItem="LxL-c1-3wy" secondAttribute="bottom" constant="8" id="vMf-qS-4xn"/>
                             <constraint firstItem="xjI-Mz-82Z" firstAttribute="top" secondItem="M5D-F7-gE6" secondAttribute="bottom" constant="8" id="viE-tC-MgZ"/>
+                            <constraint firstItem="ZNp-ZV-gc8" firstAttribute="top" secondItem="v5h-52-mYc" secondAttribute="topMargin" constant="242" id="xB6-MX-812"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -199,7 +199,7 @@
                         <outlet property="containerViewBottomConstraint" destination="evA-NN-Yke" id="SGJ-YQ-d7l"/>
                         <outlet property="directionContainterTopConstraint" destination="cAZ-t6-0y2" id="SG8-6f-6mL"/>
                         <outlet property="getDirectionsButton" destination="xjI-Mz-82Z" id="QRW-QZ-XBU"/>
-                        <outlet property="imageViewTopConstraint" destination="WTh-dy-UMA" id="R0d-lo-qSa"/>
+                        <outlet property="imageViewTopConstraint" destination="xB6-MX-812" id="WTY-SG-amB"/>
                         <outlet property="segmentedControl" destination="M5D-F7-gE6" id="f3i-lg-h5f"/>
                         <outlet property="slidingImageView" destination="ZNp-ZV-gc8" id="9iw-Ow-dyk"/>
                         <outlet property="tableView" destination="l6T-ZB-ebo" id="Vco-zO-WoK"/>
@@ -910,6 +910,12 @@
                                     <action selector="segementSelectOnTap:" destination="v5a-Rt-M6e" eventType="valueChanged" id="iI6-z6-ruZ"/>
                                 </connections>
                             </segmentedControl>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8LK-Dz-1RL">
+                                <rect key="frame" x="0.0" y="206" width="320" height="504"/>
+                                <connections>
+                                    <segue destination="zEX-Qi-iDZ" kind="embed" id="fxb-N0-nxc"/>
+                                </connections>
+                            </containerView>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-EZ-P03">
                                 <rect key="frame" x="145" y="175" width="30" height="30"/>
                                 <gestureRecognizers/>
@@ -921,20 +927,14 @@
                                     <outletCollection property="gestureRecognizers" destination="DId-qC-l89" appends="YES" id="6Kk-J7-d2g"/>
                                 </connections>
                             </imageView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8LK-Dz-1RL">
-                                <rect key="frame" x="0.0" y="206" width="320" height="504"/>
-                                <connections>
-                                    <segue destination="zEX-Qi-iDZ" kind="embed" id="fxb-N0-nxc"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Cob-EZ-P03" firstAttribute="top" secondItem="hRA-gQ-fwK" secondAttribute="bottom" constant="111" id="0O2-wT-m7e"/>
                             <constraint firstAttribute="centerX" secondItem="Cob-EZ-P03" secondAttribute="centerX" id="5Fc-et-vE7"/>
                             <constraint firstItem="Z1D-uI-0xD" firstAttribute="top" secondItem="aHH-1c-tPc" secondAttribute="bottom" constant="8" id="ASU-uf-ihu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8LK-Dz-1RL" secondAttribute="trailing" constant="-16" id="Akl-ph-F1w"/>
                             <constraint firstItem="aHH-1c-tPc" firstAttribute="leading" secondItem="Je2-LR-36N" secondAttribute="leadingMargin" constant="-16" id="QUK-cW-sCE"/>
-                            <constraint firstItem="Cob-EZ-P03" firstAttribute="top" secondItem="Je2-LR-36N" secondAttribute="topMargin" constant="175" id="eIg-3Q-6k4"/>
                             <constraint firstItem="8LK-Dz-1RL" firstAttribute="top" secondItem="Cob-EZ-P03" secondAttribute="bottom" constant="1" id="gIX-eT-lHz"/>
                             <constraint firstAttribute="bottomMargin" secondItem="8LK-Dz-1RL" secondAttribute="bottom" constant="-142" id="gSM-Zh-V18"/>
                             <constraint firstAttribute="centerX" secondItem="Z1D-uI-0xD" secondAttribute="centerX" id="iJm-Rq-rsV"/>
@@ -952,8 +952,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="containerBottomeConstraint" destination="gSM-Zh-V18" id="OjB-RC-YlJ"/>
-                        <outlet property="imageViewTopConstraint" destination="eIg-3Q-6k4" id="NY3-LP-RoA"/>
+                        <outlet property="containerBottomConstraint" destination="gSM-Zh-V18" id="EPD-76-96A"/>
+                        <outlet property="directionsTopConstraint" destination="gIX-eT-lHz" id="DJb-3e-XYa"/>
+                        <outlet property="imageViewTopConstraint" destination="0O2-wT-m7e" id="bxB-BW-XUn"/>
                         <outlet property="regionBarButtonItem" destination="Hgk-eN-g6L" id="Zne-ik-MFN"/>
                         <outlet property="searchTextField" destination="lJg-wk-K9m" id="mmU-G5-eNV"/>
                         <outlet property="searchView" destination="aHH-1c-tPc" id="ugW-T6-Mk7"/>
@@ -1225,6 +1226,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="iZk-sz-QCO"/>
+        <segue reference="fxb-N0-nxc"/>
     </inferredMetricsTieBreakers>
 </document>

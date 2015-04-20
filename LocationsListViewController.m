@@ -86,7 +86,6 @@ static NSIndexPath *endingIndexPath;
     [self reduceDirectionsViewInViewDidLoad];
     self.segmentedControl.selectedSegmentIndex = 1;
     [self.tableView reloadData];
-    self.directionContainterTopConstraint.constant = -300.0;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -122,6 +121,7 @@ static NSIndexPath *endingIndexPath;
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.containerViewBottomConstraint.constant = 0;
         self.imageViewTopConstraint.constant = kImageViewConstraintConstantOpen;
+        self.directionContainterTopConstraint.constant = -CGRectGetHeight(self.slidingImageView.frame);
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kDownArrowImage];

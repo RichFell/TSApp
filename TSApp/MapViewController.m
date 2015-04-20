@@ -32,12 +32,13 @@
 
 #pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerBottomeConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionsTopConstraint;
 
 #pragma mark - Variables
 @property (nonatomic) CDRegion *currentRegion;
@@ -60,8 +61,6 @@ static NSString *const kNotVisitedImage = @"PlacHolderImage";
 static NSString *const kHasVisitedImage = @"CheckMarkImage";
 static NSString *const rwfLocationString = @"Tap to save destination";
 
-#pragma mark - local mutable variables
-static bool notFirstLoad;
 
 #pragma mark - Getters and Setters
 -(void)setCurrentRegion:(CDRegion *)currentRegion {
@@ -115,9 +114,9 @@ static bool notFirstLoad;
     [self.view addSubview:self.mapView];
     [self.view sendSubviewToBack:self.mapView];
 
-    self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
-    self.containerBottomeConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
-    self.startingContainerBottomConstant = self.containerBottomeConstraint.constant;
+    self.imageViewTopConstraint.constant = CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.slidingImageView.frame) - CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    self.containerBottomConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
+    self.startingContainerBottomConstant = self.containerBottomConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
 }
@@ -157,14 +156,6 @@ static bool notFirstLoad;
         self.currentRegion = region;
         self.title = region.name;
         [self animateMapViewToRegion:region];
-        if (!notFirstLoad) {
-            [YPBusiness fetchBusinessesFromYelpForBounds:self.mapView.projection.visibleRegion.farLeft andSEBounds:self.mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
-                for (YPBusiness *business in businesses) {
-                    [self placeMarkerForBusiness:business];
-                }
-                notFirstLoad = true;
-            }];
-        }
     }];
 }
 
@@ -238,16 +229,12 @@ static bool notFirstLoad;
 }
 
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
-    if (notFirstLoad) {
-        [YPBusiness fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
-//        [YPBusiness fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft
-//                                         andSEBounds:mapView.projection.visibleRegion.nearRight
-//                                           completed:^(NSArray *businesses) {
-                                               for (YPBusiness *business in businesses) {
-                                                   [self placeMarkerForBusiness:business];
-            }
-        }];
-    }
+    [YPBusiness fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
+                                           for (YPBusiness *business in businesses) {
+                                               [self placeMarkerForBusiness:business];
+        }
+    }];
+
 }
 
 #pragma mark - Map related helper methods
@@ -359,8 +346,9 @@ static bool notFirstLoad;
 
 -(void)animateContainerUp {
     [UIView animateWithDuration:kAnimationDuration animations:^{
-        self.containerBottomeConstraint.constant = 0;
+        self.containerBottomConstraint.constant = 0;
         self.imageViewTopConstraint.constant = kImageViewConstraintConstantOpen;
+        self.directionsTopConstraint.constant = -CGRectGetHeight(self.slidingImageView.frame);
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kDownArrowImage];
@@ -369,8 +357,9 @@ static bool notFirstLoad;
 
 -(void)animateContainerDown {
     [UIView animateWithDuration:kAnimationDuration animations:^{
-        self.containerBottomeConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
-        self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
+        self.containerBottomConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
+        self.imageViewTopConstraint.constant = self.startingImageViewConstant;
+        self.directionsTopConstraint.constant = 1.0;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
