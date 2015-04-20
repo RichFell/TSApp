@@ -39,7 +39,6 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
 
-
 #pragma mark - Variables
 @property (nonatomic) CDRegion *currentRegion;
 @property CGFloat startingImageViewConstant;
@@ -50,14 +49,19 @@
 @property NSMutableArray *locationsArray;
 @property NSMutableArray *markers;
 @property RegionListViewController *regionListVC;
+@property NSMutableArray *businessesPlaced;
 
 @end
 
 @implementation MapViewController
 
+#pragma mark - local constant variables
 static NSString *const kNotVisitedImage = @"PlacHolderImage";
 static NSString *const kHasVisitedImage = @"CheckMarkImage";
 static NSString *const rwfLocationString = @"Tap to save destination";
+
+#pragma mark - local mutable variables
+static bool notFirstLoad;
 
 #pragma mark - Getters and Setters
 -(void)setCurrentRegion:(CDRegion *)currentRegion {
@@ -97,6 +101,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)setup
 {
+    self.businessesPlaced = [NSMutableArray new];
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager requestAlwaysAuthorization];
     self.locationsArray = [NSMutableArray array];
@@ -133,13 +138,33 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 -(void)placeMarkerForLocation:(CDLocation *)location {
-    TSMarker *marker = [[TSMarker alloc]initWithLocation:location];
-    marker.map = self.mapView;
+
+    //TODO: need to figure out filtering out array.
+//    if (self.markers.count > 0) {
+//        NSArray *currentMarkers = [NSArray arrayWithArray: self.markers];
+//        for (TSMarker *marker in currentMarkers) {
+//            if (marker.position.latitude != location.coordinate.latitude
+//                && marker.position.longitude != location.coordinate.longitude) {
+//                [self markerCreate:nil orLocation:location];
+//            }
+//        }
+//        NSLog(@"CURRENTMAKERS: %@", currentMarkers);
+//    }
+//    else {
+//        [self markerCreate:nil orLocation:location];
+//    }
+    [self markerCreate:nil orLocation:location];
 }
 
 -(void)placeMarkerForBusiness:(YPBusiness *)business {
-    TSMarker *marker = [[TSMarker alloc]initWithBusiness:business];
+    [self markerCreate:business orLocation:nil];
+    [self.businessesPlaced addObject:business];
+}
+
+-(void)markerCreate:(YPBusiness *)business orLocation:(CDLocation *)location {
+    TSMarker *marker = business ? [[TSMarker alloc]initWithBusiness:business] : [[TSMarker alloc]initWithLocation:location];
     marker.map = self.mapView;
+    [self.markers addObject:marker];
 }
 
 -(void)fetchDefaultRegion {
@@ -147,6 +172,16 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         self.currentRegion = region;
         self.title = region.name;
         [self animateMapViewToRegion:region];
+        if (!notFirstLoad) {
+//            [YPBusiness fetchBusinessesFromYelpForBounds:self.mapView.projection.visibleRegion.farLeft andSEBounds:self.mapView.projection.visibleRegion.nearRight completed:^(NSArray *businesses) {
+            [YPBusiness fetchBusinessesFromYelpForBounds:self.mapView.projection.visibleRegion.farLeft andSEBounds:self.mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
+
+                for (YPBusiness *business in businesses) {
+                    [self placeMarkerForBusiness:business];
+                }
+                notFirstLoad = true;
+            }];
+        }
     }];
 }
 
@@ -181,8 +216,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [self resetAllMarkers];
     GMSMutablePath *path = [GMSMutablePath path];
 
-    for (Direction *direction in directions)
-    {
+    for (Direction *direction in directions) {
         [path addCoordinate:direction.startingCoordinate];
         [path addCoordinate:direction.endingCoordinate];
     }
@@ -199,12 +233,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
     [MapModel reverseGeoCode:coordinate withBlock:^(GMSReverseGeocodeResponse *response, NSError *error) {
-        if (error)
-        {
+        if (!response) {
             [NetworkErrorAlert showAlertForViewController:self];
         }
-        else
-        {
+        else {
             [self resetAllMarkers];
             [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare];
         }
@@ -214,33 +246,58 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
 {
     TSMarker *theMarker = (TSMarker *)marker;
-    NSLog(@"%@", theMarker.location);
+    if (theMarker.business) {
+        [self displayAlertToCreateNewLocation:theMarker.position orBusiness: theMarker.business];
+    }
     if (!theMarker.location) {
-        [self displayAlertToCreateNewLocation:marker.position];
+        [self displayAlertToCreateNewLocation:marker.position orBusiness:nil];
     }
 }
 
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
-    [YPBusiness fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight completed:^(NSArray *businesses) {
-        for (YPBusiness *business in businesses) {
-            [self placeMarkerForBusiness:business];
-        }
-    }];
+    if (notFirstLoad) {
+        [YPBusiness fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
+//        [YPBusiness fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft
+//                                         andSEBounds:mapView.projection.visibleRegion.nearRight
+//                                           completed:^(NSArray *businesses) {
+                                               for (YPBusiness *business in businesses) {
+                                                   [self placeMarkerForBusiness:business];
+            }
+        }];
+    }
 }
 
 #pragma mark - Map related helper methods
 
--(void)displayAlertToCreateNewLocation: (CLLocationCoordinate2D) coordinate
+-(void)displayAlertToCreateNewLocation: (CLLocationCoordinate2D) coordinate orBusiness:(YPBusiness *)business
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to save this location?" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"New Destination's name";
-    }];
-    UIAlertAction *saveAction =[UIAlertAction actionWithTitle:@"SAVE" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    NSString *message = business ? business.address : nil;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to save this location?"
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    if (!business) {
+        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"New Destination's name";
+        }];
+    }
 
-        UITextField *nameTextfield = [alert.textFields firstObject];
-        [self reverseGeocodeCoordinate:coordinate andName:nameTextfield.text];
+    UIAlertAction *saveAction =[UIAlertAction actionWithTitle:@"SAVE"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction *action) {
 
+                                                          if (business) {
+                                                              [CDLocation createNewLocationWithName:business.name
+                                                                                       atCoordinate:business.coordinate
+                                                                                            atIndex:[NSNumber numberWithInteger: self.currentRegion.allLocations.count]
+                                                                                          forRegion:self.currentRegion atAddress:business.address
+                                                                                         completion:^(CDLocation *location, BOOL result) {
+                                                                                             [self resetAllMarkers];
+            }];
+        }
+        else {
+            UITextField *nameTextfield = [alert.textFields firstObject];
+            [self reverseGeocodeCoordinate:coordinate andName:nameTextfield.text];
+        }
     }];
     [alert addAction:saveAction];
 
@@ -253,24 +310,32 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)reverseGeocodeCoordinate:(CLLocationCoordinate2D)coordinate andName:(NSString *)theName
 {
     [MapModel reverseGeoCode:coordinate withBlock:^(GMSReverseGeocodeResponse *response, NSError *error) {
-        if (error)
+        if (!response)
         {
             [NetworkErrorAlert showAlertForViewController:self];
         }
         else
         {
-            [self createNewLocationWithName:theName andAddress:response.firstResult.thoroughfare andCoordinate:coordinate];
+            [CDLocation createNewLocationWithName:theName
+                                     atCoordinate:coordinate
+                                          atIndex:@0
+                                        forRegion:self.currentRegion
+                                        atAddress:response.firstResult.thoroughfare
+                                       completion:^(CDLocation *location, BOOL result) {
+                                            [self resetAllMarkers];
+            }];
         }
     }];
 }
 
--(void)createNewLocationWithName:(NSString *)theName andAddress:(NSString *)theAddress andCoordinate:(CLLocationCoordinate2D)coordinate
-{
-
-    [CDLocation createNewLocationWithName:theName atCoordinate:coordinate atIndex:@0 forRegion:self.currentRegion atAddress:theAddress completion:^(CDLocation *location, BOOL result) {
-        [self resetAllMarkers];
-    }];
-
+-(void)resetAllMarkers {
+    [self.mapView clear];
+    for (YPBusiness *business in self.businessesPlaced) {
+        [self markerCreate:business orLocation:nil];
+    }
+    for (CDLocation *location in self.currentRegion.allLocations) {
+        [self placeMarkerForLocation:location];
+    }
 }
 
 #pragma mark - TextFieldDelegate methods
@@ -336,14 +401,6 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)didGetNewDirections:(NSArray *)directions {
     [self placePolylineForDirections:directions];
-}
-
-#pragma  mark -resetAllMarkers method
--(void)resetAllMarkers {
-    [self.mapView clear];
-    for (CDLocation *location in self.currentRegion.allLocations) {
-        [self placeMarkerForLocation:location];
-    }
 }
 
 #pragma mark- RegionsListVCDelegate

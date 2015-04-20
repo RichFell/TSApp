@@ -14,9 +14,10 @@
 @property NSString *name;
 @property NSString *address;
 @property CLLocationCoordinate2D coordinate;
+@property NSString *businessId;
 
 -(instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
-+(void)fetchBusinessesFromYelpForBounds:(CLLocationCoordinate2D)neCoordinate andSEBounds:(CLLocationCoordinate2D)seCoordinate completed:(void(^)(NSArray *businesses))completionHandler;
++(void)fetchBusinessesFromYelpForBounds:(CLLocationCoordinate2D)neCoordinate andSEBounds:(CLLocationCoordinate2D)seCoordinate andCompareAgainstBusinesses:(NSArray *)businesses completed:(void (^)(NSArray *))completionHandler;
 
 @end

@@ -43,7 +43,7 @@
     self = [super init];
     self.business = business;
     self.position = business.coordinate;
-    self.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
+    self.icon = [UIImage imageNamed:@"Business"];
     self.markerType = Marker_Business;
     self.tappable = true;
     self.appearAnimation = kGMSMarkerAnimationPop;
