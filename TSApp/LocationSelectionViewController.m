@@ -13,11 +13,11 @@
 #import "Direction.h"
 #import "DirectionSet.h"
 
-@interface LocationSelectionViewController ()<UISearchBarDelegate>
+@interface LocationSelectionViewController ()<UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *transportationButtons;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBarOne;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBarTwo;
+@property (weak, nonatomic) IBOutlet UITextField *fromTextField;
+@property (weak, nonatomic) IBOutlet UITextField *toTextField;
 
 @property CDLocation *startingLocation;
 @property CDLocation *endingLocation;
@@ -33,13 +33,13 @@ static NSString *typeOfTransportation = @"driving";
 -(void)giveALocation:(CDLocation *)location {
     if (self.selectFirstPosition) {
         self.startingLocation = location;
-        [self.searchBarOne resignFirstResponder];
-        self.searchBarOne.text = self.startingLocation.localAddress;
+        [self.fromTextField resignFirstResponder];
+        self.fromTextField.text = self.startingLocation.localAddress;
     }
     else {
-        [self.searchBarTwo resignFirstResponder];
+        [self.toTextField resignFirstResponder];
         self.endingLocation = location;
-        self.searchBarTwo.text = self.endingLocation.localAddress;
+        self.toTextField.text = self.endingLocation.localAddress;
     }
 }
 
@@ -102,8 +102,8 @@ static NSString *typeOfTransportation = @"driving";
 }
 
 #pragma mark - searchBarDelegate Methods
--(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if ([searchBar isEqual:self.searchBarOne]) {
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    if ([textField isEqual:self.fromTextField]) {
         self.selectFirstPosition = true;
     }
     else {
@@ -112,27 +112,33 @@ static NSString *typeOfTransportation = @"driving";
     [self.delegate locationSelectionVC:self isSettingStartingLocation:self.selectFirstPosition];
 }
 
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [MapModel geocodeString:searchBar.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
-        if (error) {
-            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-        }
-        else {
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
-//            NSArray *array = self.currentRegion.sortedArrayOfLocations[0];
-//            NSNumber *index = [NSNumber numberWithLong:array.count];
-//            CDLocation *location = [[CDLocation alloc]initWithCoordinate:coordinate andName:@"" atIndex:index forRegion:self.currentRegion atAddress:searchBar.text];
-//            [self askToSaveLocationAlert:location];
-//            if ([searchBar isEqual:self.searchBarOne]) {
-//                self.startingLocation = location;
-//            }
-//            else {
-//                self.endingLocation = location;
-//            }
-            [self askForDirections];
-        }
-    }];
+    
+    return true;
 }
+
+//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+//    [MapModel geocodeString:searchBar.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
+//        if (error) {
+//            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+//        }
+//        else {
+//
+////            NSArray *array = self.currentRegion.sortedArrayOfLocations[0];
+////            NSNumber *index = [NSNumber numberWithLong:array.count];
+////            CDLocation *location = [[CDLocation alloc]initWithCoordinate:coordinate andName:@"" atIndex:index forRegion:self.currentRegion atAddress:searchBar.text];
+////            [self askToSaveLocationAlert:location];
+////            if ([searchBar isEqual:self.searchBarOne]) {
+////                self.startingLocation = location;
+////            }
+////            else {
+////                self.endingLocation = location;
+////            }
+//            [self askForDirections];
+//        }
+//    }];
+//}
 
 #pragma mark - Save Alerts
 -(void)askToSaveLocationAlert:(CDLocation *)location {

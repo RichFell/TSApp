@@ -7,6 +7,7 @@
 //
 
 //TODO: Go through all error message handling
+//TODO: Need to go through and clean up the headers, this is a mess, lets make it cleaner, and smarter. Shouldn't need this many imports.
 
 #import "MapViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
@@ -25,7 +26,7 @@
 #import "DirectionsViewController.h"
 #import "DirectionSet.h"
 #import "YPBusiness.h"
-
+#import "SearchTableViewController.h"
 
 
 @interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate, RegionListVCDelegate>
@@ -47,10 +48,9 @@
 @property CGPoint panStartPoint;
 @property CLLocationManager *locationManager;
 @property GMSMapView *mapView;
-@property NSMutableArray *locationsArray;
-@property NSMutableArray *markers;
 @property RegionListViewController *regionListVC;
 @property NSMutableArray *businessesPlaced;
+@property SearchTableViewController *searchVC;
 
 @end
 
@@ -103,12 +103,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     self.businessesPlaced = [NSMutableArray new];
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager requestAlwaysAuthorization];
-    self.locationsArray = [NSMutableArray array];
     self.mapView = [[GMSMapView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.searchView.frame), CGRectGetMaxY(self.searchView.frame), CGRectGetWidth(self.view.frame),CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.searchView.frame))];
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = YES;
     self.mapView.settings.myLocationButton = YES;
-    self.markers = [NSMutableArray array];
 
     [self.mapView animateToZoom:kMapViewZoom];
     [self.view addSubview:self.mapView];
@@ -148,7 +146,6 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)markerCreate:(YPBusiness *)business orLocation:(CDLocation *)location {
     TSMarker *marker = business ? [[TSMarker alloc]initWithBusiness:business] : [[TSMarker alloc]initWithLocation:location];
     marker.map = self.mapView;
-    [self.markers addObject:marker];
 }
 
 -(void)fetchDefaultRegion {
@@ -309,8 +306,20 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 #pragma mark - TextFieldDelegate methods
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    SearchTableViewController *searchVC = [[SearchTableViewController alloc] initFromCallerFrame:self.searchView.frame];
+    self.searchVC = searchVC;
+    self.searchVC.businesses = self.businessesPlaced;
+    self.searchVC.locations = self.currentRegion.allLocations;
+    [self.view addSubview:searchVC.view];
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [self.searchVC inputText:textField.text];
+    return true;
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [MapModel geocodeString:textField.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
         if (error) {
             [NetworkErrorAlert showAlertForViewController:self];

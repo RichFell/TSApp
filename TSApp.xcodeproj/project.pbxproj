@@ -31,6 +31,7 @@
 		9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B68B5471AAFF21300AF3493 /* FBSessionManager.m */; };
 		9B68D1241A3AA46000299694 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68D1231A3AA46000299694 /* FacebookSDK.framework */; };
 		9B68D1261A3AA5D500299694 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68D1251A3AA5D500299694 /* Accounts.framework */; };
+		9B69809B1AE5A68700B08462 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6980991AE5A68700B08462 /* SearchTableViewController.m */; };
 		9B6A3A391AC9EF5A00521CDA /* TSMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6A3A381AC9EF5A00521CDA /* TSMarker.m */; };
 		9B8681DF1A32C3CB009F9AD0 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8681DD1A32C3CB009F9AD0 /* FBAudienceNetwork.framework */; };
 		9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681E11A32CB81009F9AD0 /* EntryViewController.m */; };
@@ -137,6 +138,8 @@
 		9B68B5471AAFF21300AF3493 /* FBSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSessionManager.m; sourceTree = "<group>"; };
 		9B68D1231A3AA46000299694 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		9B68D1251A3AA5D500299694 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		9B6980961AE5A66C00B08462 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
+		9B6980991AE5A68700B08462 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
 		9B6A3A371AC9EF5A00521CDA /* TSMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMarker.h; sourceTree = "<group>"; };
 		9B6A3A381AC9EF5A00521CDA /* TSMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMarker.m; sourceTree = "<group>"; };
 		9B8681DD1A32C3CB009F9AD0 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
@@ -335,6 +338,8 @@
 				9B14DAF619E37D04001ADB3E /* MapViewController.m */,
 				9B6A3A371AC9EF5A00521CDA /* TSMarker.h */,
 				9B6A3A381AC9EF5A00521CDA /* TSMarker.m */,
+				9B6980961AE5A66C00B08462 /* SearchTableViewController.h */,
+				9B6980991AE5A68700B08462 /* SearchTableViewController.m */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -632,6 +637,7 @@
 				9B8681E51A32D1E5009F9AD0 /* RegistrationViewController.m in Sources */,
 				9B36F2E91A2C17AC0061DB17 /* CreateTripViewController.m in Sources */,
 				9B0F01061AD464C4005DEFA8 /* Constants.m in Sources */,
+				9B69809B1AE5A68700B08462 /* SearchTableViewController.m in Sources */,
 				9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */,
 				9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */,
 				9BC6CC8919B5318C0020C14D /* RegionTableViewCell.m in Sources */,

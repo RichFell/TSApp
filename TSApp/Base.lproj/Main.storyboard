@@ -1104,26 +1104,6 @@
                                             <action selector="switchModeOnTransOnTapped:" destination="JNC-AX-aDq" eventType="touchUpInside" id="uYI-ND-PVG"/>
                                         </connections>
                                     </button>
-                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="dZy-H7-SEb">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="Kqg-Qp-cYJ"/>
-                                        </constraints>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="JNC-AX-aDq" id="V1s-Qr-1dk"/>
-                                        </connections>
-                                    </searchBar>
-                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="MWq-ik-4T9">
-                                        <rect key="frame" x="0.0" y="46" width="320" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="iME-7W-AIC"/>
-                                        </constraints>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="JNC-AX-aDq" id="4c9-18-RJG"/>
-                                        </connections>
-                                    </searchBar>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yeh-jC-rdw" customClass="TSButton">
                                         <rect key="frame" x="205" y="97" width="30" height="30"/>
                                         <color key="backgroundColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
@@ -1139,21 +1119,43 @@
                                             <action selector="switchModeOnTransOnTapped:" destination="JNC-AX-aDq" eventType="touchUpInside" id="kcC-lN-x2o"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="From Location: Defaults to Current" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3e3-ZY-I2q">
+                                        <rect key="frame" x="8" y="8" width="304" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="KEX-VU-7L4"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="JNC-AX-aDq" id="NJc-8A-K7G"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To Location: Tap to select" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="igp-u1-VBv">
+                                        <rect key="frame" x="8" y="46" width="304" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="cgh-7P-5fj"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="JNC-AX-aDq" id="Ohz-C0-rM4"/>
+                                        </connections>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="FwO-2d-X8Y" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="2" id="9NQ-Ii-8pH"/>
+                                    <constraint firstAttribute="trailing" secondItem="igp-u1-VBv" secondAttribute="trailing" constant="8" id="60h-SB-XSL"/>
                                     <constraint firstItem="Yeh-jC-rdw" firstAttribute="leading" secondItem="FwO-2d-X8Y" secondAttribute="trailing" constant="58" id="BhJ-Or-1pF"/>
-                                    <constraint firstAttribute="trailing" secondItem="dZy-H7-SEb" secondAttribute="trailing" id="ESg-rA-GDb"/>
-                                    <constraint firstItem="0X0-AY-PAg" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="2" id="JUT-Oj-1RT"/>
-                                    <constraint firstItem="Yeh-jC-rdw" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="7" id="L1R-mA-vC0"/>
-                                    <constraint firstAttribute="trailing" secondItem="MWq-ik-4T9" secondAttribute="trailing" id="T3x-Vy-H9j"/>
+                                    <constraint firstItem="FwO-2d-X8Y" firstAttribute="top" secondItem="igp-u1-VBv" secondAttribute="bottom" constant="16" id="D7e-EI-eyd"/>
+                                    <constraint firstItem="igp-u1-VBv" firstAttribute="top" secondItem="3e3-ZY-I2q" secondAttribute="bottom" constant="8" id="KfZ-eG-hRy"/>
+                                    <constraint firstItem="3e3-ZY-I2q" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" constant="8" id="QP9-N2-97f"/>
+                                    <constraint firstAttribute="trailing" secondItem="3e3-ZY-I2q" secondAttribute="trailing" constant="8" id="QxA-wl-901"/>
+                                    <constraint firstItem="0X0-AY-PAg" firstAttribute="top" secondItem="igp-u1-VBv" secondAttribute="bottom" constant="16" id="UQw-Qf-cni"/>
                                     <constraint firstItem="FwO-2d-X8Y" firstAttribute="leading" secondItem="KqJ-Jg-LWA" secondAttribute="trailing" constant="59" id="W7T-Rc-9fB"/>
-                                    <constraint firstItem="MWq-ik-4T9" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" id="WLx-yK-jzT"/>
-                                    <constraint firstItem="dZy-H7-SEb" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" id="ibp-it-957"/>
-                                    <constraint firstItem="MWq-ik-4T9" firstAttribute="top" secondItem="dZy-H7-SEb" secondAttribute="bottom" constant="2" id="jVb-F4-54Q"/>
-                                    <constraint firstItem="dZy-H7-SEb" firstAttribute="top" secondItem="JwZ-x3-QGa" secondAttribute="top" id="jiq-iB-RKX"/>
-                                    <constraint firstItem="KqJ-Jg-LWA" firstAttribute="top" secondItem="MWq-ik-4T9" secondAttribute="bottom" constant="2" id="ma9-dC-cbq"/>
+                                    <constraint firstItem="3e3-ZY-I2q" firstAttribute="top" secondItem="JwZ-x3-QGa" secondAttribute="top" constant="8" id="WlW-mn-Qeg"/>
+                                    <constraint firstItem="KqJ-Jg-LWA" firstAttribute="top" secondItem="igp-u1-VBv" secondAttribute="bottom" constant="16" id="ZVd-NO-qeK"/>
+                                    <constraint firstItem="Yeh-jC-rdw" firstAttribute="top" secondItem="igp-u1-VBv" secondAttribute="bottom" constant="21" id="apb-rb-edn"/>
+                                    <constraint firstItem="igp-u1-VBv" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" constant="8" id="axN-Gt-dFo"/>
                                     <constraint firstItem="0X0-AY-PAg" firstAttribute="leading" secondItem="Yeh-jC-rdw" secondAttribute="trailing" constant="37" id="orb-ho-VgO"/>
                                     <constraint firstItem="KqJ-Jg-LWA" firstAttribute="leading" secondItem="JwZ-x3-QGa" secondAttribute="leading" constant="8" id="sFo-fc-kJZ"/>
                                     <constraint firstAttribute="height" constant="135" id="wAx-m7-avI"/>
@@ -1199,8 +1201,8 @@
                     </view>
                     <toolbarItems/>
                     <connections>
-                        <outlet property="searchBarOne" destination="dZy-H7-SEb" id="53Y-s0-NRb"/>
-                        <outlet property="searchBarTwo" destination="MWq-ik-4T9" id="lzp-vP-q8p"/>
+                        <outlet property="fromTextField" destination="3e3-ZY-I2q" id="gRl-G1-cPd"/>
+                        <outlet property="toTextField" destination="igp-u1-VBv" id="GB1-pG-ofP"/>
                         <outletCollection property="transportationButtons" destination="0X0-AY-PAg" id="95A-Tm-2rr"/>
                         <outletCollection property="transportationButtons" destination="Yeh-jC-rdw" id="Itt-4k-UMF"/>
                         <outletCollection property="transportationButtons" destination="FwO-2d-X8Y" id="iZf-lu-dFm"/>
@@ -1209,7 +1211,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U5s-je-eGe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2102" y="-1107"/>
+            <point key="canvasLocation" x="2102" y="-1107.5"/>
         </scene>
     </scenes>
     <resources>
