@@ -86,6 +86,7 @@ static NSIndexPath *endingIndexPath;
     [self reduceDirectionsViewInViewDidLoad];
     self.segmentedControl.selectedSegmentIndex = 1;
     [self.tableView reloadData];
+    self.title = @"Saved Locations";
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -111,9 +112,6 @@ static NSIndexPath *endingIndexPath;
         self.locationSelectionVC.delegate = self;
     }
 }
-#pragma mark - helper methods
-
-
 
 #pragma mark - Helper Methods for sliding of the container view
 

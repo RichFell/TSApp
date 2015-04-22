@@ -48,7 +48,8 @@
 @property RegionListViewController *regionListVC;
 @property NSMutableArray *businessesPlaced;
 @property SearchTableViewController *searchVC;
-@property NSMutableArray *markerArray;
+@property NSMutableArray *businessMarkers;
+@property NSMutableArray *locationMarkers;
 
 @end
 
@@ -63,7 +64,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 #pragma mark - Getters and Setters
 -(void)setCurrentRegion:(CDRegion *)currentRegion {
     _currentRegion = currentRegion;
-    [self resetAllMarkers];
+    [self resetAllLocationMarkers];
 }
 
 #pragma mark - View LifeCycle
@@ -98,7 +99,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)setup
 {
-    self.markerArray = [NSMutableArray array];
+    self.locationMarkers = [NSMutableArray array];
+    self.businessMarkers = [NSMutableArray array];
     self.businessesPlaced = [NSMutableArray new];
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager requestAlwaysAuthorization];
@@ -145,7 +147,12 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)markerCreate:(YPBusiness *)business orLocation:(CDLocation *)location {
     TSMarker *marker = business ? [[TSMarker alloc]initWithBusiness:business] : [[TSMarker alloc]initWithLocation:location];
     marker.map = self.mapView;
-    [self.markerArray addObject:marker];
+    if (business) {
+        [self.businessMarkers addObject:marker];
+    }
+    else {
+        [self.locationMarkers addObject:marker];
+    }
 }
 
 -(void)fetchDefaultRegion {
@@ -208,7 +215,6 @@ static NSString *const rwfLocationString = @"Tap to save destination";
             [NetworkErrorAlert showAlertForViewController:self];
         }
         else {
-            [self resetAllMarkers];
             [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare];
         }
     }];
@@ -258,7 +264,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
                                                                                             atIndex:[NSNumber numberWithInteger: self.currentRegion.allLocations.count]
                                                                                           forRegion:self.currentRegion atAddress:business.address
                                                                                          completion:^(CDLocation *location, BOOL result) {
-                                                                                             [self resetAllMarkers];
+                                                                                             [self resetAllLocationMarkers];
             }];
         }
         else {
@@ -289,10 +295,19 @@ static NSString *const rwfLocationString = @"Tap to save destination";
                                         forRegion:self.currentRegion
                                         atAddress:response.firstResult.thoroughfare
                                        completion:^(CDLocation *location, BOOL result) {
-                                            [self resetAllMarkers];
+                                            [self resetAllLocationMarkers];
             }];
         }
     }];
+}
+
+-(void)resetAllLocationMarkers {
+    for (TSMarker *marker in self.locationMarkers) {
+        marker.map = nil;
+    }
+    for (CDLocation *location in self.currentRegion.allLocations) {
+        [self placeMarkerForLocation:location];
+    }
 }
 
 -(void)resetAllMarkers {
@@ -300,9 +315,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     for (YPBusiness *business in self.businessesPlaced) {
         [self markerCreate:business orLocation:nil];
     }
-    for (CDLocation *location in self.currentRegion.allLocations) {
-        [self placeMarkerForLocation:location];
-    }
+    [self resetAllLocationMarkers];
 }
 
 #pragma mark - TextFieldDelegate methods
@@ -378,7 +391,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 #pragma mark - LocationListVCDelegate Methods
 -(void)locationListVC:(LocationsListViewController *)viewController didChangeLocation:(CDLocation *)location {
-    [self resetAllMarkers];
+    [self resetAllLocationMarkers];
 }
 
 -(void)didGetNewDirections:(NSArray *)directions {
@@ -414,23 +427,21 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 -(void)animateToLocation:(CDLocation *)location {
-    for (TSMarker *marker in self.markerArray) {
-        if (marker.location != nil) {
-            if ([marker.location.objectId isEqualToString:location.objectId]) {
-                [self.mapView animateToLocation:location.coordinate];
-                [self.mapView setSelectedMarker:marker];
-            }
+    NSSet *set = [NSSet setWithArray:self.locationMarkers];
+    for (TSMarker *marker in set) {
+        if ([marker.location.objectId isEqualToString:location.objectId]) {
+            [self.mapView animateToLocation:location.coordinate];
+            [self.mapView setSelectedMarker:marker];
         }
     }
 }
 
 -(void)animateToBusiness:(YPBusiness *)business {
-    for (TSMarker *marker in self.markerArray) {
-        if (marker.business != nil) {
-            if ([marker.business.businessId isEqualToString:business.businessId]) {
-                [self.mapView animateToLocation:business.coordinate];
-                [self.mapView setSelectedMarker:marker];
-            }
+    NSSet *set = [NSSet setWithArray:self.businessMarkers];
+    for (TSMarker *marker in set) {
+        if ([marker.business.businessId isEqualToString:business.businessId]) {
+            [self.mapView animateToLocation:business.coordinate];
+            [self.mapView setSelectedMarker:marker];
         }
     }
 }

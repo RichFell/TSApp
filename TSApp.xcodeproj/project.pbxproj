@@ -510,11 +510,10 @@
 		9BF72550199448A200BFCA34 /* Model Objects */ = {
 			isa = PBXGroup;
 			children = (
+				9BFA22391AE75724007155B0 /* YelpObjects */,
 				9B6A3AB01ACB771D00521CDA /* Default/Managers */,
 				9B6A3A361AC9D13E00521CDA /* Parse Objects */,
 				9BE797901ABE849B00ED236C /* ManagedObjects */,
-				9B2CCAEB1AE037F000C691BF /* YPBusiness.h */,
-				9B2CCAEC1AE037F000C691BF /* YPBusiness.m */,
 			);
 			name = "Model Objects";
 			sourceTree = "<group>";
@@ -532,6 +531,15 @@
 				9B8681E61A3513C5009F9AD0 /* CustomInfoWindow.xib */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		9BFA22391AE75724007155B0 /* YelpObjects */ = {
+			isa = PBXGroup;
+			children = (
+				9B2CCAEB1AE037F000C691BF /* YPBusiness.h */,
+				9B2CCAEC1AE037F000C691BF /* YPBusiness.m */,
+			);
+			name = YelpObjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
