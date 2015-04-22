@@ -90,4 +90,15 @@ static NSString *const kCellId = @"CellID";
     return arrayForSection.count;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        CDLocation *location = self.displayArray[indexPath.section][indexPath.row];
+        [self.delegate searchTableVC:self didSelectASearchOption:Select_Location forEitherBusiness:nil orLocation:location];
+    }
+    else {
+        YPBusiness *business = self.displayArray[indexPath.section][indexPath.row];
+        [self.delegate searchTableVC:self didSelectASearchOption:Select_Business forEitherBusiness:business orLocation:nil];
+    }
+}
+
 @end

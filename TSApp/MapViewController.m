@@ -29,7 +29,7 @@
 #import "SearchTableViewController.h"
 
 
-@interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate, RegionListVCDelegate>
+@interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate, RegionListVCDelegate, SearchTableViewDelegate>
 
 #pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
@@ -51,6 +51,7 @@
 @property RegionListViewController *regionListVC;
 @property NSMutableArray *businessesPlaced;
 @property SearchTableViewController *searchVC;
+@property NSMutableArray *markerArray;
 
 @end
 
@@ -100,6 +101,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)setup
 {
+    self.markerArray = [NSMutableArray array];
     self.businessesPlaced = [NSMutableArray new];
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager requestAlwaysAuthorization];
@@ -146,6 +148,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)markerCreate:(YPBusiness *)business orLocation:(CDLocation *)location {
     TSMarker *marker = business ? [[TSMarker alloc]initWithBusiness:business] : [[TSMarker alloc]initWithLocation:location];
     marker.map = self.mapView;
+    [self.markerArray addObject:marker];
 }
 
 -(void)fetchDefaultRegion {
@@ -311,6 +314,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     self.searchVC = searchVC;
     self.searchVC.businesses = self.businessesPlaced;
     self.searchVC.locations = self.currentRegion.allLocations;
+    self.searchVC.delegate = self;
     [self.view addSubview:searchVC.view];
 }
 
@@ -388,6 +392,50 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)regionListVC:(RegionListViewController *)viewController selectedRegion:(CDRegion *)region {
     self.currentRegion = region;
     [self.mapView animateToLocation:region.coordinate];
+}
+
+#pragma mark - SearchTableViewDelegate
+-(void)searchTableVC:(SearchTableViewController *)viewController didSelectASearchOption:(SelectionType)type forEitherBusiness:(YPBusiness *)business orLocation:(CDLocation *)location {
+    switch (type) {
+        case Select_Location:
+            [self animateToLocation:location];
+            break;
+        case Select_Business:
+            [self animateToBusiness:business];
+            break;
+
+        default:
+            break;
+    }
+
+    [UIView animateWithDuration:0.0 animations:^{
+        self.searchVC.view.frame = CGRectMake(CGRectGetMinX(self.searchVC.view.frame), CGRectGetMinY(self.searchVC.view.frame), CGRectGetWidth(self.searchVC.view.frame), 0.0);
+    } completion:^(BOOL finished) {
+        [self.searchVC.view removeFromSuperview];
+    }];
+    [self.searchTextField resignFirstResponder];
+}
+
+-(void)animateToLocation:(CDLocation *)location {
+    for (TSMarker *marker in self.markerArray) {
+        if (marker.location != nil) {
+            if ([marker.location.objectId isEqualToString:location.objectId]) {
+                [self.mapView animateToLocation:location.coordinate];
+                [self.mapView setSelectedMarker:marker];
+            }
+        }
+    }
+}
+
+-(void)animateToBusiness:(YPBusiness *)business {
+    for (TSMarker *marker in self.markerArray) {
+        if (marker.business != nil) {
+            if ([marker.business.businessId isEqualToString:business.businessId]) {
+                [self.mapView animateToLocation:business.coordinate];
+                [self.mapView setSelectedMarker:marker];
+            }
+        }
+    }
 }
 
 @end
