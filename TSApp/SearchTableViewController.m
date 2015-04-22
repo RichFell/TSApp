@@ -9,6 +9,7 @@
 #import "SearchTableViewController.h"
 #import "YPBusiness.h"
 #import "CDLocation.h"
+#import "HeaderView.h"
 
 @interface SearchTableViewController ()
 
@@ -68,12 +69,8 @@ static NSString *const kCellId = @"CellID";
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc]init];
-    headerView.backgroundColor = [UIColor lightGrayColor];
-    CGRect insetRect = CGRectMake(10.0, 0, CGRectGetWidth(self.tableView.frame), kTableViewHeaderHeight);
-    UILabel *headerLabel = [[UILabel alloc]initWithFrame:insetRect];
-    headerLabel.text = self.titleArray[section];
-    [headerView addSubview:headerLabel];
+    HeaderView *headerView = [[HeaderView alloc]initWithFrame:tableView.frame];
+    headerView.headerLabel.text = self.titleArray[section];
     return headerView;
 }
 

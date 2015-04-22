@@ -33,11 +33,11 @@
 		9B68D1261A3AA5D500299694 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68D1251A3AA5D500299694 /* Accounts.framework */; };
 		9B69809B1AE5A68700B08462 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6980991AE5A68700B08462 /* SearchTableViewController.m */; };
 		9B6A3A391AC9EF5A00521CDA /* TSMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6A3A381AC9EF5A00521CDA /* TSMarker.m */; };
+		9B7A54741AE74B720031B80D /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A54731AE74B720031B80D /* HeaderView.m */; };
 		9B8681DF1A32C3CB009F9AD0 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8681DD1A32C3CB009F9AD0 /* FBAudienceNetwork.framework */; };
 		9B8681E21A32CB81009F9AD0 /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681E11A32CB81009F9AD0 /* EntryViewController.m */; };
 		9B8681E51A32D1E5009F9AD0 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */; };
 		9B8681E71A3513C5009F9AD0 /* CustomInfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8681E61A3513C5009F9AD0 /* CustomInfoWindow.xib */; };
-		9B8681ED1A353525009F9AD0 /* HeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8681EC1A353525009F9AD0 /* HeaderTableViewCell.m */; };
 		9B86822A1A36AAC5009F9AD0 /* MapNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8682291A36AAC5009F9AD0 /* MapNavigationViewController.m */; };
 		9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */; };
 		9BAA8D7319889193000BC9A9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */; };
@@ -142,14 +142,14 @@
 		9B6980991AE5A68700B08462 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
 		9B6A3A371AC9EF5A00521CDA /* TSMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMarker.h; sourceTree = "<group>"; };
 		9B6A3A381AC9EF5A00521CDA /* TSMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMarker.m; sourceTree = "<group>"; };
+		9B7A54721AE74B720031B80D /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
+		9B7A54731AE74B720031B80D /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
 		9B8681DD1A32C3CB009F9AD0 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		9B8681E01A32CB81009F9AD0 /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
 		9B8681E11A32CB81009F9AD0 /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
 		9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
 		9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		9B8681E61A3513C5009F9AD0 /* CustomInfoWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomInfoWindow.xib; sourceTree = "<group>"; };
-		9B8681EB1A353525009F9AD0 /* HeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderTableViewCell.h; sourceTree = "<group>"; };
-		9B8681EC1A353525009F9AD0 /* HeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderTableViewCell.m; sourceTree = "<group>"; };
 		9B8682281A36AAC5009F9AD0 /* MapNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapNavigationViewController.h; sourceTree = "<group>"; };
 		9B8682291A36AAC5009F9AD0 /* MapNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapNavigationViewController.m; sourceTree = "<group>"; };
 		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -474,8 +474,8 @@
 		9BBB1124199AC9F400C5321D /* Header Cells */ = {
 			isa = PBXGroup;
 			children = (
-				9B8681EB1A353525009F9AD0 /* HeaderTableViewCell.h */,
-				9B8681EC1A353525009F9AD0 /* HeaderTableViewCell.m */,
+				9B7A54721AE74B720031B80D /* HeaderView.h */,
+				9B7A54731AE74B720031B80D /* HeaderView.m */,
 			);
 			name = "Header Cells";
 			sourceTree = "<group>";
@@ -646,6 +646,7 @@
 				9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */,
 				9BB0B885197AF79500D545C1 /* AppDelegate.m in Sources */,
 				9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */,
+				9B7A54741AE74B720031B80D /* HeaderView.m in Sources */,
 				9B6A3A391AC9EF5A00521CDA /* TSMarker.m in Sources */,
 				9B0F01091AD4923D005DEFA8 /* LocationSelectionViewController.m in Sources */,
 				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
@@ -655,7 +656,6 @@
 				9B2CCAEA1AE0323F00C691BF /* TDOAuth.m in Sources */,
 				9BCB5B661AD193CE0026D5B9 /* DirectionsListViewController.m in Sources */,
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
-				9B8681ED1A353525009F9AD0 /* HeaderTableViewCell.m in Sources */,
 				9B36F2DE1A28EFAD0061DB17 /* UserDefaults.m in Sources */,
 				9B47B7CB1AD2EE07007EB0C2 /* CDLocation.m in Sources */,
 				9BE7978C1ABE848B00ED236C /* CDRegion.m in Sources */,

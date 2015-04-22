@@ -10,7 +10,7 @@
 #import "Direction.h"
 #import "DirectionSet.h"
 #import "CDLocation.h"
-#import "HeaderTableViewCell.h"
+#import "HeaderView.h"
 
 @interface DirectionsListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -51,9 +51,9 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    HeaderTableViewCell *headerCell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
-    headerCell.headerTitleLabel.text = self.titleArray[section];
-    return headerCell;
+    HeaderView *headerView = [[HeaderView alloc]initWithFrame:tableView.frame];
+    headerView.headerLabel.text = self.titleArray[section];
+    return headerView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

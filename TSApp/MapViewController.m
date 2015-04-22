@@ -11,12 +11,9 @@
 
 #import "MapViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
-#import <Parse/Parse.h> 
 #import "User.h"
 #import "MapModel.h"
 #import "RegionListViewController.h"
-#import "Location.h"
-#import "Region.h"
 #import "NetworkErrorAlert.h"
 #import "UserDefaults.h"
 #import "Direction.h"
@@ -408,7 +405,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
             break;
     }
 
-    [UIView animateWithDuration:0.0 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
         self.searchVC.view.frame = CGRectMake(CGRectGetMinX(self.searchVC.view.frame), CGRectGetMinY(self.searchVC.view.frame), CGRectGetWidth(self.searchVC.view.frame), 0.0);
     } completion:^(BOOL finished) {
         [self.searchVC.view removeFromSuperview];

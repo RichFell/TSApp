@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>5053654F-DADE-4CD8-B3FB-3DB36E8F6671</string>
 	<key>IDESourceControlProjectName</key>
-	<string>TSApp</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>0A34B389300827D37343DB43F6E468D8878E9A13</key>
 		<string>https://github.com/RichFell/TSApp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TSApp.xcodeproj</string>
+	<string>TSApp.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0A34B389300827D37343DB43F6E468D8878E9A13</key>
