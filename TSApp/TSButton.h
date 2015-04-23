@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+IB_DESIGNABLE
 @interface TSButton : UIButton
 
-@property BOOL coloredIn;
+@property IBInspectable BOOL coloredIn;
 
 @end
