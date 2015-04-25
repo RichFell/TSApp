@@ -898,6 +898,7 @@
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Z1D-uI-0xD">
                                 <rect key="frame" x="119" y="128" width="83" height="29"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="HyC-Sj-kWw"/>
                                     <constraint firstAttribute="width" constant="83" id="Kbw-BE-iNg"/>

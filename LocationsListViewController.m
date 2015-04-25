@@ -146,7 +146,7 @@ static NSIndexPath *endingIndexPath;
     cell.infoLabel.text = location.name;
     cell.indexPath = indexPath;
     cell.delegate = self;
-    cell.addressLabel.text = location.localAddress ? location.localAddress : @"No Addres    s";
+    cell.addressLabel.text = location.localAddress ? location.localAddress : @"No Address";
     [cell.visitedButton setImage: location.hasVisited == true ? [UIImage imageNamed:kCheckMarkImageName] : [UIImage imageNamed:kPlaceHolderImage] forState:UIControlStateNormal];
     int position = (int)indexPath.row;
     cell.countLabel.text = [NSString stringWithFormat:@"%d", position + 1];

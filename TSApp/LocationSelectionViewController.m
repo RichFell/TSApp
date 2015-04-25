@@ -174,6 +174,7 @@ static NSString *typeOfTransportation = @"driving";
     [alert addAction:noAction];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [DirectionSet createNewDirectionSetWithDirections:directions andStartingLocation:self.startingLocation andEndingLocation:self.endingLocation];
+        [self.parentViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
     }];
     [alert addAction:yesAction];
     [self.parentViewController presentViewController:alert animated:true completion:nil];
