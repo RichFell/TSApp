@@ -54,15 +54,17 @@ static NSString *const kCellId = @"CellID";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellId];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellId];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellId];
     }
     if (indexPath.section == 0) {
         CDLocation *location = self.displayArray[indexPath.section][indexPath.row];
         cell.textLabel.text = location.name;
+        cell.detailTextLabel.text = location.localAddress;
     }
     else {
         YPBusiness *business = self.displayArray[indexPath.section][indexPath.row];
         cell.textLabel.text = business.name;
+        cell.detailTextLabel.text = business.address;
     }
 
     return cell;

@@ -122,28 +122,6 @@ static NSString *typeOfTransportation = @"driving";
     return true;
 }
 
-//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-//    [MapModel geocodeString:searchBar.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
-//        if (error) {
-//            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
-//        }
-//        else {
-//
-////            NSArray *array = self.currentRegion.sortedArrayOfLocations[0];
-////            NSNumber *index = [NSNumber numberWithLong:array.count];
-////            CDLocation *location = [[CDLocation alloc]initWithCoordinate:coordinate andName:@"" atIndex:index forRegion:self.currentRegion atAddress:searchBar.text];
-////            [self askToSaveLocationAlert:location];
-////            if ([searchBar isEqual:self.searchBarOne]) {
-////                self.startingLocation = location;
-////            }
-////            else {
-////                self.endingLocation = location;
-////            }
-//            [self askForDirections];
-//        }
-//    }];
-//}
-
 #pragma mark - Save Alerts
 -(void)askToSaveLocationAlert:(CDLocation *)location {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Would you like to save this to your location list?" message:nil preferredStyle:UIAlertControllerStyleAlert];
