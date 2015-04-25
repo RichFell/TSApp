@@ -45,8 +45,9 @@
 +(void)loginUserForSession:(FBSession *)session completion:(void(^)(bool result, NSError *error))completionHandler {
     [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, id<FBGraphUser> user, NSError *error) {
         if (!error) {
-            NSString *email = [user objectForKey:@"email"];
-            [User createUserWithUserName:email withPassword:email andEmail:email completion:^(BOOL result, NSError *error) {
+            NSString *email = [user objectForKey:@"name"];
+            NSString *password = [user objectForKey:@"id"];
+            [User createUserWithUserName:email withPassword:password andEmail:nil completion:^(BOOL result, NSError *error) {
                 completionHandler(result, error);
             }];
         }

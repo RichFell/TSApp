@@ -40,7 +40,7 @@
 - (IBAction)connectWithFacebookOnTapped:(UIButton *)sender {
     [FBSessionManager createNewSessionWithBlock:^(BOOL result, NSError *error) {
         if (result == true) {
-
+            [self dismissViewControllerAnimated:true completion:nil];
         }
         else {
             [self showAlertWithTitle:@"There was a problem" andMessage:error.localizedDescription];
