@@ -18,10 +18,10 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:true];
-    if (![PFUser currentUser]) {
+    BOOL hasBeenRun = [[NSUserDefaults standardUserDefaults]boolForKey:kHasBeenRun];
+    if (!hasBeenRun) {
         EntryViewController *entryVC = [EntryViewController newStoryboardInstance];
         [self presentViewController:entryVC animated:true completion:nil];
-        [[NSUserDefaults standardUserDefaults] setBool:true forKey:kFirstLoginKey];
     }
 }
 

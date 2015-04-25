@@ -72,11 +72,14 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 {
     [super viewDidLoad];
     [self setup];
-    BOOL isFirstLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kFirstLoginKey];
-    if (isFirstLogin) {
-        
+    BOOL hasBeenRun = [[NSUserDefaults standardUserDefaults] boolForKey:kHasBeenRun];
+    if (!hasBeenRun) {
+        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(41.878483, -87.638772);
+        [self.mapView animateToLocation:coordinate];
     }
-    [self fetchDefaultRegion];
+    else {
+        [self fetchDefaultRegion];
+    }
     [self setupNotificationListeners];
 }
 

@@ -26,7 +26,7 @@ CGFloat const kMapViewZoom = 12.0;
 CGFloat const kMapViewPolylineWidth = 5.0;
 
 //UserDefaults keys
-NSString *const kFirstLoginKey = @"FirstLogin";
+NSString *const kHasBeenRun = @"HasBeenRun";
 
 //API Keys
 

@@ -39,10 +39,11 @@
     if ([self.passwordTextFieldOne.text isEqualToString:self.passwordTextFieldTwo.text]) {
 
         [User createUserWithUserName:self.usernameTextField.text withPassword:self.passwordTextFieldOne.text andEmail:nil completion:^(BOOL result, NSError *error) {
-            if (error) {
+            if (!result) {
                 [NetworkErrorAlert showAlertForViewController:self];
             }
             else {
+                [[NSUserDefaults standardUserDefaults]setBool:true forKey:kHasBeenRun];
                 [self.presentingViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
             }
         }];

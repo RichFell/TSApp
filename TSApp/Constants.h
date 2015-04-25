@@ -26,7 +26,7 @@ extern CGFloat const kMapViewZoom;
 extern CGFloat const kMapViewPolylineWidth;
 
 //UserDefaults keys
-extern NSString *const kFirstLoginKey;
+extern NSString *const kHasBeenRun;
 
 
 //API Keys

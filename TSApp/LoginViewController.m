@@ -44,6 +44,7 @@ static CGFloat const kYForKeyboardAnimation = -200.0;
         }
         else
         {
+            [[NSUserDefaults standardUserDefaults]setBool:true forKey:kHasBeenRun];
             [self.presentingViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
         }
     }];
