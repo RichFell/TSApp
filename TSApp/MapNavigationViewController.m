@@ -16,16 +16,12 @@
 
 @implementation MapNavigationViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:true];
-    if ([PFUser currentUser] == nil) {
+    if (![PFUser currentUser]) {
         EntryViewController *entryVC = [EntryViewController newStoryboardInstance];
         [self presentViewController:entryVC animated:true completion:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:kFirstLoginKey];
     }
 }
 

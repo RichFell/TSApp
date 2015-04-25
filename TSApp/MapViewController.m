@@ -72,6 +72,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 {
     [super viewDidLoad];
     [self setup];
+    BOOL isFirstLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kFirstLoginKey];
+    if (isFirstLogin) {
+        
+    }
     [self fetchDefaultRegion];
     [self setupNotificationListeners];
 }

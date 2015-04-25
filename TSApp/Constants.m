@@ -25,6 +25,9 @@ CGFloat const kMapViewPadding = 30.0;
 CGFloat const kMapViewZoom = 12.0;
 CGFloat const kMapViewPolylineWidth = 5.0;
 
+//UserDefaults keys
+NSString *const kFirstLoginKey = @"FirstLogin";
+
 //API Keys
 
 NSString *const kGoogleAPIKey = @"AIzaSyCLR3ztaPMZugnESkzeeAWWTkxbHTpgCPA";

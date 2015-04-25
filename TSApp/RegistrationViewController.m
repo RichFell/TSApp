@@ -43,7 +43,7 @@
                 [NetworkErrorAlert showAlertForViewController:self];
             }
             else {
-                [self.presentingViewController dismissViewControllerAnimated:true completion:nil];
+                [self.presentingViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
             }
         }];
     }
