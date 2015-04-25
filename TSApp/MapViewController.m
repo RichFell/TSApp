@@ -437,7 +437,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     NSSet *set = [NSSet setWithArray:self.locationMarkers];
     for (TSMarker *marker in set) {
         if ([marker.location.objectId isEqualToString:location.objectId]) {
-            [self.mapView animateToLocation:location.coordinate];
+            GMSCameraPosition *cameraPos = [GMSCameraPosition cameraWithTarget:location.coordinate zoom:kMapViewZoomLocation];
+            [self.mapView setCamera:cameraPos];
             [self.mapView setSelectedMarker:marker];
         }
     }
@@ -447,7 +448,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     NSSet *set = [NSSet setWithArray:self.businessMarkers];
     for (TSMarker *marker in set) {
         if ([marker.business.businessId isEqualToString:business.businessId]) {
-            [self.mapView animateToLocation:business.coordinate];
+            GMSCameraPosition *cameraPos = [GMSCameraPosition cameraWithTarget:business.coordinate zoom:kMapViewZoomLocation];
+            [self.mapView setCamera:cameraPos];
             [self.mapView setSelectedMarker:marker];
         }
     }

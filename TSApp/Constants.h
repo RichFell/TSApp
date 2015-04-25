@@ -23,6 +23,7 @@ extern CGFloat const kTSSpacing;
 extern CGFloat const kTableViewHeaderHeight;
 extern CGFloat const kMapViewPadding;
 extern CGFloat const kMapViewZoom;
+extern CGFloat const kMapViewZoomLocation;
 extern CGFloat const kMapViewPolylineWidth;
 
 //UserDefaults keys
