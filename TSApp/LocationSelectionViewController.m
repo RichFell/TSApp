@@ -82,6 +82,10 @@ static NSString *typeOfTransportation = @"driving";
 - (IBAction)finishedGettingDirectionsOnTap:(UIButton *)sender {
     [self.delegate locationSelectionVC:self didTapDone:true];
 }
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:true];
+}
 #pragma Helper Methods 
 ///does the call for directions between the startingCoordinate and the endingCoordinate
 -(void)askForDirections {
