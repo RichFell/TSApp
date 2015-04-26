@@ -136,8 +136,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     }];
 }
 
--(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string
-{
+-(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string {
     TSMarker *marker = [[TSMarker alloc]initWithPosition:coordinate withSnippet:string forMap:self.mapView];
     marker.icon = [GMSMarker markerImageWithColor:[UIColor customOrange]];
     [self.mapView setSelectedMarker:marker];
@@ -232,8 +231,14 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
 {
-    TSMarker *theMarker = (TSMarker *)marker;
-    [self displayAlertToCreateNewLocation:theMarker.position orBusiness:theMarker.business forMarker:theMarker];
+    if (self.currentRegion) {
+        TSMarker *theMarker = (TSMarker *)marker;
+        [self displayAlertToCreateNewLocation:theMarker.position orBusiness:theMarker.business forMarker:theMarker];
+    }
+    else {
+
+    }
+
 }
 
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
@@ -322,6 +327,13 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         [self markerCreate:business orLocation:nil];
     }
     [self resetAllLocationMarkers];
+}
+
+-(void)displayAlertForNoRegion {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You need to create a Trip before you can save a Destination." message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:dismissAction];
+    [self presentViewController:alert animated:true completion:nil];
 }
 
 #pragma mark - TextFieldDelegate methods
