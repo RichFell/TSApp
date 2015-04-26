@@ -50,6 +50,7 @@
 @property SearchTableViewController *searchVC;
 @property NSMutableArray *businessMarkers;
 @property NSMutableArray *locationMarkers;
+@property TSMarker *longTapMarker;
 
 @end
 
@@ -140,6 +141,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     TSMarker *marker = [[TSMarker alloc]initWithPosition:coordinate withSnippet:string forMap:self.mapView];
     marker.icon = [GMSMarker markerImageWithColor:[UIColor customOrange]];
     [self.mapView setSelectedMarker:marker];
+    self.longTapMarker.map = nil;
+    self.longTapMarker = marker;
 }
 
 -(void)placeMarkerForLocation:(CDLocation *)location {
@@ -230,12 +233,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
 {
     TSMarker *theMarker = (TSMarker *)marker;
-    if (theMarker.business) {
-        [self displayAlertToCreateNewLocation:theMarker.position orBusiness: theMarker.business];
-    }
-    if (!theMarker.location) {
-        [self displayAlertToCreateNewLocation:marker.position orBusiness:nil];
-    }
+    [self displayAlertToCreateNewLocation:theMarker.position orBusiness:theMarker.business forMarker:theMarker];
 }
 
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
@@ -249,7 +247,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 #pragma mark - Map related helper methods
 
--(void)displayAlertToCreateNewLocation: (CLLocationCoordinate2D) coordinate orBusiness:(YPBusiness *)business
+-(void)displayAlertToCreateNewLocation: (CLLocationCoordinate2D) coordinate orBusiness:(YPBusiness *)business forMarker:(TSMarker *) marker
 {
     NSString *message = business ? business.address : nil;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to save this location?"
@@ -276,7 +274,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         }
         else {
             UITextField *nameTextfield = [alert.textFields firstObject];
-            [self reverseGeocodeCoordinate:coordinate andName:nameTextfield.text];
+            [self reverseGeocodeMarker:marker andName:nameTextfield.text];
         }
     }];
     [alert addAction:saveAction];
@@ -287,9 +285,9 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [self presentViewController:alert animated:true completion:nil];
 }
 
--(void)reverseGeocodeCoordinate:(CLLocationCoordinate2D)coordinate andName:(NSString *)theName
+-(void)reverseGeocodeMarker:(TSMarker *)marker andName:(NSString *)theName
 {
-    [MapModel reverseGeoCode:coordinate withBlock:^(GMSReverseGeocodeResponse *response, NSError *error) {
+    [MapModel reverseGeoCode:marker.position withBlock:^(GMSReverseGeocodeResponse *response, NSError *error) {
         if (!response)
         {
             [NetworkErrorAlert showAlertForViewController:self];
@@ -297,11 +295,12 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         else
         {
             [CDLocation createNewLocationWithName:theName
-                                     atCoordinate:coordinate
+                                     atCoordinate:marker.position
                                           atIndex:@0
                                         forRegion:self.currentRegion
                                         atAddress:response.firstResult.thoroughfare
                                        completion:^(CDLocation *location, BOOL result) {
+                                           marker.map = nil;
                                             [self resetAllLocationMarkers];
             }];
         }
