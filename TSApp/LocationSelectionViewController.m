@@ -12,12 +12,14 @@
 #import "NetworkErrorAlert.h"
 #import "Direction.h"
 #import "DirectionSet.h"
+#import "TSButton.h"
 
 @interface LocationSelectionViewController ()<UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *transportationButtons;
 @property (weak, nonatomic) IBOutlet UITextField *fromTextField;
 @property (weak, nonatomic) IBOutlet UITextField *toTextField;
+@property (strong, nonatomic) IBOutletCollection(TSButton) NSArray *buttons;
 
 @property CDLocation *startingLocation;
 @property CDLocation *endingLocation;
@@ -80,6 +82,9 @@ static NSString *typeOfTransportation = @"driving";
 
 
 - (IBAction)finishedGettingDirectionsOnTap:(UIButton *)sender {
+    for (TSButton *button in self.buttons) {
+        button.hidden = true;
+    }
     [self.delegate locationSelectionVC:self didTapDone:true];
 }
 
@@ -118,7 +123,7 @@ static NSString *typeOfTransportation = @"driving";
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
-    
+
     return true;
 }
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KYq-iv-Dee">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -1208,6 +1207,8 @@
                         <outletCollection property="transportationButtons" destination="Yeh-jC-rdw" id="Itt-4k-UMF"/>
                         <outletCollection property="transportationButtons" destination="FwO-2d-X8Y" id="iZf-lu-dFm"/>
                         <outletCollection property="transportationButtons" destination="KqJ-Jg-LWA" id="duM-Tj-dEW"/>
+                        <outletCollection property="buttons" destination="Tze-tv-30D" id="W10-Q8-HpA"/>
+                        <outletCollection property="buttons" destination="rfU-iJ-eV5" id="O5B-42-qVW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U5s-je-eGe" userLabel="First Responder" sceneMemberID="firstResponder"/>
