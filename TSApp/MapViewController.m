@@ -330,7 +330,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 -(void)displayAlertForNoRegion {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You need to create a Trip before you can save a Destination." message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You need to create a Trip before you can save a Destination." message:@"Select the 'plus' button in the top right corner to create a new Trip, then you will be able to save Destinations for your trip." preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:dismissAction];
     [self presentViewController:alert animated:true completion:nil];
