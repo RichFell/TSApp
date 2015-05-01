@@ -21,4 +21,6 @@
 
 @property id<CreateTripVCDelegate>delegate;
 
++(instancetype)storyboardInstance;
+
 @end

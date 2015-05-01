@@ -29,6 +29,9 @@ CGFloat const kMapViewPolylineWidth = 5.0;
 //UserDefaults keys
 NSString *const kHasBeenRun = @"HasBeenRun";
 
+//Notification Names
+NSString *const kCreatedFirstTrip = @"CreatedFirstTrip";
+
 //API Keys
 
 NSString *const kGoogleAPIKey = @"AIzaSyCLR3ztaPMZugnESkzeeAWWTkxbHTpgCPA";
@@ -50,4 +53,5 @@ NSString *const kYelpLimitKey = @"limit";
 NSString *const kYelpSortKey = @"sort";
 NSString *const kYelpQueryLimit = @"20";
 NSString *const kYelpSortType = @"0";
+NSString *const kYelpTermKey = @"term";
 

@@ -138,7 +138,7 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 
 ///Gets the default Region by seeing if there is a default Region, and if there is then doing a query for it based on the stored objectId
 +(void)getDefaultRegionWithBlock:(void (^)(CDRegion *, NSError *))completionHandler {
-    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion] != nil) {
+    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion]) {
         NSString *defaultId = [NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId == %@", defaultId];
         NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([CDRegion class])];

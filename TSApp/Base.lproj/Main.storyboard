@@ -595,11 +595,51 @@
                         <outlet property="passwordTextFieldOne" destination="mXV-Ci-bqX" id="E17-C6-s1H"/>
                         <outlet property="passwordTextFieldTwo" destination="H3g-z8-ODk" id="mMv-Pa-Zil"/>
                         <outlet property="usernameTextField" destination="fBR-MU-xlF" id="VTJ-Zz-YcR"/>
+                        <segue destination="GZT-C1-eJO" kind="modal" identifier="FirstTripSegue" id="71C-q2-SYd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mAk-VH-QNN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="467" y="-1338"/>
+        </scene>
+        <!--First Trip View Controller-->
+        <scene sceneID="N9N-1B-jUc">
+            <objects>
+                <viewController id="GZT-C1-eJO" customClass="FirstTripViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZUj-pT-QPQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="8ai-pa-0LD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kqT-vL-kCv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lets get you started by creating your first trip." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxR-XX-ysh">
+                                <rect key="frame" x="31" y="132" width="259" height="114"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8a-HY-avG" customClass="TSButton">
+                                <rect key="frame" x="76" y="269" width="169" height="30"/>
+                                <state key="normal" title="Create First Trip">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="coloredIn" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="showCreateTripVCOnTap:" destination="GZT-C1-eJO" eventType="touchUpInside" id="xvm-wa-bjS"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="rd5-KJ-eDd"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SDy-Wr-GU9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="851" y="-1338"/>
         </scene>
         <!--Your Trips-->
         <scene sceneID="hEu-fZ-3f2">
@@ -728,7 +768,7 @@
         <!--Create Trip View Controller-->
         <scene sceneID="cQX-VV-T6H">
             <objects>
-                <viewController id="Keu-kB-DQd" customClass="CreateTripViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateTripViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Keu-kB-DQd" customClass="CreateTripViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3Wl-8z-tzu"/>
                         <viewControllerLayoutGuide type="bottom" id="g0i-hH-Gk8"/>

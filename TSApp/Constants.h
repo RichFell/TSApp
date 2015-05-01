@@ -10,7 +10,7 @@
 
 extern NSString *const kStoryboardID;
 extern NSString *const kSomeString;
-extern NSString *const kSelectedDirectionNotification;
+
 extern NSString *const kDirectionArrayKey;
 extern NSString *const kUpArrowImage;
 extern NSString *const kDownArrowImage;
@@ -25,6 +25,10 @@ extern CGFloat const kMapViewPadding;
 extern CGFloat const kMapViewZoom;
 extern CGFloat const kMapViewZoomLocation;
 extern CGFloat const kMapViewPolylineWidth;
+
+//Notification Names
+extern NSString *const kCreatedFirstTrip;
+extern NSString *const kSelectedDirectionNotification;
 
 //UserDefaults keys
 extern NSString *const kHasBeenRun;
@@ -51,6 +55,7 @@ extern NSString *const kYelpLimitKey;
 extern NSString *const kYelpSortKey;
 extern NSString *const kYelpQueryLimit;
 extern NSString *const kYelpSortType;
+extern NSString *const kYelpTermKey;
 
 
 

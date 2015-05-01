@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "User.h"
 #import "NetworkErrorAlert.h"
+#import "RegistrationViewController.h"
 
 @interface RegistrationViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextFieldOne;
@@ -44,7 +45,7 @@
             }
             else {
                 [[NSUserDefaults standardUserDefaults]setBool:true forKey:kHasBeenRun];
-                [self.presentingViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
+                [self performSegueWithIdentifier:@"FirstTripSegue" sender:nil];
             }
         }];
     }

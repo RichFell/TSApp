@@ -16,6 +16,7 @@
 		9B1C6E4319A6E82C00D8B804 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4219A6E82C00D8B804 /* User.m */; };
 		9B1C6E4619A6F26100D8B804 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4519A6F26100D8B804 /* InitialViewController.m */; };
 		9B1C6E4919A6F29E00D8B804 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */; };
+		9B228FF21AED7441007F586C /* FirstTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B228FF11AED7441007F586C /* FirstTripViewController.m */; };
 		9B2CCAEA1AE0323F00C691BF /* TDOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2CCAE91AE0323F00C691BF /* TDOAuth.m */; };
 		9B2CCAED1AE037F000C691BF /* YPBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2CCAEC1AE037F000C691BF /* YPBusiness.m */; };
 		9B325EF91A3A98EC00C67667 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B325EF81A3A98EC00C67667 /* ParseUI.framework */; };
@@ -114,6 +115,8 @@
 		9B1C6E4519A6F26100D8B804 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		9B1C6E4719A6F29E00D8B804 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		9B228FF01AED7441007F586C /* FirstTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstTripViewController.h; sourceTree = "<group>"; };
+		9B228FF11AED7441007F586C /* FirstTripViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstTripViewController.m; sourceTree = "<group>"; };
 		9B2CCAE81AE0323F00C691BF /* TDOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDOAuth.h; sourceTree = "<group>"; };
 		9B2CCAE91AE0323F00C691BF /* TDOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDOAuth.m; sourceTree = "<group>"; };
 		9B2CCAEB1AE037F000C691BF /* YPBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBusiness.h; sourceTree = "<group>"; };
@@ -325,6 +328,8 @@
 				9B1C6E4819A6F29E00D8B804 /* LoginViewController.m */,
 				9B8681E31A32D1E5009F9AD0 /* RegistrationViewController.h */,
 				9B8681E41A32D1E5009F9AD0 /* RegistrationViewController.m */,
+				9B228FF01AED7441007F586C /* FirstTripViewController.h */,
+				9B228FF11AED7441007F586C /* FirstTripViewController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -680,6 +685,7 @@
 				9B2CCAED1AE037F000C691BF /* YPBusiness.m in Sources */,
 				9B47B7CE1AD2EE07007EB0C2 /* DirectionSet.m in Sources */,
 				9B47B7D11AD2EE08007EB0C2 /* Direction.m in Sources */,
+				9B228FF21AED7441007F586C /* FirstTripViewController.m in Sources */,
 				9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

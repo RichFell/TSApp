@@ -61,6 +61,23 @@
     }];
 }
 
++(void)fetchBusinessesFromYelpMatchingName:(NSString *)name
+                                notInArray:(NSArray *) businessesArray
+                                 completed:(void(^)(NSArray *businesses))completionHandler {
+    NSURLRequest *request = [TDOAuth URLRequestForPath:kYelpRequestPath GETParameters:@{kYelpTermKey: name, kYelpLimitKey: kYelpQueryLimit, kYelpSortKey: kYelpSortType}
+                                                  host:kYelpHost
+                                           consumerKey:kYelpConsumerKey
+                                        consumerSecret:kYelpConsumerSecret
+                                           accessToken:kYelpToken
+                                           tokenSecret:kYelpTokenSecret];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (data) {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            NSLog(@"%@", dict);
+        }
+    }];
+}
+
 +(NSArray *)compareArrayOfDictionaries:(NSArray *)dictionaries toArrayOfBusinesses:(NSArray *)businesses {
     NSSet *businessesSet = [NSSet setWithArray:businesses];
     NSMutableArray *predArray = [NSMutableArray new];

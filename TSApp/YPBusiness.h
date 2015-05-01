@@ -20,4 +20,8 @@
 
 +(void)fetchBusinessesFromYelpForBounds:(CLLocationCoordinate2D)neCoordinate andSEBounds:(CLLocationCoordinate2D)seCoordinate andCompareAgainstBusinesses:(NSArray *)businesses completed:(void (^)(NSArray *))completionHandler;
 
++(void)fetchBusinessesFromYelpMatchingName:(NSString *)name
+                                notInArray:(NSArray *) businessesArray
+                                 completed:(void(^)(NSArray *businesses))completionHandler;
+
 @end

@@ -36,6 +36,9 @@ static NSString *const kCellId = @"CellID";
 -(void)inputText:(NSString *)text {
     NSArray *businessesArray = [self filteredBusinessesByText:text];
     NSArray *locationsArray = [self filterLocationsByText:text];
+    [YPBusiness fetchBusinessesFromYelpMatchingName:text notInArray:businessesArray completed:^(NSArray *businesses) {
+
+    }];
     self.displayArray = @[locationsArray, businessesArray];
     [self.tableView reloadData];
 }

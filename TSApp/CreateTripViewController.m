@@ -27,6 +27,11 @@
 static CGFloat const kYKeyboardOpen = -100.0;
 static CGFloat const kYKeyboardClosed = 0.0;
 
++(instancetype)storyboardInstance {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    return [storyboard instantiateViewControllerWithIdentifier:@"CreateTripViewController"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

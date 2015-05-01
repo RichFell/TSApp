@@ -10,8 +10,15 @@
 
 @implementation TSButton
 
--(void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
+-(void)awakeFromNib {
+    [self setup];
+}
+
+-(void)prepareForInterfaceBuilder {
+    [self setup];
+}
+
+-(void)setup {
     self.layer.borderWidth = 1.0;
     self.layer.cornerRadius = 5.0;
     self.layer.borderColor = self.coloredIn ? [UIColor whiteColor].CGColor : [UIColor customOrange].CGColor;
@@ -21,5 +28,4 @@
     self.clipsToBounds = true;
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
 }
-
 @end
