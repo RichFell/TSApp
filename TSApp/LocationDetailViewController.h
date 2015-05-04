@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class CDLocation;
+
 @interface LocationDetailViewController : UIViewController
+
+@property CDLocation *selectedLocation;
 
 @end

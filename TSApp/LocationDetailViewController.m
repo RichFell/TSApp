@@ -7,8 +7,22 @@
 //
 
 #import "LocationDetailViewController.h"
+#import "CDLocation.h"
+
+@class TSButton;
 
 @interface LocationDetailViewController ()
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionContainerTopConstraint;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *getDirectionsButTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionContainerBottomConstraint;
+
+
+@property (weak, nonatomic) IBOutlet TSButton *getDirectionsButton;
+@property (weak, nonatomic) IBOutlet TSButton *saveDirectionsButton;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+
 
 @end
 
@@ -16,7 +30,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    self.title = self.selectedLocation.name;
+    self.addressLabel.text = self.selectedLocation.localAddress;
 }
 
 @end

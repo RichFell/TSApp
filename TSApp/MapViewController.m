@@ -124,7 +124,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [self.view sendSubviewToBack:self.mapView];
 
     self.imageViewTopConstraint.constant = CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.slidingImageView.frame) - CGRectGetMaxY(self.navigationController.navigationBar.frame);
-    self.containerBottomConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
+    self.containerBottomConstraint.constant = -CGRectGetHeight(self.view.frame) + CGRectGetHeight(self.slidingImageView.frame);
     self.startingContainerBottomConstant = self.containerBottomConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
     self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
@@ -374,7 +374,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 #pragma mark - IBActions
 - (IBAction)onArrowTapped:(UITapGestureRecognizer *)sender {
-    if ([sender locationInView:self.view].y > self.view.frame.size.height / 2) {
+    if ([sender locationInView:self.view].y > CGRectGetHeight(self.view.frame) / 2) {
         [self animateContainerUp];
     }
     else {
@@ -404,7 +404,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)animateContainerDown {
     [UIView animateWithDuration:kAnimationDuration animations:^{
-        self.containerBottomConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
+        self.containerBottomConstraint.constant = -CGRectGetHeight(self.view.frame) + CGRectGetHeight(self.slidingImageView.frame);
         self.imageViewTopConstraint.constant = self.startingImageViewConstant;
         self.directionsTopConstraint.constant = 1.0;
         [self.view layoutIfNeeded];
