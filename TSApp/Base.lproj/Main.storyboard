@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KYq-iv-Dee">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KYq-iv-Dee">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -209,7 +209,7 @@
                         <outletCollection property="transportationButtons" destination="0X0-AY-PAg" id="oT0-Hr-Fux"/>
                         <outletCollection property="transportationButtons" destination="FwO-2d-X8Y" id="6UE-jM-0ds"/>
                         <outletCollection property="transportationButtons" destination="Yeh-jC-rdw" id="d2R-AJ-BE4"/>
-                        <segue destination="6eS-jo-uYE" kind="push" identifier="DirectionSegue" id="qvF-1f-o07"/>
+                        <segue destination="6IE-Bc-GTq" kind="push" identifier="DirectionDetailSegue" id="0hP-pv-BWy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HxQ-Bv-nqk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -220,6 +220,45 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2102" y="-675"/>
+        </scene>
+        <!--Location Detail View Controller-->
+        <scene sceneID="WyX-WY-BsB">
+            <objects>
+                <viewController id="6IE-Bc-GTq" customClass="LocationDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1tB-RU-HN4"/>
+                        <viewControllerLayoutGuide type="bottom" id="F0s-TQ-e39"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9hP-cq-wQE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fo-fs-jnY">
+                                <rect key="frame" x="33" y="87" width="255" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZG-WG-FVM" customClass="TSButton">
+                                <rect key="frame" x="47" y="317" width="227" height="33"/>
+                                <state key="normal" title="Show Saved Directions">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mk4-y6-HOf" customClass="TSButton">
+                                <rect key="frame" x="47" y="216" width="227" height="30"/>
+                                <state key="normal" title="Get Directions To Location">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gPB-mz-ZwA"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MOC-Yq-gcT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2468" y="-676"/>
         </scene>
         <!--Directions List View Controller-->
         <scene sceneID="rfh-Et-lcv">
@@ -288,7 +327,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fZ1-2l-Oe9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2492" y="-677"/>
+            <point key="canvasLocation" x="2843" y="-663"/>
         </scene>
         <!--Entry View Controller-->
         <scene sceneID="aYi-oK-9ym">
@@ -1270,6 +1309,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fxb-N0-nxc"/>
+        <segue reference="iZk-sz-QCO"/>
     </inferredMetricsTieBreakers>
 </document>

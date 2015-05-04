@@ -19,6 +19,7 @@
 #import "DirectionSet.h"
 #import "LocationSelectionViewController.h"
 #import "HeaderView.h"
+#import "LocationDetailViewController.h"
 
 @interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, LocationSelectionVCDelegate>
 
@@ -64,12 +65,12 @@ static NSString *const kHeaderCellID = @"headerCell";
 static NSString *const kDirectionsCellID = @"DirectionCell";
 static NSString *const kCheckMarkImageName = @"CheckMarkImage";
 static NSString *const kDirectionSegue = @"DirectionSegue";
+static NSString *const kLocationDetailSegue = @"DirectionDetailSegue";
 
 #pragma mark - static variables
 static CGFloat topViewStartingHeight;
 static NSIndexPath *startingIndexPath;
 static NSIndexPath *endingIndexPath;
-
 #pragma mark - View LifeCycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -102,15 +103,17 @@ static NSIndexPath *endingIndexPath;
     if ([segue.destinationViewController isKindOfClass:[DirectionsViewController class]]) {
         self.directionsVC = segue.destinationViewController;
     }
-    else if ([segue.destinationViewController isKindOfClass:[DirectionsListViewController class]]) {
-        DirectionsListViewController *vc = segue.destinationViewController;
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        vc.selectedLocation = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+    else if ([segue.destinationViewController isKindOfClass:[LocationDetailViewController class]]) {
     }
-    else if ([segue.destinationViewController isKindOfClass:[LocationSelectionViewController class]]) {
-        self.locationSelectionVC = segue.destinationViewController;
-        self.locationSelectionVC.delegate = self;
-    }
+//    else if ([segue.destinationViewController isKindOfClass:[DirectionsListViewController class]]) {
+//        DirectionsListViewController *vc = segue.destinationViewController;
+//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+//        vc.selectedLocation = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
+//    }
+//    else if ([segue.destinationViewController isKindOfClass:[LocationSelectionViewController class]]) {
+//        self.locationSelectionVC = segue.destinationViewController;
+//        self.locationSelectionVC.delegate = self;
+//    }
 }
 
 #pragma mark - Helper Methods for sliding of the container view
@@ -201,23 +204,24 @@ static NSIndexPath *endingIndexPath;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     CDLocation *selectedLocation = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
 
-    if (self.wantDirections) {
-        [self.locationSelectionVC giveALocation:selectedLocation];
-        if (!self.selectFirstPostion) {
-            cell.backgroundColor = [UIColor customDarkGrey];
-            endingIndexPath = indexPath;
-        }
-        else {
-            cell.backgroundColor = [UIColor customLightGrey];
-            startingIndexPath = indexPath;
-        }
-    }
-    else {
-        [self performSegueWithIdentifier:kDirectionSegue sender:nil];
-    }
+//    if (self.wantDirections) {
+//        [self.locationSelectionVC giveALocation:selectedLocation];
+//        if (!self.selectFirstPostion) {
+//            cell.backgroundColor = [UIColor customDarkGrey];
+//            endingIndexPath = indexPath;
+//        }
+//        else {
+//            cell.backgroundColor = [UIColor customLightGrey];
+//            startingIndexPath = indexPath;
+//        }
+//    }
+//    else {
+//        [self performSegueWithIdentifier:kDirectionSegue sender:nil];
+//    }
+    [self performSegueWithIdentifier:kLocationDetailSegue sender:selectedLocation];
     [tableView deselectRowAtIndexPath:indexPath animated:true];
 }
 

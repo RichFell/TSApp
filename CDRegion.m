@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Region.h"
 #import "Location.h"
+#import "UserDefaults.h"
 
 
 @implementation CDRegion
@@ -94,14 +95,15 @@ static NSString *const kDefaultRegion = @"defaultRegion";
     return self;
 }
 
-+(CDRegion *)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint {
++(void)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint completed:(void (^)(BOOL, CDRegion*))completionHandler {
     CDRegion *region = [[CDRegion alloc]initWithName:name andGeoPoint:geoPoint];
 
     [Region createRegion:name withGeoPoint:geoPoint andObjectID:[NSString stringWithFormat:@"%@", region.objectID] compeletion:^(Region *newRegion, NSError *error) {
         region.objectId = newRegion.objectId;
         [region.managedObjectContext save:nil];
+        [UserDefaults setDefaultRegion:region];
+        completionHandler(newRegion ? true : false, region);
     }];
-    return region;
 }
 
 +(void)fetchRegionsWithBlock:(void(^)(NSArray * sortedRegions))completed {
@@ -138,7 +140,8 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 
 ///Gets the default Region by seeing if there is a default Region, and if there is then doing a query for it based on the stored objectId
 +(void)getDefaultRegionWithBlock:(void (^)(CDRegion *, NSError *))completionHandler {
-    if ([NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion]) {
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultRegion]);
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kDefaultRegion]) {
         NSString *defaultId = [NSUserDefaults.standardUserDefaults objectForKey:kDefaultRegion];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId == %@", defaultId];
         NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([CDRegion class])];

@@ -32,7 +32,7 @@
  :geoPoint: The PFGeoPoint where the user wants this trip to be fore
  :returns: BOOL telling whether it saved successfully to Parse, & the newly created CDRegion
  */
-+(CDRegion *)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint;
++(void)createNewRegionWithName:(NSString *)name andGeoPoint:(PFGeoPoint *)geoPoint completed:(void(^)(BOOL result, CDRegion *region))completionHandler;
 
 /**
  Description: Called to fetch the CDRegion objects stored in Core Data. Sorts the Regions by their name, then will create an array of arrays. The arrays are the Regions that have not been marked as visited, and an array of CDRegion objects that have been marked as visited.
@@ -53,6 +53,7 @@
  :returns: The CDRegion that was set as the default, and an error, if there was an error.
 */
 +(void)getDefaultRegionWithBlock: (void(^)(CDRegion *region, NSError *error))completionHandler;
+
 
 
 @end

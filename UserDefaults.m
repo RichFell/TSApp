@@ -18,7 +18,7 @@ static NSString *const kDefaultRegion = @"defaultRegion";
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:theRegion.objectId forKey:kDefaultRegion];
-    [NSUserDefaults.standardUserDefaults synchronize];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

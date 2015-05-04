@@ -29,6 +29,7 @@
 		9B47B7CB1AD2EE07007EB0C2 /* CDLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7CA1AD2EE07007EB0C2 /* CDLocation.m */; };
 		9B47B7CE1AD2EE07007EB0C2 /* DirectionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7CD1AD2EE07007EB0C2 /* DirectionSet.m */; };
 		9B47B7D11AD2EE08007EB0C2 /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7D01AD2EE08007EB0C2 /* Direction.m */; };
+		9B5690C81AF41FE100D8B4BA /* LocationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5690C51AF41EB500D8B4BA /* LocationDetailViewController.m */; };
 		9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B68B5471AAFF21300AF3493 /* FBSessionManager.m */; };
 		9B68D1241A3AA46000299694 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68D1231A3AA46000299694 /* FacebookSDK.framework */; };
 		9B68D1261A3AA5D500299694 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68D1251A3AA5D500299694 /* Accounts.framework */; };
@@ -137,6 +138,8 @@
 		9B47B7CD1AD2EE07007EB0C2 /* DirectionSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionSet.m; sourceTree = "<group>"; };
 		9B47B7CF1AD2EE08007EB0C2 /* Direction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Direction.h; sourceTree = "<group>"; };
 		9B47B7D01AD2EE08007EB0C2 /* Direction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Direction.m; sourceTree = "<group>"; };
+		9B5690C41AF41EB500D8B4BA /* LocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailViewController.h; sourceTree = "<group>"; };
+		9B5690C51AF41EB500D8B4BA /* LocationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailViewController.m; sourceTree = "<group>"; };
 		9B68B5461AAFF21300AF3493 /* FBSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSessionManager.h; sourceTree = "<group>"; };
 		9B68B5471AAFF21300AF3493 /* FBSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSessionManager.m; sourceTree = "<group>"; };
 		9B68D1231A3AA46000299694 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -283,6 +286,8 @@
 				9BBB0F941997F21300C5321D /* LocationsListViewController.m */,
 				9B0F01071AD4923C005DEFA8 /* LocationSelectionViewController.h */,
 				9B0F01081AD4923D005DEFA8 /* LocationSelectionViewController.m */,
+				9B5690C41AF41EB500D8B4BA /* LocationDetailViewController.h */,
+				9B5690C51AF41EB500D8B4BA /* LocationDetailViewController.m */,
 			);
 			name = Locations;
 			sourceTree = "<group>";
@@ -676,6 +681,7 @@
 				9B47B7CB1AD2EE07007EB0C2 /* CDLocation.m in Sources */,
 				9BE7978C1ABE848B00ED236C /* CDRegion.m in Sources */,
 				9BB0B881197AF79500D545C1 /* main.m in Sources */,
+				9B5690C81AF41FE100D8B4BA /* LocationDetailViewController.m in Sources */,
 				9BBB112B199AEA3400C5321D /* Region.m in Sources */,
 				9BC6CC8619B4FA780020C14D /* NSString+StringCategory.m in Sources */,
 				9B1C6E4319A6E82C00D8B804 /* User.m in Sources */,

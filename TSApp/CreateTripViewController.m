@@ -64,16 +64,16 @@ static CGFloat const kYKeyboardClosed = 0.0;
 
 -(void)saveRegionWithGeoPoint: (PFGeoPoint *)geoPoint
 {
-    CDRegion *region = [CDRegion createNewRegionWithName:self.tripNameTextField.text andGeoPoint:geoPoint];
-    [UserDefaults setDefaultRegion:region];
-    [self dismissViewControllerAnimated:true completion:nil];
-    [self.delegate createTripViewController:self didSaveNewRegion:region];
+    [CDRegion createNewRegionWithName:self.tripNameTextField.text andGeoPoint:geoPoint completed:^(BOOL result, CDRegion *region) {
+        [self dismissViewControllerAnimated:true completion:nil];
+        [self.delegate createTripViewController:self didSaveNewRegion:region];
+    }];
 }
 
 -(void)animateViewWhenKeyboardOpenedToY: (CGFloat)y
 {
     [UIView animateWithDuration: 0.25 animations:^{
-        self.view.frame = CGRectMake(0.0, y, self.view.frame.size.width, self.view.frame.size.height);
+        self.view.frame = CGRectMake(0.0, y, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
     }];
 }
 
