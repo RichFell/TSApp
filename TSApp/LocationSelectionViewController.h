@@ -20,7 +20,6 @@
 
 @property id<LocationSelectionVCDelegate>delegate;
 @property BOOL selectFirstPosition;
-
--(void)giveALocation:(CDLocation *)location;
+@property CDLocation *currentLocation;
 
 @end

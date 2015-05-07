@@ -11,6 +11,7 @@
 #import "Region.h"
 #import "Location.h"
 #import "UserDefaults.h"
+#import "UniversalRegion.h"
 
 
 @implementation CDRegion
@@ -92,6 +93,8 @@ static NSString *const kDefaultRegion = @"defaultRegion";
     self.name = name;
     self.longitude = [NSNumber numberWithDouble:geoPoint.longitude];
     self.latitude = [NSNumber numberWithDouble: geoPoint.latitude];
+    UniversalRegion *uniRegion = [UniversalRegion sharedInstance];
+    uniRegion.currentRegion = self;
     return self;
 }
 

@@ -8,6 +8,7 @@
 
 #import "UserDefaults.h"
 #import "AppDelegate.h"
+#import "UniversalRegion.h"
 
 @implementation UserDefaults
 
@@ -19,6 +20,9 @@ static NSString *const kDefaultRegion = @"defaultRegion";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:theRegion.objectId forKey:kDefaultRegion];
     [[NSUserDefaults standardUserDefaults] synchronize];
+
+    UniversalRegion *uniRegion = [UniversalRegion sharedInstance];
+    uniRegion.currentRegion = theRegion;
 }
 
 @end

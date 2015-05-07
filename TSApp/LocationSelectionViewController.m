@@ -13,16 +13,18 @@
 #import "Direction.h"
 #import "DirectionSet.h"
 #import "TSButton.h"
+#import "CDRegion.h"
 
-@interface LocationSelectionViewController ()<UITextFieldDelegate>
+
+@interface LocationSelectionViewController ()<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *transportationButtons;
-@property (weak, nonatomic) IBOutlet UITextField *fromTextField;
 @property (weak, nonatomic) IBOutlet UITextField *toTextField;
 @property (strong, nonatomic) IBOutletCollection(TSButton) NSArray *buttons;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property CDLocation *startingLocation;
 @property CDLocation *endingLocation;
+@property (nonatomic)NSArray *locations;
 
 @end
 
@@ -30,19 +32,15 @@
 
 static NSString *typeOfTransportation = @"driving";
 
+-(void)setLocations:(NSArray *)locations {
+    _locations = locations;
+    [self.tableView reloadData];
+}
 
-#pragma mark - Public Instance Methods
--(void)giveALocation:(CDLocation *)location {
-    if (self.selectFirstPosition) {
-        self.startingLocation = location;
-        [self.fromTextField resignFirstResponder];
-        self.fromTextField.text = self.startingLocation.localAddress;
-    }
-    else {
-        [self.toTextField resignFirstResponder];
-        self.endingLocation = location;
-        self.toTextField.text = self.endingLocation.localAddress;
-    }
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    UniversalRegion *sharedRegion = [UniversalRegion sharedInstance];
+    self.locations = sharedRegion.currentRegion.allLocations;
 }
 
 #pragma mark - Actions
@@ -81,12 +79,12 @@ static NSString *typeOfTransportation = @"driving";
 }
 
 
-- (IBAction)finishedGettingDirectionsOnTap:(UIButton *)sender {
-    for (TSButton *button in self.buttons) {
-        button.hidden = true;
-    }
-    [self.delegate locationSelectionVC:self didTapDone:true];
-}
+//- (IBAction)finishedGettingDirectionsOnTap:(UIButton *)sender {
+//    for (TSButton *button in self.buttons) {
+//        button.hidden = true;
+//    }
+//    [self.delegate locationSelectionVC:self didTapDone:true];
+//}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:true];
@@ -94,7 +92,7 @@ static NSString *typeOfTransportation = @"driving";
 #pragma Helper Methods 
 ///does the call for directions between the startingCoordinate and the endingCoordinate
 -(void)askForDirections {
-    [Direction getDirectionsWithCoordinate:self.startingLocation.coordinate andEndingPosition:self.endingLocation.coordinate withTypeOfTransportation:typeOfTransportation andBlock:^(NSArray *directionArray, NSError *error) {
+    [Direction getDirectionsWithCoordinate:self.currentLocation.coordinate andEndingPosition:self.endingLocation.coordinate withTypeOfTransportation:typeOfTransportation andBlock:^(NSArray *directionArray, NSError *error) {
         if (directionArray != nil) {
             [self alertToSaveDirectionSetWithDirections:directionArray];
             [self postNotificationForDirections:directionArray];
@@ -111,15 +109,6 @@ static NSString *typeOfTransportation = @"driving";
 }
 
 #pragma mark - searchBarDelegate Methods
--(void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([textField isEqual:self.fromTextField]) {
-        self.selectFirstPosition = true;
-    }
-    else {
-        self.selectFirstPosition = false;
-    }
-    [self.delegate locationSelectionVC:self isSettingStartingLocation:self.selectFirstPosition];
-}
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
@@ -160,11 +149,30 @@ static NSString *typeOfTransportation = @"driving";
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:noAction];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [DirectionSet createNewDirectionSetWithDirections:directions andStartingLocation:self.startingLocation andEndingLocation:self.endingLocation];
+        [DirectionSet createNewDirectionSetWithDirections:directions andStartingLocation:self.currentLocation andEndingLocation:self.endingLocation];
         [self.parentViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
     }];
     [alert addAction:yesAction];
     [self.parentViewController presentViewController:alert animated:true completion:nil];
+}
+
+#pragma mark -TableViewDataSource/Delegate
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    CDLocation *location = self.locations[indexPath.row];
+    cell.textLabel.text = location.name;
+    cell.detailTextLabel.text = location.localAddress;
+
+    return cell;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.locations.count;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.endingLocation = self.locations[indexPath.row];
+    self.toTextField.text = self.endingLocation.name;
 }
 
 @end

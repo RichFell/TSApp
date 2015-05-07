@@ -11,6 +11,7 @@
 #import "CDLocation.h"
 #import <CoreLocation/CoreLocation.h>
 #import <Parse/Parse.h>
+#import "UniversalRegion.h"
 
 
 @interface CDRegion : NSManagedObject
