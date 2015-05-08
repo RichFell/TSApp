@@ -8,6 +8,7 @@
 
 #import "LocationDetailViewController.h"
 #import "CDLocation.h"
+#import "GetDirectionsViewController.h"
 
 @class TSButton;
 
@@ -47,9 +48,22 @@
     [self displayDirectionsSearch:false withAnimation:false];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.destinationViewController isKindOfClass:[GetDirectionsViewController class]]) {
+        GetDirectionsViewController *getVC = segue.destinationViewController;
+        getVC.currentLocation = self.selectedLocation;
+    }
+}
+
 #pragma mark - Actions
 - (IBAction)directionButtonTap:(UIButton *)sender {
-    [self displayDirectionsSearch:true withAnimation:true];
+    if (sender.tag == 0) {
+        [self displayDirectionsSearch:true withAnimation:true];
+        sender.tag = 1;
+    } else {
+        sender.tag = 0;
+        [self displayDirectionsSearch:false withAnimation:true];
+    }
 }
 
 - (IBAction)displaySavedDirectionsOnTap:(UIButton *)sender {
@@ -63,6 +77,11 @@
         [UIView animateWithDuration:0.5 animations:^{
             [self setConstraintsForDirectionsContainerOpen:isDisplayed ? true : false];
             [self.view layoutIfNeeded];
+
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.getDirectionsButton setTitle:isDisplayed ? @"Close" : @"Get Directions" forState:UIControlStateNormal];
+            }
         }];
     }
     else {

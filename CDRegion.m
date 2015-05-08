@@ -152,6 +152,8 @@ static NSString *const kDefaultRegion = @"defaultRegion";
         AppDelegate *appDel = [[UIApplication sharedApplication]delegate];
         NSManagedObjectContext *moc = appDel.managedObjectContext;
         NSArray *regions = [moc executeFetchRequest:request error:nil];
+        UniversalRegion *sharedRegion = [UniversalRegion sharedInstance];
+        sharedRegion.currentRegion = regions[0];
         completionHandler(regions[0], nil);
     }
     else {

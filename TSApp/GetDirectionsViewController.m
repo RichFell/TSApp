@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 TravelSages. All rights reserved.
 //
 
-#import "LocationSelectionViewController.h"
+#import "GetDirectionsViewController.h"
 #import "CDLocation.h"
 #import "MapModel.h"
 #import "NetworkErrorAlert.h"
@@ -14,9 +14,10 @@
 #import "DirectionSet.h"
 #import "TSButton.h"
 #import "CDRegion.h"
+#import "YPBusiness.h"
 
 
-@interface LocationSelectionViewController ()<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface GetDirectionsViewController ()<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *transportationButtons;
 @property (weak, nonatomic) IBOutlet UITextField *toTextField;
@@ -24,11 +25,12 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property CDLocation *endingLocation;
+@property YPBusiness *endingBusiness;
 @property (nonatomic)NSArray *locations;
 
 @end
 
-@implementation LocationSelectionViewController
+@implementation GetDirectionsViewController
 
 static NSString *typeOfTransportation = @"driving";
 
@@ -40,7 +42,10 @@ static NSString *typeOfTransportation = @"driving";
 -(void)viewDidLoad {
     [super viewDidLoad];
     UniversalRegion *sharedRegion = [UniversalRegion sharedInstance];
-    self.locations = sharedRegion.currentRegion.allLocations;
+    UniversalBusiness *sharedBusiness = [UniversalBusiness sharedInstance];
+    NSMutableArray *array = [NSMutableArray arrayWithArray:sharedRegion.currentRegion.allLocations];
+    [array addObjectsFromArray:sharedBusiness.currentBusinesses];
+    self.locations = array;
 }
 
 #pragma mark - Actions
@@ -78,27 +83,26 @@ static NSString *typeOfTransportation = @"driving";
     [self askForDirections];
 }
 
-
-//- (IBAction)finishedGettingDirectionsOnTap:(UIButton *)sender {
-//    for (TSButton *button in self.buttons) {
-//        button.hidden = true;
-//    }
-//    [self.delegate locationSelectionVC:self didTapDone:true];
-//}
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:true];
 }
 #pragma Helper Methods 
 ///does the call for directions between the startingCoordinate and the endingCoordinate
 -(void)askForDirections {
-    [Direction getDirectionsWithCoordinate:self.currentLocation.coordinate andEndingPosition:self.endingLocation.coordinate withTypeOfTransportation:typeOfTransportation andBlock:^(NSArray *directionArray, NSError *error) {
+    [Direction getDirectionsWithCoordinate:self.currentLocation.coordinate
+                         andEndingPosition:self.endingLocation ? self.endingLocation.coordinate : self.endingBusiness.coordinate
+                  withTypeOfTransportation:typeOfTransportation
+                                  andBlock:^(NSArray *directionArray, NSError *error) {
         if (directionArray != nil) {
             [self alertToSaveDirectionSetWithDirections:directionArray];
             [self postNotificationForDirections:directionArray];
         }
+        else if (error) {
+            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+        }
         else {
             [NetworkErrorAlert showAlertForViewController:self];
+            NSLog(@"direction Array nil");
         }
     }];
 }
@@ -111,37 +115,7 @@ static NSString *typeOfTransportation = @"driving";
 #pragma mark - searchBarDelegate Methods
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-
     return true;
-}
-
-#pragma mark - Save Alerts
--(void)askToSaveLocationAlert:(CDLocation *)location {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Would you like to save this to your location list?" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self saveLocationAlertForLocation:location];
-    }];
-    [alertController addAction:yesAction];
-    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
-    [alertController addAction:noAction];
-    [self presentViewController:alertController animated:true completion:nil];
-}
-
--(void)saveLocationAlertForLocation:(CDLocation *)location {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Give the Location a name" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"Add name here";
-    }];
-    UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UITextField *textField = alertController.textFields[0];
-        location.name = textField.text;
-        [location saveLocation];
-    }];
-    [alertController addAction:saveAction];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    [alertController addAction: cancelAction];
-    [self presentViewController:alertController animated:true completion:nil];
 }
 
 -(void)alertToSaveDirectionSetWithDirections:(NSArray *)directions {
@@ -159,10 +133,20 @@ static NSString *typeOfTransportation = @"driving";
 #pragma mark -TableViewDataSource/Delegate
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    CDLocation *location = self.locations[indexPath.row];
-    cell.textLabel.text = location.name;
-    cell.detailTextLabel.text = location.localAddress;
-
+    NSString *titleString;
+    NSString *subTitleString;
+    if ([self.locations[indexPath.row] isKindOfClass:[CDLocation class]]) {
+        CDLocation *location = self.locations[indexPath.row];
+        titleString = location.name;
+        subTitleString = location.localAddress;
+    }
+    else if ([self.locations[indexPath.row] isKindOfClass:[YPBusiness class]]) {
+        YPBusiness *biz = self.locations[indexPath.row];
+        titleString = biz.name;
+        subTitleString = biz.address;
+    }
+    cell.textLabel.text = titleString;
+    cell.detailTextLabel.text = subTitleString;
     return cell;
 }
 
@@ -171,8 +155,48 @@ static NSString *typeOfTransportation = @"driving";
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.endingLocation = self.locations[indexPath.row];
-    self.toTextField.text = self.endingLocation.name;
+    NSString *textFieldText;
+    if ([self.locations[indexPath.row] isKindOfClass:[CDLocation class]]) {
+        CDLocation *loc = self.locations[indexPath.row];
+        self.endingLocation = loc;
+        textFieldText = loc.name;
+        self.endingBusiness = nil;
+    }
+    else if ([self.locations[indexPath.row] isKindOfClass:[YPBusiness class]]) {
+        YPBusiness *biz = self.locations[indexPath.row];
+        self.endingBusiness = biz;
+        textFieldText = biz.name;
+        self.endingLocation = nil;
+    }
+    self.toTextField.text = textFieldText;
 }
+
+#pragma mark - Save Alerts
+//-(void)askToSaveLocationAlert:(CDLocation *)location {
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Would you like to save this to your location list?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//        [self saveLocationAlertForLocation:location];
+//    }];
+//    [alertController addAction:yesAction];
+//    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+//    [alertController addAction:noAction];
+//    [self presentViewController:alertController animated:true completion:nil];
+//}
+
+//-(void)saveLocationAlertForLocation:(CDLocation *)location {
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Give the Location a name" message:nil preferredStyle:UIAlertControllerStyleAlert];
+//    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+//        textField.placeholder = @"Add name here";
+//    }];
+//    UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//        UITextField *textField = alertController.textFields[0];
+//        location.name = textField.text;
+//        [location saveLocation];
+//    }];
+//    [alertController addAction:saveAction];
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+//    [alertController addAction: cancelAction];
+//    [self presentViewController:alertController animated:true completion:nil];
+//}
 
 @end

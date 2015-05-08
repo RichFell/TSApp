@@ -8,6 +8,7 @@
 
 #import "YPBusiness.h"
 #import "TDOAuth.h"
+#import "UniversalBusiness.h"
 
 @implementation YPBusiness
 
@@ -46,6 +47,7 @@
             NSArray *array = dict[@"businesses"] ? dict[@"businesses"] : @[];
             NSMutableArray *mArray = [NSMutableArray new];
 
+            //If I have already pulled in Businesses from yelp, I want to check to make sure I am not duplicating what I already have.
             if (businesses.count > 0) {
                 array = [YPBusiness compareArrayOfDictionaries:array toArrayOfBusinesses:businesses];
             }
@@ -53,6 +55,8 @@
                 YPBusiness *busi = [[YPBusiness alloc]initWithDictionary:dictionary];
                 [mArray addObject:busi];
             }
+            UniversalBusiness *sharedBusiness = [UniversalBusiness sharedInstance];
+            [sharedBusiness.currentBusinesses addObjectsFromArray:mArray];
             completionHandler(mArray);
         }
         else {

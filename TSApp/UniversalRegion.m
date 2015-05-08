@@ -16,6 +16,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedRegion = [self new];
+        
     });
     return sharedRegion;
 }

@@ -1138,10 +1138,10 @@
             </objects>
             <point key="canvasLocation" x="1718" y="-675"/>
         </scene>
-        <!--Location Selection View Controller-->
+        <!--Get Directions View Controller-->
         <scene sceneID="zz6-kg-JAg">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="JNC-AX-aDq" customClass="LocationSelectionViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="JNC-AX-aDq" customClass="GetDirectionsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="q8G-rD-t1N"/>
                         <viewControllerLayoutGuide type="bottom" id="3bY-aa-TaZ"/>

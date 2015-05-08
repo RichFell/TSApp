@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-@class LocationSelectionViewController, CDLocation;
+@class GetDirectionsViewController, CDLocation;
 
 @protocol LocationSelectionVCDelegate <NSObject>
 
--(void)locationSelectionVC:(LocationSelectionViewController *)viewController didTapDone:(BOOL)done;
--(void)locationSelectionVC:(LocationSelectionViewController *)viewController isSettingStartingLocation:(BOOL)isStartingLocation;
+-(void)locationSelectionVC:(GetDirectionsViewController *)viewController didTapDone:(BOOL)done;
+-(void)locationSelectionVC:(GetDirectionsViewController *)viewController isSettingStartingLocation:(BOOL)isStartingLocation;
 
 @end
 
-@interface LocationSelectionViewController : UIViewController
+@interface GetDirectionsViewController : UIViewController
 
 @property id<LocationSelectionVCDelegate>delegate;
 @property BOOL selectFirstPosition;

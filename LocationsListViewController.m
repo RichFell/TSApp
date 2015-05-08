@@ -17,7 +17,7 @@
 #import "DirectionsViewController.h"
 #import "DirectionsListViewController.h"
 #import "DirectionSet.h"
-#import "LocationSelectionViewController.h"
+#import "GetDirectionsViewController.h"
 #import "HeaderView.h"
 #import "LocationDetailViewController.h"
 
@@ -47,7 +47,7 @@
 @property CGFloat startingContainerBottomConstant;
 @property CGFloat startingImageViewConstant;
 @property DirectionsViewController *directionsVC;
-@property LocationSelectionViewController *locationSelectionVC;
+@property GetDirectionsViewController *locationSelectionVC;
 
 @end
 
@@ -104,6 +104,8 @@ static NSIndexPath *endingIndexPath;
         self.directionsVC = segue.destinationViewController;
     }
     else if ([segue.destinationViewController isKindOfClass:[LocationDetailViewController class]]) {
+        LocationDetailViewController *locationDetVC = segue.destinationViewController;
+        locationDetVC.selectedLocation = self.currentRegion.allLocations[[self.tableView indexPathForSelectedRow].row];
     }
 //    else if ([segue.destinationViewController isKindOfClass:[DirectionsListViewController class]]) {
 //        DirectionsListViewController *vc = segue.destinationViewController;
@@ -298,11 +300,11 @@ static NSIndexPath *endingIndexPath;
 }
 
 #pragma mark - LocationSelectVCDelegate Methods
--(void)locationSelectionVC:(LocationSelectionViewController *)viewController didTapDone:(BOOL)done {
+-(void)locationSelectionVC:(GetDirectionsViewController *)viewController didTapDone:(BOOL)done {
     [self animateDirectionsViewClosed];
 }
 
--(void)locationSelectionVC:(LocationSelectionViewController *)viewController isSettingStartingLocation:(BOOL)isStartingLocation {
+-(void)locationSelectionVC:(GetDirectionsViewController *)viewController isSettingStartingLocation:(BOOL)isStartingLocation {
     self.selectFirstPosition = isStartingLocation;
 }
 

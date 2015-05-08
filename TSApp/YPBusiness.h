@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #include <CoreLocation/CoreLocation.h>
+#import "UniversalBusiness.h"
 
 @interface YPBusiness : NSObject
 

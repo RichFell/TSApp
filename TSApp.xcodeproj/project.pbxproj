@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9B0D2FBA1AD6249A00683722 /* TSButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0D2FB91AD6249A00683722 /* TSButton.m */; };
 		9B0F01061AD464C4005DEFA8 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0F01051AD464C4005DEFA8 /* Constants.m */; };
-		9B0F01091AD4923D005DEFA8 /* LocationSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0F01081AD4923D005DEFA8 /* LocationSelectionViewController.m */; };
+		9B0F01091AD4923D005DEFA8 /* GetDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0F01081AD4923D005DEFA8 /* GetDirectionsViewController.m */; };
 		9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */; };
 		9B14DAF419E37A89001ADB3E /* RegionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF319E37A89001ADB3E /* RegionListViewController.m */; };
 		9B14DAF719E37D04001ADB3E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14DAF619E37D04001ADB3E /* MapViewController.m */; };
@@ -29,6 +29,7 @@
 		9B47B7CB1AD2EE07007EB0C2 /* CDLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7CA1AD2EE07007EB0C2 /* CDLocation.m */; };
 		9B47B7CE1AD2EE07007EB0C2 /* DirectionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7CD1AD2EE07007EB0C2 /* DirectionSet.m */; };
 		9B47B7D11AD2EE08007EB0C2 /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B47B7D01AD2EE08007EB0C2 /* Direction.m */; };
+		9B541AFE1AFD28800058A60D /* UniversalBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B541AFD1AFD28800058A60D /* UniversalBusiness.m */; };
 		9B5690C81AF41FE100D8B4BA /* LocationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5690C51AF41EB500D8B4BA /* LocationDetailViewController.m */; };
 		9B5690CB1AFBC36700D8B4BA /* UniversalRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5690CA1AFBC36700D8B4BA /* UniversalRegion.m */; };
 		9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B68B5471AAFF21300AF3493 /* FBSessionManager.m */; };
@@ -103,8 +104,8 @@
 		9B0D2FB91AD6249A00683722 /* TSButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSButton.m; sourceTree = "<group>"; };
 		9B0F01041AD464C4005DEFA8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9B0F01051AD464C4005DEFA8 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
-		9B0F01071AD4923C005DEFA8 /* LocationSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationSelectionViewController.h; sourceTree = "<group>"; };
-		9B0F01081AD4923D005DEFA8 /* LocationSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationSelectionViewController.m; sourceTree = "<group>"; };
+		9B0F01071AD4923C005DEFA8 /* GetDirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetDirectionsViewController.h; sourceTree = "<group>"; };
+		9B0F01081AD4923D005DEFA8 /* GetDirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetDirectionsViewController.m; sourceTree = "<group>"; };
 		9B14DAEF19E2D257001ADB3E /* NetworkErrorAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkErrorAlert.h; sourceTree = "<group>"; };
 		9B14DAF019E2D257001ADB3E /* NetworkErrorAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkErrorAlert.m; sourceTree = "<group>"; };
 		9B14DAF219E37A89001ADB3E /* RegionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionListViewController.h; sourceTree = "<group>"; };
@@ -139,6 +140,8 @@
 		9B47B7CD1AD2EE07007EB0C2 /* DirectionSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionSet.m; sourceTree = "<group>"; };
 		9B47B7CF1AD2EE08007EB0C2 /* Direction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Direction.h; sourceTree = "<group>"; };
 		9B47B7D01AD2EE08007EB0C2 /* Direction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Direction.m; sourceTree = "<group>"; };
+		9B541AFC1AFD28800058A60D /* UniversalBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalBusiness.h; sourceTree = "<group>"; };
+		9B541AFD1AFD28800058A60D /* UniversalBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniversalBusiness.m; sourceTree = "<group>"; };
 		9B5690C41AF41EB500D8B4BA /* LocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailViewController.h; sourceTree = "<group>"; };
 		9B5690C51AF41EB500D8B4BA /* LocationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailViewController.m; sourceTree = "<group>"; };
 		9B5690C91AFBC36700D8B4BA /* UniversalRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalRegion.h; sourceTree = "<group>"; };
@@ -287,8 +290,8 @@
 				9BBB1122199AC72300C5321D /* LocationTableViewCell.m */,
 				9BBB0F931997F21300C5321D /* LocationsListViewController.h */,
 				9BBB0F941997F21300C5321D /* LocationsListViewController.m */,
-				9B0F01071AD4923C005DEFA8 /* LocationSelectionViewController.h */,
-				9B0F01081AD4923D005DEFA8 /* LocationSelectionViewController.m */,
+				9B0F01071AD4923C005DEFA8 /* GetDirectionsViewController.h */,
+				9B0F01081AD4923D005DEFA8 /* GetDirectionsViewController.m */,
 				9B5690C41AF41EB500D8B4BA /* LocationDetailViewController.h */,
 				9B5690C51AF41EB500D8B4BA /* LocationDetailViewController.m */,
 			);
@@ -310,6 +313,17 @@
 				9B36F2E41A2B7F500061DB17 /* UIColor+CustomColors.m */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		9B541AFF1AFD291F0058A60D /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				9B541AFC1AFD28800058A60D /* UniversalBusiness.h */,
+				9B541AFD1AFD28800058A60D /* UniversalBusiness.m */,
+				9B5690C91AFBC36700D8B4BA /* UniversalRegion.h */,
+				9B5690CA1AFBC36700D8B4BA /* UniversalRegion.m */,
+			);
+			name = Singletons;
 			sourceTree = "<group>";
 		};
 		9B6A3A331AC9BF8E00521CDA /* Regions */ = {
@@ -516,8 +530,6 @@
 				9B47B7CA1AD2EE07007EB0C2 /* CDLocation.m */,
 				9BE7978A1ABE848B00ED236C /* CDRegion.h */,
 				9BE7978B1ABE848B00ED236C /* CDRegion.m */,
-				9B5690C91AFBC36700D8B4BA /* UniversalRegion.h */,
-				9B5690CA1AFBC36700D8B4BA /* UniversalRegion.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -525,6 +537,7 @@
 		9BF72550199448A200BFCA34 /* Model Objects */ = {
 			isa = PBXGroup;
 			children = (
+				9B541AFF1AFD291F0058A60D /* Singletons */,
 				9BFA22391AE75724007155B0 /* YelpObjects */,
 				9B6A3AB01ACB771D00521CDA /* Default/Managers */,
 				9B6A3A361AC9D13E00521CDA /* Parse Objects */,
@@ -674,7 +687,7 @@
 				9B14DAF119E2D257001ADB3E /* NetworkErrorAlert.m in Sources */,
 				9B7A54741AE74B720031B80D /* HeaderView.m in Sources */,
 				9B6A3A391AC9EF5A00521CDA /* TSMarker.m in Sources */,
-				9B0F01091AD4923D005DEFA8 /* LocationSelectionViewController.m in Sources */,
+				9B0F01091AD4923D005DEFA8 /* GetDirectionsViewController.m in Sources */,
 				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
 				9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */,
 				9B0D2FBA1AD6249A00683722 /* TSButton.m in Sources */,
@@ -684,6 +697,7 @@
 				9BBB0F951997F21300C5321D /* LocationsListViewController.m in Sources */,
 				9B36F2DE1A28EFAD0061DB17 /* UserDefaults.m in Sources */,
 				9B47B7CB1AD2EE07007EB0C2 /* CDLocation.m in Sources */,
+				9B541AFE1AFD28800058A60D /* UniversalBusiness.m in Sources */,
 				9BE7978C1ABE848B00ED236C /* CDRegion.m in Sources */,
 				9BB0B881197AF79500D545C1 /* main.m in Sources */,
 				9B5690C81AF41FE100D8B4BA /* LocationDetailViewController.m in Sources */,
