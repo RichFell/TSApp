@@ -24,12 +24,22 @@
 
 @implementation DirectionsListViewController
 
++(instancetype)storyboardInstance {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    return [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([DirectionsListViewController class])];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = self.selectedLocation.name;
     self.titleArray = @[@"From Location", @"To Location"];
     self.directionSets = [DirectionSet fetchDirectionSetsWithLocation:self.selectedLocation];
     [self.tableView reloadData];
+}
+
+#pragma Actions
+- (IBAction)closeViewOnTap:(UIButton *)sender {
+    [self.delegate directionListVC:self finishedSelection:nil];
 }
 
 #pragma mark - TableViewDataSource/Delegate
@@ -53,15 +63,20 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     HeaderView *headerView = [[HeaderView alloc]initWithFrame:tableView.frame];
     headerView.headerLabel.text = self.titleArray[section];
+    if ([self.directionSets[section] count] <= 0) {
+        headerView = nil;
+    }
     return headerView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 57.0;
+
+    CGFloat height = [self.directionSets[section] count] <= 0 ? 0 : 57.0;
+    return height;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.titleArray.count;
+    return self.directionSets.count;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

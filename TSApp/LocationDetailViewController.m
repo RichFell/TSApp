@@ -9,18 +9,17 @@
 #import "LocationDetailViewController.h"
 #import "CDLocation.h"
 #import "GetDirectionsViewController.h"
+#import "DirectionsListViewController.h"
 
 @class TSButton;
 
-@interface LocationDetailViewController ()
+@interface LocationDetailViewController ()<DirectionsListVCDelegate>
 
+#pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionContainerTopConstraint;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *getDirectionsButTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionContainerBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIView *findDirectionsContainerView;
-
-
 @property (weak, nonatomic) IBOutlet UIButton *getDirectionsButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveDirectionsButton;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -67,8 +66,24 @@
 }
 
 - (IBAction)displaySavedDirectionsOnTap:(UIButton *)sender {
+    [self showSavedDirections];
+}
 
+-(void)showSavedDirections {
+    DirectionsListViewController *directionsVC = [DirectionsListViewController storyboardInstance];
+    directionsVC.view.frame = CGRectMake(0, CGRectGetMaxY(self.view.frame),
+                                         CGRectGetWidth(self.view.frame),
+                                         CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.navigationController.navigationBar.frame));
+    [self.view addSubview:directionsVC.view];
+    [self addChildViewController:directionsVC];
+    directionsVC.delegate = self;
 
+    [UIView animateWithDuration:0.5 animations:^{
+        directionsVC.view.frame = CGRectMake(0,
+                                             CGRectGetMaxY(self.navigationController.navigationBar.frame),
+                                             CGRectGetWidth(self.view.frame),
+                                             CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.navigationController.navigationBar.frame));
+    }];
 }
 
 #pragma mark - Animation Helpers
@@ -91,13 +106,28 @@
     self.saveDirectionsButton.hidden = isDisplayed ? true : false;
 }
 
+-(void)animateClosedDirectionList:(DirectionsListViewController *)directionVC {
+    [UIView animateWithDuration:0.5 animations:^{
+        directionVC.view.frame = CGRectMake(0, CGRectGetMaxY(self.view.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(directionVC.view.frame));
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [directionVC.view removeFromSuperview];
+            [directionVC removeFromParentViewController];
+        }
+    }];
+}
+
 -(void)setConstraintsForDirectionsContainerOpen:(BOOL)isDisplayed {
     self.getDirectionsButTopConstraint.constant = !isDisplayed ? kStartingGetDirectionsButtonTopConstraintCons : CGRectGetHeight(self.findDirectionsContainerView.frame);
     self.directionContainerTopConstraint.constant = isDisplayed ? kOpenDirectionContainerTopConstraintConst: CGRectGetMaxY(self.view.frame) - CGRectGetMaxY(self.addressLabel.frame);
     self.directionContainerBottomConstraint.constant = kOpenDirectionContainerBottomContraintConst;
 }
 
+#pragma DirectionListVCDelegate
 
+-(void)directionListVC:(DirectionsListViewController *)viewController finishedSelection:(DirectionSet *)set {
+    [self animateClosedDirectionList:viewController];
+}
 
 
 @end

@@ -7,10 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-@class CDLocation;
+@class CDLocation, DirectionsListViewController, DirectionSet;
+
+@protocol DirectionsListVCDelegate <NSObject>
+
+-(void)directionListVC:(DirectionsListViewController *)viewController finishedSelection:(DirectionSet *)set;
+
+@end
 
 @interface DirectionsListViewController : UIViewController
 
 @property CDLocation *selectedLocation;
+@property id<DirectionsListVCDelegate>delegate;
+
++(instancetype)storyboardInstance;
 
 @end
