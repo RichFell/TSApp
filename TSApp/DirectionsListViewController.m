@@ -84,7 +84,7 @@
     DirectionSet *dSet = self.directionSets[indexPath.section][indexPath.row];
     NSDictionary *info = @{kDirectionArrayKey: dSet.directionsArray};
     [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedDirectionNotification object:nil userInfo:info];
-    [self.presentingViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
+    [self.parentViewController.presentingViewController dismissViewControllerAnimated:true completion:nil];
 }
 
 @end
