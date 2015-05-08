@@ -268,7 +268,6 @@
                         <outlet property="getDirectionsButTopConstraint" destination="Xq1-8V-fQK" id="GKi-rA-xV8"/>
                         <outlet property="getDirectionsButton" destination="Mk4-y6-HOf" id="RS7-a3-4b3"/>
                         <outlet property="saveDirectionsButton" destination="fZG-WG-FVM" id="p9B-iq-f60"/>
-                        <segue destination="6eS-jo-uYE" kind="modal" identifier="SavedDirectionsSeg" id="psv-I8-R4T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MOC-Yq-gcT" userLabel="First Responder" sceneMemberID="firstResponder"/>
