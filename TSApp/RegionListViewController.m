@@ -7,7 +7,7 @@
 //
 
 #import "RegionListViewController.h"
-#import "NetworkErrorAlert.h"
+#import "Alert.h"
 #import "MapViewController.h"
 #import "UserDefaults.h"
 #import "RegionTableViewCell.h"

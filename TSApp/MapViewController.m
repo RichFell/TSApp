@@ -13,10 +13,11 @@
 
 #import "MapViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import <MapKit/MapKit.h>
 #import "User.h"
 #import "MapModel.h"
 #import "RegionListViewController.h"
-#import "NetworkErrorAlert.h"
+#import "Alert.h"
 #import "UserDefaults.h"
 #import "Direction.h"
 #import "LocationsListViewController.h"
@@ -24,8 +25,9 @@
 #import "TSMarker.h"
 #import "DirectionsViewController.h"
 #import "DirectionSet.h"
-#import "YPBusiness.h"
+#import "Business.h"
 #import "SearchTableViewController.h"
+
 
 
 @interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate, RegionListVCDelegate, SearchTableViewDelegate>
@@ -154,12 +156,12 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [self markerCreate:nil orLocation:location];
 }
 
--(void)placeMarkerForBusiness:(YPBusiness *)business {
+-(void)placeMarkerForBusiness:(Business *)business {
     [self markerCreate:business orLocation:nil];
     [self.businessesPlaced addObject:business];
 }
 
--(void)markerCreate:(YPBusiness *)business orLocation:(CDLocation *)location {
+-(void)markerCreate:(Business *)business orLocation:(CDLocation *)location {
     TSMarker *marker = business ? [[TSMarker alloc]initWithBusiness:business] : [[TSMarker alloc]initWithLocation:location];
     marker.map = self.mapView;
     if (business) {
@@ -227,7 +229,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 {
     [MapModel reverseGeoCode:coordinate withBlock:^(GMSReverseGeocodeResponse *response, NSError *error) {
         if (!response) {
-            [NetworkErrorAlert showAlertForViewController:self];
+            [Alert showAlertForViewController:self];
         }
         else {
             [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare];
@@ -248,8 +250,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
-    [YPBusiness fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
-                                           for (YPBusiness *business in businesses) {
+    [Business fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
+                                           for (Business *business in businesses) {
                                                [self placeMarkerForBusiness:business];
         }
     }];
@@ -258,7 +260,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 #pragma mark - Map related helper methods
 
--(void)displayAlertToCreateNewLocation: (CLLocationCoordinate2D) coordinate orBusiness:(YPBusiness *)business forMarker:(TSMarker *) marker
+-(void)displayAlertToCreateNewLocation: (CLLocationCoordinate2D) coordinate orBusiness:(Business *)business forMarker:(TSMarker *) marker
 {
     NSString *message = business ? business.address : nil;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to save this location?"
@@ -301,7 +303,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [MapModel reverseGeoCode:marker.position withBlock:^(GMSReverseGeocodeResponse *response, NSError *error) {
         if (!response)
         {
-            [NetworkErrorAlert showAlertForViewController:self];
+            [Alert showAlertForViewController:self];
         }
         else
         {
@@ -329,7 +331,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)resetAllMarkers {
     [self.mapView clear];
-    for (YPBusiness *business in self.businessesPlaced) {
+    for (Business *business in self.businessesPlaced) {
         [self markerCreate:business orLocation:nil];
     }
     [self resetAllLocationMarkers];
@@ -360,7 +362,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [MapModel geocodeString:textField.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
         if (error) {
-            [NetworkErrorAlert showAlertForViewController:self];
+            [Alert showAlertForViewController:self];
         }
         else {
             [self.mapView animateToLocation:coordinate];
@@ -429,7 +431,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 #pragma mark - SearchTableViewDelegate
--(void)searchTableVC:(SearchTableViewController *)viewController didSelectASearchOption:(SelectionType)type forEitherBusiness:(YPBusiness *)business orLocation:(CDLocation *)location {
+-(void)searchTableVC:(SearchTableViewController *)viewController didSelectASearchOption:(SelectionType)type forEitherBusiness:(Business *)business orLocation:(CDLocation *)location {
     switch (type) {
         case Select_Location:
             [self animateToLocation:location];
@@ -461,7 +463,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     }
 }
 
--(void)animateToBusiness:(YPBusiness *)business {
+-(void)animateToBusiness:(Business *)business {
     NSSet *set = [NSSet setWithArray:self.businessMarkers];
     for (TSMarker *marker in set) {
         if ([marker.business.businessId isEqualToString:business.businessId]) {

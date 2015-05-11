@@ -8,7 +8,7 @@
 
 #import "EntryViewController.h"
 #import <Parse/Parse.h>
-#import "NetworkErrorAlert.h"
+#import "Alert.h"
 #import "FBSessionManager.h"
 
 @interface EntryViewController ()

@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NetworkErrorAlert : NSObject
+@interface Alert : NSObject
 
 +(void)showNetworkAlertWithError: (NSError *)error withViewController: (UIViewController *)viewController;
 +(void)showAlertForViewController: (UIViewController *)vc;
++(void)showAlertForViewController:(UIViewController *)vc withTitle:(NSString *)title andMessage:(NSString *)message;
 
 @end

@@ -9,7 +9,7 @@
 #import "RegistrationViewController.h"
 #import <Parse/Parse.h>
 #import "User.h"
-#import "NetworkErrorAlert.h"
+#import "Alert.h"
 #import "RegistrationViewController.h"
 
 @interface RegistrationViewController ()<UITextFieldDelegate>
@@ -41,13 +41,16 @@
 
         [User createUserWithUserName:self.usernameTextField.text withPassword:self.passwordTextFieldOne.text andEmail:nil completion:^(BOOL result, NSError *error) {
             if (!result) {
-                [NetworkErrorAlert showAlertForViewController:self];
+                [Alert showAlertForViewController:self];
             }
             else {
                 [[NSUserDefaults standardUserDefaults]setBool:true forKey:kHasBeenRun];
                 [self performSegueWithIdentifier:@"FirstTripSegue" sender:nil];
             }
         }];
+    }
+    else {
+        [Alert showAlertForViewController:self withTitle:@"Your passwords didn't match." andMessage:@"Please re-enter your password, and try again."];
     }
 }
 

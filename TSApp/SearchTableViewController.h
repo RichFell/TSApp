@@ -14,10 +14,10 @@ typedef enum{
 
 }SelectionType;
 
-@class SearchTableViewController, YPBusiness, CDLocation;
+@class SearchTableViewController, Business, CDLocation;
 @protocol SearchTableViewDelegate <NSObject>
 
--(void)searchTableVC:(SearchTableViewController *)viewController didSelectASearchOption:(SelectionType)type forEitherBusiness:(YPBusiness *)business orLocation:(CDLocation *)location;
+-(void)searchTableVC:(SearchTableViewController *)viewController didSelectASearchOption:(SelectionType)type forEitherBusiness:(Business *)business orLocation:(CDLocation *)location;
 
 @end
 

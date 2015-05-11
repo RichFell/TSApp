@@ -6,11 +6,12 @@
 //  Copyright (c) 2015 TravelSages. All rights reserved.
 //
 
-#import "YPBusiness.h"
+#import "Business.h"
 #import "TDOAuth.h"
 #import "UniversalBusiness.h"
+#import <MapKit/MapKit.h>
 
-@implementation YPBusiness
+@implementation Business
 
 
 -(instancetype)initWithDictionary:(NSDictionary *)dictionary {
@@ -33,6 +34,17 @@
     return mString;
 }
 
+-(instancetype)initWithMapItem:(MKMapItem *)mapItem {
+    self = [super init];
+    if (self) {
+        self.name = mapItem.name;
+        NSString *addressString = [NSString stringWithFormat:@"%@ %@, %@", mapItem.placemark.thoroughfare, mapItem.placemark.locality, mapItem.placemark.administrativeArea];
+        self.address = addressString;
+        self.coordinate = mapItem.placemark.coordinate;
+    }
+    return self;
+}
+
 +(void)fetchBusinessesFromYelpForBounds:(CLLocationCoordinate2D)neCoordinate andSEBounds:(CLLocationCoordinate2D)seCoordinate andCompareAgainstBusinesses:(NSArray *)businesses completed:(void (^)(NSArray *))completionHandler {
     NSURLRequest *request = [TDOAuth URLRequestForPath:kYelpRequestPath GETParameters:@{kYelpBoundsKey: [NSString stringWithFormat:@"%f,%f|%f,%f", seCoordinate.latitude, seCoordinate.longitude, neCoordinate.latitude, neCoordinate.longitude], kYelpLimitKey : kYelpQueryLimit, kYelpSortKey : kYelpSortType}
                                          host:kYelpHost
@@ -49,10 +61,10 @@
 
             //If I have already pulled in Businesses from yelp, I want to check to make sure I am not duplicating what I already have.
             if (businesses.count > 0) {
-                array = [YPBusiness compareArrayOfDictionaries:array toArrayOfBusinesses:businesses];
+                array = [Business compareArrayOfDictionaries:array toArrayOfBusinesses:businesses];
             }
             for (NSDictionary *dictionary in array) {
-                YPBusiness *busi = [[YPBusiness alloc]initWithDictionary:dictionary];
+                Business *busi = [[Business alloc]initWithDictionary:dictionary];
                 [mArray addObject:busi];
             }
             UniversalBusiness *sharedBusiness = [UniversalBusiness sharedInstance];
@@ -85,7 +97,7 @@
 +(NSArray *)compareArrayOfDictionaries:(NSArray *)dictionaries toArrayOfBusinesses:(NSArray *)businesses {
     NSSet *businessesSet = [NSSet setWithArray:businesses];
     NSMutableArray *predArray = [NSMutableArray new];
-    for (YPBusiness *business in businessesSet) {
+    for (Business *business in businessesSet) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id != %@", business.businessId];
         [predArray addObject:predicate];
     }
@@ -93,6 +105,26 @@
 
     return [dictionaries filteredArrayUsingPredicate:compoundPred];
 }
+
++(void)executeSearchForBusinessMatchingText:(NSString *)text completed:(void(^)(NSArray *businesses, NSError *error))completionHandler{
+    MKLocalSearchRequest *request = [MKLocalSearchRequest new];
+    request.naturalLanguageQuery = text;
+    MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
+    [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+        if (response) {
+            NSMutableArray *array = [NSMutableArray new];
+            for (MKMapItem *mapItem in response.mapItems) {
+                Business *biz = [[Business alloc]initWithMapItem:mapItem];
+                [array addObject:biz];
+            }
+            completionHandler(array, error);
+        }
+        else {
+            completionHandler(nil, error);
+        }
+    }];
+}
+
 
 
 @end

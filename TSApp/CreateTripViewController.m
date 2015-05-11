@@ -8,7 +8,7 @@
 
 #import "CreateTripViewController.h"
 #import "UserDefaults.h"
-#import "NetworkErrorAlert.h"
+#import "Alert.h"
 #import "MapModel.h"
 #import "MapNavigationViewController.h"
 #import "CDRegion.h"
@@ -47,7 +47,7 @@ static CGFloat const kYKeyboardClosed = 0.0;
     [MapModel geocodeString:self.destinationTextField.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
         if (error)
         {
-            [NetworkErrorAlert showAlertForViewController:self];
+            [Alert showAlertForViewController:self];
         }
         else
         {

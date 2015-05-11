@@ -9,12 +9,12 @@
 #import "GetDirectionsViewController.h"
 #import "CDLocation.h"
 #import "MapModel.h"
-#import "NetworkErrorAlert.h"
+#import "Alert.h"
 #import "Direction.h"
 #import "DirectionSet.h"
 #import "TSButton.h"
 #import "CDRegion.h"
-#import "YPBusiness.h"
+#import "Business.h"
 
 
 @interface GetDirectionsViewController ()<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property CDLocation *endingLocation;
-@property YPBusiness *endingBusiness;
+@property Business *endingBusiness;
 @property (nonatomic)NSArray *locations;
 
 @end
@@ -98,10 +98,10 @@ static NSString *typeOfTransportation = @"driving";
             [self postNotificationForDirections:directionArray];
         }
         else if (error) {
-            [NetworkErrorAlert showNetworkAlertWithError:error withViewController:self];
+            [Alert showNetworkAlertWithError:error withViewController:self];
         }
         else {
-            [NetworkErrorAlert showAlertForViewController:self];
+            [Alert showAlertForViewController:self];
             NSLog(@"direction Array nil");
         }
     }];
@@ -140,8 +140,8 @@ static NSString *typeOfTransportation = @"driving";
         titleString = location.name;
         subTitleString = location.localAddress;
     }
-    else if ([self.locations[indexPath.row] isKindOfClass:[YPBusiness class]]) {
-        YPBusiness *biz = self.locations[indexPath.row];
+    else if ([self.locations[indexPath.row] isKindOfClass:[Business class]]) {
+        Business *biz = self.locations[indexPath.row];
         titleString = biz.name;
         subTitleString = biz.address;
     }
@@ -162,8 +162,8 @@ static NSString *typeOfTransportation = @"driving";
         textFieldText = loc.name;
         self.endingBusiness = nil;
     }
-    else if ([self.locations[indexPath.row] isKindOfClass:[YPBusiness class]]) {
-        YPBusiness *biz = self.locations[indexPath.row];
+    else if ([self.locations[indexPath.row] isKindOfClass:[Business class]]) {
+        Business *biz = self.locations[indexPath.row];
         self.endingBusiness = biz;
         textFieldText = biz.name;
         self.endingLocation = nil;

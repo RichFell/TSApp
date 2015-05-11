@@ -8,7 +8,7 @@
 
 #import "LocationsListViewController.h"
 #import "LocationTableViewCell.h"
-#import "NetworkErrorAlert.h"
+#import "Alert.h"
 #import "UserDefaults.h"
 #import "Direction.h"
 #import <CoreLocation/CoreLocation.h>

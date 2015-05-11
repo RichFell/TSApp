@@ -8,7 +8,7 @@
 
 #import "TSMarker.h"
 #import "CDLocation.h"
-#import "YPBusiness.h"
+#import "Business.h"
 
 @implementation TSMarker
 
@@ -39,7 +39,7 @@
     return self;
 }
 
--(instancetype)initWithBusiness:(YPBusiness *)business {
+-(instancetype)initWithBusiness:(Business *)business {
     self = [super init];
     self.business = business;
     self.position = business.coordinate;

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class YPBusiness;
+@class Business;
 
 @interface UniversalBusiness : NSObject
 

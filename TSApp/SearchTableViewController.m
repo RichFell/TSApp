@@ -7,9 +7,10 @@
 //
 
 #import "SearchTableViewController.h"
-#import "YPBusiness.h"
+#import "Business.h"
 #import "CDLocation.h"
 #import "HeaderView.h"
+#import "Alert.h"
 
 @interface SearchTableViewController ()
 
@@ -19,6 +20,10 @@
 @end
 
 @implementation SearchTableViewController
+{
+    NSTimer *searchTimer;
+    NSString *searchText;
+}
 
 static NSString *const kCellId = @"CellID";
 
@@ -34,13 +39,27 @@ static NSString *const kCellId = @"CellID";
 }
 
 -(void)inputText:(NSString *)text {
-    NSArray *businessesArray = [self filteredBusinessesByText:text];
-    NSArray *locationsArray = [self filterLocationsByText:text];
-    [YPBusiness fetchBusinessesFromYelpMatchingName:text notInArray:businessesArray completed:^(NSArray *businesses) {
+    searchText = text;
+    if (searchTimer) {
+        [searchTimer invalidate];
+    }
+//    searchTimer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(searchForText) userInfo:nil repeats:false];
+    searchTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(searchForText) userInfo:nil repeats:false];
+}
 
+-(void)searchForText {
+    NSMutableArray *businessesArray = [[self filteredBusinessesByText:searchText] mutableCopy];
+    NSArray *locationsArray = [self filterLocationsByText:searchText];
+    [Business executeSearchForBusinessMatchingText:searchText completed:^(NSArray *businesses, NSError *error) {
+        if (businesses) {
+            [businessesArray addObjectsFromArray:businesses];
+        }
+        else if(error) {
+            [Alert showNetworkAlertWithError:error withViewController:self];
+        }
+        self.displayArray = @[locationsArray, businessesArray];
+        [self.tableView reloadData];
     }];
-    self.displayArray = @[locationsArray, businessesArray];
-    [self.tableView reloadData];
 }
 
 -(NSArray *)filteredBusinessesByText:(NSString *)text {
@@ -65,7 +84,7 @@ static NSString *const kCellId = @"CellID";
         cell.detailTextLabel.text = location.localAddress;
     }
     else {
-        YPBusiness *business = self.displayArray[indexPath.section][indexPath.row];
+        Business *business = self.displayArray[indexPath.section][indexPath.row];
         cell.textLabel.text = business.name;
         cell.detailTextLabel.text = business.address;
     }
@@ -98,7 +117,7 @@ static NSString *const kCellId = @"CellID";
         [self.delegate searchTableVC:self didSelectASearchOption:Select_Location forEitherBusiness:nil orLocation:location];
     }
     else {
-        YPBusiness *business = self.displayArray[indexPath.section][indexPath.row];
+        Business *business = self.displayArray[indexPath.section][indexPath.row];
         [self.delegate searchTableVC:self didSelectASearchOption:Select_Business forEitherBusiness:business orLocation:nil];
     }
 }

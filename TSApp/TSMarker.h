@@ -7,7 +7,7 @@
 //
 
 #import <GoogleMaps/GoogleMaps.h>
-@class CDLocation, YPBusiness;
+@class CDLocation, Business;
 
 typedef NS_ENUM(NSInteger, MarkerType) {
     Marker_New,
@@ -19,10 +19,10 @@ typedef NS_ENUM(NSInteger, MarkerType) {
 @interface TSMarker : GMSMarker
 
 @property CDLocation *location;
-@property YPBusiness *business;
+@property Business *business;
 @property MarkerType markerType;
 
 -(instancetype)initWithLocation:(CDLocation *)location;
 -(instancetype)initWithPosition:(CLLocationCoordinate2D)position withSnippet:(NSString *)snippet forMap:(GMSMapView *)mapView;
--(instancetype)initWithBusiness:(YPBusiness *)business;
+-(instancetype)initWithBusiness:(Business *)business;
 @end
