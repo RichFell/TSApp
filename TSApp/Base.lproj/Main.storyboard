@@ -1069,6 +1069,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="closeBarButton" destination="XXX-Et-YlZ" id="LEr-wE-zQz"/>
                         <outlet property="containerBottomConstraint" destination="gSM-Zh-V18" id="EPD-76-96A"/>
                         <outlet property="directionsTopConstraint" destination="gIX-eT-lHz" id="DJb-3e-XYa"/>
                         <outlet property="imageViewTopConstraint" destination="0O2-wT-m7e" id="bxB-BW-XUn"/>
@@ -1080,6 +1081,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BeX-6l-gCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem systemItem="cancel" id="XXX-Et-YlZ">
+                    <connections>
+                        <action selector="closeSearchTableViewOnTap:" destination="v5a-Rt-M6e" id="8aL-Nb-lat"/>
+                    </connections>
+                </barButtonItem>
                 <tapGestureRecognizer id="DId-qC-l89">
                     <connections>
                         <action selector="onArrowTapped:" destination="v5a-Rt-M6e" id="feg-mP-1yh"/>

@@ -41,6 +41,8 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionsTopConstraint;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *closeBarButton;
+
 
 #pragma mark - Variables
 @property (nonatomic) CDRegion *currentRegion;
@@ -372,12 +374,12 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    SearchTableViewController *searchVC = [[SearchTableViewController alloc] initFromCallerFrame:self.searchView.frame];
-    self.searchVC = searchVC;
+    self.searchVC = [[SearchTableViewController alloc] initFromCallerFrame:self.searchView.frame];
     self.searchVC.businesses = self.businessesPlaced;
     self.searchVC.locations = self.currentRegion.allLocations;
     self.searchVC.delegate = self;
-    [self.view addSubview:searchVC.view];
+    [self.view addSubview:self.searchVC.view];
+    [self.navigationItem setLeftBarButtonItem:self.closeBarButton];
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -409,6 +411,11 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         [self performSegueWithIdentifier:@"ListSegue" sender:nil];
     }
 }
+
+- (IBAction)closeSearchTableViewOnTap:(UIBarButtonItem *)sender {
+    [self animateSearchViewClosed];
+}
+
 
 #pragma mark - Helper Methods for sliding of the container view
 
@@ -462,7 +469,11 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         default:
             break;
     }
+    [self animateSearchViewClosed];
+    [self.view endEditing:true];
+}
 
+-(void)animateSearchViewClosed {
     [UIView animateWithDuration:0.5 animations:^{
         self.searchVC.view.frame = CGRectMake(CGRectGetMinX(self.searchVC.view.frame),
                                               CGRectGetMinY(self.searchVC.view.frame),
@@ -470,9 +481,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
                                               0.0);
     } completion:^(BOOL finished) {
         [self.searchVC.view removeFromSuperview];
+        [self.navigationItem setLeftBarButtonItem:nil];
+        [self.view endEditing:true];
     }];
-    [self.view endEditing:true];
-}
+} 
 
 -(void)animateToLocation:(CDLocation *)location {
     NSSet *set = [NSSet setWithArray:self.locationMarkers];
