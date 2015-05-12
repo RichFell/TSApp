@@ -30,14 +30,14 @@
 
 
 
-@interface MapViewController ()<GMSMapViewDelegate, UITextFieldDelegate, LocationsListVCDelegate, RegionListVCDelegate, SearchTableViewDelegate>
+@interface MapViewController ()<GMSMapViewDelegate, UISearchBarDelegate, LocationsListVCDelegate, RegionListVCDelegate, SearchTableViewDelegate>
 
 #pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *regionBarButtonItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
-@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+//@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionsTopConstraint;
@@ -153,15 +153,15 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 -(void)placeMarkerForLocation:(CDLocation *)location {
-    [self markerCreate:nil orLocation:location];
+    [self markerCreate:nil orLocation:location setMarker:false];
 }
 
--(void)placeMarkerForBusiness:(Business *)business {
-    [self markerCreate:business orLocation:nil];
+-(void)placeMarkerForBusiness:(Business *)business setMarker:(BOOL)isSet {
+    [self markerCreate:business orLocation:nil setMarker:isSet];
     [self.businessesPlaced addObject:business];
 }
 
--(void)markerCreate:(Business *)business orLocation:(CDLocation *)location {
+-(void)markerCreate:(Business *)business orLocation:(CDLocation *)location setMarker:(BOOL)isSet{
     TSMarker *marker = business ? [[TSMarker alloc]initWithBusiness:business] : [[TSMarker alloc]initWithLocation:location];
     marker.map = self.mapView;
     if (business) {
@@ -169,6 +169,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     }
     else {
         [self.locationMarkers addObject:marker];
+    }
+
+    if (isSet) {
+        [self.mapView setSelectedMarker:marker];
     }
 }
 
@@ -252,7 +256,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
     [Business fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
                                            for (Business *business in businesses) {
-                                               [self placeMarkerForBusiness:business];
+                                               [self placeMarkerForBusiness:business setMarker:false];
         }
     }];
 
@@ -332,7 +336,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 -(void)resetAllMarkers {
     [self.mapView clear];
     for (Business *business in self.businessesPlaced) {
-        [self markerCreate:business orLocation:nil];
+        [self markerCreate:business orLocation:nil setMarker:false];
     }
     [self resetAllLocationMarkers];
 }
@@ -344,8 +348,12 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [self presentViewController:alert animated:true completion:nil];
 }
 
-#pragma mark - TextFieldDelegate methods
--(void)textFieldDidBeginEditing:(UITextField *)textField {
+#pragma mark - SearchBarDelegate methods
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self.searchVC inputText:searchText];
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     SearchTableViewController *searchVC = [[SearchTableViewController alloc] initFromCallerFrame:self.searchView.frame];
     self.searchVC = searchVC;
     self.searchVC.businesses = self.businessesPlaced;
@@ -354,13 +362,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [self.view addSubview:searchVC.view];
 }
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    [self.searchVC inputText:textField.text];
-    return true;
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [MapModel geocodeString:textField.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [MapModel geocodeString:searchBar.text withBlock:^(CLLocationCoordinate2D coordinate, NSError *error) {
         if (error) {
             [Alert showAlertForViewController:self];
         }
@@ -370,8 +373,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
             [self placeMarker:coordinate string:@"Tap to save destination"];
         }
     }];
-    [textField resignFirstResponder];
-    return true;
+    [searchBar resignFirstResponder];
 }
 
 #pragma mark - IBActions
@@ -449,7 +451,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     } completion:^(BOOL finished) {
         [self.searchVC.view removeFromSuperview];
     }];
-    [self.searchTextField resignFirstResponder];
+    [self.view endEditing:true];
 }
 
 -(void)animateToLocation:(CDLocation *)location {
@@ -465,13 +467,18 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)animateToBusiness:(Business *)business {
     NSSet *set = [NSSet setWithArray:self.businessMarkers];
+    BOOL isDisplayed = false;
     for (TSMarker *marker in set) {
         if ([marker.business.businessId isEqualToString:business.businessId]) {
-            GMSCameraPosition *cameraPos = [GMSCameraPosition cameraWithTarget:business.coordinate zoom:kMapViewZoomLocation];
-            [self.mapView setCamera:cameraPos];
             [self.mapView setSelectedMarker:marker];
+            isDisplayed = true;
         }
     }
+    if (!isDisplayed) {
+        [self placeMarkerForBusiness:business setMarker:true];
+    }
+    GMSCameraPosition *cameraPos = [GMSCameraPosition cameraWithTarget:business.coordinate zoom:kMapViewZoomLocation];
+    [self.mapView setCamera:cameraPos];
 }
 
 @end

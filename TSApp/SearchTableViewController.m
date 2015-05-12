@@ -35,31 +35,45 @@ static NSString *const kCellId = @"CellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titleArray = @[@"Saved Locations", @"From Yelp"];
+    self.titleArray = @[@"Saved Locations", @"Search Results"];
 }
 
 -(void)inputText:(NSString *)text {
+
+    //Using the timer because we want to make network calls to find matching locations as text is entered, but we don't want to fire them everytime a letter is entered. This approach will help to limit the number of calls that go through.
     searchText = text;
+    [self sortArrays];
     if (searchTimer) {
         [searchTimer invalidate];
     }
-//    searchTimer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(searchForText) userInfo:nil repeats:false];
-    searchTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(searchForText) userInfo:nil repeats:false];
+    searchTimer = [NSTimer scheduledTimerWithTimeInterval:2.0
+                                                   target:self
+                                                 selector:@selector(searchForText)
+                                                 userInfo:nil repeats:false];
+}
+
+-(void)sortArrays {
+    NSMutableArray *businessesArray = [[self filteredBusinessesByText:searchText] mutableCopy];
+    NSArray *locationsArray = [self filterLocationsByText:searchText];
+    self.displayArray = @[locationsArray, businessesArray];
+    [self.tableView reloadData];
 }
 
 -(void)searchForText {
-    NSMutableArray *businessesArray = [[self filteredBusinessesByText:searchText] mutableCopy];
-    NSArray *locationsArray = [self filterLocationsByText:searchText];
-    [Business executeSearchForBusinessMatchingText:searchText completed:^(NSArray *businesses, NSError *error) {
+
+    [Business executeSearchForBusinessMatchingText:searchText
+                                         completed:^(NSArray *businesses, NSError *error) {
         if (businesses) {
+            NSMutableArray *businessesArray = self.displayArray[1];
             [businessesArray addObjectsFromArray:businesses];
+//            self.displayArray = @[locationsArray, businessesArray];
+            [self.tableView reloadData];
         }
         else if(error) {
             [Alert showNetworkAlertWithError:error withViewController:self];
         }
-        self.displayArray = @[locationsArray, businessesArray];
-        [self.tableView reloadData];
     }];
+
 }
 
 -(NSArray *)filteredBusinessesByText:(NSString *)text {

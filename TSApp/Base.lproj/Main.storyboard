@@ -993,18 +993,23 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHH-1c-tPc">
                                 <rect key="frame" x="0.0" y="64" width="320" height="56"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-wk-K9m">
-                                        <rect key="frame" x="24" y="13" width="261" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="yUy-i7-5e2">
+                                        <rect key="frame" x="0.0" y="6" width="320" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="XHG-sx-wtj"/>
+                                        </constraints>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <outlet property="delegate" destination="v5a-Rt-M6e" id="DpO-5u-woM"/>
+                                            <outlet property="delegate" destination="v5a-Rt-M6e" id="hW0-ja-W4w"/>
                                         </connections>
-                                    </textField>
+                                    </searchBar>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="JcX-n9-8R1"/>
+                                    <constraint firstAttribute="centerY" secondItem="yUy-i7-5e2" secondAttribute="centerY" id="iCZ-Jl-jTs"/>
+                                    <constraint firstAttribute="trailing" secondItem="yUy-i7-5e2" secondAttribute="trailing" id="lyC-wi-4j1"/>
+                                    <constraint firstItem="yUy-i7-5e2" firstAttribute="leading" secondItem="aHH-1c-tPc" secondAttribute="leading" id="w7H-Np-EBH"/>
                                 </constraints>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Z1D-uI-0xD">
@@ -1068,7 +1073,6 @@
                         <outlet property="directionsTopConstraint" destination="gIX-eT-lHz" id="DJb-3e-XYa"/>
                         <outlet property="imageViewTopConstraint" destination="0O2-wT-m7e" id="bxB-BW-XUn"/>
                         <outlet property="regionBarButtonItem" destination="Hgk-eN-g6L" id="Zne-ik-MFN"/>
-                        <outlet property="searchTextField" destination="lJg-wk-K9m" id="mmU-G5-eNV"/>
                         <outlet property="searchView" destination="aHH-1c-tPc" id="ugW-T6-Mk7"/>
                         <outlet property="segmentControl" destination="Z1D-uI-0xD" id="V1h-hP-fwB"/>
                         <outlet property="slidingImageView" destination="Cob-EZ-P03" id="j9U-dv-6SA"/>
@@ -1302,6 +1306,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="iZk-sz-QCO"/>
+        <segue reference="fxb-N0-nxc"/>
     </inferredMetricsTieBreakers>
 </document>
