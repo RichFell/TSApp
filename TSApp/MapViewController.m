@@ -392,7 +392,6 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     }
 }
 
-
 #pragma mark - Helper Methods for sliding of the container view
 
 -(void)animateContainerUp {
