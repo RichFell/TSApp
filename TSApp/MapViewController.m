@@ -116,7 +116,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     self.businessesPlaced = [NSMutableArray new];
     self.locationManager = [[CLLocationManager alloc]init];
     [self.locationManager requestAlwaysAuthorization];
-    self.mapView = [[GMSMapView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.searchView.frame), CGRectGetMaxY(self.searchView.frame), CGRectGetWidth(self.view.frame),CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.searchView.frame))];
+    self.mapView = [[GMSMapView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.searchView.frame),
+                                                                CGRectGetMaxY(self.searchView.frame),
+                                                                CGRectGetWidth(self.view.frame),
+                                                                CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.searchView.frame))];
     self.mapView.delegate = self;
     self.mapView.myLocationEnabled = YES;
     self.mapView.settings.myLocationButton = YES;
@@ -133,19 +136,26 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 -(void)setupNotificationListeners {
-    [[NSNotificationCenter defaultCenter] addObserverForName:kSelectedDirectionNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+    [[NSNotificationCenter defaultCenter] addObserverForName:kSelectedDirectionNotification
+                                                      object:nil queue:[NSOperationQueue mainQueue]
+                                                  usingBlock:^(NSNotification *note) {
         NSDictionary *info = note.userInfo;
         NSArray *directions = info[kDirectionArrayKey];
         [self placePolylineForDirections:directions];
     }];
 
-    [[NSNotificationCenter defaultCenter]addObserverForName:kCreatedFirstTrip object:nil queue:[NSOperationQueue mainQueue]usingBlock:^(NSNotification *note) {
+    [[NSNotificationCenter defaultCenter]addObserverForName:kCreatedFirstTrip
+                                                     object:nil
+                                                      queue:[NSOperationQueue mainQueue]
+                                                 usingBlock:^(NSNotification *note) {
         [self fetchDefaultRegion];
     }];
 }
 
 -(void)placeMarker:(CLLocationCoordinate2D)coordinate string: (NSString *)string {
-    TSMarker *marker = [[TSMarker alloc]initWithPosition:coordinate withSnippet:string forMap:self.mapView];
+    TSMarker *marker = [[TSMarker alloc]initWithPosition:coordinate
+                                             withSnippet:string
+                                                  forMap:self.mapView];
     marker.icon = [GMSMarker markerImageWithColor:[UIColor customOrange]];
     [self.mapView setSelectedMarker:marker];
     self.longTapMarker.map = nil;
@@ -199,7 +209,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     for (CDLocation *location in locations) {
         bounds = [bounds includingCoordinate:location.coordinate];
     }
-    [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:kMapViewPadding]];
+    [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds
+                                                         withPadding:kMapViewPadding]];
 }
 
 -(void)animateMapViewToDirections:(NSArray *)directions {
@@ -208,7 +219,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         bounds = [bounds includingCoordinate:direction.startingCoordinate];
         bounds = [bounds includingCoordinate:direction.endingCoordinate];
     }
-    [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:kMapViewPadding]];
+    [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds
+                                                         withPadding:kMapViewPadding]];
 }
 
 -(void)placePolylineForDirections:(NSArray *)directions {
@@ -236,7 +248,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
             [Alert showAlertForViewController:self];
         }
         else {
-            [self placeMarker:response.firstResult.coordinate string:response.firstResult.thoroughfare];
+            [self placeMarker:response.firstResult.coordinate
+                       string:response.firstResult.thoroughfare];
         }
     }];
 }
@@ -245,7 +258,9 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 {
     if (self.currentRegion) {
         TSMarker *theMarker = (TSMarker *)marker;
-        [self displayAlertToCreateNewLocation:theMarker.position orBusiness:theMarker.business forMarker:theMarker];
+        [self displayAlertToCreateNewLocation:theMarker.position
+                                   orBusiness:theMarker.business
+                                    forMarker:theMarker];
     }
     else {
 
@@ -254,7 +269,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 }
 
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
-    [Business fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft andSEBounds:mapView.projection.visibleRegion.nearRight andCompareAgainstBusinesses:self.businessesPlaced completed:^(NSArray *businesses) {
+    [Business fetchBusinessesFromYelpForBounds:mapView.projection.visibleRegion.farLeft
+                                   andSEBounds:mapView.projection.visibleRegion.nearRight
+                   andCompareAgainstBusinesses:self.businessesPlaced
+                                     completed:^(NSArray *businesses) {
                                            for (Business *business in businesses) {
                                                [self placeMarkerForBusiness:business setMarker:false];
         }
@@ -446,7 +464,10 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     }
 
     [UIView animateWithDuration:0.5 animations:^{
-        self.searchVC.view.frame = CGRectMake(CGRectGetMinX(self.searchVC.view.frame), CGRectGetMinY(self.searchVC.view.frame), CGRectGetWidth(self.searchVC.view.frame), 0.0);
+        self.searchVC.view.frame = CGRectMake(CGRectGetMinX(self.searchVC.view.frame),
+                                              CGRectGetMinY(self.searchVC.view.frame),
+                                              CGRectGetWidth(self.searchVC.view.frame),
+                                              0.0);
     } completion:^(BOOL finished) {
         [self.searchVC.view removeFromSuperview];
     }];
@@ -457,7 +478,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     NSSet *set = [NSSet setWithArray:self.locationMarkers];
     for (TSMarker *marker in set) {
         if ([marker.location.objectId isEqualToString:location.objectId]) {
-            GMSCameraPosition *cameraPos = [GMSCameraPosition cameraWithTarget:location.coordinate zoom:kMapViewZoomLocation];
+            GMSCameraPosition *cameraPos = [GMSCameraPosition cameraWithTarget:location.coordinate
+                                                                          zoom:kMapViewZoomLocation];
             [self.mapView setCamera:cameraPos];
             [self.mapView setSelectedMarker:marker];
         }
@@ -476,7 +498,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     if (!isDisplayed) {
         [self placeMarkerForBusiness:business setMarker:true];
     }
-    GMSCameraPosition *cameraPos = [GMSCameraPosition cameraWithTarget:business.coordinate zoom:kMapViewZoomLocation];
+    GMSCameraPosition *cameraPos = [GMSCameraPosition cameraWithTarget:business.coordinate
+                                                                  zoom:kMapViewZoomLocation];
     [self.mapView setCamera:cameraPos];
 }
 
