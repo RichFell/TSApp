@@ -28,7 +28,12 @@ typedef enum{
 @property NSArray *businesses;
 @property NSArray *locations;
 
+//Convenience init that is used to call this according to the size of the element that calls it.
 -(instancetype)initFromCallerFrame:(CGRect)frame;
+
+//Used to tell the VC that it should filter the shown array by the text
 -(void)inputText:(NSString *)text;
+//Tells the view to show the default array versus the filtered
+-(void)resetArray;
 
 @end

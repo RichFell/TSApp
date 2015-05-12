@@ -502,13 +502,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9BBB1124199AC9F400C5321D /* Header Cells */ = {
+		9BBB1124199AC9F400C5321D /* Header View */ = {
 			isa = PBXGroup;
 			children = (
 				9B7A54721AE74B720031B80D /* HeaderView.h */,
 				9B7A54731AE74B720031B80D /* HeaderView.m */,
 			);
-			name = "Header Cells";
+			name = "Header View";
 			sourceTree = "<group>";
 		};
 		9BCB5B601AD1848A0026D5B9 /* Directions */ = {
@@ -553,7 +553,7 @@
 		9BF72551199448AF00BFCA34 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				9BBB1124199AC9F400C5321D /* Header Cells */,
+				9BBB1124199AC9F400C5321D /* Header View */,
 				9B0D2FB71AD6245900683722 /* Buttons */,
 				9B0F010B1AD492B2005DEFA8 /* Locations */,
 				9BCB5B601AD1848A0026D5B9 /* Directions */,

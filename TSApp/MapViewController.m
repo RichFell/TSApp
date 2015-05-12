@@ -396,6 +396,12 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [searchBar resignFirstResponder];
 }
 
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.searchVC resetArray];
+
+    //This doesn't work like I expected, need to find the correct method for when the 'x' is tapped on the searchBar.
+}
+
 #pragma mark - IBActions
 - (IBAction)onArrowTapped:(UITapGestureRecognizer *)sender {
     if ([sender locationInView:self.view].y > CGRectGetHeight(self.view.frame) / 2) {
@@ -484,7 +490,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         [self.navigationItem setLeftBarButtonItem:nil];
         [self.view endEditing:true];
     }];
-} 
+}
 
 -(void)animateToLocation:(CDLocation *)location {
     NSSet *set = [NSSet setWithArray:self.locationMarkers];

@@ -17,7 +17,7 @@
     CGRect insetRect = CGRectMake(0, 0, CGRectGetWidth(frame), kTableViewHeaderHeight);
     self.headerLabel = [[UILabel alloc]initWithFrame:insetRect];
     self.headerLabel.textAlignment = NSTextAlignmentCenter;
-    self.headerLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:17.0];
+    self.headerLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:15.0];
     [self addSubview:self.headerLabel];
     return self;
 }

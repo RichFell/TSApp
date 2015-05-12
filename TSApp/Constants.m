@@ -20,7 +20,10 @@ NSString *const kPlaceHolderImage = @"PlaceHolderImage";
 CGFloat const kAnimationDuration = 0.5;
 CGFloat const kImageViewConstraintConstantOpen = 0.0;
 CGFloat const kTSSpacing = 8.0;
-CGFloat const kTableViewHeaderHeight = 40.0;
+
+//Default height for tableViewCells
+CGFloat const kTableViewHeaderHeight = 20.0;
+
 CGFloat const kMapViewPadding = 30.0;
 CGFloat const kMapViewZoom = 12.0;
 CGFloat const kMapViewZoomLocation = 17.0;

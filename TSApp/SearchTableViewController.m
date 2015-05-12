@@ -14,7 +14,7 @@
 
 @interface SearchTableViewController ()
 
-@property NSArray *displayArray;
+@property (nonatomic)NSArray *displayArray;
 @property NSArray *titleArray;
 
 @end
@@ -25,7 +25,13 @@
     NSString *searchText;
 }
 
+static float const kTimerTimeInterval = 0.5;
 static NSString *const kCellId = @"CellID";
+
+-(void)setDisplayArray:(NSArray *)displayArray {
+    _displayArray = displayArray;
+    [self.tableView reloadData];
+}
 
 -(instancetype)initFromCallerFrame:(CGRect)frame {
     self = [super initWithStyle:UITableViewStylePlain];
@@ -38,6 +44,13 @@ static NSString *const kCellId = @"CellID";
     self.titleArray = @[@"Saved Locations", @"Search Results"];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:true];
+    self.displayArray = @[self.locations, self.businesses];
+}
+
+
+#pragma mark - Public instance methods
 -(void)inputText:(NSString *)text {
 
     //Using the timer because we want to make network calls to find matching locations as text is entered, but we don't want to fire them everytime a letter is entered. This approach will help to limit the number of calls that go through.
@@ -46,12 +59,17 @@ static NSString *const kCellId = @"CellID";
     if (searchTimer) {
         [searchTimer invalidate];
     }
-    searchTimer = [NSTimer scheduledTimerWithTimeInterval:2.0
+    searchTimer = [NSTimer scheduledTimerWithTimeInterval:kTimerTimeInterval
                                                    target:self
                                                  selector:@selector(searchForText)
                                                  userInfo:nil repeats:false];
 }
 
+-(void)resetArray {
+    self.displayArray = @[self.locations, self.businesses];
+}
+
+#pragma mark - Array sorting methods
 -(void)sortArrays {
     NSMutableArray *businessesArray = [[self filteredBusinessesByText:searchText] mutableCopy];
     NSArray *locationsArray = [self filterLocationsByText:searchText];
@@ -66,8 +84,6 @@ static NSString *const kCellId = @"CellID";
         if (businesses) {
             NSMutableArray *businessesArray = self.displayArray[1];
             [businessesArray addObjectsFromArray:businesses];
-//            self.displayArray = @[locationsArray, businessesArray];
-            [self.tableView reloadData];
         }
         else if(error) {
             [Alert showNetworkAlertWithError:error withViewController:self];
