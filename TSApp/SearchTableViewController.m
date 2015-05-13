@@ -20,12 +20,14 @@
 @end
 
 @implementation SearchTableViewController
+
+#pragma mark - Local Variables
 {
     NSTimer *searchTimer;
     NSString *searchText;
 }
 
-static float const kTimerTimeInterval = 0.5;
+static float const kTimerTimeInterval = 0.2;
 static NSString *const kCellId = @"CellID";
 
 -(void)setDisplayArray:(NSArray *)displayArray {

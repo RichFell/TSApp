@@ -27,6 +27,7 @@
 #import "DirectionSet.h"
 #import "Business.h"
 #import "SearchTableViewController.h"
+#import "CustomInfoWindow.h"
 
 
 
@@ -258,16 +259,15 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 -(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker
 {
-    if (self.currentRegion) {
+    if ([marker isKindOfClass:[TSMarker class]]) {
         TSMarker *theMarker = (TSMarker *)marker;
-        [self displayAlertToCreateNewLocation:theMarker.position
-                                   orBusiness:theMarker.business
-                                    forMarker:theMarker];
+        if (self.currentRegion && theMarker.markerType == Marker_Business) {
+            TSMarker *theMarker = (TSMarker *)marker;
+            [self displayAlertToCreateNewLocation:theMarker.position
+                                       orBusiness:theMarker.business
+                                        forMarker:theMarker];
+        }
     }
-    else {
-
-    }
-
 }
 
 -(void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
@@ -280,6 +280,28 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         }
     }];
 
+}
+
+-(UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
+    NSString *nameString;
+    CustomInfoWindow *infoWindow = [[NSBundle mainBundle]loadNibNamed:@"CustomInfoWindow" owner:self options:nil].firstObject;
+    if ([marker isKindOfClass:[TSMarker class]]) {
+        TSMarker *theMarker = (TSMarker *)marker;
+        if (theMarker.location) {
+            infoWindow.saveButton.hidden = true;
+            nameString = theMarker.location.name;
+        }
+        else if (theMarker.business){
+            nameString = theMarker.business.name;
+        }
+        else {
+            nameString = @"New Location";
+        }
+    }
+    infoWindow.nameLabel.text = nameString;
+    infoWindow.addressLabel.text = marker.snippet;
+
+    return infoWindow;
 }
 
 #pragma mark - Map related helper methods

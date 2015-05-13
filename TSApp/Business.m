@@ -17,7 +17,7 @@
 -(instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     self.name = dictionary[@"name"];
-    self.address = [self addressStringFromArray: dictionary[@"location"][@"display_address"]];
+    self.address = [self addressStringFromDictionary:dictionary[@"location"]];
     NSNumber *lat = dictionary[@"location"][@"coordinate"][@"latitude"];
     NSNumber *longi = dictionary[@"location"][@"coordinate"][@"longitude"];
     self.coordinate = CLLocationCoordinate2DMake(lat.floatValue, longi.floatValue);
@@ -26,12 +26,18 @@
 }
 
 //Have to use this because the @"display_address" is actually an array of strings.
--(NSString *)addressStringFromArray:(NSArray *)array {
-    NSMutableString *mString = [NSMutableString new];
-    for (NSString *string in array) {
-        [mString appendString:string];
-    }
-    return mString;
+-(NSString *)addressStringFromDictionary:(NSDictionary *)dictionary {
+//    NSMutableString *mString = [NSMutableString new];
+//    for (NSString *string in array) {
+//        [mString appendString:string];
+//    }
+    NSString *address = [dictionary[@"address"]firstObject];
+    NSString *city = dictionary[@"city"];
+    NSString *state = dictionary[@"state_code"];
+    NSString *zipcode = dictionary[@"postal_code"];
+
+    NSString *fullAddress = [NSString stringWithFormat:@"%@, %@, %@ %@", address, city, state, zipcode];
+    return fullAddress;
 }
 
 -(instancetype)initWithMapItem:(MKMapItem *)mapItem {
