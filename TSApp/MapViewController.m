@@ -242,6 +242,16 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [self animateMapViewToDirections:directions];
 }
 
+-(void)saveLocationFromBusiness:(Business *)business {
+    [CDLocation createNewLocationWithName:business.name
+                             atCoordinate:business.coordinate
+                                  atIndex:[NSNumber numberWithInteger: self.currentRegion.allLocations.count]
+                                forRegion:self.currentRegion atAddress:business.address
+                               completion:^(CDLocation *location, BOOL result) {
+                                   [self resetAllLocationMarkers];
+                               }];
+}
+
 #pragma mark - GMSMapViewDelegate Methods
 
 -(void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
@@ -261,7 +271,8 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 {
     if ([marker isKindOfClass:[TSMarker class]]) {
         TSMarker *theMarker = (TSMarker *)marker;
-        if (self.currentRegion && theMarker.markerType == Marker_Business) {
+        if (self.currentRegion &&
+            theMarker.markerType == Marker_Business) {
             TSMarker *theMarker = (TSMarker *)marker;
             [self displayAlertToCreateNewLocation:theMarker.position
                                        orBusiness:theMarker.business
@@ -322,15 +333,11 @@ static NSString *const rwfLocationString = @"Tap to save destination";
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction *action) {
 
-                                                          if (business) {
-                                                              [CDLocation createNewLocationWithName:business.name
-                                                                                       atCoordinate:business.coordinate
-                                                                                            atIndex:[NSNumber numberWithInteger: self.currentRegion.allLocations.count]
-                                                                                          forRegion:self.currentRegion atAddress:business.address
-                                                                                         completion:^(CDLocation *location, BOOL result) {
-                                                                                             [self resetAllLocationMarkers];
-            }];
+        if (business) {
+            [self saveLocationFromBusiness:business];
         }
+
+
         else {
             UITextField *nameTextfield = [alert.textFields firstObject];
             [self reverseGeocodeMarker:marker andName:nameTextfield.text];
@@ -480,21 +487,35 @@ static NSString *const rwfLocationString = @"Tap to save destination";
 
 #pragma mark - SearchTableViewDelegate
 -(void)searchTableVC:(SearchTableViewController *)viewController didSelectASearchOption:(SelectionType)type forEitherBusiness:(Business *)business orLocation:(CDLocation *)location {
+    [self animateSearchViewClosed];
+    [self.view endEditing:true];
     switch (type) {
         case Select_Location:
             [self animateToLocation:location];
             break;
         case Select_Business:
             [self animateToBusiness:business];
+            [self displayAlertToSaveSelectedBusiness:business];
             break;
-
         default:
             break;
     }
-    [self animateSearchViewClosed];
-    [self.view endEditing:true];
+
 }
 
+-(void)displayAlertToSaveSelectedBusiness:(Business *)business {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Would you like to save the selected business?" message:@"You can always save later if you don't want to save now." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"SAVE" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self saveLocationFromBusiness:business];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"CANCEL" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    }];
+    [alert addAction:cancelAction];
+    [alert addAction:saveAction];
+    [self presentViewController:alert animated:true completion:nil];
+}
+
+#pragma mark - animation helpers
 -(void)animateSearchViewClosed {
     [UIView animateWithDuration:0.5 animations:^{
         self.searchVC.view.frame = CGRectMake(CGRectGetMinX(self.searchVC.view.frame),
