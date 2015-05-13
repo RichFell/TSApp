@@ -63,6 +63,11 @@ static NSString *const kCellId = @"CellID";
                                                    target:self
                                                  selector:@selector(searchForText)
                                                  userInfo:nil repeats:false];
+    //If we clear the text, want to just show the original arrays, and stop the timer, so no network call is made
+    if (text.length <= 0) {
+        [searchTimer invalidate];
+        self.displayArray = @[self.locations, self.businesses];
+    }
 }
 
 -(void)resetArray {
@@ -93,12 +98,12 @@ static NSString *const kCellId = @"CellID";
 }
 
 -(NSArray *)filteredBusinessesByText:(NSString *)text {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name CONTAINS %@ OR address CONTAINS %@", text, text];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@ OR address contains[cd] %@", text, text];
     return [self.businesses filteredArrayUsingPredicate:predicate];
 }
 
 -(NSArray *)filterLocationsByText:(NSString *)text {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name CONTAINS %@ OR localAddress CONTAINS %@", text, text];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@ OR localAddress contains[cd] %@", text, text];
     return [self.locations filteredArrayUsingPredicate:predicate];
 }
 
