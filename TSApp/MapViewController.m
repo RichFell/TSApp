@@ -8,7 +8,6 @@
 
 //TODO: Go through all error message handling
 //TODO: Need to go through and clean up the headers, this is a mess, lets make it cleaner, and smarter. Shouldn't need this many imports.
-//TODO: Refine search so that it pulls from Yelp and makes calls with the text that has been entered. Could even go ahead, and add these to the map as they are searched for.
 //TODO: setup the grids for the map
 
 #import "MapViewController.h"
@@ -249,6 +248,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
                                 forRegion:self.currentRegion atAddress:business.address
                                completion:^(CDLocation *location, BOOL result) {
                                    [self resetAllLocationMarkers];
+                                   self.mapView.selectedMarker = nil;
                                }];
 }
 
