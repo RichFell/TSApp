@@ -45,6 +45,7 @@
 		9B8681E71A3513C5009F9AD0 /* CustomInfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8681E61A3513C5009F9AD0 /* CustomInfoWindow.xib */; };
 		9B86822A1A36AAC5009F9AD0 /* MapNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8682291A36AAC5009F9AD0 /* MapNavigationViewController.m */; };
 		9B9D04C71B02EA3600893255 /* CustomInfoWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9D04C61B02EA3600893255 /* CustomInfoWindow.m */; };
+		9BAA477C1B043AE1005948E0 /* TSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA477B1B043AE1005948E0 /* TSLabel.m */; };
 		9BAA8D08198742AC000BC9A9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA8D06198742AC000BC9A9 /* Model.xcdatamodeld */; };
 		9BAA8D7319889193000BC9A9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */; };
 		9BAA8D77198891C1000BC9A9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BAA8D76198891C1000BC9A9 /* MobileCoreServices.framework */; };
@@ -169,6 +170,8 @@
 		9B8682291A36AAC5009F9AD0 /* MapNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapNavigationViewController.m; sourceTree = "<group>"; };
 		9B9D04C51B02EA3600893255 /* CustomInfoWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfoWindow.h; sourceTree = "<group>"; };
 		9B9D04C61B02EA3600893255 /* CustomInfoWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfoWindow.m; sourceTree = "<group>"; };
+		9BAA477A1B043AE1005948E0 /* TSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLabel.h; sourceTree = "<group>"; };
+		9BAA477B1B043AE1005948E0 /* TSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLabel.m; sourceTree = "<group>"; };
 		9BAA8D07198742AC000BC9A9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9BAA8D7219889193000BC9A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9BAA8D74198891AE000BC9A9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -403,6 +406,15 @@
 			name = Default/Managers;
 			sourceTree = "<group>";
 		};
+		9BAA47791B043AD2005948E0 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				9BAA477A1B043AE1005948E0 /* TSLabel.h */,
+				9BAA477B1B043AE1005948E0 /* TSLabel.m */,
+			);
+			name = Labels;
+			sourceTree = "<group>";
+		};
 		9BB0B868197AF79500D545C1 = {
 			isa = PBXGroup;
 			children = (
@@ -556,6 +568,7 @@
 		9BF72551199448AF00BFCA34 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9BAA47791B043AD2005948E0 /* Labels */,
 				9BBB1124199AC9F400C5321D /* Header View */,
 				9B0D2FB71AD6245900683722 /* Buttons */,
 				9B0F010B1AD492B2005DEFA8 /* Locations */,
@@ -696,6 +709,7 @@
 				9B14DAF119E2D257001ADB3E /* Alert.m in Sources */,
 				9B7A54741AE74B720031B80D /* HeaderView.m in Sources */,
 				9B6A3A391AC9EF5A00521CDA /* TSMarker.m in Sources */,
+				9BAA477C1B043AE1005948E0 /* TSLabel.m in Sources */,
 				9B0F01091AD4923D005DEFA8 /* GetDirectionsViewController.m in Sources */,
 				9BBB1128199AEA2800C5321D /* Location.m in Sources */,
 				9B68B5481AAFF21300AF3493 /* FBSessionManager.m in Sources */,

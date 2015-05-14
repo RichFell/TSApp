@@ -21,7 +21,7 @@
 #import "HeaderView.h"
 #import "LocationDetailViewController.h"
 
-@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate, LocationSelectionVCDelegate>
+@interface LocationsListViewController ()<UITableViewDataSource, UITableViewDelegate, LocationTVCellDelegate, CLLocationManagerDelegate>
 
 #pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -30,10 +30,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
-@property (weak, nonatomic) IBOutlet UIButton *getDirectionsButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topContainerHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
+//@property (weak, nonatomic) IBOutlet UIButton *getDirectionsButton;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topContainerHeightConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionContainterTopConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *directionsLabel;
 
 #pragma mark - Variables
 @property CLLocationManager *locationManager;
@@ -52,6 +53,10 @@
 @end
 
 @implementation LocationsListViewController
+{
+    NSIndexPath *startingIndexPath;
+    NSIndexPath *endingIndexPath;
+}
 
 #pragma getters and setters
 -(BOOL)selectFirstPostion {
@@ -68,9 +73,7 @@ static NSString *const kDirectionSegue = @"DirectionSegue";
 static NSString *const kLocationDetailSegue = @"DirectionDetailSegue";
 
 #pragma mark - static variables
-static CGFloat topViewStartingHeight;
-static NSIndexPath *startingIndexPath;
-static NSIndexPath *endingIndexPath;
+
 #pragma mark - View LifeCycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -84,7 +87,7 @@ static NSIndexPath *endingIndexPath;
     self.wantDirections = false;
     self.titleArray = @[kNeedToVisitString, kVisitedString];
     self.tableView.backgroundColor = [UIColor whiteColor];
-    [self reduceDirectionsViewInViewDidLoad];
+//    [self reduceDirectionsViewInViewDidLoad];
     self.segmentedControl.selectedSegmentIndex = 1;
     [self.tableView reloadData];
     self.title = @"Saved Locations";
@@ -92,7 +95,7 @@ static NSIndexPath *endingIndexPath;
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:true];
-    self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
+    self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height - CGRectGetHeight(self.directionsLabel.frame);
     self.containerViewBottomConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
     self.startingContainerBottomConstant = self.containerViewBottomConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
@@ -107,15 +110,6 @@ static NSIndexPath *endingIndexPath;
         LocationDetailViewController *locationDetVC = segue.destinationViewController;
         locationDetVC.selectedLocation = self.currentRegion.allLocations[[self.tableView indexPathForSelectedRow].row];
     }
-//    else if ([segue.destinationViewController isKindOfClass:[DirectionsListViewController class]]) {
-//        DirectionsListViewController *vc = segue.destinationViewController;
-//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//        vc.selectedLocation = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
-//    }
-//    else if ([segue.destinationViewController isKindOfClass:[LocationSelectionViewController class]]) {
-//        self.locationSelectionVC = segue.destinationViewController;
-//        self.locationSelectionVC.delegate = self;
-//    }
 }
 
 #pragma mark - Helper Methods for sliding of the container view
@@ -124,21 +118,23 @@ static NSIndexPath *endingIndexPath;
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.containerViewBottomConstraint.constant = 0;
         self.imageViewTopConstraint.constant = kImageViewConstraintConstantOpen;
-        self.directionContainterTopConstraint.constant = -CGRectGetHeight(self.slidingImageView.frame);
+        self.directionContainterTopConstraint.constant = -CGRectGetHeight(self.slidingImageView.frame) - CGRectGetHeight(self.directionsLabel.frame);
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kDownArrowImage];
+        self.directionsLabel.text = @"Hide Directions";
     }];
 }
 
 -(void)animateContainerDown {
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.containerViewBottomConstraint.constant = -self.view.frame.size.height + self.slidingImageView.frame.size.height;
-        self.imageViewTopConstraint.constant = self.view.frame.size.height - self.slidingImageView.frame.size.height;
+        self.imageViewTopConstraint.constant = self.startingImageViewConstant;
         self.directionContainterTopConstraint.constant = 1.0;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
+        self.directionsLabel.text = @"Show Directions";
     }];
 }
 
@@ -249,9 +245,9 @@ static NSIndexPath *endingIndexPath;
 
 #pragma mark - IBActions
 
-- (IBAction)expandDirectionsViewOnTap:(UIButton *)sender {
-    [self expandDirectionsView];
-}
+//- (IBAction)expandDirectionsViewOnTap:(UIButton *)sender {
+//    [self expandDirectionsView];
+//}
 
 - (IBAction)flipBackToMapOnTap:(UISegmentedControl *)sender {
     if (sender.selectedSegmentIndex == 0) {
@@ -269,40 +265,40 @@ static NSIndexPath *endingIndexPath;
 }
 
 #pragma mark - Methods for movement of directionsView
--(void)reduceDirectionsViewInViewDidLoad {
-    topViewStartingHeight = self.topContainerHeightConstraint.constant;
-    self.topContainerHeightConstraint.constant = 0.0;
-
-}
+//-(void)reduceDirectionsViewInViewDidLoad {
+//    topViewStartingHeight = self.topContainerHeightConstraint.constant;
+//    self.topContainerHeightConstraint.constant = 0.0;
+//
+//}
 
 //Expands directions View to display the full view and button animated
--(void)expandDirectionsView {
-    self.wantDirections = true;
-    self.getDirectionsButton.hidden = true;
-    [UIView animateWithDuration:kAnimationDuration animations:^{
-        self.tableViewTopConstraint.constant = topViewStartingHeight - self.getDirectionsButton.frame.size.height;
-        self.topContainerHeightConstraint.constant = topViewStartingHeight;
-        [self.view layoutIfNeeded];
-    }];
-}
+//-(void)expandDirectionsView {
+//    self.wantDirections = true;
+//    self.getDirectionsButton.hidden = true;
+//    [UIView animateWithDuration:kAnimationDuration animations:^{
+//        self.tableViewTopConstraint.constant = topViewStartingHeight - self.getDirectionsButton.frame.size.height;
+//        self.topContainerHeightConstraint.constant = topViewStartingHeight;
+//        [self.view layoutIfNeeded];
+//    }];
+//}
 
--(void)animateDirectionsViewClosed {
-    self.wantDirections = false;
-    [UIView animateWithDuration:kAnimationDuration animations:^{
-        self.topContainerHeightConstraint.constant = 0.0;
-        self.tableViewTopConstraint.constant = kTSSpacing;
-        [self.view layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if (finished) {
-            self.getDirectionsButton.hidden = false;
-        }
-    }];
-}
+//-(void)animateDirectionsViewClosed {
+//    self.wantDirections = false;
+//    [UIView animateWithDuration:kAnimationDuration animations:^{
+//        self.topContainerHeightConstraint.constant = 0.0;
+//        self.tableViewTopConstraint.constant = kTSSpacing;
+//        [self.view layoutIfNeeded];
+//    } completion:^(BOOL finished) {
+//        if (finished) {
+//            self.getDirectionsButton.hidden = false;
+//        }
+//    }];
+//}
 
 #pragma mark - LocationSelectVCDelegate Methods
--(void)locationSelectionVC:(GetDirectionsViewController *)viewController didTapDone:(BOOL)done {
-    [self animateDirectionsViewClosed];
-}
+//-(void)locationSelectionVC:(GetDirectionsViewController *)viewController didTapDone:(BOOL)done {
+//    [self animateDirectionsViewClosed];
+//}
 
 -(void)locationSelectionVC:(GetDirectionsViewController *)viewController isSettingStartingLocation:(BOOL)isStartingLocation {
     self.selectFirstPosition = isStartingLocation;

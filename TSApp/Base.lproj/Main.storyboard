@@ -132,12 +132,12 @@
                                 </connections>
                             </segmentedControl>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyx-v6-69E">
-                                <rect key="frame" x="0.0" y="273" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="302" width="320" height="504"/>
                                 <connections>
                                     <segue destination="zEX-Qi-iDZ" kind="embed" id="iZk-sz-QCO"/>
                                 </connections>
                             </containerView>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="ZNp-ZV-gc8">
+                            <imageView alpha="0.79999999999999982" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="ZNp-ZV-gc8">
                                 <rect key="frame" x="145" y="242" width="30" height="30"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -148,20 +148,36 @@
                                     <outletCollection property="gestureRecognizers" destination="Hoq-Kd-FeU" appends="YES" id="IjD-Gu-eOY"/>
                                 </connections>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Directions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ywi-WY-z0I" customClass="TSLabel">
+                                <rect key="frame" x="97" y="274" width="126" height="21"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="126" id="Aqs-pm-MsB"/>
+                                    <constraint firstAttribute="height" constant="21" id="PRc-SX-cUN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="H34-8n-RuD" appends="YES" id="tM3-Lt-3gI"/>
+                                </connections>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="l6T-ZB-ebo" firstAttribute="top" secondItem="M5D-F7-gE6" secondAttribute="bottom" constant="8" id="3XA-ZJ-eol"/>
+                            <constraint firstItem="Ywi-WY-z0I" firstAttribute="top" secondItem="ZNp-ZV-gc8" secondAttribute="bottom" constant="2" id="9Di-Pm-xeI"/>
                             <constraint firstAttribute="centerX" secondItem="ZNp-ZV-gc8" secondAttribute="centerX" id="VeI-Hu-Iq2"/>
                             <constraint firstItem="lyx-v6-69E" firstAttribute="leading" secondItem="v5h-52-mYc" secondAttribute="leadingMargin" constant="-16" id="Y6f-9R-e6d"/>
-                            <constraint firstItem="lyx-v6-69E" firstAttribute="top" secondItem="ZNp-ZV-gc8" secondAttribute="bottom" constant="1" id="cAZ-t6-0y2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lyx-v6-69E" secondAttribute="trailing" constant="-16" id="dAD-x6-2fm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="l6T-ZB-ebo" secondAttribute="trailing" constant="-16" id="dlL-Uf-et9"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="lyx-v6-69E" secondAttribute="bottom" constant="-273" id="evA-NN-Yke"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="lyx-v6-69E" secondAttribute="bottom" constant="-302" id="evA-NN-Yke"/>
                             <constraint firstItem="awO-Tp-G2c" firstAttribute="top" secondItem="l6T-ZB-ebo" secondAttribute="bottom" id="gTH-b7-rlL"/>
+                            <constraint firstItem="lyx-v6-69E" firstAttribute="top" secondItem="Ywi-WY-z0I" secondAttribute="bottom" constant="7" id="iyV-hb-ppi"/>
                             <constraint firstAttribute="centerX" secondItem="M5D-F7-gE6" secondAttribute="centerX" id="l2L-lF-wk4"/>
                             <constraint firstItem="l6T-ZB-ebo" firstAttribute="leading" secondItem="v5h-52-mYc" secondAttribute="leadingMargin" constant="-16" id="uyH-1t-lMi"/>
                             <constraint firstItem="M5D-F7-gE6" firstAttribute="top" secondItem="LxL-c1-3wy" secondAttribute="bottom" constant="8" id="vMf-qS-4xn"/>
+                            <constraint firstAttribute="centerX" secondItem="Ywi-WY-z0I" secondAttribute="centerX" id="vvL-fA-A5d"/>
                             <constraint firstItem="ZNp-ZV-gc8" firstAttribute="top" secondItem="v5h-52-mYc" secondAttribute="topMargin" constant="242" id="xB6-MX-812"/>
                         </constraints>
                     </view>
@@ -169,7 +185,8 @@
                     <navigationItem key="navigationItem" id="YGa-IL-Cft"/>
                     <connections>
                         <outlet property="containerViewBottomConstraint" destination="evA-NN-Yke" id="SGJ-YQ-d7l"/>
-                        <outlet property="directionContainterTopConstraint" destination="cAZ-t6-0y2" id="SG8-6f-6mL"/>
+                        <outlet property="directionContainterTopConstraint" destination="iyV-hb-ppi" id="zsE-JM-88C"/>
+                        <outlet property="directionsLabel" destination="Ywi-WY-z0I" id="o9m-UQ-9FI"/>
                         <outlet property="imageViewTopConstraint" destination="xB6-MX-812" id="WTY-SG-amB"/>
                         <outlet property="segmentedControl" destination="M5D-F7-gE6" id="f3i-lg-h5f"/>
                         <outlet property="slidingImageView" destination="ZNp-ZV-gc8" id="9iw-Ow-dyk"/>
@@ -185,6 +202,11 @@
                 <tapGestureRecognizer id="Hoq-Kd-FeU">
                     <connections>
                         <action selector="arrowTapped:" destination="y2z-dT-rya" id="ghF-EI-k8K"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="H34-8n-RuD">
+                    <connections>
+                        <action selector="arrowTapped:" destination="y2z-dT-rya" id="nJ3-Cq-Mfr"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -1028,12 +1050,12 @@
                                 </connections>
                             </segmentedControl>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8LK-Dz-1RL">
-                                <rect key="frame" x="0.0" y="206" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="234" width="320" height="504"/>
                                 <connections>
                                     <segue destination="zEX-Qi-iDZ" kind="embed" id="fxb-N0-nxc"/>
                                 </connections>
                             </containerView>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-EZ-P03">
+                            <imageView alpha="0.79999999999999982" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TSOrangeUpArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Cob-EZ-P03">
                                 <rect key="frame" x="145" y="175" width="30" height="30"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -1044,17 +1066,33 @@
                                     <outletCollection property="gestureRecognizers" destination="DId-qC-l89" appends="YES" id="6Kk-J7-d2g"/>
                                 </connections>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Directions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fxo-sl-Jmu" customClass="TSLabel">
+                                <rect key="frame" x="97" y="205" width="126" height="21"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="64P-Ve-tSs"/>
+                                    <constraint firstAttribute="width" constant="126" id="UTP-4K-Xak"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="UWg-29-lSJ" appends="YES" id="aaL-sG-nD1"/>
+                                </connections>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Cob-EZ-P03" firstAttribute="top" secondItem="hRA-gQ-fwK" secondAttribute="bottom" constant="111" id="0O2-wT-m7e"/>
+                            <constraint firstItem="fxo-sl-Jmu" firstAttribute="top" secondItem="Cob-EZ-P03" secondAttribute="bottom" id="3Pb-wJ-Qnd"/>
                             <constraint firstAttribute="centerX" secondItem="Cob-EZ-P03" secondAttribute="centerX" id="5Fc-et-vE7"/>
                             <constraint firstItem="Z1D-uI-0xD" firstAttribute="top" secondItem="aHH-1c-tPc" secondAttribute="bottom" constant="8" id="ASU-uf-ihu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8LK-Dz-1RL" secondAttribute="trailing" constant="-16" id="Akl-ph-F1w"/>
                             <constraint firstItem="aHH-1c-tPc" firstAttribute="leading" secondItem="Je2-LR-36N" secondAttribute="leadingMargin" constant="-16" id="QUK-cW-sCE"/>
-                            <constraint firstItem="8LK-Dz-1RL" firstAttribute="top" secondItem="Cob-EZ-P03" secondAttribute="bottom" constant="1" id="gIX-eT-lHz"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="8LK-Dz-1RL" secondAttribute="bottom" constant="-142" id="gSM-Zh-V18"/>
+                            <constraint firstItem="8LK-Dz-1RL" firstAttribute="top" secondItem="fxo-sl-Jmu" secondAttribute="bottom" constant="8" id="aDH-5D-tpb"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="8LK-Dz-1RL" secondAttribute="bottom" constant="-170" id="gSM-Zh-V18"/>
                             <constraint firstAttribute="centerX" secondItem="Z1D-uI-0xD" secondAttribute="centerX" id="iJm-Rq-rsV"/>
+                            <constraint firstAttribute="centerX" secondItem="fxo-sl-Jmu" secondAttribute="centerX" id="nMd-Y5-LS9"/>
                             <constraint firstItem="8LK-Dz-1RL" firstAttribute="leading" secondItem="Je2-LR-36N" secondAttribute="leadingMargin" constant="-16" id="sWS-x6-1jq"/>
                             <constraint firstItem="aHH-1c-tPc" firstAttribute="top" secondItem="hRA-gQ-fwK" secondAttribute="bottom" id="uge-kL-5xK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aHH-1c-tPc" secondAttribute="trailing" constant="-16" id="vCd-bm-24w"/>
@@ -1071,7 +1109,8 @@
                     <connections>
                         <outlet property="closeBarButton" destination="XXX-Et-YlZ" id="LEr-wE-zQz"/>
                         <outlet property="containerBottomConstraint" destination="gSM-Zh-V18" id="EPD-76-96A"/>
-                        <outlet property="directionsTopConstraint" destination="gIX-eT-lHz" id="DJb-3e-XYa"/>
+                        <outlet property="directionsLabel" destination="fxo-sl-Jmu" id="t00-cw-Nkj"/>
+                        <outlet property="directionsTopConstraint" destination="aDH-5D-tpb" id="oai-CD-lsM"/>
                         <outlet property="imageViewTopConstraint" destination="0O2-wT-m7e" id="bxB-BW-XUn"/>
                         <outlet property="regionBarButtonItem" destination="Hgk-eN-g6L" id="Zne-ik-MFN"/>
                         <outlet property="searchView" destination="aHH-1c-tPc" id="ugW-T6-Mk7"/>
@@ -1089,6 +1128,11 @@
                 <tapGestureRecognizer id="DId-qC-l89">
                     <connections>
                         <action selector="onArrowTapped:" destination="v5a-Rt-M6e" id="feg-mP-1yh"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="UWg-29-lSJ">
+                    <connections>
+                        <action selector="onArrowTapped:" destination="v5a-Rt-M6e" id="7zz-8E-FZP"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -1312,6 +1356,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fxb-N0-nxc"/>
+        <segue reference="iZk-sz-QCO"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -42,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIView *searchView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionsTopConstraint;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *closeBarButton;
+@property (weak, nonatomic) IBOutlet UILabel *directionsLabel;
 
 
 #pragma mark - Variables
@@ -130,7 +131,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [self.view addSubview:self.mapView];
     [self.view sendSubviewToBack:self.mapView];
 
-    self.imageViewTopConstraint.constant = CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.slidingImageView.frame) - CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    self.imageViewTopConstraint.constant = CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.slidingImageView.frame) - CGRectGetHeight(self.directionsLabel.frame) - CGRectGetMaxY(self.navigationController.navigationBar.frame);
     self.containerBottomConstraint.constant = -CGRectGetHeight(self.view.frame) + CGRectGetHeight(self.slidingImageView.frame);
     self.startingContainerBottomConstant = self.containerBottomConstraint.constant;
     self.startingImageViewConstant = self.imageViewTopConstraint.constant;
@@ -452,10 +453,11 @@ static NSString *const rwfLocationString = @"Tap to save destination";
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.containerBottomConstraint.constant = 0;
         self.imageViewTopConstraint.constant = kImageViewConstraintConstantOpen;
-        self.directionsTopConstraint.constant = -CGRectGetHeight(self.slidingImageView.frame);
+        self.directionsTopConstraint.constant = -CGRectGetHeight(self.slidingImageView.frame) - CGRectGetHeight(self.directionsLabel.frame);
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kDownArrowImage];
+        self.directionsLabel.text = @"Hide Directions";
     }];
 }
 
@@ -467,6 +469,7 @@ static NSString *const rwfLocationString = @"Tap to save destination";
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.slidingImageView.image = [UIImage imageNamed:kUpArrowImage];
+        self.directionsLabel.text = @"Show Directions";
     }];
 }
 
