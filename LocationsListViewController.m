@@ -25,14 +25,10 @@
 
 #pragma mark - Outlets
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *slidingImageView;
-//@property (weak, nonatomic) IBOutlet UIButton *getDirectionsButton;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topContainerHeightConstraint;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *directionContainterTopConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *directionsLabel;
 
@@ -78,6 +74,7 @@ static NSString *const kLocationDetailSegue = @"DirectionDetailSegue";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+
     self.displayDirections = false;
     self.firstTapOnCurrentPosition = true;
     self.typeOfTransportation = @"driving";
@@ -87,7 +84,6 @@ static NSString *const kLocationDetailSegue = @"DirectionDetailSegue";
     self.wantDirections = false;
     self.titleArray = @[kNeedToVisitString, kVisitedString];
     self.tableView.backgroundColor = [UIColor whiteColor];
-//    [self reduceDirectionsViewInViewDidLoad];
     self.segmentedControl.selectedSegmentIndex = 1;
     [self.tableView reloadData];
     self.title = @"Saved Locations";
@@ -202,23 +198,7 @@ static NSString *const kLocationDetailSegue = @"DirectionDetailSegue";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     CDLocation *selectedLocation = self.currentRegion.sortedArrayOfLocations[indexPath.section][indexPath.row];
-
-//    if (self.wantDirections) {
-//        [self.locationSelectionVC giveALocation:selectedLocation];
-//        if (!self.selectFirstPostion) {
-//            cell.backgroundColor = [UIColor customDarkGrey];
-//            endingIndexPath = indexPath;
-//        }
-//        else {
-//            cell.backgroundColor = [UIColor customLightGrey];
-//            startingIndexPath = indexPath;
-//        }
-//    }
-//    else {
-//        [self performSegueWithIdentifier:kDirectionSegue sender:nil];
-//    }
     [self performSegueWithIdentifier:kLocationDetailSegue sender:selectedLocation];
     [tableView deselectRowAtIndexPath:indexPath animated:true];
 }
@@ -245,10 +225,6 @@ static NSString *const kLocationDetailSegue = @"DirectionDetailSegue";
 
 #pragma mark - IBActions
 
-//- (IBAction)expandDirectionsViewOnTap:(UIButton *)sender {
-//    [self expandDirectionsView];
-//}
-
 - (IBAction)flipBackToMapOnTap:(UISegmentedControl *)sender {
     if (sender.selectedSegmentIndex == 0) {
         [self.presentingViewController dismissViewControllerAnimated:true completion:nil];
@@ -262,46 +238,6 @@ static NSString *const kLocationDetailSegue = @"DirectionDetailSegue";
     else {
         [self animateContainerDown];
     }
-}
-
-#pragma mark - Methods for movement of directionsView
-//-(void)reduceDirectionsViewInViewDidLoad {
-//    topViewStartingHeight = self.topContainerHeightConstraint.constant;
-//    self.topContainerHeightConstraint.constant = 0.0;
-//
-//}
-
-//Expands directions View to display the full view and button animated
-//-(void)expandDirectionsView {
-//    self.wantDirections = true;
-//    self.getDirectionsButton.hidden = true;
-//    [UIView animateWithDuration:kAnimationDuration animations:^{
-//        self.tableViewTopConstraint.constant = topViewStartingHeight - self.getDirectionsButton.frame.size.height;
-//        self.topContainerHeightConstraint.constant = topViewStartingHeight;
-//        [self.view layoutIfNeeded];
-//    }];
-//}
-
-//-(void)animateDirectionsViewClosed {
-//    self.wantDirections = false;
-//    [UIView animateWithDuration:kAnimationDuration animations:^{
-//        self.topContainerHeightConstraint.constant = 0.0;
-//        self.tableViewTopConstraint.constant = kTSSpacing;
-//        [self.view layoutIfNeeded];
-//    } completion:^(BOOL finished) {
-//        if (finished) {
-//            self.getDirectionsButton.hidden = false;
-//        }
-//    }];
-//}
-
-#pragma mark - LocationSelectVCDelegate Methods
-//-(void)locationSelectionVC:(GetDirectionsViewController *)viewController didTapDone:(BOOL)done {
-//    [self animateDirectionsViewClosed];
-//}
-
--(void)locationSelectionVC:(GetDirectionsViewController *)viewController isSettingStartingLocation:(BOOL)isStartingLocation {
-    self.selectFirstPosition = isStartingLocation;
 }
 
 @end
